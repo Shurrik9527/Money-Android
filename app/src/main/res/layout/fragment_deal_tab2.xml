@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--上拉加载，下拉刷新框架-->
+<com.yan.pullrefreshlayout.PullRefreshLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/pullrefreshLayout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    app:prl_headerClass="com.moyacs.canary.widget.pullrefreshlayout.ClassicsHeader"
+    app:prl_headerFront="true"
+    app:prl_headerShowGravity="follow"
+    app:prl_pullDownMaxDistance="120dp"
+    app:prl_pullUpMaxDistance="200dp">
+
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/recyclerView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:scrollbars="vertical" />
+</com.yan.pullrefreshlayout.PullRefreshLayout>
+

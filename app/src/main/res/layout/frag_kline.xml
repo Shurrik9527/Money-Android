@@ -1,0 +1,283 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <RelativeLayout
+        android:id="@+id/layoutContent"
+        android:layout_width="fill_parent"
+        android:layout_height="match_parent"
+        android:layout_margin="2dip"
+        android:layout_marginRight="0dip"
+        android:visibility="invisible">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_toLeftOf="@+id/landTypeView"
+            android:visibility="visible">
+
+            <LinearLayout
+                android:id="@+id/mainNormal"
+                android:layout_width="match_parent"
+                android:layout_height="32dip"
+                android:orientation="horizontal">
+
+                <com.moyacs.canary.widget.UnderLineTextView
+                    android:id="@+id/tab_SMA"
+                    android:layout_width="0dip"
+                    android:layout_height="fill_parent"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:text="SMA"
+                    android:textColor="@color/kline_cycle_item_tvcolor"
+                    android:textSize="@dimen/text_size_15sp"
+                    app:isLineEnable="true"
+                    app:lineColor="@color/under_line"
+                    app:mlineHeight="3dip"
+                    app:upOrunder="under" />
+
+                <com.moyacs.canary.widget.UnderLineTextView
+                    android:id="@+id/tab_EMA"
+                    android:layout_width="0dip"
+                    android:layout_height="fill_parent"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:text="EMA"
+                    android:textColor="@color/kline_cycle_item_tvcolor"
+                    android:textSize="@dimen/text_size_15sp"
+                    app:isLineEnable="false"
+                    app:lineColor="@color/under_line"
+                    app:mlineHeight="3dip"
+                    app:upOrunder="under" />
+
+                <com.moyacs.canary.widget.UnderLineTextView
+                    android:id="@+id/tab_BOLL"
+                    android:layout_width="0dip"
+                    android:layout_height="fill_parent"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:text="BOLL"
+                    android:textColor="@color/kline_cycle_item_tvcolor"
+                    android:textSize="@dimen/text_size_15sp"
+                    app:isLineEnable="false"
+                    app:lineColor="@color/under_line"
+                    app:mlineHeight="3dip"
+                    app:upOrunder="under" />
+
+
+            </LinearLayout>
+
+            <com.moyacs.canary.kchart.chart.candle.KLineView
+                android:id="@+id/klineView"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:layout_below="@+id/mainNormal" />
+
+            <com.moyacs.canary.kchart.chart.cross.KCrossLineView
+                android:id="@+id/crossLineView"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:layout_below="@+id/mainNormal"
+                android:visibility="visible" />
+
+            <LinearLayout
+                android:id="@+id/crossInfoView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/mainNormal"
+                android:orientation="vertical"
+                android:visibility="gone">
+
+                <include layout="@layout/kline_cross_info" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/subNormal"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_below="@+id/mainNormal"
+                android:orientation="vertical">
+
+                <View
+                    android:layout_width="1dip"
+                    android:layout_height="0dip"
+                    android:layout_weight="4" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="0dip"
+                    android:layout_marginTop="-32dip"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1px"
+                        android:layout_marginTop="0dip"
+                        android:background="#33848999" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="32dip"
+                        android:orientation="horizontal">
+
+                        <com.moyacs.canary.widget.UnderLineTextView
+                            android:id="@+id/tab_MACD"
+                            android:layout_width="0dip"
+                            android:layout_height="fill_parent"
+                            android:layout_weight="1"
+                            android:gravity="center"
+                            android:text="MACD"
+                            android:textColor="@color/kline_cycle_item_tvcolor"
+                            android:textSize="@dimen/text_size_15sp"
+                            app:isLineEnable="true"
+                            app:lineColor="@color/under_line"
+                            app:mlineHeight="3dip"
+                            app:upOrunder="under" />
+                        <com.moyacs.canary.widget.UnderLineTextView
+                            android:id="@+id/tab_KDJ"
+                            android:layout_width="0dip"
+                            android:layout_height="fill_parent"
+                            android:layout_weight="1"
+                            android:gravity="center"
+                            android:text="KDJ"
+                            android:textColor="@color/kline_cycle_item_tvcolor"
+                            android:textSize="@dimen/text_size_15sp"
+                            app:isLineEnable="false"
+                            app:lineColor="@color/under_line"
+                            app:mlineHeight="3dip"
+                            app:upOrunder="under" />
+                        <com.moyacs.canary.widget.UnderLineTextView
+                            android:id="@+id/tab_RSI"
+                            android:layout_width="0dip"
+                            android:layout_height="fill_parent"
+                            android:layout_weight="1"
+                            android:gravity="center"
+                            android:text="RSI"
+                            android:textColor="@color/kline_cycle_item_tvcolor"
+                            android:textSize="@dimen/text_size_15sp"
+                            app:isLineEnable="false"
+                            app:lineColor="@color/under_line"
+                            app:mlineHeight="3dip"
+                            app:upOrunder="under" />
+                    </LinearLayout>
+                </LinearLayout>
+
+            </LinearLayout>
+        </RelativeLayout>
+
+        <LinearLayout
+            android:id="@+id/landTypeView"
+            android:layout_width="40dip"
+            android:layout_height="match_parent"
+            android:layout_alignParentRight="true"
+            android:background="@color/kline_type_land"
+            android:gravity="center"
+            android:orientation="vertical"
+            android:visibility="gone">
+
+            <com.moyacs.canary.widget.UnderLineTextView
+                android:id="@+id/tab_SMA_land"
+                android:layout_width="match_parent"
+                android:layout_height="0dip"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:text="SMA"
+                android:textColor="@color/kline_cycle_item_tvcolor"
+                android:textSize="12sp"
+                app:isLineEnable="true"
+                app:lineColor="@color/under_line"
+                app:mlineHeight="0dip"
+                app:mlineWidth="3dip"
+                app:upOrunder="left" />
+
+            <com.moyacs.canary.widget.UnderLineTextView
+                android:id="@+id/tab_EMA_land"
+                android:layout_width="match_parent"
+                android:layout_height="0dip"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:text="EMA"
+                android:textColor="@color/kline_cycle_item_tvcolor"
+                android:textSize="12sp"
+                app:isLineEnable="false"
+                app:lineColor="@color/under_line"
+                app:mlineHeight="0dip"
+                app:mlineWidth="3dip"
+                app:upOrunder="left" />
+
+            <com.moyacs.canary.widget.UnderLineTextView
+                android:id="@+id/tab_BOLL_land"
+                android:layout_width="match_parent"
+                android:layout_height="0dip"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:text="BOLL"
+                android:textColor="@color/kline_cycle_item_tvcolor"
+                android:textSize="12sp"
+                app:isLineEnable="false"
+                app:lineColor="@color/under_line"
+                app:mlineHeight="0dip"
+                app:mlineWidth="3dip"
+                app:upOrunder="left" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dip"
+                android:background="@color/product_bg" />
+
+            <com.moyacs.canary.widget.UnderLineTextView
+                android:id="@+id/tab_MACD_land"
+                android:layout_width="match_parent"
+                android:layout_height="0dip"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:text="MACD"
+                android:textColor="@color/kline_cycle_item_tvcolor"
+                android:textSize="12sp"
+                app:isLineEnable="true"
+                app:lineColor="@color/under_line"
+                app:mlineHeight="0dip"
+                app:mlineWidth="3dip"
+                app:upOrunder="left" />
+
+            <com.moyacs.canary.widget.UnderLineTextView
+                android:id="@+id/tab_KDJ_land"
+                android:layout_width="match_parent"
+                android:layout_height="0dip"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:text="KDJ"
+                android:textColor="@color/kline_cycle_item_tvcolor"
+                android:textSize="12sp"
+                app:isLineEnable="false"
+                app:lineColor="@color/under_line"
+                app:mlineHeight="0dip"
+                app:mlineWidth="3dip"
+                app:upOrunder="left" />
+
+            <com.moyacs.canary.widget.UnderLineTextView
+                android:id="@+id/tab_RSI_land"
+                android:layout_width="match_parent"
+                android:layout_height="0dip"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:text="RSI"
+                android:textColor="@color/kline_cycle_item_tvcolor"
+                android:textSize="12sp"
+                app:isLineEnable="false"
+                app:lineColor="@color/under_line"
+                app:mlineHeight="0dip"
+                app:mlineWidth="3dip"
+                app:upOrunder="left" />
+
+        </LinearLayout>
+    </RelativeLayout>
+
+    <!--<include-->
+        <!--android:id="@+id/layoutLoding"-->
+        <!--layout="@layout/app_common_progressbar" />-->
+</RelativeLayout>

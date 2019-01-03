@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <item name="title_tv" type="id" />
+    <item name="kline_weipanView" type="id" />
+    <item name="kline_weipanline" type="id" />
+    <item name="weipanView" type="id" />
+
+    <item name="layoutLoding" type="id" />
+    <item name="appBaseContentView" type="id" />
+
+</resources>

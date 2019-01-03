@@ -1,0 +1,626 @@
+<resources>
+    <string name="app_name">掌上投</string>
+
+    <string name="app_downing">正在下载：汇大师</string>
+
+
+    <!--批量发包 下面的渠道号仅仅做特殊渠道发包使用-->
+    <!--code market 每次发版本的渠道号-->
+    <string name="market">main</string>
+
+
+    <string name="market_other">other</string>
+    <string name="market_baidu">baidu</string>
+    <string name="market_taobao">taobao</string>
+    <string name="market_huawei">huawei</string>
+    <!--如果当前渠道为百度网盟 就会开启开启百度网盟的统计-->
+    <string name="market_baidumon">Baidu-Mobads</string>
+
+    <string name="market_xiaomi">xiaomi</string>
+    <string name="market_samsung">samsung</string>
+
+    <string name="network_problem">网络连接失败</string>
+    <!-- do not modifyed start-->
+    <string name="string_lable_market">market</string>
+    <string name="string_lable_versionCode">versionCode</string>
+    <!-- do not modifyed end-->
+
+
+    <!--关于简介内容     &#160;  &nbsp;   -->
+    <!--对于空格而言不同的分辨率会有不同的距离-->
+    <!--\n\u3000\u3000-->
+    <string name="aboutus_lable">关于我们</string>
+
+
+    <string name="law_app">\t\t本产品提供的信息内容仅供参考，不作为投资者交易的依据，投资者据此操作，风险自担。</string>
+    <string name="law_lable">风险提示</string>
+
+    <string name="title_week_share">分享领代金券</string>
+
+    <string name="kline_cycle_1m">分时</string>
+    <string name="kline_cycle_5m">5分钟</string>
+    <string name="kline_cycle_15m">15分钟</string>
+    <string name="kline_cycle_30m">30分钟</string>
+    <string name="kline_cycle_1h">1小时</string>
+    <string name="kline_cycle_4h">4小时</string>
+    <string name="kline_cycle_1d">日线</string>
+    <string name="kline_cycle_other">其他</string>
+
+
+    <!-- 开启 与baseActivity SystemBar 一起使用-->
+    <bool name="fitsSystemWindows">true</bool>
+
+    <string name="tab_main_home">首页</string>
+    <string name="tab_main_market">行情</string>
+    <string name="tab_main_news">资讯</string>
+    <string name="tab_main_weipan">交易</string>
+    <string name="tab_main_live">直播</string>
+    <string name="tab_main_me">我</string>
+
+
+    <string name="small_window_save">保存</string>
+    <string name="small_window_variety">品种</string>
+    <string name="small_window_enter_txt">进入应用</string>
+    <string name="small_window_close_txt">关闭</string>
+    <string name="small_window_settings_txt">设置</string>
+    <string name="small_window_international_txt">"(国际)"</string>
+    <string name="small_window_title_txt">"悬浮窗口"</string>
+    <string name="small_window_temp_txt">"- -"</string>
+    <string name="small_window_toast_no_data">当前品种暂无数据！</string>
+
+
+    <string name="data_no_more">没有更多数据了！</string>
+    <string name="data_empty">暂无数据！</string>
+
+    <string name="home_tab_news">重要消息</string>
+    <string name="home_tab_calendar">财经日历</string>
+    <string name="home_tab_rank">盈利榜</string>
+    <string name="home_tab_hot">热门行情</string>
+    <string name="home_tab_hot_more">查看更多</string>
+    <string name="home_tab_profit">最新盈利:</string>
+    <string name="str_lable_weipan"></string>
+
+
+    <string name="lable_create">建仓</string>
+
+    <string name="trade_title_lable">交易大厅</string>
+    <string name="trade_choose_lable">{total}的用户选择买跌</string>
+    <string name="trade_create_success">建仓成功</string>
+    <string name="trade_create_fail">建仓失败</string>
+    <string name="trade_close_success">平仓成功</string>
+    <string name="trade_close_fail">平仓失败</string>
+    <string name="trade_buy_up">买涨</string>
+    <string name="trade_buy_down">买跌</string>
+    <string name="trade_close">平仓</string>
+    <string name="trade_closeempty">暂无持仓</string>
+    <string name="trade_queryorder">查看持仓</string>
+    <string name="trade_surplus">浮动盈亏</string>
+    <string name="trade_create_fee">手续费</string>
+    <string name="trade_create_time">建仓时间</string>
+    <string name="trade_guoye_fee">过夜费</string>
+    <string name="trade_mostnew_price">最新价</string>
+    <string name="trade_mostnew_point">浮动点位</string>
+    <string name="str_trade_deal">处理中...</string>
+    <string name="str_msg_longing">加载中</string>
+    <string name="str_msg_wait">请稍等</string>
+    <string name="trade_order_createprice">建仓价</string>
+    <string name="trade_order_currentprice">现价</string>
+    <string name="trade_order_closeprice">平仓价</string>
+    <string name="trade_order_zhisun">止损:&#160;&#160;</string>
+    <string name="trade_order_zhiying">止盈:&#160;&#160;</string>
+    <string name="trade_order_deferred">过夜费:&#160;&#160;</string>
+    <string name="trade_order_createfee">手续费:&#160;&#160;</string>
+    <string name="trade_order_usemoney">占用预付款:&#160;&#160;</string>
+    <string name="trade_order_createtime">建仓时间:&#160;&#160;</string>
+    <string name="trade_order_closetype">平仓类型:&#160;&#160;</string>
+    <string name="trade_order_message">交易消息</string>
+    <string name="trade_order_notification">%1$s,平仓价格%2$s,盈亏%3$s美元</string>
+    <string name="trade_order_goproduct">看行情</string>
+    <string name="trade_order_changeorder">修改止盈止损</string>
+    <!--箭头-->
+    <string name="trade_order_arrow">&#8595;</string>
+    <string name="trade_order_cashin">入金</string>
+    <string name="trade_order_cashout">出金</string>
+    <string name="trade_order_mangaecard">管理银行卡</string>
+    <string name="trade_order_addcard">添加银行卡</string>
+
+    <string name="trade_order_cardnum4">尾号:&#160;</string>
+    <string name="trade_order_unbindcard">解绑</string>
+    <string name="trade_order_bindcard">绑定</string>
+    <string name="trade_order_bindcard_title">绑定银行卡</string>
+    <string name="trade_order_cashout_tips">当前汇率:美元:人民币=1:%1$s, 折合人民币:¥%2$s元</string>
+    <string name="trade_order_closetime">平仓时间:&#160;&#160;</string>
+
+    <string name="trade_order_tradehistory">交易历史</string>
+    <string name="trade_order_cashhistory">出入金记录</string>
+
+
+    <string name="cash_out_input_money">请输入提取金额</string>
+    <string name="cash_out_input_bank">请选择银行</string>
+    <string name="cash_out_input_provice">请选择开户行所在省份</string>
+    <string name="cash_out_input_city">请选择开户行所在城市</string>
+    <string name="cash_out_input_branch">请选择开户行支行</string>
+
+    <string name="cash_jd_idcard">请输入身份证</string>
+    <string name="cash_jd_sms_hint">请输入短信验证码</string>
+    <string name="cash_jd_mobileNum">请输入银行预留手机号码</string>
+
+
+    <string name="cash_out_input_bankBrach">请输入银行支行名称</string>
+    <string name="cash_out_input_card">请输入本人借记卡卡号</string>
+    <string name="cash_out_input_cardName">请输入持卡人姓名</string>
+    <string name="cash_out_input_checkCode">请输入验证码</string>
+
+    <string name="cash_out_fee_hg">(100元以内需缴纳2元手续费)</string>
+    <string name="cash_out_fee_jn">(100元以内需缴纳2元手续费)</string>
+    <string name="tab_video">聊天室</string>
+    <string name="tab_gonggao">公告</string>
+    <string name="tab_advice">文字直播</string>
+    <string name="tab_fxs">分析师</string>
+
+    <string name="trade_set_profit_tips">*投资有风险，交易需谨慎，做好止损，降低风险。</string>
+    <string name="str_chat_room_title">聊天室</string>
+    <string name="str_trade_tips01">1.暂不支持持仓过夜，收盘后将自动平仓</string>
+    <string name="str_trade_tips02">2.同一品种如有持仓，需平仓后才可建新单</string>
+    <string name="str_trade_tips03_cash">3.本次购买将从余额中扣除</string>
+
+    <string name="str_trade_quan_tips01">3.代金券免手续费，盈利后获得其中收益，亏损您无需承担</string>
+    <string name="str_trade_cash">现金不够用？>>分享拿券</string>
+    <string name="str_set_profit_limit">设置范围(10~50)</string>
+    <string name="str_yk_tips">最小单位波动一个点盈利%s元</string>
+
+    <string name="share_window_title">活动规则</string>
+    <string name="share_window_step_lable_01">1. 参与对象:</string>
+    <string name="share_window_step_lable_02">2. 参与方式:</string>
+    <string name="share_window_step_lable_03">3. 活动奖励:</string>
+    <string name="share_window_step_text_01">汇大师注册用户</string>
+    <string name="share_window_step_text_02">点击【点击分享】，并成功分享至微信朋友圈</string>
+    <string name="share_window_step_text_03">成功分享完成，送8元代金券1张，每周1次</string>
+
+
+    <string name="str_trade_gg_you">广贵油</string>
+    <string name="str_trade_gg_yin">广贵银</string>
+    <string name="str_trade_hg_you">哈贵油</string>
+    <string name="str_trade_hg_yin">哈贵银</string>
+    <string name="str_trade_hg_nie">哈贵镍</string>
+
+
+    <string name="home_rank_hint">(当天排名次日凌晨4点送券)</string>
+    <string name="nodata_trade_hold">您当前没有购买的产品\n快去交易吧</string>
+    <string name="voucher_tips">限%s元/手的产品使用</string>
+    <string name="reg_hint_01">点击表示您已阅读并同意</string>
+    <string name="reg_hint_02">《用户协议》</string>
+    <string name="reg_hint_03">保障您的资金安全</string>
+    <string name="empty_deferred">暂无过夜记录</string>
+    <string name="empty_noprofitorder">暂无可晒盈利单</string>
+    <string name="empty_notradeorder">暂无交易记录</string>
+    <string name="empty_nocashout">暂无出金记录</string>
+    <string name="empty_nocashin">暂无入金记录</string>
+
+
+    <string name="qucik_create_count01">1手</string>
+    <string name="qucik_create_count02">5手</string>
+    <string name="qucik_create_count03">10手</string>
+
+    <string name="token_title_disable">交易密码已过期</string>
+    <string name="token_msg_disable">为保障您的资金安全，\n交易大厅6小时后自动注销</string>
+    <string name="token_btn_disable">重新输入</string>
+
+    <string name="token_title_setpwd">请输入交易密码</string>
+    <string name="token_msg_setpwd">为保障您的资金安全，\n输入交易密码后可查看交易信息</string>
+    <string name="token_btn_setpwd">输入密码</string>
+
+    <string name="token_title_init">请设置%s交易密码</string>
+    <string name="token_msg_init">注意：三所账户独立\n需单独设置%s交易密码</string>
+    <string name="token_btn_init">设置</string>
+
+
+    <string name="video_empty">当前是非视频直播时段\n稍后再来吧</string>
+
+    <string name="chat_notice">【公告】聊天室内禁止发QQ、微信、手机号等联系方式和广告，一经发现，永久禁用！请大家一起维护聊天室的环境，谢谢。</string>
+    <string name="chat_notice_1">聊天室内禁止发QQ、微信、手机号等联系方式和广告，请大家一起维护聊天室的环境，感谢。</string>
+
+    <string name="str_fengxian_title">用户协议</string>
+
+    <string name="tick_rule_lable">代金券使用规则</string>
+    <string name="tick_rule_01">代金券仅限购买对应面额的产品，如200元代金券只能购买200元/手的产品。</string>
+    <string name="tick_rule_02">一笔交易中，代金券和现金不可同时使用</string>
+    <string name="tick_rule_03">一笔交易中，最多可使用10张代金券</string>
+    <string name="tick_rule_04">代金券领取之后在有效期内使用，过期后代金券将收回。</string>
+    <string name="tick_rule_05">代金券仅限领取时的账号使用，不可买卖、转赠他人。</string>
+
+    <string name="redpacket_rule_lable">红包说明</string>
+    <string name="redpacket_rule_01">红包是农交所专有，等同于现金，可用于建仓、抵充手续费，不能提现。</string>
+    <string name="redpacket_rule_02">建仓时优先使用红包；平仓时亏损部分优先消耗红包。</string>
+    <string name="redpacket_rule_03">使用红包建仓，平仓时盈利同比例返回红包账户。</string>
+    <string name="redpacket_rule_04">红包有效期为30天，包含双休及节假日。</string>
+    <string name="redpacket_rule_05">红包有效期内获取新的红包，则以最新的红包有效期为准。</string>
+
+    <string name="money_lable">$</string>
+    <string name="str_goto_index_trade">去往交易大厅</string>
+    <string name="live_plan">时间表</string>
+    <string name="me_know_eight">一分钟了解汇大师</string>
+    <string name="quick_fee_str">(手续费:%s元)</string>
+    <string name="login_please">请先登录</string>
+    <string name="login_hint">说明：汇大师账户系统安全升级，请您设置登录密码</string>
+    <string name="input_phone">请输入手机号</string>
+    <string name="input_code">输入验证码</string>
+    <string name="input_pwd">输入6-12位登录密码</string>
+    <string name="input_pwd_reset">设置6-12位新密码</string>
+    <string name="input_pwd_reg_jn">设置6-12位数字或字母</string>
+    <string name="input_pwd_reg_jn_confirm">请重复以上密码</string>
+    <string name="input_pwd_jn_hint">注意：三所账户独立，请牢记交易密码。</string>
+    <string name="input_pwd_jn_relogin">请输入交易密码</string>
+
+    <string name="reg_exit_msg">要放弃注册吗？</string>
+    <string name="btn_reg_neg">放弃</string>
+    <string name="btn_reg_post">继续注册</string>
+
+    <string name="auth_exit_msg">要退出实名认证吗？</string>
+    <string name="auth_reg_neg">放弃</string>
+    <string name="auth_reg_post">继续认证</string>
+
+
+    <string name="str_buy_up">%s用户买涨</string>
+    <string name="str_buy_up_1">&#160;%1$s用户买涨</string>
+    <string name="str_buy_down">%s用户买跌</string>
+    <string name="str_buy_down_1">&#160;%1$s用户买跌</string>
+
+    <string name="str_buy_up_dlg">%s用户选择</string>
+    <string name="str_buy_down_dlg">%s用户选择</string>
+
+    <string name="str_need_wx_pay">充值需要微信支持，您还没有安装微信</string>
+
+    <string name="msg_live_quickclose">直播室快速建仓平仓功能\n只支持哈贵所</string>
+    <string name="hint_create_jn">*建仓默认开启持仓过夜，建仓后可以手动设置</string>
+
+    <!--资金模块-->
+    <string name="voucher_entrytitle">查看代金券</string>
+    <!--<string name="coupon_entrytitle">我的红包</string>-->
+    <string name="coupon_entrytitle">我的代金券</string>
+    <string name="trade_history">交易记录</string>
+    <string name="inandout_history">收支明细</string>
+    <string name="out_history">出金记录</string>
+    <string name="in_history">入金记录</string>
+    <string name="out_historyempty">暂无出金记录</string>
+    <string name="in_historyempty">暂无入金记录</string>
+
+    <string name="cashout_doing">处理中</string>
+    <string name="cashout_success">成功</string>
+    <string name="cashout_fail">失败</string>
+
+    <string name="str_lable_jn_rule">%1$s规则</string>
+
+    <!--<string name="str_lable_jn_hb">红包</string>-->
+    <string name="str_lable_jn_deferred">持仓过夜</string>
+    <string name="str_msg_jn_fun">%1$s新增%2$s功能</string>
+    <!--版本更新-->
+    <string name="upgrade_title">检测到新版本</string>
+    <string name="upgrade_version">新版本号: %1$s</string>
+    <string name="upgrade_contenttitle">更新内容:</string>
+    <!--农交所提现手续费说明-->
+    <string name="jn_cashout_tip1">%1$s提现手续费规则:</string>
+    <string name="jn_cashout_tip2">&#8226;&#160;&#160;2500元以内的提现金额收取1%的手续费。</string>
+    <string name="jn_cashout_tip2_1">&#8226;&#160;&#160;%1$s</string>
+    <string name="jn_cashout_tip3">&#8226;&#160;&#160;提现不足200元收取2元手续费。</string>
+    <string name="jn_cashout_tip3_1">&#8226;&#160;&#160;%1$s</string>
+    <string name="jn_cashout_tip4">&#8226;&#160;&#160;提现手续费25元封顶。</string>
+    <string name="jn_cashout_tip4_1">&#8226;&#160;&#160;%1$s</string>
+
+    <string name="jn_cashout_tip5">到账时间:</string>
+    <string name="jn_cashout_tip6">单笔提现小于2000元或当天累计提现小于1万元，即时到账。</string>
+    <string name="jn_cashout_tip7">单笔提现大于2000元或当天累计提现大于1万元，隔天到账。</string>
+
+    <string name="set_trade_pwd">请设置%1s密码</string>
+    <string name="input_trade_pwd">请输入交易密码</string>
+    <string name="reset_trade_pwd">重置%1s交易密码</string>
+
+    <string name="lable_recommen">应用推荐</string>
+    <string name="lable_compety">大赛</string>
+    <!--首頁-->
+    <string name="home_userstudy">新手学堂</string>
+    <string name="home_userstudy_tips">什么是汇大师?</string>
+    <string name="home_usergold">盈利榜</string>
+    <string name="home_usergold_tips">晒盈利单赚代金券</string>
+    <string name="home_tradechance">交易机会</string>
+    <string name="home_information_type1">公告&#160;&#160;&#160;&#160;&#160;%1$s</string>
+    <string name="home_information_type2">早间布局&#160;&#160;&#160;&#160;&#160;%1$s</string>
+    <string name="home_information_type5">早间资讯&#160;&#160;&#160;&#160;&#160;%1$s</string>
+    <string name="home_information_type4_1">专家解读&#160;&#160;&#160;&#160;&#160;%1$s</string>
+    <string name="home_information_type4">专家解读</string>
+    <string name="home_information_tradeup">%1$d%2$s用户买涨</string>
+    <string name="home_information_tradedown">%1$d%2$s用户买跌</string>
+    <string name="home_information_hold">支持</string>
+    <string name="home_information_redhold">利多&#160;&#160;&#160;&#160;&#160;%1$d%2$s</string>
+    <string name="home_information_greenhold">利空&#160;&#160;&#160;&#160;&#160;%1$d%2$s</string>
+
+    <string name="homerank_tip1">上榜规则:</string>
+    <string name="homerank_tip2">将当前交易日内8:00到次日凌晨4:00间盈利的平仓单晒单至朋友圈(用券单不可参加)</string>
+    <string name="homerank_tip3">盈利率排名前20者即可上榜，产生前三名后，榜单定时更新</string>
+    <string name="homerank_tip4">上榜者奖金(优惠券)由系统在次日凌晨5:00自动发放。</string>
+
+    <string name="homerank_shareorder">晒单</string>
+    <string name="homerank_rank_totalnum">%1$d位</string>
+    <string name="homerank_myranknum">第%1$d位</string>
+
+
+    <string name="cashout_faile">出金失败</string>
+    <!--休市提醒-->
+    <string name="qa_trade">交易问题大揭秘</string>
+    <string name="cashout_shiming">账户实名制</string>
+    <string name="cashout_goshiming">去认证</string>
+    <string name="close_title">已休市</string>
+    <string name="close_title_bak">当前为休市时间</string>
+    <string name="close_btn_neg">取消</string>
+    <string name="close_btn_post">了解更多</string>
+
+    <!--统一交易密码-->
+    <string name="unifypwd_title_newaccount">请设置交易密码</string>
+    <string name="unifypwd_msg_newaccount">交易密码用于保障\n您在各个交易所的资金安全</string>
+    <string name="unifypwd_btn_newaccount">设置</string>
+    <string name="unifypwd_title_oldaccount">请设置统一的交易密码</string>
+    <string name="unifypwd_title_oldaccount_1">暂不统一交易密码</string>
+    <string name="unifypwd_msg_oldaccount">为提升您的交易体验\n三个交易所可以设置统一的交易密码</string>
+    <string name="unifypwd_msg_forquicktrade">设置统一的交易密码后\n方可进行各产品的快速交易</string>
+
+
+    <string name="unifypwd_msgtips_oldaccount"><![CDATA[ 您也可以通过以下途径进行设置<br /><font color="#24273e">我的>账号管理>统一交易密码</font>]]></string>
+    <string name="unifypwd_negbtn_oldaccount">暂不设置</string>
+    <string name="unifypwd_posbtn_oldaccount">我知道了</string>
+    <string name="unifypwd_notify_close">不再提醒</string>
+    <string name="unifypwd_notify_firststep">第1步  输入已设置的交易密码</string>
+    <string name="unifypwd_notify_secondstep">第2步  设置统一的交易密码</string>
+    <string name="unifypwd_gg_name">广贵所</string>
+    <string name="unifypwd_hg_name">哈贵所</string>
+    <string name="unifypwd_jn_name">农交所</string>
+    <string name="unifypwd_forgetpwd">忘记密码</string>
+    <string name="unifypwd_gg_hint">请输入广贵所交易密码</string>
+    <string name="unifypwd_hg_hint">请输入哈贵所交易密码</string>
+    <string name="unifypwd_jn_hint">请输入农交所交易密码</string>
+    <string name="unifypwd_errortips">密码输入有误，请重新输入</string>
+    <string name="unifypwd_resettitle">重置交易密码</string>
+    <string name="unifypwd_logintitle">输入交易密码</string>
+    <string name="unifypwd_protocl_tip">我已经阅读理解并同意本功能的</string>
+    <string name="unifypwd_nextstep">下一步</string>
+    <string name="unifypwd_title">设置交易密码</string>
+    <string name="unifypwd_melable">统一交易密码</string>
+    <string name="unifypwd_partpwd_errortitle">%1$s密码错误</string>
+    <string name="unifypwd_partpwd_errormsg">请您重置%1$s密码</string>
+    <string name="unifypwd_partpwd_resetbtn">立刻重置</string>
+
+    <string name="operation_success">操作成功</string>
+    <string name="lable_voucher_rule">代金券使用规则</string>
+    <string name="call_list_low">以上为分析师个人观点，不构成买卖依据，请谨慎交易!</string>
+
+    <!--积分商城-->
+    <string name="accountintergral">&#160;&#160;&#160;&#160;积分:%1$s</string>
+    <string name="accountexp">成长值:%1$s&#160;&#160;&#160;&#160;</string>
+    <string name="me_open_account">开通账号</string>
+    <string name="me_account_auth">实名认证</string>
+
+    <string name="intergral_market">积分商城</string>
+    <string name="mission_center">任务中心</string>
+    <string name="account_manager">账号管理</string>
+    <string name="customer_service">在线客服</string>
+    <string name="my_integral">我的积分</string>
+    <string name="integral_detail">查看明细</string>
+    <string name="integral_info">打败%1$s的汇大师用户</string>
+    <string name="intergral_exchange">积分兑换</string>
+    <string name="intergral_exchange_history">兑换历史></string>
+    <string name="intergral_point">%1$s积分</string>
+    <string name="intergral_needpoint">%1$s&#160;积分&#160;%2$s</string>
+    <string name="intergral_takenum">%1$s人已兑换</string>
+    <string name="intergral_takeleft">仅剩%1$s份</string>
+    <string name="intergral_lv">我的会员等级</string>
+    <string name="intergral_lvrebaterate">可享受积分商城 %1$s 折优惠</string>
+    <string name="intergral_lvnorebaterate">积分商城无优惠</string>
+    <string name="intergral_exchangenum">兑换张数</string>
+    <string name="intergral_accountnum">总计积分</string>
+    <string name="intergral_exchange_option">兑换</string>
+    <string name="intergral_rebattips">%1$s会员%2$s折</string>
+    <string name="integral_create_success">兑换成功</string>
+    <string name="integral_detailtitle">积分明细</string>
+    <string name="integral_exhistory">兑换历史</string>
+    <string name="integral_exnum_info">%1$s%2$d张</string>
+    <string name="integral_exintegral_needed">%1$s积分</string>
+    <string name="integral_exhistory_empty">暂无兑换历史</string>
+    <string name="integral_integral_empty">暂无积分明细</string>
+    <string name="integral_rebatnum">(已打%1$s折)</string>
+    <string name="integral_left">积分余额: %1$s</string>
+    <string name="integral_exchangedlgtitle">%1$s \n兑换:%2$s积分</string>
+    <string name="integral_exchangedlgcontent">注:每人只能抢购一种特权卡</string>
+    <string name="integral_exchangedlg_posbtn">确认兑换</string>
+
+    <string name="ll_us_unifypwd">统一交易密码</string>
+    <string name="ll_us_unifypwd_set">设置交易密码</string>
+    <string name="ll_us_change_tradepwd">修改交易密码</string>
+
+    <string name="chatroom_user_disable_text">内容非法不允许发送</string>
+    <string name="chatroom_text_key_word">禁用来自:android\n包含敏感词:{keyword}\n禁用时间:{time}\n版本号:{version}\n发送详细内容:{sendMsg}</string>
+    <string name="chatroom_more_msg">%1$s条新消息</string>
+
+
+    <string name="index_live_teacherdescribe">%1$s &#8226; %2$s(%3$s)</string>
+
+    <!--行情提醒-->
+    <string name="product_notice">行情提醒</string>
+    <string name="product_fullscreen">全屏</string>
+    <string name="product_openline">开启辅助线</string>
+    <string name="product_closeline">关闭辅助线</string>
+    <string name="product_qa">功能说明</string>
+    <string name="product_notice_delete">删除提醒</string>
+    <string name="product_notice_array">行情达到</string>
+    <string name="product_notice_array1">到达:</string>
+    <string name="product_notice_range">波动范围</string>
+    <string name="product_notice_range1">波动范围:</string>
+    <string name="product_notice_tips1">行情到达：为您需要被提醒的点位，可设置到小数点后两位</string>
+    <string name="product_notice_tips2">波动范围：为允许上下波动的范围，可以有效预防跳点的情况</string>
+    <string name="product_notice_tips3">当%1$s行情达到 %2$s ～ %3$s 范围内，将有报价提醒</string>
+    <string name="product_notice_day">提醒24小时内有效</string>
+    <string name="product_notice_week">提醒7日内有效</string>
+    <string name="product_notice_time">有效期至:&#160;&#160;%1$s</string>
+    <string name="product_notice_empty">未设置提醒</string>
+    <string name="product_notice_permissiontitle">需要Lv2及以上用户\n才能设置提醒</string>
+    <string name="product_notice_permissioncontent">Lv2需要10000成长值\n做单可以增加成长值</string>
+    <string name="product_notice_numtitle">最多添加%1$d条提醒</string>
+    <string name="product_notice_numcontent">您可以编辑已有提醒，或者删除\n旧提醒后添加</string>
+    <string name="iknow">知道了</string>
+    <string name="product_notice_notify">行情波动提醒</string>
+    <string name="product_notice_optional">查看行情</string>
+    <string name="product_notice_order">查看持仓</string>
+    <string name="product_notice_error1">请输入您需要被提醒的点位</string>
+    <string name="product_notice_error2">请输入正确的点位</string>
+
+
+    <!--任务中心-->
+    <string name="explaine">解释</string>
+    <string name="next_question">下一题</string>
+    <string name="answer_again">重新答题</string>
+    <string name="view_score">查看成绩</string>
+    <string name="question_text">%1$d&#160;&#160;&#160;&#160;&#160;%2$s</string>
+    <string name="aq_exit_title">确定退出？</string>
+    <string name="aq_exit_content">全部答完才能获得积分</string>
+    <string name="aq_exit_navbtnmsg">退出</string>
+    <string name="aq_exit_posbtnmsg">继续答题</string>
+    <string name="aq_complete_title">恭喜您获得800积分</string>
+    <string name="aq_complete_content">可以去积分商城兑换代金券啦！</string>
+    <string name="aq_go_missioncenter">返回任务中心</string>
+    <string name="aq_go_missioncenter_1">去任务中心</string>
+    <string name="aq_go_intergralmarket">查看积分商城</string>
+    <string name="mc_did">已领取</string>
+    <string name="mc_doing">继续领取</string>
+    <string name="mc_undo">马上领取</string>
+
+    <!--消息中心  messagecenter->mc -->
+    <string name="mc_title">消息中心</string>
+    <string name="mc_quan">券</string>
+    <string name="mc_guan">官</string>
+    <string name="mc_cang">仓</string>
+    <string name="mc_empty">暂无消息记录</string>
+
+    <string name="quicktrade_cp_title">请选择交易产品</string>
+    <!--<string name="trade_order_tips">每波动%1$s点,盈利%2$s美元</string>-->
+    <string name="quicktrade_pointtips">每波动%1$s，收益%2$s美元</string>
+    <string name="order_count">(%1$d)</string>
+
+    <!--发送礼物-->
+    <string name="gift_point_less_title">积分不足</string>
+    <string name="gift_point_less_msg">您可以通过现金交易赚取积分\n积分=建仓手续费x20%x100</string>
+    <string name="gift_point_less_btn">知道了</string>
+
+    <!--直播室 -->
+    <string name="ct_starttime">%1$s开播</string>
+    <string name="ct_fxsnum">资格证号: %1$s</string>
+    <string name="ct_fxstitle">&#8968;%1$s&#8971;</string>
+
+    <string name="me_need_auth">请完善资料</string>
+    <string name="me_authed">已实名认证</string>
+    <string name="authed_hint">注册成功!\n实名认证后，即可开始交易</string>
+    <string name="auth_scan01">身份证正面照片扫描上传</string>
+    <string name="auth_scan02">身份证反面照片扫描上传</string>
+
+    <string name="auth_rule01">点击提交表示您已阅读并同意</string>
+    <string name="auth_rule02">《用户协议书》</string>
+    <string name="auth_rule_title">开户协议</string>
+    <!--<string name="copy_right">©2002-2017 FXBTG Global 版权所有</string>-->
+    <string name="copy_right01">©2002-2017</string>
+    <string name="copy_right02">FX</string>
+    <string name="copy_right03">BTG</string>
+    <string name="copy_right04">Global 版权所有</string>
+
+
+    <string name="btn_submit">提交</string>
+    <string name="btn_ok">确定</string>
+    <string name="btn_cancle">取消</string>
+    <string name="card_input_idno">请输入身份证号码</string>
+    <string name="card_input_name">请输入姓名</string>
+    <string name="card_input_sex">请选择性别</string>
+    <string name="card_input_startdate">请输入身份证生效日期</string>
+    <string name="card_input_enddate">请输入身份证失效日期</string>
+    <string name="card_input_yaoqiu">照片要求</string>
+    <string name="card_input_tips_1">身份证号码有误，请重新上传照片</string>
+    <string name="card_input_tips_2">身份证已过期，请重新上传照片</string>
+    <string name="card_input_tips_3">部分信息未识别出，请重新上传照片</string>
+    <string name="card_takephoto_tips_1">请将身份证正面放入框中拍摄</string>
+    <string name="card_takephoto_tips_2">请将身份证反面放入框中拍摄</string>
+    <string name="auth_confirm">提交前请确保是本人信息且真实无误,以免影响出金。</string>
+    <string name="auth_confirm_cancle">取消提交</string>
+    <string name="auth_confirm_submit">确认提交</string>
+
+    <string name="card_succes_01">身份证正面上传成功</string>
+    <string name="card_succes_02">身份证反面上传成功</string>
+
+    <string name="card_status_success">恭喜!身份信息审核通过</string>
+    <string name="card_status_success_hint">请注意接听工作人员的来电</string>
+    <string name="card_status_failed">抱歉!实名资料提交失败</string>
+    <string name="card_status_failed_hint">请点击按钮重新提交</string>
+    <string name="card_status_checking">提交成功，信息审核中</string>
+    <string name="card_status_checking_1">实名认证信息审核中</string>
+    <string name="card_status_tips">请先实名认证</string>
+
+    <string name="card_status_checking_hint">预计审核将在24小时内完成</string>
+
+    <string name="btn_card_status_checking">返回首页</string>
+    <string name="btn_card_status_failed">重新提交</string>
+    <string name="btn_card_status_success">立即入金，开始交易</string>
+
+    <string name="p_pointdiff">点差:</string>
+    <string name="money_unit_lable">净值(美元)</string>
+    <string name="money_unit_lable_1">净值</string>
+
+    <string name="money_yfk_lable">可用预付款：</string>
+    <string name="money_yfk_lable_1">可用预付款</string>
+
+    <string name="money_fdfk_lable">浮动盈亏：</string>
+    <string name="money_fdfk_lable_1">浮动盈亏</string>
+
+    <string name="money_yyyfk_lable">已用预付款：</string>
+    <string name="money_yfkrate_lable">预付款比例：</string>
+
+    <string name="t_create_num">建仓手数</string>
+    <string name="create_min_num">建仓手数最小%1$s手</string>
+    <string name="create_max_num">建仓手数最大%1$s手</string>
+    <string name="create_num_formart">建仓手数只能保留2位小数点</string>
+    <string name="create_loss_profit_reg">止盈止损价格无效</string>
+
+    <string name="p_list_point_tips">点差是买涨价和买跌价的差额,是交易成本。点差会随着汇率波动或交易量大小等原因产生浮动。</string>
+
+    <string name="t_create_num18">1%仓</string>
+    <string name="t_create_num14">2%仓</string>
+    <string name="t_create_num12">5%仓</string>
+    <string name="t_create_num_hit">*最小建仓%1$s手，最大可建仓手数：%2$s手</string>
+    <string name="profit_point">止盈价格</string>
+    <string name="loss_point">止损价格</string>
+    <string name="profit_point_hint"><![CDATA[参考盈利<font color="#f54a40">%1$s</font>美元]]></string>
+    <string name="loss_point_hint"><![CDATA[参考亏损<font color="#1fb73c">%1$s</font>美元]]></string>
+    <string name="auth_upload_failed"><![CDATA[<font color="#24273e">上传失败，点击</font><u><font color="#4877e6">重试</font></u>]]></string>
+
+
+    <string name="dollar">美元</string>
+    <string name="set_loss_point">未设置价格</string>
+    <string name="set_profit_point">未设置价格</string>
+    <string name="dlg_total">总计</string>
+    <string name="dlg_create">建仓</string>
+    <string name="trade_bcjg">爆仓警告:总资产/建仓资本=%1$s,已接近%2$s爆仓线,入金或减仓,减免风险。</string>
+    <string name="trade_bcjg_1">爆仓警告:总资产/建仓资本=%1$s,已接近%2$s爆仓线,入金或减仓,减免风险。</string>
+    <string name="cashout_success_title">提交成功</string>
+    <string name="cashout_success_asctract">出金申请已提交成功!</string>
+    <string name="cashout_success_content">提交出金申请后1个工作日内受理,受理前不可建仓,资金将在自扣款之日起1-2个工作日到账,具体取决于中转银行的受理时间</string>
+    <string name="cashout_history">出金详情</string>
+    <string name="cashin_history">入金详情</string>
+    <string name="createorder_fengxian_tips">您建仓后预付款比例可能低于500%,风险较高,建议轻仓操作。</string>
+
+    <string name="tradefx_notify_title">爆仓警告</string>
+    <string name="tradefx_notify_gocashin">去入金</string>
+    <string name="singlelogin_title">您的账号在别处登录</string>
+    <string name="singlelogin_content">如非本人操作,则密码可能已泄漏,建议修改密码。</string>
+    <string name="singlelogin_relogin">重新登录</string>
+    <string name="cashout_lookdetail">查看详情</string>
+    <string name="cashout_reason">原因:%1$s</string>
+    <string name="pwd_style">0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="guadan">挂单</string>
+
+</resources>

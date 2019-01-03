@@ -1,0 +1,420 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#24273e</color>
+    <color name="colorPrimaryDark">#24273e</color>
+    <color name="colorAccent">#3F51B5</color>
+    <color name="bottombar_bg">#3F000000</color>
+    <!--蜡烛图颜色配置-->
+    <!--阳线-->
+    <color name="k_post">#F15758</color>
+    <!--阴线-->
+    <color name="k_neg">#46BD5C</color>
+
+
+    <color name="white">#ffFFFFFF</color>
+    <color name="white_80percent">#ccFFFFFF</color>
+    <color name="white_70percent">#b3FFFFFF</color>
+    <color name="white_60percent">#99FFFFFF</color>
+    <!-- 白色 -->
+    <color name="black">#FF000000</color>
+    <!-- 黑色 -->
+    <color name="yellow">#FFFFFF00</color>
+    <!-- 黄色 -->
+    <color name="transparent">#00000000</color>
+    <color name="blackTransparent">#3F000000</color>
+    <!-- 透明黑色 -->
+
+    <color name="blue">#FF3a80d2</color>
+    <color name="red">#ffb0031c</color>
+    <color name="grey">#8d92a2</color>
+    <color name="grey_10">#19848999</color>
+    <color name="grey_20">#33848999</color>
+    <color name="grey_30">#4c848999</color>
+    <color name="grey_40">#66848999</color>
+    <color name="grey_50">#80848999</color>
+    <color name="grey_80">#cc848999</color>
+    <color name="green">#ff41b806</color>
+    <color name="content_bg_color">#101419</color>
+
+    <!--新春的颜色-->
+    <!--收集系统导航栏的颜色-->
+    <!--<color name="sys_nav_bar_color">#D32930</color>-->
+    <!--&lt;!&ndash;app 主题的主要颜色 &ndash;&gt;-->
+    <!--<color name="title_bg_color">#24273e</color>-->
+    <!--&lt;!&ndash;首页tab，顶部的导航颜色&ndash;&gt;-->
+    <!--<color name="home_title_bg_color">#24273e</color>-->
+    <!--<color name="headimg_bg">#DD333B</color>-->
+    <!--<color name="me_pro_bg">#DD333B</color>-->
+    <!--<color name="integral_normal">@color/grey</color>-->
+
+    <!--默认的颜色-->
+    <!--收集系统导航栏的颜色-->
+    <color name="sys_nav_bar_color">#24273e</color>
+    <!--app 主题的主要颜色 -->
+    <color name="title_bg_color">#24273e</color>
+    <!--首页tab，顶部的导航颜色-->
+    <color name="home_title_bg_color">#24273e</color>
+    <color name="headimg_bg">#393E5E</color>
+    <color name="integral_normal">@color/white_60</color>
+    <color name="me_pro_bg">#2d2f49</color>
+
+
+    <color name="main_tab_selected">#19FF0000</color>
+    <color name="main_tab_normal">@color/white</color>
+
+    <color name="grid_bg">#FFFFFFFF</color>
+    <color name="grid_border">#FFC6C6C6</color>
+    <color name="_red">#ff0000</color>
+    <color name="strategy_list_select">#1F2630</color>
+
+
+    <color name="lightblack">#ff202020</color>
+
+    <color name="color_1d2228">#1d2228</color>
+
+
+    <drawable name="bg_black">#FF000000</drawable>
+    <drawable name="bg_read">#ff0000</drawable>
+    <drawable name="bg_blue">#FF3a80d2</drawable>
+    <drawable name="bg_5e7b9e">#5e7b9e</drawable>
+
+    <color name="color_08bebc">#08bebc</color>
+    <color name="color_20242b">#20242b</color>
+    <color name="color_2a2d34">#2a2d34</color>
+    <color name="color_5e7b9e">#5e7b9e</color>
+    <color name="holo_red_dark">#ffcc0000</color>
+    <color name="color_101318">#101318</color>
+    <color name="color_latitude">#2f384e</color>
+    <color name="color_longitude">#2f384e</color>
+    <color name="color_16222e">#16222e</color>
+    <color name="color_03d4e3">#03d4e3</color>
+    <color name="color_04fcff">#04fcff</color>
+    <color name="color_86919c">#86919c</color>
+
+    <!--<color name="color_trade_red">#f54a40</color>-->
+    <!--<color name="color_trade_green">#1fb73c</color>-->
+
+    <!--less than zero-->
+    <color name="color_opt_lt">#1fb73c</color>
+    <color name="color_opt_lt_4">#0a1fb73c</color>
+    <color name="color_opt_lt_10">#191fb73c</color>
+    <color name="color_opt_lt_25">#3F1fb73c</color>
+    <color name="color_opt_lt_50">#801fb73c</color>
+    <color name="color_opt_lt_75">#BF1fb73c</color>
+    <color name="color_opt_gt">#f54a40</color>
+    <color name="color_opt_gt_70">#b3f54a40</color>
+    <color name="color_opt_gt_4">#0af54a40</color>
+    <color name="color_opt_gt_10">#19f16161</color>
+    <color name="color_opt_gt_25">#3Ff16161</color>
+    <color name="color_opt_gt_50">#80f16161</color>
+    <color name="color_opt_gt_75">#BFf16161</color>
+    <color name="color_opt_eq">#848999</color>
+
+    <color name="color_opt_gt_shan">#20f54a40</color>
+    <color name="color_opt_lt_shan">#201fb73c</color>
+
+    <color name="color_2a3037">#2a3037</color>
+    <color name="color_3b435c">#3b435c</color>
+    <color name="color_4c587c">#4c587c</color>
+    <color name="color_4350ae">#4350ae</color>
+
+    <color name="white_90">#e6ffffff</color>
+    <color name="white_80">#ccffffff</color>
+    <color name="white_70">#b2ffffff</color>
+    <color name="white_60">#99ffffff</color>
+    <color name="white_50">#80ffffff</color>
+    <color name="white_40">#66ffffff</color>
+    <color name="white_30">#4cffffff</color>
+    <color name="white_20">#33ffffff</color>
+    <color name="white_15">#26ffffff</color>
+    <color name="darker_gray">#aaa</color>
+
+    <color name="black_70">#b2000000</color>
+
+    <color name="black_50">#80000000</color>
+    <color name="sub_item">#b2000000</color>
+
+    <color name="color_cycle_tvborder">#5a687f</color>
+    <color name="color_cycle_tvbg">#37404f</color>
+
+    <color name="me_etf_areas">#192836</color>
+    <color name="me_etf_line">#282828</color>
+    <color name="color_analys_item">#282b32</color>
+    <color name="color_liveroombg">#e8e8e8</color>
+
+    <color name="live_audio_lable">#121212</color>
+    <color name="live_audio_status_on">#d33434</color>
+    <color name="live_audio_status_off">#484f59</color>
+    <color name="live_audio_des">#484f59</color>
+    <color name="live_audio_analysdes">@color/app_common_content</color>
+
+    <color name="product_manager_lable">@color/common_blue</color>
+    <color name="item_lable_color">@color/home_hot_lable</color>
+    <color name="item_lable_alpha30_color">@color/home_hot_lable</color>
+    <!--<color name="color_common_bg">#e8e8e8</color>-->
+    <color name="color_common_bg">@color/sub_bg</color>
+    <color name="product_manager_content">#343c48</color>
+    <color name="optional_item_title">#343c48</color>
+    <color name="optional_item_subtitle">#cccccc</color>
+    <color name="optional_line">#1b1d29</color>
+    <color name="tab_indicator_selected">#469cff</color>
+
+    <color name="tab_main_default">#848999</color>
+    <color name="tab_main_selected">@color/common_blue</color>
+
+    <!--<color name="tab_main_default">#848999</color>-->
+    <!--<color name="tab_main_selected">#F54A40</color>-->
+
+    <color name="dlg_c_point_diff">#bdc0c9</color>
+    <color name="dlg_c_hint">#8d92a2</color>
+
+    <color name="app_common_content">#24273e</color>
+    <color name="app_common_content_90">#e624273e</color>
+    <color name="app_common_content_80">#cc24273e</color>
+    <color name="app_common_content_40">#6624273e</color>
+    <color name="kline_cycle_normal">@color/grey</color>
+    <color name="kline_cycle_selected">@color/white</color>
+    <color name="product_bg">#20222e</color>
+    <color name="cross_info_bg">#24273E</color>
+
+
+    <color name="kline_currentmin_are">#469cff</color>
+    <!--<color name="kline_currentmin_are">#D2DDF8</color>-->
+    <color name="kline_currentmin_red">#ff2d13</color>
+    <color name="kline_currentmin_green">#219b05</color>
+    <color name="kline_currentmin_line">#4a78e6</color>
+    <color name="kline_line">#e8e8e8</color>
+    <color name="kline_crossline">#469cff</color>
+    <color name="color_app_bg">@color/white</color>
+    <color name="new_content_color">#343c48</color>
+    <color name="index_weipan_bg">#f5f5f5</color>
+    <color name="index_weipan_btn_up_pressed">#eb2e2e</color>
+    <color name="index_weipan_btn_down_pressed">#108433</color>
+
+    <color name="me_item">@color/color_86919c</color>
+    <color name="app_bottom_text">@color/grey</color>
+
+    <color name="setting_category_lable">#f2f2f2</color>
+    <color name="common_pressed">#eeeeee</color>
+    <color name="app_common_selected">@color/sub_blue</color>
+    <color name="fullimg_title_bg">#88333333</color>
+    <color name="economic_calenda_category_lable">#f2f2f2</color>
+    <color name="nav_dotview_default">@color/white</color>
+    <color name="nav_dotview_selected">#4877e6</color><!--#00b7ee-->
+    <color name="pd_bottom_btn_default">@color/transparent</color><!--#414042-->
+    <color name="pd_bottom_btn_selected">@color/app_common_selected</color><!--469CFF-->
+    <color name="dk_btn_text">#262A3B</color>
+
+    <color name="small_window_dialog_bg">#AA000000</color>
+
+    <color name="video_control_bg">#26ffffff</color>
+    <color name="background_tab_pressed">#6633B5E5</color>
+    <color name="background_window">#FFE5E5E5</color>
+    <color name="mtab_indicator_selected">#ff9000</color>
+    <color name="color_chat_time">#86919c</color>
+    <color name="color_videochat_send_default">#1f7eba</color>
+    <color name="color_videochat_send_pressed">#58b5ef</color>
+    <color name="color_qa_lable_sub">#8d8d8d</color>
+    <color name="color_qa_title_sub">#343c48</color>
+
+    <color name="main_title_grey">#6a6868</color>
+    <color name="main_lable_title">@color/sub_bg</color>
+    <color name="color_d4d4d4">#d4d4d4</color>
+
+    <color name="home_choose_view_selected">@color/home_hot_lable</color>
+    <color name="account_online_grey">#838383</color>
+    <color name="account_online_grey_white">#f2f2f2</color>
+
+    <color name="calendar_detail_lable">#7e8aa2</color>
+    <color name="calendar_detail_content">@color/black</color>
+
+    <color name="home_tologin_bg_color">#f7eccc</color>
+    <color name="trade_line_title_tab">#636677</color>
+
+    <color name="color_reg_text">#5e8bbb</color>
+    <color name="color_code_text">#4877e6</color>
+    <color name="zixun_tip_line">#f1f1f1</color>
+    <color name="zixun_tip_bg">#eef5fa</color>
+    <color name="zixun_tip_bg_text">#497a94</color>
+    <color name="index_weipan_info01">#993399</color>
+    <color name="index_weipan_info02">#993366</color>
+    <color name="index_weipan_info03">#006699</color>
+
+    <color name="home_hot_lable">#0075a9</color>
+
+    <!--首页交易 部分-->
+    <color name="trade_lable_tab">#848999</color>
+    <color name="trade_lable_tab_selected">@color/white</color>
+    <color name="trade_choose_hit">@color/grey</color>
+    <color name="trade_item_temp">@color/sub_bg</color>
+
+    <color name="trade_normal">#a8a8a8</color>
+    <color name="hold_lable">#888d9d</color>
+    <color name="trade_btn_cancle">#dbeef9</color>
+    <color name="trade_btn_cancle_pressed">#80dbeef9</color>
+    <color name="trade_btn_submit">#6f85db</color>
+    <color name="trade_btn_submit_pressed">#806f85db</color>
+    <color name="trade_hold_item_lable_bg">#F8F9FB</color>
+    <color name="trade_money_head">#3a3d51</color>
+    <color name="trade_money_lable">#e6e7ea</color>
+    <color name="deep_sub_bg">#e6e7ea</color>
+    <!--90 e6  75 bf  80 cc 50 80-->
+    <color name="live_content_bg">#e624273e</color>
+
+    <color name="trade_voucher_item_left_sub">#e3d4af</color>
+    <color name="trade_voucher_item_right_sub">#ededed</color>
+    <!--文字颜色-->
+    <color name="trade_voucher_item_text_right">#3462ad</color>
+    <color name="trade_voucher_item_text_time_right">#6589c3</color>
+    <color name="trade_voucher_item_text_right_sub">#b79e60</color>
+    <color name="trade_voucher_item_text_time_right_sub">#b79e60</color>
+
+    <color name="login_dialog_btn_selected">#f1f1f1</color>
+    <color name="login_dialog_btn_normal">@color/grey</color>
+    <color name="home_help_btn_normal">#0075a9</color>
+    <color name="home_help_btn_pressed">#800075a9</color>
+
+    <color name="sub_bg">#f0f2f5</color>
+    <color name="enable_false">@color/grey</color>
+    <color name="btn_share_text">#7f2811</color>
+    <color name="step_tips">#fac96b</color>
+
+    <color name="quick_create_selected">#007bee</color>
+
+    <color name="hold_time_lable">#828797</color>
+    <color name="home_rank_time">#a8adb6</color>
+    <color name="p_lable">#7d8292</color>
+
+    <color name="trade_tab_create_selected">#F0F2F5</color>
+    <color name="trade_tab_create_selected_50">#80F0F2F5</color>
+    <color name="trade_tab_create">@color/white</color>
+    <color name="seekbar_bg">#e6e7ea</color>
+    <color name="dialog_btn_blue">#3a69e3</color>
+    <color name="common_blue">#3a69e3</color>
+    <color name="common_blue_50">#803a69e3</color>
+    <color name="dialog_btn_blue_50">#803a69e3</color>
+    <color name="chat_live_room_bg">#F4F6F9</color>
+    <color name="sub_blue">#4877e6</color>
+    <color name="sub_blue_80">#cc4877e6</color>
+    <color name="sub_blue_50">#804877e6</color>
+    <color name="chat_text_time">#9f9a9b</color>
+    <color name="under_line">#4877e6</color>
+    <color name="trade_money">#f0f2f5</color>
+    <color name="trade_money_btn_tx">#616373</color>
+    <color name="trade_money_btn_tx_50">#80616373</color>
+
+    <color name="trade_money_btn_cz">#3a69e3</color>
+    <color name="trade_money_btn_cz_50">#803a69e3</color>
+    <color name="close_detail_sub">#F8F9FA</color>
+    <color name="dialog_btn_msg">#f5f5f7</color>
+    <color name="voucher_8">@color/common_blue</color>
+    <color name="voucher_80">#33c8e1</color>
+    <color name="voucher_200">#f5a245</color>
+    <color name="btn_quick_create_selected">#F0F1F2</color>
+    <color name="quick_btn_cancle">#f5f5f7</color>
+    <color name="btn_help_lable">#f2f5f0</color>
+    <color name="tv_online_help">#F0F2F5</color>
+
+    <color name="tt_line_selected">#53586B</color>
+    <color name="tt_line_normal">#53586B</color>
+    <color name="tt_solid_normal">@color/transparent</color>
+    <color name="tt_solid_selected">#53586B</color>
+
+
+    <color name="kline_cycle_bg">#2C2F47</color>
+    <color name="p_bottom_bg">#24273E</color>
+
+    <color name="kline_type_land">#2C2F47</color>
+
+    <color name="top_login_reg">@color/app_common_content</color>
+    <color name="tab_login_reg">#303345</color>
+
+    <color name="d_u_btn_normal">#FED300</color>
+    <color name="d_u_btn_normal_pressed">#80FED300</color>
+
+    <color name="homeinformation_black">#373637</color>
+    <color name="help_color">#ff999999</color>
+
+    <color name="rank_itemforself">#F7F8FA</color>
+
+
+    <color name="auto_lable_custom">@color/white</color>
+    <color name="auto_index_qa_custom">@color/black</color>
+    <color name="auto_inner_msg_custom">@color/white</color>
+
+    <color name="auto_lable_service">@color/black</color>
+    <color name="auto_index_qa_service">#0888ff</color>
+    <color name="auto_inner_msg_service">@color/black</color>
+
+
+
+    <color name="integral_poin">@color/white</color>
+
+
+    <color name="integraldlg_50percent">#80ffdd00</color>
+    <color name="integraldlg">#ffdd00</color>
+
+
+    <color name="integral_poin_orange">#ff5d01</color>
+
+    <color name="me_join_line">#19f54a40</color>
+    <color name="me_join_text">#f54a40</color>
+
+    <color name="giftpan_lable">#B4B9CB</color>
+    <!--<color name="giftpan_bg_select">#2B2B2C</color>-->
+    <!--<color name="giftpan_bg">#f52B2B2C</color>-->
+    <color name="giftpan_bg_select">@color/black_50</color>
+    <color name="giftpan_bg">#cc2B2B2C</color>
+    <color name="giftpan_line">#464647</color>
+    <color name="giftpan_inter">#F5E02B</color>
+    <color name="giftpan_show_nick">#F5A623</color>
+    <color name="giftpan_number">#f5df23</color>
+
+
+    <color name="dialog_integral_confirm">#333333</color>
+    <color name="mission_center_orange">#ff7901</color>
+    <color name="color_ffdd00">#ffdd00</color>
+    <color name="color_b4b9cb">#B4B9CB</color>
+    <color name="color_FEA848">#FEA848</color>
+    <color name="color_3A69E3">#3A69E3</color>
+    <color name="color_F54A40">#F54A40</color>
+    <color name="color_6D92EB">#6D92EB</color>
+    <color name="color_f7faff">#f7faff</color>
+    <color name="color_6C97FC">#6C97FC</color>
+
+
+    <color name="c_ff6200">#ff6200</color>
+    <color name="dlg_hy_bg">#ffa14d</color>
+    <color name="t_less_line">#e4e5e8</color>
+    <color name="t_less_bg">#f0f1f5</color>
+    <color name="c_f0f1f5">#f0f1f5</color>
+    <color name="c_8d92a2">#8d92a2</color>
+    <color name="t_ed_hint">#bdc0c9</color>
+    <color name="t_less_bg_50">#80f0f1f5</color>
+
+    <color name="color9EFFFFFF">#9EFFFFFF</color>
+    <color name="colorFF666666">#ff666666</color>
+    <color name="colorFF999999">#ff999999</color>
+    <color name="colorA8FFFFFF">#a8ffffff</color>
+    <color name="colorF0F9FF">#F0F9FF</color>
+
+    <!--IM聊天背景颜色-->
+    <color name="bg_content">#f3f3f3</color>
+
+    <array name="tab_colors">
+        <item name="tab_1">#455C65</item>
+        <item name="tab_2">#00886A</item>
+        <item name="tab_3">#8B6B62</item>
+        <item name="tab_4">#6C4A42</item>
+        <item name="tab_5">#F63D2B</item>
+    </array>
+
+    <!--新版 UI 颜色-->
+    <color name="text_color_black">#24273e</color>
+    <color name="text_color_gray">#8d92a2</color>
+    <color name="bg_gray">#f0f2f5</color>
+    <color name="trade_up">#F54A40</color>
+    <color name="trade_down">#1FB73C</color>
+    <color name="mt4user_not_select">#757575</color>
+
+</resources>

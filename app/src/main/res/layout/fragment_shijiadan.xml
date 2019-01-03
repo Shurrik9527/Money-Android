@@ -1,0 +1,469 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+        <!--买涨买跌布局-->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="45dp"
+            android:background="@color/tab_login_reg"
+            android:orientation="horizontal">
+
+            <com.moyacs.canary.widget.UnderLineTextView
+                android:id="@+id/tab1"
+                android:layout_width="0dip"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:text="买涨"
+                android:textColor="@color/normal_grey_selected_white"
+                android:textSize="@dimen/text_size_17sp"
+                app:isLineEnable="false"
+                app:isLineEnableWhileSelected="true"
+                app:lineColor="@color/_red"
+                app:mlineHeight="3dip"
+                app:mlineWidth="0dip"
+                app:upOrunder="under" />
+
+            <com.moyacs.canary.widget.UnderLineTextView
+                android:id="@+id/tab2"
+                android:layout_width="0dip"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:text="买跌"
+                android:textColor="@color/normal_grey_selected_white"
+                android:textSize="@dimen/text_size_17sp"
+                app:isLineEnable="false"
+                app:lineColor="@color/green"
+                app:mlineHeight="3dip"
+                app:mlineWidth="0dip"
+                app:upOrunder="under" />
+
+
+        </LinearLayout>
+        <!--手数值-->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dip"
+            android:gravity="center"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="5dip"
+                android:gravity="center_vertical"
+                android:text="手数:"
+                android:textColor="@color/app_common_content"
+                android:textSize="15sp"
+                android:visibility="visible" />
+
+            <!--<TextView-->
+                <!--android:id="@+id/tv_shoushuValue"-->
+                <!--android:layout_width="wrap_content"-->
+                <!--android:layout_height="fill_parent"-->
+                <!--android:background="@color/white"-->
+                <!--android:gravity="left|center_vertical"-->
+                <!--android:inputType="number"-->
+                <!--android:singleLine="true"-->
+                <!--android:text="不限"-->
+                <!--android:textColor="@color/color_opt_lt"-->
+                <!--android:textSize="15sp" />-->
+
+            <EditText
+                android:maxLength="5"
+                android:digits="0123456789."
+                android:maxLines="1"
+                android:id="@+id/edit_shoushu"
+                android:textColor="@color/normal_grey_selected_white"
+                android:background="@drawable/bg_edittext"
+                android:layout_width="70dp"
+                android:layout_height="wrap_content" />
+
+
+        </LinearLayout>
+        <!--手数 seekbar-->
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dip"
+            android:layout_marginRight="10dip"
+            android:layout_marginTop="8dip"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+
+            <Button
+                android:id="@+id/btnShouShuLess"
+                android:layout_width="20dip"
+                android:layout_height="20dip"
+                android:layout_marginLeft="5dip"
+                android:layout_marginRight="12dip"
+                android:background="@drawable/bg_btn_less" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="0.01"
+                android:textColor="@color/color_chat_time"
+                android:textSize="@dimen/text_size_12sp"
+                android:visibility="visible" />
+
+            <SeekBar
+                android:id="@+id/seekBarShoushu"
+                android:layout_width="0dip"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="2dip"
+                android:layout_marginRight="2dip"
+                android:layout_weight="1"
+                android:maxHeight="3dip"
+                android:minHeight="3dip"
+                android:paddingLeft="10dip"
+                android:paddingRight="10dip"
+                android:progressDrawable="@drawable/seekbar_setstop_green_style"
+                android:thumb="@drawable/seekbar_thum_green_style" />
+
+            <TextView
+                android:id="@+id/tv_maxShoushu"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="20"
+                android:textColor="@color/color_chat_time"
+                android:textSize="@dimen/text_size_12sp"
+                android:visibility="visible" />
+
+            <Button
+                android:id="@+id/btnShouShuAdd"
+                android:layout_width="20dip"
+                android:layout_height="20dip"
+                android:layout_marginLeft="12dip"
+                android:layout_marginRight="5dip"
+                android:background="@drawable/bg_btn_add" />
+
+        </LinearLayout>
+        <!--止损值-->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dip"
+            android:gravity="center"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="5dip"
+                android:gravity="center_vertical"
+                android:text="止损:"
+                android:textColor="@color/app_common_content"
+                android:textSize="15sp"
+                android:visibility="visible" />
+
+            <TextView
+                android:id="@+id/tv_zhisunValue"
+                android:layout_width="wrap_content"
+                android:layout_height="fill_parent"
+                android:background="@color/white"
+                android:gravity="left|center_vertical"
+                android:inputType="number"
+                android:singleLine="true"
+                android:text="不限"
+                android:textColor="@color/color_opt_lt"
+                android:textSize="15sp" />
+
+            <TextView
+                android:id="@+id/tv_zhisunMoney"
+                android:layout_width="wrap_content"
+                android:layout_height="fill_parent"
+                android:layout_marginLeft="5dip"
+                android:background="@color/white"
+                android:gravity="left|center_vertical"
+                android:inputType="number"
+                android:singleLine="true"
+                android:text=""
+                android:textColor="@color/color_chat_time"
+                android:textSize="12sp" />
+
+        </LinearLayout>
+        <!--止损 seekbar-->
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dip"
+            android:layout_marginRight="10dip"
+            android:layout_marginTop="8dip"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+
+            <Button
+                android:id="@+id/btnZhisunLess"
+                android:layout_width="20dip"
+                android:layout_height="20dip"
+                android:layout_marginLeft="5dip"
+                android:layout_marginRight="12dip"
+                android:background="@drawable/bg_btn_less" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="不限"
+                android:textColor="@color/color_chat_time"
+                android:textSize="@dimen/text_size_12sp"
+                android:visibility="visible" />
+
+            <SeekBar
+                android:id="@+id/seekBarZhisun"
+                android:layout_width="0dip"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="2dip"
+                android:layout_marginRight="2dip"
+                android:layout_weight="1"
+                android:maxHeight="3dip"
+                android:minHeight="3dip"
+                android:paddingLeft="10dip"
+                android:paddingRight="10dip"
+                android:progressDrawable="@drawable/seekbar_setstop_green_style"
+                android:thumb="@drawable/seekbar_thum_green_style" />
+
+            <TextView
+                android:id="@+id/tv_maxZhisun"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="80点"
+                android:textColor="@color/color_chat_time"
+                android:textSize="@dimen/text_size_12sp"
+                android:visibility="visible" />
+
+            <Button
+                android:id="@+id/btnZhisunAdd"
+                android:layout_width="20dip"
+                android:layout_height="20dip"
+                android:layout_marginLeft="12dip"
+                android:layout_marginRight="5dip"
+                android:background="@drawable/bg_btn_add" />
+
+        </LinearLayout>
+        <!--止盈值-->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dip"
+            android:gravity="center"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="5dip"
+                android:gravity="center_vertical"
+                android:text="止盈:"
+                android:textColor="@color/app_common_content"
+                android:textSize="15sp"
+                android:visibility="visible" />
+
+            <TextView
+                android:id="@+id/tv_zhiyingValue"
+                android:layout_width="wrap_content"
+                android:layout_height="fill_parent"
+                android:background="@color/white"
+                android:gravity="left|center_vertical"
+                android:inputType="number"
+                android:singleLine="true"
+                android:text="不限"
+                android:textColor="@color/color_opt_gt"
+                android:textSize="15sp" />
+
+            <TextView
+                android:id="@+id/tv_zhiyingMoney"
+                android:layout_width="wrap_content"
+                android:layout_height="fill_parent"
+                android:layout_marginLeft="5dip"
+                android:background="@color/white"
+                android:gravity="left|center_vertical"
+                android:inputType="number"
+                android:singleLine="true"
+                android:text=""
+                android:textColor="@color/color_chat_time"
+                android:textSize="12sp" />
+
+        </LinearLayout>
+        <!--止盈seekbar-->
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="16dip"
+            android:layout_marginLeft="10dip"
+            android:layout_marginRight="10dip"
+            android:layout_marginTop="8dip"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <Button
+                android:id="@+id/btnZhiyingLess"
+                android:layout_width="20dip"
+                android:layout_height="20dip"
+                android:layout_marginLeft="5dip"
+                android:layout_marginRight="12dip"
+                android:background="@drawable/bg_btn_less" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="不限"
+                android:textColor="@color/color_chat_time"
+                android:textSize="@dimen/text_size_12sp"
+                android:visibility="visible" />
+
+            <SeekBar
+                android:id="@+id/seekBarZhiying"
+                android:layout_width="0dip"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="2dip"
+                android:layout_marginRight="2dip"
+                android:layout_weight="1"
+                android:maxHeight="3dip"
+                android:minHeight="3dip"
+                android:paddingLeft="10dip"
+                android:paddingRight="10dip"
+                android:progressDrawable="@drawable/seekbar_setstop_red_style"
+                android:thumb="@drawable/seekbar_thum_red_style" />
+
+            <TextView
+                android:id="@+id/tv_maxZhiying"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="200点"
+                android:textColor="@color/color_chat_time"
+                android:textSize="@dimen/text_size_12sp"
+                android:visibility="visible" />
+
+            <Button
+                android:id="@+id/btnZhiyingAdd"
+                android:layout_width="20dip"
+                android:layout_height="20dip"
+                android:layout_marginLeft="12dip"
+                android:layout_marginRight="5dip"
+                android:background="@drawable/bg_btn_add" />
+
+        </LinearLayout>
+
+
+    </LinearLayout>
+    <LinearLayout
+        android:layout_above="@id/btn_order"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/margin_44dp"
+        android:layout_marginLeft="10dip"
+        android:layout_marginRight="0dip"
+        android:orientation="horizontal">
+
+        <LinearLayout
+            android:id="@+id/line_check_usecasher"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent">
+
+            <!--<ImageView-->
+                <!--android:id="@+id/check_usecasher"-->
+                <!--android:layout_width="@dimen/margin_22dp"-->
+                <!--android:layout_height="@dimen/margin_22dp"-->
+                <!--android:layout_gravity="center_vertical"-->
+                <!--android:src="@mipmap/img_choosequan_checked" />-->
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/margin_4dp"
+                android:gravity="center_vertical"
+                android:text="余额"
+                android:textColor="@color/app_common_content"
+                android:textSize="15sp" />
+
+            <TextView
+                android:id="@+id/tv_balance"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="@dimen/margin_8dp"
+                android:gravity="center_vertical"
+                android:text="--元"
+                android:textColor="@color/app_common_content"
+                android:textSize="15sp" />
+        </LinearLayout>
+
+
+        <TextView
+            android:id="@+id/tv_cashin"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="8dip"
+            android:layout_weight="1.0"
+            android:gravity="center_vertical"
+            android:paddingLeft="8dip"
+            android:paddingRight="8dip"
+            android:text="充值"
+            android:textColor="@color/sub_blue"
+            android:textSize="15sp" />
+
+        <!--<LinearLayout-->
+            <!--android:id="@+id/line_check_usequan"-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="match_parent">-->
+
+            <!--<ImageView-->
+                <!--android:id="@+id/check_usequan"-->
+                <!--android:layout_width="@dimen/margin_22dp"-->
+                <!--android:layout_height="@dimen/margin_22dp"-->
+                <!--android:layout_gravity="center_vertical"-->
+                <!--android:src="@mipmap/img_choosequan_normal" />-->
+
+            <!--<TextView-->
+                <!--android:layout_width="wrap_content"-->
+                <!--android:layout_height="match_parent"-->
+                <!--android:layout_marginLeft="@dimen/margin_4dp"-->
+                <!--android:gravity="center_vertical|left"-->
+                <!--android:text="代金券"-->
+                <!--android:textColor="@color/grey"-->
+                <!--android:textSize="12sp" />-->
+
+            <!--<TextView-->
+                <!--android:id="@+id/tv_quanCount"-->
+                <!--android:layout_width="wrap_content"-->
+                <!--android:layout_height="match_parent"-->
+                <!--android:layout_marginLeft="@dimen/margin_4dp"-->
+                <!--android:gravity="center_vertical"-->
+                <!--android:text="&#45;&#45;"-->
+                <!--android:textColor="@color/color_opt_gt"-->
+                <!--android:textSize="15sp" />-->
+
+            <!--<TextView-->
+                <!--android:layout_width="wrap_content"-->
+                <!--android:layout_height="match_parent"-->
+                <!--android:layout_marginLeft="4dip"-->
+                <!--android:layout_marginRight="@dimen/margin_10dp"-->
+                <!--android:gravity="center_vertical"-->
+                <!--android:text="张"-->
+                <!--android:textColor="@color/grey"-->
+                <!--android:textSize="12sp" />-->
+        <!--</LinearLayout>-->
+    </LinearLayout>
+
+    <Button
+        android:id="@+id/btn_order"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_margin="10dp"
+        android:text="下单"
+        android:textColor="@color/white"
+        android:background="@drawable/bg_market_text_item"
+         />
+</RelativeLayout>

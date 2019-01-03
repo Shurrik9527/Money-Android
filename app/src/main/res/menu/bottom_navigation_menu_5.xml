@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:title="首页"
+        android:icon="@mipmap/main_tab_home_default" />
+
+    <item
+        android:title="行情"
+        android:icon="@mipmap/main_tab_quotations_default" />
+
+    <item
+        android:title="交易"
+        android:icon="@mipmap/main_tab_weipan_1_normal_1" />
+
+    <item
+        android:title="我"
+        android:icon="@mipmap/main_tab_me_default" />
+
+
+
+</menu>

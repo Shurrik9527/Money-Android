@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="utf-8"?><!--<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"--><!--android:id="@+id/scrollView"--><!--android:layout_width="match_parent"--><!--android:layout_height="match_parent"--><!--android:background="@color/sub_bg"--><!--android:orientation="vertical">-->
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/sub_bg"
+    android:orientation="vertical">
+    <!--手机号-->
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/margin_45dp"
+        android:layout_marginLeft="@dimen/margin_16dp"
+        android:layout_marginRight="@dimen/margin_16dp"
+        android:layout_marginTop="16dip"
+        android:background="@drawable/input_login_stork_round">
+
+        <EditText
+            android:id="@+id/et_phonenumber"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/margin_45dp"
+            android:layout_centerVertical="true"
+            android:background="@null"
+            android:hint="@string/input_phone"
+            android:imeOptions="actionDone"
+            android:inputType="number"
+            android:paddingLeft="16dip"
+            android:singleLine="true"
+            android:textColor="@color/app_common_content"
+            android:textColorHint="@color/grey"
+            android:textSize="@dimen/text_size_15sp" />
+
+    </RelativeLayout>
+    <!--密码-->
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/margin_45dp"
+        android:layout_marginLeft="@dimen/margin_16dp"
+        android:layout_marginRight="@dimen/margin_16dp"
+        android:layout_marginTop="12dip"
+        android:background="@drawable/input_login_stork_round">
+
+        <EditText
+            android:digits="@string/pwd_style"
+            android:id="@+id/et_pwd"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/margin_45dp"
+            android:layout_centerVertical="true"
+            android:layout_toLeftOf="@+id/showPwdView"
+            android:background="@null"
+            android:hint="@string/input_pwd"
+            android:imeOptions="actionDone"
+            android:inputType="textPassword"
+            android:paddingLeft="16dip"
+            android:singleLine="true"
+            android:textColor="@color/app_common_content"
+            android:textColorHint="@color/grey"
+            android:textSize="@dimen/text_size_15sp" />
+
+        <RelativeLayout
+            android:id="@+id/showPwdView"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="10dip"
+            android:paddingLeft="6dip"
+            android:paddingRight="6dip">
+
+            <ImageView
+                android:id="@+id/iv_showpwd"
+                android:layout_width="20dip"
+                android:layout_height="20dip"
+                android:layout_centerVertical="true"
+                android:src="@mipmap/icon_hide_pwd" />
+
+        </RelativeLayout>
+    </RelativeLayout>
+
+    <!--登录-->
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/margin_45dp"
+        android:layout_marginLeft="@dimen/margin_16dp"
+        android:layout_marginRight="@dimen/margin_16dp"
+        android:layout_marginTop="12dip">
+
+        <Button
+            android:id="@+id/btn_login"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/margin_45dp"
+            android:layout_centerVertical="true"
+            android:background="@drawable/dialog_trade_submit_blue"
+            android:gravity="center"
+            android:text="登录"
+            android:textColor="@color/quick_close_submit"
+            android:textSize="@dimen/text_size_15sp" />
+
+    </RelativeLayout>
+    <!--忘记密码-->
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/margin_16dp"
+        android:layout_marginRight="@dimen/margin_16dp"
+        android:layout_marginTop="10dip">
+
+        <Button
+            android:id="@+id/btn_findPwd"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:background="@null"
+            android:gravity="center"
+            android:padding="5dip"
+            android:text="忘记密码"
+            android:textColor="@color/common_blue"
+            android:textSize="@dimen/text_size_15sp" />
+
+    </RelativeLayout>
+
+
+</LinearLayout>

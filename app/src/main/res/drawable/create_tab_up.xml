@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:state_enabled="true" android:state_selected="true">
+        <shape>
+            <!--<stroke android:width="0.3dip" android:color="#979797"/>-->
+            <solid android:color="@color/color_opt_gt" />
+            <corners android:bottomLeftRadius="3dip" android:topLeftRadius="3dip" />
+        </shape>
+    </item>
+    <item android:state_selected="true">
+        <shape>
+            <!--<stroke android:width="0.3dip" android:color="#979797"/>-->
+            <solid android:color="@color/color_opt_gt" />
+            <corners android:bottomLeftRadius="3dip" android:topLeftRadius="3dip" />
+        </shape>
+    </item>
+    <item android:state_enabled="false">
+        <shape>
+            <!--<stroke android:width="0.3dip" android:color="@color/grey" />-->
+            <solid android:color="@color/grey_10" />
+            <corners android:bottomLeftRadius="3dip" android:topLeftRadius="3dip" />
+        </shape>
+    </item>
+    <item android:state_pressed="true">
+        <shape>
+            <!--<stroke android:width="0.3dip" android:color="@color/grey" />-->
+            <solid android:color="@color/grey_10" />
+            <corners android:bottomLeftRadius="3dip" android:topLeftRadius="3dip" />
+        </shape>
+    </item>
+    <item>
+        <shape>
+            <!--<stroke android:width="0.3dip" android:color="@color/grey" />-->
+            <solid android:color="@color/grey_10" />
+            <corners android:bottomLeftRadius="3dip" android:topLeftRadius="3dip" />
+        </shape>
+    </item>
+</selector>

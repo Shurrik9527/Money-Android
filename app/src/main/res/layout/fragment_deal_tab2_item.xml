@@ -1,0 +1,191 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/white"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:id="@+id/titleView"
+        android:layout_width="match_parent"
+        android:layout_height="42dip"
+        android:background="@drawable/bg_common_listitem"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:paddingLeft="@dimen/margin_16dp"
+        android:paddingRight="@dimen/margin_16dp">
+
+        <TextView
+            android:id="@+id/tv_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center_vertical"
+            android:singleLine="true"
+            android:text="黄金"
+            android:textColor="@color/black"
+            android:textSize="@dimen/text_size_15sp" />
+
+        <TextView
+            android:id="@+id/tv_price"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:singleLine="true"
+            android:text="1332.93"
+            android:textColor="@color/trade_up"
+            android:textSize="20sp" />
+
+
+        <TextView
+            android:id="@+id/tv_rate"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dip"
+            android:singleLine="true"
+            android:text="+6.49"
+            android:textColor="@color/trade_up"
+            android:textSize="@dimen/text_size_15sp" />
+
+        <TextView
+            android:id="@+id/tv_rateChange"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dip"
+            android:singleLine="true"
+            android:text="+0.49%"
+            android:textColor="@color/trade_up"
+            android:textSize="@dimen/text_size_15sp" />
+
+        <TextView
+            android:id="@+id/tv_arrow"
+            android:layout_width="7dip"
+            android:layout_height="12dip"
+            android:layout_marginLeft="20dip"
+            android:background="@mipmap/home_icon_more" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/margin_107dp"
+        android:background="@color/white"
+        android:orientation="horizontal"
+        android:paddingBottom="0dip"
+        android:paddingLeft="10dip"
+        android:paddingRight="10dip"
+        android:paddingTop="0dip">
+
+        <RelativeLayout
+            android:id="@+id/item01"
+            android:layout_width="0dip"
+            android:layout_height="wrap_content"
+            android:layout_weight="1">
+
+            <include layout="@layout/item_trade_border_content" />
+        </RelativeLayout>
+
+        <View
+            android:layout_width="5dip"
+            android:layout_height="match_parent" />
+
+        <RelativeLayout
+            android:id="@+id/item02"
+            android:layout_width="0dip"
+            android:layout_height="wrap_content"
+            android:layout_weight="1">
+
+            <include layout="@layout/item_trade_border_content" />
+
+        </RelativeLayout>
+
+        <View
+            android:layout_width="5dip"
+            android:layout_height="match_parent" />
+
+        <RelativeLayout
+            android:id="@+id/item03"
+            android:layout_width="0dip"
+            android:layout_height="wrap_content"
+            android:layout_weight="1">
+
+            <include layout="@layout/item_trade_border_content" />
+
+        </RelativeLayout>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white"
+        android:gravity="center"
+        android:orientation="horizontal"
+        android:paddingBottom="8dip"
+        android:paddingLeft="8dip"
+        android:paddingRight="8dip"
+        android:paddingTop="8dip">
+
+        <TextView
+            android:id="@+id/tv_upCount"
+            android:layout_width="140dip"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:gravity="center"
+            android:text="@string/trade_buy_up"
+            android:textColor="@color/grey"
+            android:textSize="12sp" />
+
+
+        <TextView
+            android:id="@+id/tv_downCount"
+            android:layout_width="140dip"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_marginLeft="15dip"
+            android:gravity="center"
+            android:text="@string/trade_buy_up"
+            android:textColor="@color/grey"
+            android:textSize="12sp" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white"
+        android:gravity="center"
+        android:orientation="horizontal"
+        android:paddingBottom="10dip"
+        android:paddingLeft="8dip"
+        android:paddingRight="8dip"
+        android:paddingTop="0dip">
+
+        <TextView
+            android:id="@+id/tv_buyUp"
+            android:layout_width="140dip"
+            android:layout_height="@dimen/margin_36dp"
+            android:layout_gravity="center_vertical"
+            android:background="@drawable/index_weipan_btn_buy_bg"
+            android:gravity="center"
+            android:text="@string/trade_buy_up"
+            android:textColor="@color/white"
+            android:textSize="@dimen/text_size_15sp" />
+
+
+        <TextView
+            android:id="@+id/tv_buyDown"
+            android:layout_width="140dip"
+            android:layout_height="@dimen/margin_36dp"
+            android:layout_gravity="center_vertical"
+            android:layout_marginLeft="15dip"
+            android:background="@drawable/index_weipan_btn_sell_bg"
+            android:gravity="center"
+            android:text="@string/trade_buy_down"
+            android:textColor="@color/white"
+            android:textSize="@dimen/text_size_15sp" />
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="12dip"
+        android:background="@color/sub_bg" />
+</LinearLayout>

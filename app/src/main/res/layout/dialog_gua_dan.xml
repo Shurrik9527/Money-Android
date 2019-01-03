@@ -1,0 +1,824 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/white"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/margin_48dp"
+        android:layout_centerVertical="true"
+        android:background="@color/sub_bg"
+        android:gravity="center"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/tv_tradeName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="白银"
+            android:textColor="@color/app_common_content"
+            android:textSize="@dimen/text_size_15sp" />
+
+        <TextView
+            android:id="@+id/tv_tradeValue"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/margin_10dp"
+            android:text="192.11"
+            android:textColor="@color/trade_up"
+            android:textSize="@dimen/text_size_15sp" />
+    </LinearLayout>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:paddingLeft="@dimen/margin_16dp"
+                android:paddingRight="@dimen/margin_16dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/margin_10dp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="挂单价"
+                        android:textColor="@color/app_common_content"
+                        android:textSize="@dimen/text_size_15sp" />
+
+                    <EditText
+                        android:inputType="numberDecimal"
+                        android:id="@+id/et_guaDanPic"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="@dimen/margin_16dp"
+                        android:background="@drawable/et_guadan_bg"
+                        android:hint="请输入挂单价"
+                        android:singleLine="true"
+                        android:textSize="@dimen/text_size_15sp" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/margin_10dp"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="允许成交价与挂单价之间的最大偏差："
+                        android:textColor="@color/app_common_content"
+                        android:textSize="@dimen/text_size_14sp" />
+
+                    <EditText
+                        android:inputType="number"
+                        android:id="@+id/et_guaDanLot"
+                        android:layout_width="@dimen/margin_50dp"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/et_guadan_bg"
+                        android:gravity="center"
+                        android:singleLine="true"
+                        android:text="0"
+                        android:textSize="@dimen/text_size_14sp" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="@dimen/margin_10dp"
+                        android:text="点"
+                        android:textColor="@color/app_common_content"
+                        android:textSize="@dimen/text_size_15sp" />
+                </LinearLayout>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/margin_10dp"
+                    android:text="成交价格范围：~~~~"
+                    android:textSize="@dimen/text_size_12sp" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/margin_8dp"
+                    android:text="注：设置较大的误差在价格波动大的时可确保建仓成功"
+                    android:textSize="@dimen/text_size_12sp" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/dp_10"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:id="@+id/tv_buyUp"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:background="@drawable/create_tab_up"
+                        android:gravity="center"
+                        android:padding="@dimen/dp_10"
+                        android:text="买涨"
+                        android:textColor="@color/normal_black_selected_white" />
+
+                    <TextView
+                        android:id="@+id/tv_buyDown"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:background="@drawable/create_tab_down"
+                        android:gravity="center"
+                        android:padding="@dimen/dp_10"
+                        android:text="买跌"
+                        android:textColor="@color/normal_black_selected_white" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal"
+                    android:padding="10dip">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginRight="16dip"
+                        android:gravity="center_vertical"
+                        android:text="类型"
+                        android:textColor="@color/app_common_content"
+                        android:textSize="15sp" />
+
+                    <TextView
+                        android:id="@+id/tv_mongey01"
+                        android:layout_width="wrap_content"
+                        android:layout_height="36dip"
+                        android:layout_weight="1"
+                        android:background="@drawable/bg_item_quick_trade"
+                        android:gravity="center"
+                        android:minEms="5"
+                        android:text="*元/手"
+                        android:textColor="@color/item_quick_trade_color_tv"
+                        android:textSize="15sp" />
+
+                    <View
+                        android:layout_width="10dip"
+                        android:layout_height="10dip" />
+
+                    <TextView
+                        android:id="@+id/tv_mongey02"
+                        android:layout_width="wrap_content"
+                        android:layout_height="36dip"
+                        android:layout_weight="1"
+                        android:background="@drawable/bg_item_quick_trade"
+                        android:gravity="center"
+                        android:minEms="5"
+                        android:text="*元/手"
+                        android:textColor="@color/item_quick_trade_color_tv"
+                        android:textSize="15sp" />
+
+                    <View
+                        android:layout_width="10dip"
+                        android:layout_height="10dip" />
+
+                    <TextView
+                        android:id="@+id/tv_mongey03"
+                        android:layout_width="wrap_content"
+                        android:layout_height="36dip"
+                        android:layout_weight="1"
+                        android:background="@drawable/bg_item_quick_trade"
+                        android:gravity="center"
+                        android:minEms="5"
+                        android:text="*元/手"
+                        android:textColor="@color/item_quick_trade_color_tv"
+                        android:textSize="15sp" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:padding="10dip">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="36dip"
+                        android:layout_marginRight="16dip"
+                        android:gravity="center_vertical"
+                        android:text="建仓"
+                        android:textColor="@color/app_common_content"
+                        android:textSize="15sp" />
+
+                    <LinearLayout
+                        android:id="@+id/quickSizeView"
+                        android:layout_width="fill_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal"
+                        android:visibility="visible">
+
+                        <TextView
+                            android:id="@+id/tv_size01"
+                            android:layout_width="wrap_content"
+                            android:layout_height="36dip"
+                            android:layout_weight="1"
+                            android:background="@drawable/bg_item_quick_trade"
+                            android:gravity="center"
+                            android:minEms="5"
+                            android:text="@string/qucik_create_count01"
+                            android:textColor="@color/item_quick_trade_color_tv"
+                            android:textSize="14sp" />
+
+                        <View
+                            android:layout_width="10dip"
+                            android:layout_height="10dip" />
+
+                        <TextView
+                            android:id="@+id/tv_size02"
+                            android:layout_width="wrap_content"
+                            android:layout_height="36dip"
+                            android:layout_weight="1"
+                            android:background="@drawable/bg_item_quick_trade"
+                            android:gravity="center"
+                            android:minEms="5"
+                            android:text="@string/qucik_create_count02"
+                            android:textColor="@color/item_quick_trade_color_tv"
+                            android:textSize="14sp" />
+
+                        <View
+                            android:layout_width="10dip"
+                            android:layout_height="10dip" />
+
+                        <TextView
+                            android:id="@+id/tv_size03"
+                            android:layout_width="wrap_content"
+                            android:layout_height="36dip"
+                            android:layout_weight="1"
+                            android:background="@drawable/bg_item_quick_trade"
+                            android:gravity="center"
+                            android:minEms="5"
+                            android:text="@string/qucik_create_count03"
+                            android:textColor="@color/item_quick_trade_color_tv"
+                            android:textSize="14sp" />
+
+                        <View
+                            android:layout_width="10dip"
+                            android:layout_height="10dip" />
+
+                        <TextView
+                            android:id="@+id/tv_sizeOther"
+                            android:layout_width="wrap_content"
+                            android:layout_height="36dip"
+                            android:layout_weight="1"
+                            android:background="@null"
+                            android:gravity="center"
+                            android:minEms="5"
+                            android:text="其他"
+                            android:textColor="@color/sub_blue"
+                            android:textSize="14sp" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/sizeOtherView"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:visibility="gone">
+
+                        <LinearLayout
+                            android:id="@+id/sizeOther01"
+                            android:layout_width="fill_parent"
+                            android:layout_height="wrap_content"
+                            android:gravity="center_vertical"
+                            android:orientation="horizontal">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="36dip"
+                                android:layout_weight="1"
+                                android:background="@drawable/bg_item_quick_trade"
+                                android:gravity="center"
+                                android:minEms="5"
+                                android:text="@string/qucik_create_count01"
+                                android:textColor="@color/item_quick_trade_color_tv"
+                                android:textSize="14sp" />
+
+                            <View
+                                android:layout_width="10dip"
+                                android:layout_height="10dip" />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="36dip"
+                                android:layout_weight="1"
+                                android:background="@drawable/bg_item_quick_trade"
+                                android:gravity="center"
+                                android:minEms="5"
+                                android:text="@string/qucik_create_count01"
+                                android:textColor="@color/item_quick_trade_color_tv"
+                                android:textSize="14sp" />
+
+                            <View
+                                android:layout_width="10dip"
+                                android:layout_height="10dip" />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="36dip"
+                                android:layout_weight="1"
+                                android:background="@drawable/bg_item_quick_trade"
+                                android:gravity="center"
+                                android:minEms="5"
+                                android:text="@string/qucik_create_count01"
+                                android:textColor="@color/item_quick_trade_color_tv"
+                                android:textSize="14sp" />
+
+                            <View
+                                android:layout_width="10dip"
+                                android:layout_height="10dip" />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="36dip"
+                                android:layout_weight="1"
+                                android:background="@drawable/bg_item_quick_trade"
+                                android:gravity="center"
+                                android:minEms="5"
+                                android:text="@string/qucik_create_count01"
+                                android:textColor="@color/item_quick_trade_color_tv"
+                                android:textSize="14sp" />
+
+                            <View
+                                android:layout_width="10dip"
+                                android:layout_height="10dip" />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="36dip"
+                                android:layout_weight="1"
+                                android:background="@drawable/bg_item_quick_trade"
+                                android:gravity="center"
+                                android:minEms="5"
+                                android:text="@string/qucik_create_count01"
+                                android:textColor="@color/item_quick_trade_color_tv"
+                                android:textSize="14sp" />
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:id="@+id/sizeOther02"
+                            android:layout_width="fill_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="12dip"
+                            android:gravity="center_vertical"
+                            android:orientation="horizontal">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="36dip"
+                                android:layout_weight="1"
+                                android:background="@drawable/bg_item_quick_trade"
+                                android:gravity="center"
+                                android:minEms="5"
+                                android:text="@string/qucik_create_count01"
+                                android:textColor="@color/item_quick_trade_color_tv"
+                                android:textSize="14sp" />
+
+                            <View
+                                android:layout_width="10dip"
+                                android:layout_height="10dip" />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="36dip"
+                                android:layout_weight="1"
+                                android:background="@drawable/bg_item_quick_trade"
+                                android:gravity="center"
+                                android:minEms="5"
+                                android:text="@string/qucik_create_count01"
+                                android:textColor="@color/item_quick_trade_color_tv"
+                                android:textSize="14sp" />
+
+                            <View
+                                android:layout_width="10dip"
+                                android:layout_height="10dip" />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="36dip"
+                                android:layout_weight="1"
+                                android:background="@drawable/bg_item_quick_trade"
+                                android:gravity="center"
+                                android:minEms="5"
+                                android:text="@string/qucik_create_count01"
+                                android:textColor="@color/item_quick_trade_color_tv"
+                                android:textSize="14sp" />
+
+                            <View
+                                android:layout_width="10dip"
+                                android:layout_height="10dip" />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="36dip"
+                                android:layout_weight="1"
+                                android:background="@drawable/bg_item_quick_trade"
+                                android:gravity="center"
+                                android:minEms="5"
+                                android:text="@string/qucik_create_count01"
+                                android:textColor="@color/item_quick_trade_color_tv"
+                                android:textSize="14sp" />
+
+                            <View
+                                android:layout_width="10dip"
+                                android:layout_height="10dip" />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="36dip"
+                                android:layout_weight="1"
+                                android:background="@drawable/bg_item_quick_trade"
+                                android:gravity="center"
+                                android:minEms="5"
+                                android:text="@string/qucik_create_count01"
+                                android:textColor="@color/item_quick_trade_color_tv"
+                                android:textSize="14sp" />
+                        </LinearLayout>
+                    </LinearLayout>
+                </LinearLayout>
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/tv_rateTips"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/sub_bg"
+                android:paddingLeft="@dimen/sp_16"
+                android:paddingTop="@dimen/margin_4dp"
+                android:paddingBottom="@dimen/margin_4dp"
+                android:text="共合计一盎司，每波动一个点，收益$0.1"
+                android:textSize="@dimen/text_size_12sp" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/margin_44dp"
+                android:gravity="center_vertical"
+                android:paddingLeft="@dimen/margin_16dp"
+                android:paddingRight="@dimen/margin_16dp">
+
+                <ImageView
+                    android:layout_width="@dimen/margin_22dp"
+                    android:layout_height="@dimen/margin_22dp"
+                    android:src="@mipmap/img_choosequan_checked"
+                    android:visibility="gone" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="余额$："
+                    android:textColor="@color/app_common_content" />
+
+                <TextView
+                    android:id="@+id/tv_balance"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="123" />
+
+                <TextView
+                    android:id="@+id/tv_recharge"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:gravity="center"
+                    android:paddingLeft="@dimen/margin_16dp"
+                    android:paddingRight="@dimen/margin_16dp"
+                    android:text="充值"
+                    android:textColor="@color/sub_blue" />
+            </LinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/margin_0.5dp"
+                android:background="@color/line" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:paddingLeft="@dimen/margin_16dp"
+                android:paddingRight="@dimen/margin_16dp">
+
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dip"
+                    android:gravity="center"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginRight="5dip"
+                        android:gravity="center_vertical"
+                        android:text="止损:"
+                        android:textColor="@color/app_common_content"
+                        android:textSize="15sp"
+                        android:visibility="visible" />
+
+                    <TextView
+                        android:id="@+id/tv_zhisunValue"
+                        android:layout_width="wrap_content"
+                        android:layout_height="fill_parent"
+                        android:background="@color/white"
+                        android:singleLine="true"
+                        android:text="不限"
+                        android:textColor="@color/color_opt_lt"
+                        android:textSize="15sp" />
+
+                    <TextView
+                        android:id="@+id/tv_zhisunMoney"
+                        android:layout_width="wrap_content"
+                        android:layout_height="fill_parent"
+                        android:layout_marginLeft="5dip"
+                        android:background="@color/white"
+                        android:singleLine="true"
+                        android:text=""
+                        android:textColor="@color/color_chat_time"
+                        android:textSize="12sp" />
+                </LinearLayout>
+
+
+                <LinearLayout
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dip"
+                    android:layout_marginTop="8dip"
+                    android:layout_marginRight="10dip"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal">
+
+
+                    <Button
+                        android:id="@+id/btnZhisunLess"
+                        android:layout_width="20dip"
+                        android:layout_height="20dip"
+                        android:layout_marginLeft="5dip"
+                        android:layout_marginRight="12dip"
+                        android:background="@drawable/bg_btn_less" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="不限"
+                        android:textColor="@color/color_chat_time"
+                        android:textSize="@dimen/text_size_12sp"
+                        android:visibility="visible" />
+
+                    <SeekBar
+                        android:id="@+id/seekBarZhisun"
+                        android:layout_width="0dip"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="2dip"
+                        android:layout_marginRight="2dip"
+                        android:layout_weight="1"
+                        android:maxHeight="3dip"
+                        android:minHeight="3dip"
+                        android:paddingLeft="10dip"
+                        android:paddingRight="10dip"
+                        android:progressDrawable="@drawable/seekbar_setstop_green_style"
+                        android:thumb="@drawable/seekbar_thum_green_style" />
+
+                    <TextView
+                        android:id="@+id/tv_maxZhisun"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="80点"
+                        android:textColor="@color/color_chat_time"
+                        android:textSize="@dimen/text_size_12sp"
+                        android:visibility="visible" />
+
+                    <Button
+                        android:id="@+id/btnZhisunAdd"
+                        android:layout_width="20dip"
+                        android:layout_height="20dip"
+                        android:layout_marginLeft="12dip"
+                        android:layout_marginRight="5dip"
+                        android:background="@drawable/bg_btn_add" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="12dip"
+                    android:gravity="center"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginRight="5dip"
+                        android:gravity="center_vertical"
+                        android:text="止盈:"
+                        android:textColor="@color/app_common_content"
+                        android:textSize="15sp"
+                        android:visibility="visible" />
+
+                    <TextView
+                        android:id="@+id/tv_zhiyingValue"
+                        android:layout_width="wrap_content"
+                        android:layout_height="fill_parent"
+                        android:background="@color/white"
+                        android:gravity="left|center_vertical"
+                        android:inputType="number"
+                        android:singleLine="true"
+                        android:text="不限"
+                        android:textColor="@color/color_opt_gt"
+                        android:textSize="15sp" />
+
+                    <TextView
+                        android:id="@+id/tv_zhiyingMoney"
+                        android:layout_width="wrap_content"
+                        android:layout_height="fill_parent"
+                        android:layout_marginLeft="5dip"
+                        android:background="@color/white"
+                        android:gravity="left|center_vertical"
+                        android:inputType="number"
+                        android:singleLine="true"
+                        android:text=""
+                        android:textColor="@color/color_chat_time"
+                        android:textSize="12sp" />
+
+                </LinearLayout>
+
+
+                <LinearLayout
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dip"
+                    android:layout_marginTop="8dip"
+                    android:layout_marginRight="10dip"
+                    android:layout_marginBottom="16dip"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal">
+
+                    <Button
+                        android:id="@+id/btnZhiyingLess"
+                        android:layout_width="20dip"
+                        android:layout_height="20dip"
+                        android:layout_marginLeft="5dip"
+                        android:layout_marginRight="12dip"
+                        android:background="@drawable/bg_btn_less" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="不限"
+                        android:textColor="@color/color_chat_time"
+                        android:textSize="@dimen/text_size_12sp"
+                        android:visibility="visible" />
+
+                    <SeekBar
+                        android:id="@+id/seekBarZhiying"
+                        android:layout_width="0dip"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="2dip"
+                        android:layout_marginRight="2dip"
+                        android:layout_weight="1"
+                        android:maxHeight="3dip"
+                        android:minHeight="3dip"
+                        android:paddingLeft="10dip"
+                        android:paddingRight="10dip"
+                        android:progressDrawable="@drawable/seekbar_setstop_red_style"
+                        android:thumb="@drawable/seekbar_thum_red_style" />
+
+                    <TextView
+                        android:id="@+id/tv_maxZhiying"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="200点"
+                        android:textColor="@color/color_chat_time"
+                        android:textSize="@dimen/text_size_12sp"
+                        android:visibility="visible" />
+
+                    <Button
+                        android:id="@+id/btnZhiyingAdd"
+                        android:layout_width="20dip"
+                        android:layout_height="20dip"
+                        android:layout_marginLeft="12dip"
+                        android:layout_marginRight="5dip"
+                        android:background="@drawable/bg_btn_add" />
+                </LinearLayout>
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/tv_nightFee"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/sub_bg"
+                android:paddingLeft="@dimen/sp_16"
+                android:paddingTop="@dimen/margin_4dp"
+                android:paddingBottom="@dimen/margin_4dp"
+                android:text="过夜费0.02美元/天，默认开启，建仓后可手动关闭"
+                android:textSize="@dimen/text_size_12sp" />
+
+        </LinearLayout>
+    </ScrollView>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="52dip"
+        android:layout_marginLeft="10dip"
+        android:layout_marginTop="0dip"
+        android:layout_marginRight="0dip"
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
+
+        <LinearLayout
+            android:layout_width="0dip"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="0dip"
+            android:layout_marginTop="0dip"
+            android:layout_marginRight="5dip"
+            android:layout_weight="2.1"
+            android:gravity="center_vertical"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_marginRight="16dip"
+                    android:gravity="center_vertical"
+                    android:text="总计"
+                    android:textColor="@color/app_common_content"
+                    android:textSize="15sp"
+                    android:visibility="visible" />
+
+                <TextView
+                    android:id="@+id/tv_totalMoney"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/margin_16dp"
+                    android:layout_weight="1"
+                    android:text="--"
+                    android:textColor="@color/color_opt_gt"
+                    android:textSize="20sp"
+                    android:visibility="visible" />
+
+                <TextView
+                    android:id="@+id/tv_fee"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="8dip"
+                    android:layout_marginRight="@dimen/margin_16dp"
+                    android:text="(手续费--元)"
+                    android:textColor="@color/grey"
+                    android:textSize="12sp"
+                    android:visibility="visible" />
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/text_giftremark"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="手续费先收后返，以积分形式返还"
+                android:textColor="@color/color_opt_gt"
+                android:textSize="@dimen/text_size_12sp"
+                android:visibility="gone" />
+        </LinearLayout>
+
+        <Button
+            android:id="@+id/btn_submit"
+            android:layout_width="0dip"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="0dip"
+            android:layout_weight="1"
+            android:background="@drawable/qucik_trade_submit"
+            android:gravity="center"
+            android:text="@string/guadan"
+            android:textColor="@color/white"
+            android:textSize="@dimen/text_size_17sp" />
+    </LinearLayout>
+</LinearLayout>

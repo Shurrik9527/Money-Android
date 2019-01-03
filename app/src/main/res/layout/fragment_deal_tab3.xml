@@ -1,0 +1,237 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/trade_item_temp"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/trade_money_head"
+        android:gravity="center_vertical"
+        android:orientation="vertical"
+        android:paddingTop="10dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/margin_16dp"
+            android:layout_marginRight="@dimen/margin_16dp"
+            android:layout_marginTop="2dip"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_weight="2"
+                android:maxLines="1"
+                android:text="账户余额$："
+                android:textColor="@color/trade_money_lable"
+                android:textSize="@dimen/text_size_15sp" />
+
+            <TextView
+                android:id="@+id/tv_totalMoney"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/margin_16dp"
+                android:layout_marginTop="-5dip"
+                android:layout_weight="3"
+                android:maxLines="1"
+                android:text="--"
+                android:textColor="@color/trade_money"
+                android:textSize="30sp" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/margin_16dp"
+            android:layout_marginRight="@dimen/margin_16dp"
+            android:layout_marginTop="2dip"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_weight="2"
+                android:maxLines="1"
+                android:text="可用保证金$："
+                android:textColor="@color/trade_money_lable"
+                android:textSize="@dimen/text_size_15sp" />
+
+            <TextView
+                android:id="@+id/tv_baozhengjin"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/margin_16dp"
+                android:layout_marginTop="-5dip"
+                android:layout_weight="3"
+                android:maxLines="1"
+                android:text="--"
+                android:textColor="@color/trade_money"
+                android:textSize="30sp" />
+
+        </LinearLayout>
+
+        <!--<TextView-->
+        <!--android:id="@+id/tv_totalMoney"-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:layout_marginLeft="@dimen/margin_16dp"-->
+        <!--android:layout_marginTop="-5dip"-->
+        <!--android:text="&#45;&#45;"-->
+        <!--android:textColor="@color/trade_money"-->
+        <!--android:textSize="40sp" />-->
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="8dip"
+            android:layout_marginLeft="8dip"
+            android:layout_marginRight="8dip"
+            android:layout_marginTop="15dip"
+            android:orientation="horizontal">
+
+            <Button
+                android:id="@+id/btn_chongzhi"
+                android:layout_width="0dip"
+                android:layout_height="40dip"
+                android:layout_weight="1"
+                android:background="@drawable/trade_money_btn_cz"
+                android:gravity="center"
+                android:text="充值"
+                android:textColor="@color/trade_money_btn"
+                android:textSize="@dimen/text_size_15sp"
+                android:visibility="visible" />
+
+            <Button
+                android:id="@+id/btn_tixian"
+                android:layout_width="0dip"
+                android:layout_height="40dip"
+                android:layout_marginLeft="8dip"
+                android:layout_weight="1"
+                android:background="@drawable/trade_money_btn_tx"
+                android:gravity="center"
+                android:text="提现"
+                android:textColor="@color/trade_money_btn"
+                android:textSize="@dimen/text_size_15sp"
+                android:visibility="visible" />
+        </LinearLayout>
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/typeView"
+        android:layout_width="fill_parent"
+        android:layout_height="40dp"
+        android:layout_marginBottom="0dip"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:layout_marginTop="0dp"
+        android:orientation="horizontal">
+
+        <com.moyacs.canary.widget.UnderLineTextView
+            android:id="@+id/tv_1"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="@string/trade_history"
+            android:textColor="@color/trade_money_tab"
+            android:textSize="16sp"
+            app:isLineEnable="true"
+            app:lineColor="@color/under_line"
+            app:mlineHeight="3dip"
+            app:mlineWidth="10dip"
+            app:upOrunder="under" />
+
+        <com.moyacs.canary.widget.UnderLineTextView
+            android:id="@+id/tv_2"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="0dip"
+            android:layout_weight="1"
+            android:clickable="true"
+            android:gravity="center"
+            android:text="@string/out_history"
+            android:textColor="@color/trade_money_tab"
+            android:textSize="16sp"
+            app:isLineEnable="false"
+            app:lineColor="@color/under_line"
+            app:mlineHeight="3dip"
+            app:mlineWidth="10dip"
+            app:upOrunder="under" />
+
+        <com.moyacs.canary.widget.UnderLineTextView
+            android:id="@+id/tv_3"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="0dip"
+            android:layout_weight="1"
+            android:clickable="true"
+            android:gravity="center"
+            android:text="@string/in_history"
+            android:textColor="@color/trade_money_tab"
+            android:textSize="16sp"
+            app:isLineEnable="false"
+            app:lineColor="@color/under_line"
+            app:mlineHeight="3dip"
+            app:mlineWidth="10dip"
+            app:upOrunder="under" />
+
+    </LinearLayout>
+
+    <View
+        android:layout_width="fill_parent"
+        android:layout_height="@dimen/margin_0.5dp"
+        android:background="@mipmap/app_common_list_divider" />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <!--上拉加载，下拉刷新框架-->
+        <com.yan.pullrefreshlayout.PullRefreshLayout
+            android:id="@+id/pullrefreshLayout"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:prl_headerClass="com.moyacs.canary.widget.pullrefreshlayout.ClassicsHeader"
+            app:prl_headerFront="true"
+            app:prl_headerShowGravity="follow"
+            app:prl_pullDownMaxDistance="120dp"
+            app:prl_pullUpMaxDistance="200dp">
+
+
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/recycler_fragment_deal_tab3"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:scrollbars="vertical" />
+
+
+        </com.yan.pullrefreshlayout.PullRefreshLayout>
+
+        <RelativeLayout
+            android:id="@+id/rl_requestFailed"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:visibility="gone">
+
+            <TextView
+                android:id="@+id/tv_requestFailed"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:text="历史记录记录获取失败"
+                android:textColor="@color/app_common_content"
+                android:textSize="@dimen/text_size_18sp" />
+        </RelativeLayout>
+    </RelativeLayout>
+
+</LinearLayout>

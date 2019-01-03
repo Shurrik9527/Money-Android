@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:background="@color/grey_50"
+    android:padding="5dp"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/upView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="3dp"
+        android:layout_marginTop="5dp"
+        android:text="买涨限价"
+        android:textColor="@color/app_common_content"
+        android:textSize="@dimen/text_size_14sp" />
+
+    <TextView
+        android:id="@+id/upView2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="3dp"
+        android:layout_marginTop="5dp"
+        android:text="买涨止损"
+        android:textColor="@color/app_common_content"
+        android:textSize="@dimen/text_size_14sp" />
+
+    <TextView
+        android:id="@+id/downView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="3dp"
+        android:layout_marginTop="5dp"
+        android:text="买跌限价"
+        android:textColor="@color/app_common_content"
+        android:textSize="@dimen/text_size_14sp" />
+
+    <TextView
+        android:id="@+id/downView2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="3dp"
+        android:layout_marginTop="5dp"
+        android:text="买跌止损"
+        android:textColor="@color/app_common_content"
+        android:textSize="@dimen/text_size_14sp" />
+
+</LinearLayout>

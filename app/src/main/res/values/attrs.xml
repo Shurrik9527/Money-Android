@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+
+
+    <!--“我” 页面  圆形头像 自定义属性-->
+    <declare-styleable name="CircleImageview">
+        <attr name="border_thickness" format="dimension" />
+        <attr name="border_width" format="dimension" />
+        <attr name="border_color" format="color" />
+        <attr name="corner_radius" format="dimension" />
+        <attr name="mutate_background" format="boolean" />
+        <attr name="oval" format="boolean" />
+        <attr name="android:scaleType" />
+        <attr name="circle_style">
+            <enum name="circle" value="0"></enum>
+            <enum name="round" value="1"></enum>
+        </attr>
+        <attr name="roundradius" format="dimension" />
+    </declare-styleable>
+    <!--行情页面，顶部 tab 自定义属性-->
+    <declare-styleable name="UnderLineTextView">
+        <attr name="lineColor" format="color" />
+        <attr name="mlineHeight" format="dimension" />
+        <attr name="mlineWidth" format="dimension" />
+        <attr name="upOrunder">
+            <enum name="under" value="0" />
+            <enum name="up" value="1" />
+            <enum name="left" value="2" />
+            <enum name="right" value="3" />
+        </attr>
+        <attr name="fitsPadding" format="boolean" />
+        <attr name="isLineEnable" format="boolean" />
+        <attr name="isLineEnableWhileSelected" format="boolean" />
+        <attr name="isBlodWhileSelected" format="boolean" />
+
+    </declare-styleable>
+    <declare-styleable name="RoundProgressBar">
+        <attr name="roundColor" format="color"/>
+        <attr name="roundProgressColor" format="color"/>
+        <attr name="roundWidth" format="dimension"></attr>
+        <attr name="textColor" format="color" />
+        <attr name="textSize" format="dimension" />
+        <attr name="max" format="integer"></attr>
+        <attr name="textIsDisplayable" format="boolean"></attr>
+        <attr name="style">
+            <enum name="STROKE" value="0"></enum>
+            <enum name="FILL" value="1"></enum>
+        </attr>
+        <attr name="angle">
+            <enum name="angle_0" value="0"></enum>
+            <enum name="angle_90" value="90"></enum>
+            <enum name="angle_90_1" value="-90"></enum>
+        </attr>
+    </declare-styleable>
+    <declare-styleable name="RoundImageView">
+        <attr name="round_radius" format="dimension" />
+    </declare-styleable>
+
+
+</resources>

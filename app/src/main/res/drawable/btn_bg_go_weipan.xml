@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+    <!--<item android:state_enabled="true" android:state_selected="true">-->
+    <!--<shape>-->
+    <!--<stroke android:width="1dip" android:color="@color/white"/>-->
+    <!--<solid android:color="@color/trade_tab_create_selected_50" />-->
+    <!--<corners android:radius="5dip" />-->
+    <!--</shape>-->
+
+    <!--</item>-->
+    <!--<item android:state_selected="true">-->
+    <!--<shape>-->
+    <!--<stroke android:width="1dip" android:color="@color/white"/>-->
+    <!--<solid android:color="@color/trade_tab_create_selected_50" />-->
+    <!--<corners android:radius="5dip" />-->
+    <!--</shape>-->
+    <!--</item>-->
+    <!--<item android:state_enabled="false">-->
+    <!--<shape>-->
+    <!--<stroke android:width="1dip" android:color="@color/white"/>-->
+    <!--<solid android:color="@color/kline_cycle_bg" />-->
+    <!--<corners android:radius="5dip" />-->
+    <!--</shape>-->
+    <!--</item>-->
+    <!--<item android:state_pressed="true">-->
+    <!--<shape>-->
+    <!--<stroke android:width="1dip" android:color="@color/white"/>-->
+    <!--<solid android:color="@color/trade_tab_create_selected_50" />-->
+    <!--<corners android:radius="5dip" />-->
+    <!--</shape>-->
+    <!--</item>-->
+    <item>
+        <shape>
+            <stroke android:width="1dip" android:color="@color/grey" />
+            <solid android:color="@color/p_bottom_bg" />
+            <corners android:radius="5dip" />
+        </shape>
+    </item>
+</selector>

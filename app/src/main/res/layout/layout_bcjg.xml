@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/line_trade_bcjg"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/mission_center_orange"
+    android:orientation="horizontal"
+    android:paddingBottom="@dimen/margin_4dp"
+    android:paddingTop="@dimen/margin_4dp"
+    android:visibility="gone">
+
+    <ImageView
+        android:layout_width="@dimen/margin_12dp"
+        android:layout_height="@dimen/margin_12dp"
+        android:layout_marginLeft="@dimen/margin_16dp"
+        android:layout_marginTop="@dimen/margin_2dp"
+        android:scaleType="fitXY"
+        android:src="@mipmap/img_trade_bcjg" />
+
+    <TextView
+        android:id="@+id/text_trade_bcjg"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/margin_4dp"
+        android:layout_marginRight="@dimen/margin_16dp"
+        android:textColor="@color/white"
+        android:textSize="@dimen/text_size_12sp" />
+</LinearLayout>
