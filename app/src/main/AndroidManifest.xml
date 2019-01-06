@@ -131,6 +131,8 @@
         <activity android:name="com.moyacs.canary.main.me.UserInformationActivity" />
         <activity android:name="com.moyacs.canary.main.market.OptionalActivity" />
         <activity android:name="com.moyacs.canary.login.ForgetPasswordActivity" />
+        <activity android:name="com.moyacs.canary.main.me.AccountActivity" />
+        <activity android:name="com.moyacs.canary.main.me.SetNickNameActivity"></activity>
     </application>
 
 </manifest>

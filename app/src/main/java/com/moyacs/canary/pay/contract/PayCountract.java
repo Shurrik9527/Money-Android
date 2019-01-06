@@ -6,8 +6,10 @@ import com.moyacs.canary.base.BaseRequestListener;
 import com.moyacs.canary.base.BaseView;
 import com.moyacs.canary.main.market.net.MarketDataBean;
 import com.moyacs.canary.network.HttpResult;
+import com.moyacs.canary.network.ServerResult;
 
 import java.util.List;
+import java.util.Map;
 
 import retrofit2.http.Field;
 
@@ -33,59 +35,29 @@ public interface PayCountract {
          * @param errormsg
          */
         void submitOrderFailed(String errormsg);
-
-
-
-
-
-
     }
 
     interface PayPresenter extends BasePresenter {
         /**
          * 下单
-         *
-         * @param server 交易环境  DEMO 或者 live
-         * @param mt4id  MT4ID
-         * @param symbol 品种代码
-         * @param type   交易类型
-         * @param volume 手数
-         * @param sl     止损
-         * @param tp     止盈
-         * @param ticket 单号
          */
-        void submitOrder(String server, int mt4id, String symbol, String type, int volume, double sl,
-                         double tp, String ticket, double price, String expiredDate);
+        void submitOrder(Map<String, Object> map);
 
     }
 
     interface PayModul extends BaseModul {
         /**
          * 下单
-         *
-         * @param server 交易环境  DEMO 或者 live
-         * @param mt4id  MT4ID
-         * @param symbol 品种代码
-         * @param type   交易类型
-         * @param volume 手数
-         * @param sl     止损
-         * @param tp     止盈
-         * @param ticket 单号
          */
-        void submitOrder(String server, int mt4id, String symbol, String type, int volume, double sl,
-                         double tp, String ticket, double price, String expiredDate);
-
-
+        void submitOrder(Map<String, Object> map);
     }
 
     interface SubmitOrderRequestListener extends BaseRequestListener {
 
         /**
          * 下单成功
-         *
-         * @param result
          */
-        void submitOrderResponseSucessed(HttpResult<Object> result);
+        void submitOrderResponseSucessed(ServerResult<String> result);
 
         /**
          * 下单失败
@@ -93,7 +65,5 @@ public interface PayCountract {
          * @param errormsg
          */
         void submitOrderResponseFailed(String errormsg);
-
-
     }
 }

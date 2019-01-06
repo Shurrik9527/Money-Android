@@ -13,7 +13,9 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 
+import com.blankj.utilcode.util.SPUtils;
 import com.blankj.utilcode.util.ToastUtils;
+import com.moyacs.canary.common.AppConstans;
 import com.moyacs.canary.network.ServerManger;
 import com.moyacs.canary.network.ServerResult;
 
@@ -55,6 +57,9 @@ public class ForgetPasswordActivity extends AppCompatActivity {
         initEdViewListener();
         initListener();
         setBtnSubmitStatue();
+        if (!TextUtils.isEmpty(SPUtils.getInstance().getString(AppConstans.USER_PHONE))) {
+            etPhone.setText(SPUtils.getInstance().getString(AppConstans.USER_PHONE));
+        }
         downTimer = new GetCodeCountDownTimer(60000, 1000);
     }
 

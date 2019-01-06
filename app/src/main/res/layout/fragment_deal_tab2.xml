@@ -1,21 +1,34 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!--上拉加载，下拉刷新框架-->
-<com.yan.pullrefreshlayout.PullRefreshLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:id="@+id/pullrefreshLayout"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    app:prl_headerClass="com.moyacs.canary.widget.pullrefreshlayout.ClassicsHeader"
-    app:prl_headerFront="true"
-    app:prl_headerShowGravity="follow"
-    app:prl_pullDownMaxDistance="120dp"
-    app:prl_pullUpMaxDistance="200dp">
+    android:layout_height="match_parent">
 
-
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/recyclerView"
+    <!--上拉加载，下拉刷新框架-->
+    <com.yan.pullrefreshlayout.PullRefreshLayout
+        android:id="@+id/pullrefreshLayout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:scrollbars="vertical" />
-</com.yan.pullrefreshlayout.PullRefreshLayout>
+        app:prl_headerClass="com.moyacs.canary.widget.pullrefreshlayout.ClassicsHeader"
+        app:prl_headerFront="true"
+        app:prl_headerShowGravity="follow"
+        app:prl_pullDownMaxDistance="120dp"
+        app:prl_pullUpMaxDistance="200dp">
 
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/recyclerView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:scrollbars="vertical" />
+
+    </com.yan.pullrefreshlayout.PullRefreshLayout>
+
+    <TextView
+        android:id="@+id/tv_error"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:text="建仓交易获取为空"
+        android:textSize="@dimen/text_size_14sp"
+        android:visibility="gone" />
+</RelativeLayout>

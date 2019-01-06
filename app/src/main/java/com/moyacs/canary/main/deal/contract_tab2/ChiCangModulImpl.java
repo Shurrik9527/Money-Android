@@ -1,12 +1,17 @@
 package com.moyacs.canary.main.deal.contract_tab2;
 
 import com.blankj.utilcode.util.LogUtils;
+import com.blankj.utilcode.util.SPUtils;
+import com.moyacs.canary.common.AppConstans;
 import com.moyacs.canary.main.deal.net_tab2.ChiCangDateBean;
 import com.moyacs.canary.main.deal.net_tab2.ChiCangTabServer;
+import com.moyacs.canary.main.deal.net_tab3.TransactionRecordVo;
 import com.moyacs.canary.main.market.net.MarketDataBean;
 import com.moyacs.canary.network.HttpExceptionHandler;
 import com.moyacs.canary.network.HttpResult;
 import com.moyacs.canary.network.HttpServerManager;
+import com.moyacs.canary.network.ServerManger;
+import com.moyacs.canary.network.ServerResult;
 
 import java.io.IOException;
 import java.util.List;
@@ -31,12 +36,10 @@ public class ChiCangModulImpl implements ChiCangCountract.ChiCangModul {
 
     private ChiCangCountract.GetChiCangListRequestListener listener;
     private CompositeDisposable mCompositeDisposable;
-    private final ChiCangTabServer chiCangTabServer;
 
     public ChiCangModulImpl(ChiCangCountract.GetChiCangListRequestListener listener) {
         this.listener = listener;
         mCompositeDisposable = new CompositeDisposable();
-        chiCangTabServer = HttpServerManager.getInstance().create(ChiCangTabServer.class);
     }
 
     @Override
@@ -45,8 +48,8 @@ public class ChiCangModulImpl implements ChiCangCountract.ChiCangModul {
     }
 
     @Override
-    public void getChiCangList(int mt4id,String server,String startDate,String endDate) {
-        chiCangTabServer.getChiCangList(mt4id,server,startDate,endDate)
+    public void getChiCangList() {
+     /*   chiCangTabServer.getChiCangList(mt4id, server, startDate, endDate)
                 .subscribeOn(Schedulers.io())//指定网络请求所在的线程
                 .doOnSubscribe(new Consumer<Disposable>() {
                     @Override
@@ -95,8 +98,33 @@ public class ChiCangModulImpl implements ChiCangCountract.ChiCangModul {
                     public void onComplete() {
 
                     }
-                });
+                });*/
 
+        ServerManger.getInstance().getServer().getTransactionRecordList(SPUtils.getInstance().getString(AppConstans.USER_PHONE), "1")
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Observer<ServerResult<TransactionRecordVo>>() {
+                    @Override
+                    public void onSubscribe(Disposable d) {
+                        listener.beforeRequest();
+                    }
+
+                    @Override
+                    public void onNext(ServerResult<TransactionRecordVo> transactionRecordVoServerResult) {
+                        listener.getChiCangListResponseSucessed(transactionRecordVoServerResult);
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        listener.afterRequest();
+                        listener.getChiCangListResponseFailed("服务器异常，请稍后再试！");
+                    }
+
+                    @Override
+                    public void onComplete() {
+                        listener.afterRequest();
+                    }
+                });
 
     }
 }

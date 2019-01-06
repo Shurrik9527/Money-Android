@@ -1,16 +1,21 @@
 package com.moyacs.canary.pay.contract;
 
 
+import android.view.View;
+
 import com.blankj.utilcode.util.LogUtils;
 import com.moyacs.canary.main.market.net.MarketDataBean;
 import com.moyacs.canary.main.market.net.MarketServer;
 import com.moyacs.canary.network.HttpExceptionHandler;
 import com.moyacs.canary.network.HttpResult;
 import com.moyacs.canary.network.HttpServerManager;
+import com.moyacs.canary.network.ServerManger;
+import com.moyacs.canary.network.ServerResult;
 import com.moyacs.canary.pay.net.PayServer;
 
 import java.io.IOException;
 import java.util.List;
+import java.util.Map;
 
 import io.reactivex.Observer;
 import io.reactivex.android.schedulers.AndroidSchedulers;
@@ -46,9 +51,8 @@ public class PayModulImpl implements PayCountract.PayModul {
     }
 
     @Override
-    public void submitOrder(String server, int mt4id, String symbol, String type, int volume,
-                            double sl, double tp, String ticket,double price,String expiredDate) {
-        payServer.submitOrder(server, mt4id, symbol, type, volume, sl, tp, ticket,price,expiredDate)
+    public void submitOrder(Map<String, Object> map) {
+      /*  payServer.submitOrder(server, mt4id, symbol, type, volume, sl, tp, ticket, price, expiredDate)
                 .subscribeOn(Schedulers.io())//指定网络请求所在的线程
                 .doOnSubscribe(new Consumer<Disposable>() {
                     @Override
@@ -91,6 +95,30 @@ public class PayModulImpl implements PayCountract.PayModul {
                     public void onError(Throwable e) {
                         String throwable = HttpExceptionHandler.getThrowable(e);
                         listener.submitOrderResponseFailed(throwable);
+                    }
+
+                    @Override
+                    public void onComplete() {
+
+                    }
+                });*/
+        ServerManger.getInstance().getServer().transactionSell(map)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Observer<ServerResult<String>>() {
+                    @Override
+                    public void onSubscribe(Disposable d) {
+
+                    }
+
+                    @Override
+                    public void onNext(ServerResult<String> stringServerResult) {
+                        listener.submitOrderResponseSucessed(stringServerResult);
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        listener.submitOrderResponseFailed("服务器异常");
                     }
 
                     @Override

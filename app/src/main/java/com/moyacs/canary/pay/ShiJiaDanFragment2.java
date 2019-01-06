@@ -677,8 +677,7 @@ public class ShiJiaDanFragment2 extends BaseFragment2 implements PayCountract.Pa
                 } else {
                     tp = 0D;
                 }
-
-                payPresenter.submitOrder(server, mt4id, symbol, type, multiply.intValue(), sl, tp, null, 0, "");
+//                payPresenter.submitOrder(server, mt4id, symbol, type, multiply.intValue(), sl, tp, null, 0, "");
                 Log.i("mt4id", "mt4id: " + mt4id + "      server : " + server);
                 break;
         }

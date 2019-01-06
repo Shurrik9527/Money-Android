@@ -6,6 +6,9 @@ import com.blankj.utilcode.util.LogUtils;
 import com.google.gson.JsonObject;
 import com.moyacs.canary.network.HttpConstants;
 import com.moyacs.canary.network.HttpResult;
+import com.moyacs.canary.network.ServerResult;
+
+import java.util.Map;
 
 /**
  * 作者：luoshen on 2018/4/15 0015 10:51
@@ -31,12 +34,9 @@ public class PayPresenterImpl implements PayCountract.PayPresenter, PayCountract
     }
 
     @Override
-    public void submitOrder(String server, int mt4id, String symbol, String type, int volume, double
-            sl, double tp, String ticket, double price, String expiredDate) {
-        modul.submitOrder(server, mt4id, symbol, type, volume, sl, tp, ticket, price, expiredDate);
+    public void submitOrder(Map<String, Object> map) {
+        modul.submitOrder(map);
     }
-
-
 
     @Override
     public void beforeRequest() {
@@ -49,13 +49,9 @@ public class PayPresenterImpl implements PayCountract.PayPresenter, PayCountract
     }
 
     @Override
-    public void submitOrderResponseSucessed(HttpResult<Object> result) {
-        int result1 = result.getCode();
-        String s = result.toString();
-        Log.i("xxx", "submitOrderResponseSucessed:     " + s);
-        LogUtils.d("服务器返回的数据字段  code   " + result1);
-        if (result1 == HttpConstants.result_sucess) {
-            view.submitOrderSucess(result.getDataObject());
+    public void submitOrderResponseSucessed(ServerResult<String> result) {
+        if (result.isSuccess()) {
+            view.submitOrderSucess(result.getMsg());
         } else {
             view.submitOrderFailed("服务器返回数据错误");
         }

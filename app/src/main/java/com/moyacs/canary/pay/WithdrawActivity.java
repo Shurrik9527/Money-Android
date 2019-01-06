@@ -58,8 +58,6 @@ import www.moyacs.com.myapplication.R;
  * 提现页面
  */
 public class WithdrawActivity extends BaseActivity2 implements WithdrawCountract.WithdrawView {
-
-
     @BindView(R.id.text_quanbutixian)
     TextView textQuanbutixian;
     @BindView(R.id.ed_inputMoney)

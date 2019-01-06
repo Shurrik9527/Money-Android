@@ -81,7 +81,9 @@ public interface FundCountract {
          */
         void getTradingRecordsFailed(String errormsg);
 
+        void setTransactionRecordList(List<TransactionRecordVo.Record> list, String typ);
 
+        void setTransactionRecordsListFailed(String errormsg, String type);
     }
 
     interface FundPresenter extends BasePresenter {
@@ -94,6 +96,7 @@ public interface FundCountract {
 
         /**
          * 获取入金记录
+         *
          * @param mt4id
          * @param startDate
          * @param endDate
@@ -108,6 +111,7 @@ public interface FundCountract {
 
         /**
          * 获取出金记录
+         *
          * @param mt4id
          * @param startDate
          * @param endDate
@@ -122,16 +126,18 @@ public interface FundCountract {
 
         /**
          * 获取交易记录
+         *
          * @param mt4id
-         * @param server DEMO  LIVE
+         * @param server    DEMO  LIVE
          * @param startDate 开始时间
          * @param endDate   结束时间呢
          */
-        void getTradingRecords( int mt4id,
-                                String server,
-                                String startDate,
-                                String endDate);
+        void getTradingRecords(int mt4id,
+                               String server,
+                               String startDate,
+                               String endDate);
 
+        void getTransactionRecordList(String transactionStatus);
     }
 
     interface FundModul extends BaseModul {
@@ -144,6 +150,7 @@ public interface FundCountract {
 
         /**
          * 获取入金记录
+         *
          * @param mt4id
          * @param startDate
          * @param endDate
@@ -158,6 +165,7 @@ public interface FundCountract {
 
         /**
          * 获取出金记录
+         *
          * @param mt4id
          * @param startDate
          * @param endDate
@@ -165,22 +173,30 @@ public interface FundCountract {
          * @param pageNumber
          */
         void getPayment(int mt4id,
-                           String startDate,
-                           String endDate,
-                           int pageSize,
-                           int pageNumber);
+                        String startDate,
+                        String endDate,
+                        int pageSize,
+                        int pageNumber);
 
         /**
          * 获取交易记录
+         *
          * @param mt4id
-         * @param server DEMO  LIVE
+         * @param server    DEMO  LIVE
          * @param startDate 开始时间
          * @param endDate   结束时间呢
          */
-        void getTradingRecords( int mt4id,
-                                String server,
-                                String startDate,
-                                String endDate);
+        void getTradingRecords(int mt4id,
+                               String server,
+                               String startDate,
+                               String endDate);
+
+        /**
+         * 获取记录
+         *
+         * @param transactionStatus 0除挂单外所有 1持仓 3挂单（已成功的则归到持仓）
+         */
+        void getTransactionRecordList(String transactionStatus);
     }
 
     interface GetFundRequestListener extends BaseRequestListener {
@@ -239,7 +255,14 @@ public interface FundCountract {
          *
          * @param errormsg
          */
-        void getTradingRecordsFailed(String errormsg);
+        void setTransactionRecordsListFailed(String errormsg, String type);
 
+
+        /**
+         * 设置交易记录
+         *
+         * @param list
+         */
+        void setTransactionRecordList(List<TransactionRecordVo.Record> list, String type);
     }
 }

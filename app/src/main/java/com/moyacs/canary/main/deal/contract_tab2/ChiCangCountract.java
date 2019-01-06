@@ -5,7 +5,9 @@ import com.moyacs.canary.base.BasePresenter;
 import com.moyacs.canary.base.BaseRequestListener;
 import com.moyacs.canary.base.BaseView;
 import com.moyacs.canary.main.deal.net_tab2.ChiCangDateBean;
+import com.moyacs.canary.main.deal.net_tab3.TransactionRecordVo;
 import com.moyacs.canary.network.HttpResult;
+import com.moyacs.canary.network.ServerResult;
 
 import java.util.List;
 
@@ -20,12 +22,14 @@ public interface ChiCangCountract {
     interface ChiCangView extends BaseView {
         /**
          * 持仓列表  成功
+         *
          * @param result
          */
-        void getChiCangListSucess(List<ChiCangDateBean> result);
+        void getChiCangListSucess(List<TransactionRecordVo.Record> result);
 
         /**
          * 持仓列表  失败
+         *
          * @param errormsg
          */
         void getChiCangListFailed(String errormsg);
@@ -35,34 +39,30 @@ public interface ChiCangCountract {
 
     interface ChiCangPresenter extends BasePresenter {
         /**
-         *
          * 持仓列表
-         *
-         * @param mt4id     MT4ID
          */
-        void getChiCangList(int mt4id,String server,String startDate,String endDate);
+        void getChiCangList();
     }
 
     interface ChiCangModul extends BaseModul {
         /**
-         *
          * 持仓列表
-         *
-         * @param mt4id     MT4ID
          */
-        void getChiCangList(int mt4id,String server,String startDate,String endDate);
+        void getChiCangList();
     }
 
     interface GetChiCangListRequestListener extends BaseRequestListener {
 
         /**
          * 持仓列表  成功
+         *
          * @param result
          */
-        void getChiCangListResponseSucessed(HttpResult<List<ChiCangDateBean>> result);
+        void getChiCangListResponseSucessed(ServerResult<TransactionRecordVo> result);
 
         /**
          * 持仓列表  失败
+         *
          * @param errormsg
          */
         void getChiCangListResponseFailed(String errormsg);

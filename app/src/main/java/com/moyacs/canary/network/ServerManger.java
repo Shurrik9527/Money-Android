@@ -48,9 +48,9 @@ public class ServerManger {
         loggingInterceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
         OkHttpClient.Builder client = new OkHttpClient().newBuilder()
                 .retryOnConnectionFailure(true)//失败重试
-                .connectTimeout(HttpConstants.default_connectTimeout, TimeUnit.MILLISECONDS)
-                .readTimeout(HttpConstants.default_readTimeout, TimeUnit.MINUTES)
-                .writeTimeout(HttpConstants.default_writeTimeout, TimeUnit.MINUTES)
+                .connectTimeout(10, TimeUnit.SECONDS)
+                .readTimeout(10, TimeUnit.SECONDS)
+                .writeTimeout(10, TimeUnit.SECONDS)
                 .addInterceptor(loggingInterceptor)
                 //添加请求头
                 .addInterceptor(new HeadersInterceptor());

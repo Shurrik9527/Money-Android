@@ -278,10 +278,10 @@
     <string name="voucher_entrytitle">查看代金券</string>
     <!--<string name="coupon_entrytitle">我的红包</string>-->
     <string name="coupon_entrytitle">我的代金券</string>
-    <string name="trade_history">交易记录</string>
+    <string name="trade_history">交易</string>
     <string name="inandout_history">收支明细</string>
-    <string name="out_history">出金记录</string>
-    <string name="in_history">入金记录</string>
+    <string name="out_history">提现</string>
+    <string name="in_history">充值</string>
     <string name="out_historyempty">暂无出金记录</string>
     <string name="in_historyempty">暂无入金记录</string>
 

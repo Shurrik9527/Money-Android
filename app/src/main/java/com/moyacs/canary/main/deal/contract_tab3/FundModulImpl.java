@@ -4,7 +4,6 @@ import com.blankj.utilcode.util.LogUtils;
 import com.blankj.utilcode.util.SPUtils;
 import com.moyacs.canary.common.AppConstans;
 import com.moyacs.canary.main.deal.net_tab2.ChiCangDateBean;
-import com.moyacs.canary.main.deal.net_tab3.FundDataBean;
 import com.moyacs.canary.main.deal.net_tab3.FundServer;
 import com.moyacs.canary.main.deal.net_tab3.PaymentDateBean;
 import com.moyacs.canary.main.deal.net_tab3.TransactionRecordVo;
@@ -238,7 +237,7 @@ public class FundModulImpl implements FundCountract.FundModul {
 
     @Override
     public void getTradingRecords(int mt4id, String server, String startDate, String endDate) {
-       /* fundServer.getTradingRecords(mt4id, server, startDate, endDate)
+        fundServer.getTradingRecords(mt4id, server, startDate, endDate)
                 .subscribeOn(Schedulers.io())//指定网络请求所在的线程
                 .doOnSubscribe(new Consumer<Disposable>() {
                     @Override
@@ -267,28 +266,32 @@ public class FundModulImpl implements FundCountract.FundModul {
                         int code = httpResultResponse.code();
                         LogUtils.d("服务器返回的响应码：  " + code);
                         if (code == 200) {
-                            listener.getTradingRecordsSucessed(httpResultResponse.body());
+//                            listener.getTradingRecordsSucessed(httpResultResponse.body());
                         } else {
-                            try {
-                                listener.getTradingRecordsFailed(httpResultResponse.errorBody().string());
-                            } catch (IOException e) {
-                                e.printStackTrace();
-                            }
+//                            try {
+////                                listener.setTransactionRecordsListFailed(httpResultResponse.errorBody().string());
+//                            } catch (IOException e) {
+//                                e.printStackTrace();
+//                            }
                         }
                     }
 
                     @Override
                     public void onError(Throwable e) {
                         String throwable = HttpExceptionHandler.getThrowable(e);
-                        listener.getTradingRecordsFailed(throwable);
+//                        listener.setTransactionRecordsListFailed(throwable);
                     }
 
                     @Override
                     public void onComplete() {
 
                     }
-                });*/
-        ServerManger.getInstance().getServer().getTransactionRecordList(SPUtils.getInstance().getString(AppConstans.USER_PHONE), "0")
+                });
+    }
+
+    @Override
+    public void getTransactionRecordList(final String transactionStatus) {
+        ServerManger.getInstance().getServer().getTransactionRecordList(SPUtils.getInstance().getString(AppConstans.USER_PHONE), transactionStatus)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Observer<ServerResult<TransactionRecordVo>>() {
@@ -299,12 +302,16 @@ public class FundModulImpl implements FundCountract.FundModul {
 
                     @Override
                     public void onNext(ServerResult<TransactionRecordVo> transactionRecordVoServerResult) {
-                        listener.getTradingRecordsSucessed(transactionRecordVoServerResult);
+                        if (transactionRecordVoServerResult.isSuccess()) {
+                            listener.setTransactionRecordList(transactionRecordVoServerResult.getData().getList(), transactionStatus);
+                        } else {
+                            listener.setTransactionRecordsListFailed(transactionRecordVoServerResult.getMsg(), transactionStatus);
+                        }
                     }
 
                     @Override
                     public void onError(Throwable e) {
-                        listener.getTradingRecordsFailed(e.getMessage());
+                        listener.setTransactionRecordsListFailed(e.getMessage(), transactionStatus);
                     }
 
                     @Override
@@ -312,5 +319,6 @@ public class FundModulImpl implements FundCountract.FundModul {
 
                     }
                 });
+
     }
 }

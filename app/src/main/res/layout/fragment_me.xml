@@ -1,18 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
-
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:android_custom="http://schemas.android.com/apk/res-auto"
-
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
+    android:layout_height="match_parent"
     android:background="@color/sub_bg"
     android:orientation="vertical">
 
-
-    <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:minHeight="800dip">
+        android:layout_height="match_parent">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -35,19 +31,14 @@
                     android:gravity="center"
                     android:orientation="vertical"
                     android:paddingLeft="15dip"
-                    android:paddingRight="15dip"
-                    android:paddingTop="30dip">
+                    android:paddingTop="30dip"
+                    android:paddingRight="15dip">
 
-                    <RelativeLayout
-                        android:layout_width="80dip"
-                        android:layout_height="60dip">
-
-                        <com.moyacs.canary.widget.CircleImageView
-                            android:layout_width="54dip"
-                            android:layout_height="54dip"
-                            android:layout_centerInParent="true"
-                            android:src="@mipmap/img_me_headimage_default" />
-                    </RelativeLayout>
+                    <com.moyacs.canary.widget.CircleImageView
+                        android:layout_width="54dip"
+                        android:layout_height="54dip"
+                        android:layout_centerInParent="true"
+                        android:src="@mipmap/img_me_headimage_default" />
 
                     <Button
                         android:id="@+id/btn_login"
@@ -59,15 +50,11 @@
                         android:background="@null"
                         android:gravity="center"
                         android:minWidth="120dip"
-                        android:paddingBottom="5dip"
-                        android:paddingLeft="10dip"
-                        android:paddingRight="10dip"
                         android:paddingTop="5dip"
-                        android:singleLine="true"
+                        android:paddingBottom="5dip"
                         android:text="登录 / 注册"
                         android:textColor="@color/white"
-                        android:textSize="@dimen/text_size_15sp"
-                        android:visibility="visible" />
+                        android:textSize="@dimen/text_size_15sp" />
                 </LinearLayout>
             </LinearLayout>
             <!--登录成功之后的  头像 布局-->
@@ -84,8 +71,8 @@
                     android:layout_height="match_parent"
                     android:background="@color/app_common_content_90"
                     android:orientation="vertical"
-                    android:paddingBottom="@dimen/margin_20dp"
-                    android:paddingTop="@dimen/margin_30dp">
+                    android:paddingTop="@dimen/margin_30dp"
+                    android:paddingBottom="@dimen/margin_20dp">
 
                     <LinearLayout
                         android:layout_width="match_parent"
@@ -124,7 +111,6 @@
                                 android:textColor="@color/white"
                                 android:textSize="@dimen/text_size_20sp" />
 
-
                             <TextView
                                 android:id="@+id/text_needexp"
                                 android:layout_width="wrap_content"
@@ -136,8 +122,6 @@
                                 android:textColor="@color/white"
                                 android:textSize="@dimen/text_size_12sp"
                                 android:visibility="visible" />
-
-
                         </LinearLayout>
                     </LinearLayout>
                 </LinearLayout>

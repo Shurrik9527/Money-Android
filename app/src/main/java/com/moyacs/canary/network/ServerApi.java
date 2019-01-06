@@ -5,11 +5,14 @@ import com.moyacs.canary.main.deal.net_tab3.TransactionRecordVo;
 import com.moyacs.canary.main.deal.net_tab3.UserAmountVo;
 import com.moyacs.canary.main.homepage.net.BannerDate;
 import com.moyacs.canary.main.market.net.TradeVo;
+import com.moyacs.canary.main.me.UserInfoVo;
+import com.netease.nimlib.sdk.uinfo.model.UserInfo;
 
 import java.util.List;
 import java.util.Map;
 
 import io.reactivex.Observable;
+import io.reactivex.android.schedulers.AndroidSchedulers;
 import retrofit2.Response;
 import retrofit2.http.Field;
 import retrofit2.http.FieldMap;
@@ -118,5 +121,25 @@ public interface ServerApi {
     @FormUrlEncoded
     @POST("transaction/reserve")
     Observable<ServerResult> reserveTransaction(@FieldMap Map<String, Object> map);
+
+    /**
+     * 获取用户信息
+     */
+    @POST("user/getUser")
+    Observable<ServerResult<UserInfoVo>> getUserInfo();
+
+    /**
+     * 修改用户昵称
+     */
+    @FormUrlEncoded
+    @POST("user/edit")
+    Observable<ServerResult<String>> updateNickName(@Field("nickname") String nickname);
+
+    /**
+     * 平仓
+     */
+    @FormUrlEncoded
+    @POST("transaction/sell")
+    Observable<ServerResult<String>> transactionSell(@FieldMap Map<String, Object> map);
 
 }

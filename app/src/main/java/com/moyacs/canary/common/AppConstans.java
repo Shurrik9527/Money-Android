@@ -86,6 +86,7 @@ public class AppConstans {
     public static final String type_SELL_STOP = "SELL_STOP";
     public static final String type_BUY = "BUY";
     public static final String type_SELL_ = "SELL";
+    public static final String USER_NICK_NAME = "USER_NICK_NAME";
 
     /**
      * 全局所有列表行情数据,首页获取所有行情列表之后赋值

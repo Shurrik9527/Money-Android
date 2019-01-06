@@ -18,8 +18,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginLeft="@dimen/margin_16dp"
-            android:layout_marginRight="@dimen/margin_16dp"
             android:layout_marginTop="2dip"
+            android:layout_marginRight="@dimen/margin_16dp"
             android:gravity="center_vertical"
             android:orientation="horizontal">
 
@@ -51,8 +51,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginLeft="@dimen/margin_16dp"
-            android:layout_marginRight="@dimen/margin_16dp"
             android:layout_marginTop="2dip"
+            android:layout_marginRight="@dimen/margin_16dp"
             android:gravity="center_vertical"
             android:orientation="horizontal">
 
@@ -80,23 +80,13 @@
 
         </LinearLayout>
 
-        <!--<TextView-->
-        <!--android:id="@+id/tv_totalMoney"-->
-        <!--android:layout_width="wrap_content"-->
-        <!--android:layout_height="wrap_content"-->
-        <!--android:layout_marginLeft="@dimen/margin_16dp"-->
-        <!--android:layout_marginTop="-5dip"-->
-        <!--android:text="&#45;&#45;"-->
-        <!--android:textColor="@color/trade_money"-->
-        <!--android:textSize="40sp" />-->
-
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="8dip"
             android:layout_marginLeft="8dip"
-            android:layout_marginRight="8dip"
             android:layout_marginTop="15dip"
+            android:layout_marginRight="8dip"
+            android:layout_marginBottom="8dip"
             android:orientation="horizontal">
 
             <Button
@@ -130,10 +120,10 @@
         android:id="@+id/typeView"
         android:layout_width="fill_parent"
         android:layout_height="40dp"
-        android:layout_marginBottom="0dip"
         android:layout_marginLeft="10dp"
-        android:layout_marginRight="10dp"
         android:layout_marginTop="0dp"
+        android:layout_marginRight="10dp"
+        android:layout_marginBottom="0dip"
         android:orientation="horizontal">
 
         <com.moyacs.canary.widget.UnderLineTextView
@@ -146,6 +136,21 @@
             android:textColor="@color/trade_money_tab"
             android:textSize="16sp"
             app:isLineEnable="true"
+            app:lineColor="@color/under_line"
+            app:mlineHeight="3dip"
+            app:mlineWidth="10dip"
+            app:upOrunder="under" />
+
+        <com.moyacs.canary.widget.UnderLineTextView
+            android:id="@+id/tv_4"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="@string/guadan"
+            android:textColor="@color/trade_money_tab"
+            android:textSize="16sp"
+            app:isLineEnable="false"
             app:lineColor="@color/under_line"
             app:mlineHeight="3dip"
             app:mlineWidth="10dip"
@@ -184,7 +189,6 @@
             app:mlineHeight="3dip"
             app:mlineWidth="10dip"
             app:upOrunder="under" />
-
     </LinearLayout>
 
     <View
@@ -228,9 +232,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerInParent="true"
-                android:text="历史记录记录获取失败"
-                android:textColor="@color/app_common_content"
-                android:textSize="@dimen/text_size_18sp" />
+                android:textSize="@dimen/text_size_14sp" />
         </RelativeLayout>
     </RelativeLayout>
 

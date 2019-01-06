@@ -44,7 +44,6 @@ public class UserInformationActivity extends BaseActivity2 {
     @Override
     protected void initIntentData(Intent intent) {
         url = intent.getStringExtra("url");
-
         webView.loadUrl(url);
         //声明WebSettings子类
         WebSettings webSettings = webView.getSettings();
@@ -89,8 +88,6 @@ public class UserInformationActivity extends BaseActivity2 {
             @Override
             public void onPageFinished(WebView view, String url) {
                 super.onPageFinished(view, url);
-
-
             }
 
             /**
@@ -115,6 +112,7 @@ public class UserInformationActivity extends BaseActivity2 {
         webView = new WebView(getApplicationContext());
         return webView;
     }
+
     @Override
     protected Boolean isShowBack() {
         return true;
@@ -129,6 +127,7 @@ public class UserInformationActivity extends BaseActivity2 {
     protected String setToolbarTitle(String title) {
         return "完善资料";
     }
+
     /**
      * 防止 webView 内存泄漏
      */

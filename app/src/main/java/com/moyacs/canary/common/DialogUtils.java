@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 
+import com.blankj.utilcode.util.SPUtils;
 import com.moyacs.canary.login.LoginActivity2;
 
 import net.lemonsoft.lemonhello.LemonHello;
@@ -21,10 +22,11 @@ import net.lemonsoft.lemonhello.interfaces.LemonHelloActionDelegate;
 public class DialogUtils {
     /**
      * 登录提示框
-     * @param title 显示的提示消息
-     * @param context   山下文
+     *
+     * @param title   显示的提示消息
+     * @param context 山下文
      */
-    public static void login_please(String title, final Context context){
+    public static void login_please(String title, final Context context) {
         LemonHello.getInformationHello(title, "")
                 .setContentFontSize(14)
                 //取消图标
@@ -32,17 +34,15 @@ public class DialogUtils {
                 .addAction(new LemonHelloAction("取消", Color.GRAY, new LemonHelloActionDelegate() {
                     @Override
                     public void onClick(LemonHelloView helloView, LemonHelloInfo helloInfo, LemonHelloAction helloAction) {
-
                         helloView.hide();
-
                     }
                 }))
                 .addAction(new LemonHelloAction("确定", new LemonHelloActionDelegate() {
                     @Override
                     public void onClick(LemonHelloView lemonHelloView, LemonHelloInfo lemonHelloInfo, LemonHelloAction lemonHelloAction) {
+                        SPUtils.getInstance().clear();
                         context.startActivity(new Intent(context, LoginActivity2.class));
                         lemonHelloView.hide();
-
                     }
                 }))
                 .show(context);

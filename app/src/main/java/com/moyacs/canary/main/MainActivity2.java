@@ -164,11 +164,11 @@ public class MainActivity2 extends BaseActivity2 {
                 commonTabLayout.setCurrentTab(position);
                 switch (position) {
                     case 0:
-                        initToolbar("汇大师");
+                        initToolbar(getResources().getString(R.string.app_name));
                         showToolbar();
                         break;
                     case 1:
-                        initToolbar("汇大师行情");
+                        initToolbar(getResources().getString(R.string.app_name) + "行情");
                         showToolbar();
                         //如果 行情页面显示的是 自选 tab ，就弹出提示登录
                         int type_showTab = marketFragment2.getType_showTab();

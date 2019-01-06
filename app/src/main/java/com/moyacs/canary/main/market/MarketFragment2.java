@@ -137,7 +137,7 @@ public class MarketFragment2 extends BaseFragment2 implements MarketContract.Mar
      * 为了确定当前页面显示的是哪个tab
      * 0 自选 1:外汇 2:贵金属 3:原油  4:全球指数
      */
-    private int type_showTab = 0;
+    private int type_showTab = 1;
     /**
      * 外汇 数据源
      */
@@ -170,8 +170,8 @@ public class MarketFragment2 extends BaseFragment2 implements MarketContract.Mar
         recyclerMarket = rootView.findViewById(R.id.recycler_market);
         textView_failed = rootView.findViewById(R.id.tv_failed);
         initTabList();
-        //初始化 tab 选中第一个
-        setTabSelect(0);
+        //初始化 tab 选中外汇
+        setTabSelect(1);
         //初始化 recyclerView
         initrecyclerView();
         //初始化下拉刷新框架
@@ -200,15 +200,10 @@ public class MarketFragment2 extends BaseFragment2 implements MarketContract.Mar
         if (list_zixuan != null && list_zixuan.size() >= 0) {
             return;
         }
-        //如果没有登录就不获取数据
-        int mt4id = SPUtils.getInstance().getInt(AppConstans.mt4id, -1);
-        if (mt4id == -1) {
-            return;
-        }
         /**
          * 获取自选列表
          */
-        presenter.getMarketList("13232323636", "DEMO");
+//        presenter.getMarketList("13232323636", "DEMO");
     }
 
     @Override
@@ -240,7 +235,6 @@ public class MarketFragment2 extends BaseFragment2 implements MarketContract.Mar
         pullrefreshLayout.setOnRefreshListener(new PullRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-                LogUtils.d("pullrefreshLayout :    onRefresh ");
                 if (tab1.isSelected())
                     presenter.getMarketList("13232323636", "DEMO");
                 else {
@@ -276,6 +270,7 @@ public class MarketFragment2 extends BaseFragment2 implements MarketContract.Mar
      * 抽取方法，便于设置 对应tab 的选中状态
      */
     private void setTabSelect(int tabSelect) {
+        type_showTab = tabSelect;
         int size = tabList.size();
         if (tabSelect > size || tabSelect < 0) {
             return;
@@ -365,7 +360,6 @@ public class MarketFragment2 extends BaseFragment2 implements MarketContract.Mar
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.tab1:
-                type_showTab = 0;
                 String userPhone = SPUtils.getInstance().getString(AppConstans.USER_PHONE, "");
                 if (TextUtils.isEmpty(userPhone)) {
                     DialogUtils.login_please("请先登录", getContext());
@@ -381,25 +375,21 @@ public class MarketFragment2 extends BaseFragment2 implements MarketContract.Mar
                 }
                 break;
             case R.id.tab2:
-                type_showTab = 1;
                 type = "1";
                 setTabSelect(1);
                 requestDate(list_waihui);
                 break;
             case R.id.tab3:
-                type_showTab = 2;
                 type = "2";
                 setTabSelect(2);
                 requestDate(list_guijinshu);
                 break;
             case R.id.tab4:
-                type_showTab = 3;
                 type = "3";
                 setTabSelect(3);
                 requestDate(list_yuanyou);
                 break;
             case R.id.tab5:
-                type_showTab = 4;
                 type = "4";
                 setTabSelect(4);
                 requestDate(list_quanqiuzhishu);

@@ -17,24 +17,28 @@ public class TransactionRecordVo {
         private String id;
         private String loginName;
         private String symbolCode;
-        private String createTime;
+        private long createTime;
         private double lot;
         private String unitPrice;
         private String money;
         private String overnightFee;
         private String commissionCharges;
-        private String transactionStatus;
-        private String exponent;
+        private int transactionStatus;
+        private double exponent;
         private String closeOutPrice;
         private String entryOrdersPrice;
         private String errorRange;
         private String endTime;
-        private String stopLossCount;
-        private String stopProfitCount;
+        private double stopLossCount;
+        private double stopProfitCount;
         private String ransactionType;
         private String isOvernight;
         private double profit;
         private String entryOrdersTime;
+
+        private int digit;
+        private double price_buy;
+        private double price_sell;
 
         public String getId() {
             return id;
@@ -60,11 +64,11 @@ public class TransactionRecordVo {
             this.symbolCode = symbolCode;
         }
 
-        public String getCreateTime() {
+        public long getCreateTime() {
             return createTime;
         }
 
-        public void setCreateTime(String createTime) {
+        public void setCreateTime(long createTime) {
             this.createTime = createTime;
         }
 
@@ -108,19 +112,19 @@ public class TransactionRecordVo {
             this.commissionCharges = commissionCharges;
         }
 
-        public String getTransactionStatus() {
+        public int getTransactionStatus() {
             return transactionStatus;
         }
 
-        public void setTransactionStatus(String transactionStatus) {
+        public void setTransactionStatus(int transactionStatus) {
             this.transactionStatus = transactionStatus;
         }
 
-        public String getExponent() {
+        public double getExponent() {
             return exponent;
         }
 
-        public void setExponent(String exponent) {
+        public void setExponent(double exponent) {
             this.exponent = exponent;
         }
 
@@ -156,19 +160,19 @@ public class TransactionRecordVo {
             this.endTime = endTime;
         }
 
-        public String getStopLossCount() {
+        public double getStopLossCount() {
             return stopLossCount;
         }
 
-        public void setStopLossCount(String stopLossCount) {
+        public void setStopLossCount(double stopLossCount) {
             this.stopLossCount = stopLossCount;
         }
 
-        public String getStopProfitCount() {
+        public double getStopProfitCount() {
             return stopProfitCount;
         }
 
-        public void setStopProfitCount(String stopProfitCount) {
+        public void setStopProfitCount(double stopProfitCount) {
             this.stopProfitCount = stopProfitCount;
         }
 
@@ -202,6 +206,30 @@ public class TransactionRecordVo {
 
         public void setEntryOrdersTime(String entryOrdersTime) {
             this.entryOrdersTime = entryOrdersTime;
+        }
+
+        public int getDigit() {
+            return digit;
+        }
+
+        public void setDigit(int digit) {
+            this.digit = digit;
+        }
+
+        public void setPrice_buy(double price_buy) {
+            this.price_buy = price_buy;
+        }
+
+        public void setPrice_sell(double price_sell) {
+            this.price_sell = price_sell;
+        }
+
+        public double getPrice_buy() {
+            return price_buy;
+        }
+
+        public double getPrice_sell() {
+            return price_sell;
         }
     }
 }

@@ -891,7 +891,7 @@ public class GuaDanFragment extends BaseFragment2 implements PayCountract.PayVie
                         "expiredDate: " + expiredDate + "\n"
                 );
                 PayPresenterImpl payPresenter = new PayPresenterImpl(this);
-                payPresenter.submitOrder(server, mt4id, symbol, type, multiply.intValue(), sl, tp, "", price, expiredDate);
+//                payPresenter.submitOrder(server, mt4id, symbol, type, multiply.intValue(), sl, tp, "", price, expiredDate);
                 Log.i("mt4id", "mt4id: " + mt4id + "      server : " + server);
                 break;
         }

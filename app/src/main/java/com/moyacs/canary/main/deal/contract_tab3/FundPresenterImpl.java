@@ -3,8 +3,6 @@ package com.moyacs.canary.main.deal.contract_tab3;
 import android.util.Log;
 
 import com.blankj.utilcode.util.LogUtils;
-import com.moyacs.canary.main.deal.net_tab2.ChiCangDateBean;
-import com.moyacs.canary.main.deal.net_tab3.FundDataBean;
 import com.moyacs.canary.main.deal.net_tab3.PaymentDateBean;
 import com.moyacs.canary.main.deal.net_tab3.TransactionRecordVo;
 import com.moyacs.canary.main.deal.net_tab3.UserAmountVo;
@@ -55,6 +53,12 @@ public class FundPresenterImpl implements FundCountract.FundPresenter, FundCount
     @Override
     public void getTradingRecords(int mt4id, String server, String startDate, String endDate) {
         modul.getTradingRecords(mt4id, server, startDate, endDate);
+    }
+
+    @Override
+    public void getTransactionRecordList(String transactionStatus) {
+        view.showLoadingDailog();
+        modul.getTransactionRecordList(transactionStatus);
     }
 
     @Override
@@ -144,7 +148,14 @@ public class FundPresenterImpl implements FundCountract.FundPresenter, FundCount
     }
 
     @Override
-    public void getTradingRecordsFailed(String errormsg) {
+    public void setTransactionRecordsListFailed(String errormsg, String type) {
         view.dismissLoadingDialog();
+        view.setTransactionRecordsListFailed(errormsg, type);
+    }
+
+    @Override
+    public void setTransactionRecordList(List<TransactionRecordVo.Record> list, String typ) {
+        view.dismissLoadingDialog();
+        view.setTransactionRecordList(list, typ);
     }
 }
