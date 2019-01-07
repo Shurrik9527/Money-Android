@@ -30,7 +30,6 @@ import com.moyacs.canary.common.AppConstans;
 import com.moyacs.canary.common.NumberUtils;
 import com.moyacs.canary.kchart.fragment.KLineFragment;
 import com.moyacs.canary.kchart.fragment.ProFormatConfig;
-import com.moyacs.canary.main.MainActivity2;
 import com.moyacs.canary.main.market.net.TradeVo;
 import com.moyacs.canary.netty.codec.Quotation;
 import com.moyacs.canary.pay.DialogFragment_order;
@@ -678,9 +677,8 @@ public class ProductActivity extends BaseActivity2 implements OnClickListener {
             dialogFragment_order.show(getSupportFragmentManager(), "order");*/
 
         } else if (id == R.id.tv_tradeclose) {// 查看持仓
+            setResult(0x11);
             finish();
-            MainActivity2.setViewPagerCurrentItme(2);
-
         } else if (id == R.id.line_productnotice) {//提醒
 
 

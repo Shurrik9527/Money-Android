@@ -8,7 +8,6 @@ import android.support.v4.app.FragmentPagerAdapter;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -16,9 +15,7 @@ import android.widget.TextView;
 import com.flyco.tablayout.SlidingTabLayout;
 import com.moyacs.canary.base.BaseFragment2;
 import com.moyacs.canary.base.BaseFragment3;
-import com.moyacs.canary.login.LoginActivity2;
 import com.moyacs.canary.widget.SwitchSlidingViewPager;
-import com.moyacs.canary.widget.UnderLineTextView;
 
 import java.util.ArrayList;
 import java.util.List;

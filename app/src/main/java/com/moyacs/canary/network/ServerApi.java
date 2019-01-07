@@ -1,18 +1,14 @@
 package com.moyacs.canary.network;
 
-import com.moyacs.canary.login.net.MT4Users;
 import com.moyacs.canary.main.deal.net_tab3.TransactionRecordVo;
 import com.moyacs.canary.main.deal.net_tab3.UserAmountVo;
 import com.moyacs.canary.main.homepage.net.BannerDate;
 import com.moyacs.canary.main.market.net.TradeVo;
 import com.moyacs.canary.main.me.UserInfoVo;
-import com.netease.nimlib.sdk.uinfo.model.UserInfo;
 
-import java.util.List;
 import java.util.Map;
 
 import io.reactivex.Observable;
-import io.reactivex.android.schedulers.AndroidSchedulers;
 import retrofit2.Response;
 import retrofit2.http.Field;
 import retrofit2.http.FieldMap;
@@ -31,7 +27,7 @@ public interface ServerApi {
      */
     @FormUrlEncoded
     @POST("login/passwordLogin")
-    Observable<Response<ServerResult<String>>> doLogin(@Field("loginName") String userName, @Field("password") String password);
+    Observable<ServerResult<String>> doLogin(@Field("loginName") String userName, @Field("password") String password);
 
     /**
      * 获取验证码
@@ -40,7 +36,7 @@ public interface ServerApi {
      * @return
      */
     @GET("login/getCode")
-    Observable<Response<ServerResult<String>>> getCode(@Query("loginName") String mobile);
+    Observable<ServerResult<String>> getCode(@Query("loginName") String mobile);
 
     /**
      * 注册
@@ -53,7 +49,7 @@ public interface ServerApi {
      */
     @FormUrlEncoded
     @POST("login/register")
-    Observable<Response<ServerResult<String>>> register(@Field("id") String id,
+    Observable<ServerResult<String>> register(@Field("id") String id,
                                                         @Field("loginName") String mobile,
                                                         @Field("password") String password,
                                                         @Field("userName") String fullname,

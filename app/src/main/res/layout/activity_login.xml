@@ -1,60 +1,47 @@
 <?xml version="1.0" encoding="utf-8"?>
-
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/sub_bg"
     android:fitsSystemWindows="@bool/fitsSystemWindows"
     android:orientation="vertical">
 
-    <RelativeLayout
+    <FrameLayout
         android:layout_width="match_parent"
-        android:layout_height="150dip"
-        android:background="@mipmap/bg_login_top_2">
+        android:layout_height="wrap_content">
+
         <ImageView
-            android:visibility="gone"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:scaleType="centerCrop"
+            android:src="@mipmap/bg_login_top_2" />
+
+        <ImageView
             android:id="@+id/iv_goback"
-            android:layout_width="50dip"
-            android:layout_height="40dip"
-            android:clickable="true"
-            android:maxHeight="@dimen/margin_44dp"
+            android:layout_width="wrap_content"
+            android:layout_height="@dimen/margin_50dp"
             android:paddingLeft="@dimen/margin_16dp"
             android:paddingRight="@dimen/margin_16dp"
             android:src="@mipmap/icon_back_default" />
+    </FrameLayout>
 
-        <!--<ImageView-->
-            <!--android:layout_width="70dip"-->
-            <!--android:layout_height="75dip"-->
-            <!--android:layout_centerInParent="true"-->
-            <!--android:src="@mipmap/icon_login_top_logo" />-->
 
-    </RelativeLayout>
-
-    <LinearLayout
+    <com.flyco.tablayout.SlidingTabLayout
+        android:id="@+id/tablayout"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical">
+        android:layout_height="50dp"
+        android:background="@color/tab_login_reg"
+        app:tl_indicator_color="@color/blue"
+        app:tl_indicator_height="3dp"
+        app:tl_tab_space_equal="true"
+        app:tl_textAllCaps="true"
+        app:tl_textBold="SELECT"
+        app:tl_textSelectColor="@color/white"
+        app:tl_textUnselectColor="@color/grey"
+        app:tl_textsize="@dimen/text_size_16sp" />
 
-        <com.flyco.tablayout.SlidingTabLayout
-            android:id="@+id/tablayout"
-            android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:background="@color/tab_login_reg"
-            app:tl_indicator_color="@color/blue"
-            app:tl_indicator_height="3dp"
-            app:tl_tab_space_equal="true"
-            app:tl_textAllCaps="true"
-            app:tl_textBold="SELECT"
-            app:tl_textSelectColor="@color/white"
-            app:tl_textUnselectColor="@color/grey"
-            app:tl_textsize="@dimen/text_size_16sp" />
-
-        <android.support.v4.view.ViewPager
-            android:id="@+id/viewpager"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent" />
-
-    </LinearLayout>
-
+    <android.support.v4.view.ViewPager
+        android:id="@+id/viewpager"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
 </LinearLayout>

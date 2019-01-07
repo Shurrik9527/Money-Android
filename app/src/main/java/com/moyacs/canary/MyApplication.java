@@ -11,7 +11,7 @@ import android.support.v4.content.ContextCompat;
 import com.blankj.utilcode.util.LogUtils;
 import com.blankj.utilcode.util.ToastUtils;
 import com.blankj.utilcode.util.Utils;
-import com.moyacs.canary.main.MainActivity2;
+import com.moyacs.canary.main.MainActivity;
 import com.moyacs.canary.network.HttpServerManager;
 import com.netease.nimlib.sdk.NIMClient;
 import com.netease.nimlib.sdk.SDKOptions;
@@ -70,7 +70,7 @@ public class MyApplication extends Application {
 
         // 如果将新消息通知提醒托管给 SDK 完成，需要添加以下配置。否则无需设置。
         StatusBarNotificationConfig config = new StatusBarNotificationConfig();
-        config.notificationEntrance = MainActivity2.class; // 点击通知栏跳转到该Activity
+        config.notificationEntrance = MainActivity.class; // 点击通知栏跳转到该Activity
         config.notificationSmallIconId = R.mipmap.ic_launcher;
         // 呼吸灯配置
         config.ledARGB = Color.GREEN;

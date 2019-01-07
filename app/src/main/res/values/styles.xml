@@ -12,23 +12,23 @@
     </style>
 
     <!--<style name="CalendarCard.Root">-->
-        <!--<item name="android:padding">10dp</item>-->
+    <!--<item name="android:padding">10dp</item>-->
     <!--</style>-->
 
     <!--<style name="CalendarCard.Day">-->
-        <!--<item name="android:paddingBottom">5dp</item>-->
-        <!--<item name="android:textSize">12sp</item>-->
-        <!--<item name="android:gravity">center</item>-->
+    <!--<item name="android:paddingBottom">5dp</item>-->
+    <!--<item name="android:textSize">12sp</item>-->
+    <!--<item name="android:gravity">center</item>-->
     <!--</style>-->
 
     <!--<style name="CalendarCard.Days">-->
-        <!--<item name="android:padding">0dp</item>-->
+    <!--<item name="android:padding">0dp</item>-->
     <!--</style>-->
 
     <!--<style name="CalendarCard.Title">-->
-        <!--<item name="android:padding">5dp</item>-->
-        <!--<item name="android:textSize">20sp</item>-->
-        <!--<item name="android:gravity">center</item>-->
+    <!--<item name="android:padding">5dp</item>-->
+    <!--<item name="android:textSize">20sp</item>-->
+    <!--<item name="android:gravity">center</item>-->
     <!--</style>-->
 
 
@@ -148,8 +148,8 @@
     </style>
 
     <!--<style name="popwin_anim_style">-->
-        <!--&lt;!&ndash;<item name="android:windowEnterAnimation">@anim/pop_in_from_bottom</item>&ndash;&gt;-->
-        <!--&lt;!&ndash;<item name="android:windowExitAnimation">@anim/pop_out_from_top</item>&ndash;&gt;-->
+    <!--&lt;!&ndash;<item name="android:windowEnterAnimation">@anim/pop_in_from_bottom</item>&ndash;&gt;-->
+    <!--&lt;!&ndash;<item name="android:windowExitAnimation">@anim/pop_out_from_top</item>&ndash;&gt;-->
     <!--</style>-->
 
     <style name="item_style">
@@ -204,8 +204,8 @@
         <!--<item name="android:windowEnterAnimation">@anim/in_from_right</item>-->
     </style>
 
-    <style name="dialog_trade_ani" parent="ani_in_bottm_out_bottom">
-    </style>
+    <style name="dialog_trade_ani" parent="ani_in_bottm_out_bottom"></style>
+
     <style name="dialog_livetime_ani" parent="ani_in_right_out_right">
 
     </style>
@@ -281,6 +281,7 @@
         <item name="android:windowEnterAnimation">@android:anim/fade_in</item>
         <item name="android:windowExitAnimation">@android:anim/fade_out</item>
     </style>
+
     <style name="dialogactivity_ani">
 
         <!--<item name="android:activityCloseExitAnimation">@anim/out_to_bottom</item>-->
@@ -315,5 +316,17 @@
         <item name="android:backgroundDimEnabled">false</item>
     </style>
 
+    <style name="MyDialog" parent="android:style/Theme.Dialog">
+        <!--背景颜色及和透明程度-->
+        <item name="android:windowBackground">@android:color/transparent</item>
+        <!--是否去除标题 -->
+        <item name="android:windowNoTitle">true</item>
+        <!--是否去除边框-->
+        <item name="android:windowFrame">@null</item>
+        <!--是否浮现在activity之上-->
+        <item name="android:windowIsFloating">true</item>
+        <!--是否模糊-->
+        <item name="android:backgroundDimEnabled">true</item>
+    </style>
 
 </resources>

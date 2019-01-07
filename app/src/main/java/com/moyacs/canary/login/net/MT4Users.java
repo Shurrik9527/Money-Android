@@ -9,8 +9,6 @@ import java.util.List;
  */
 
 public class MT4Users {
-
-
     /**
      * id : 1577
      * mobile : 86-13911531884

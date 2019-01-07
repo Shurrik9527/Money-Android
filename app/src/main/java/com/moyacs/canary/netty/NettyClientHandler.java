@@ -1,18 +1,12 @@
 package com.moyacs.canary.netty;
 
 
-import android.util.Log;
-
-import com.blankj.utilcode.util.LogUtils;
 import com.moyacs.canary.netty.codec.Quotation;
-import com.moyacs.canary.service.SocketService;
 
 import org.greenrobot.eventbus.EventBus;
 
-import java.io.IOException;
 import java.util.concurrent.TimeUnit;
 
-import io.netty.bootstrap.Bootstrap;
 import io.netty.channel.ChannelHandler;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.EventLoop;
@@ -54,7 +48,6 @@ public class NettyClientHandler extends SimpleChannelInboundHandler<Quotation> {
      */
     @Override
     public void channelActive(ChannelHandlerContext ctx) throws Exception {
-        LogUtils.d("channelActive");
         super.channelInactive(ctx);
     }
 
@@ -66,7 +59,6 @@ public class NettyClientHandler extends SimpleChannelInboundHandler<Quotation> {
      */
     @Override
     public void channelInactive(ChannelHandlerContext ctx) throws Exception {
-        LogUtils.d("channelInactive");
         final EventLoop eventLoop = ctx.channel().eventLoop();
         eventLoop.schedule(new Runnable() {
             @Override

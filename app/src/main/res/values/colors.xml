@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools">
     <color name="colorPrimary">#24273e</color>
     <color name="colorPrimaryDark">#24273e</color>
     <color name="colorAccent">#3F51B5</color>
@@ -415,5 +415,5 @@
     <color name="trade_up">#F54A40</color>
     <color name="trade_down">#1FB73C</color>
     <color name="mt4user_not_select">#757575</color>
-    <color name="test_color">#FFCCCC</color>
+    <color name="theme">#24273e</color>
 </resources>

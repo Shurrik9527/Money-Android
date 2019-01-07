@@ -4,26 +4,17 @@ import android.util.Base64;
 
 import com.blankj.utilcode.util.LogUtils;
 import com.blankj.utilcode.util.ToastUtils;
-import com.moyacs.canary.login.net.LoginServer;
-import com.moyacs.canary.login.net.MT4Users;
-import com.moyacs.canary.network.HttpExceptionHandler;
-import com.moyacs.canary.network.HttpResult;
-import com.moyacs.canary.network.HttpServerManager;
 import com.moyacs.canary.network.ServerApi;
 import com.moyacs.canary.network.ServerManger;
 import com.moyacs.canary.network.ServerResult;
 
-import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 
 import io.reactivex.Observer;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.disposables.Disposable;
-import io.reactivex.functions.Action;
-import io.reactivex.functions.Consumer;
 import io.reactivex.schedulers.Schedulers;
-import retrofit2.Response;
 
 /**
  * 作者：luoshen on 2018/3/5 0005 16:22
@@ -61,7 +52,7 @@ public class LoginModulImpl implements LoginContract.LoginModul {
             ToastUtils.showShort("密码格式输入错误");
             return;
         }
-        loginServer.doLogin(userName, base64Pw)
+        /*loginServer.doLogin(userName, base64Pw)
                 .subscribeOn(Schedulers.io())//指定网络请求所在的线程
                 .doOnSubscribe(new Consumer<Disposable>() {
                     @Override
@@ -117,7 +108,7 @@ public class LoginModulImpl implements LoginContract.LoginModul {
                     public void onComplete() {
 
                     }
-                });
+                });*/
     }
 
     @Override
@@ -176,7 +167,7 @@ public class LoginModulImpl implements LoginContract.LoginModul {
     @Override
     public void getCode(String mobile) {
         LogUtils.e("========获取验证码=======");
-        loginServer.getCode(mobile)
+      /*  loginServer.getCode(mobile)
                 .subscribeOn(Schedulers.io())//指定网络请求所在的线程
                 .doOnSubscribe(new Consumer<Disposable>() {
                     @Override
@@ -225,12 +216,12 @@ public class LoginModulImpl implements LoginContract.LoginModul {
                     public void onComplete() {
 
                     }
-                });
+                });*/
     }
 
     @Override
     public void register(String registerId, String mobile, String password, String fullname, String vcode) {
-        String pw = "zst" + password.trim() + "013";
+       /* String pw = "zst" + password.trim() + "013";
         String base64Pw;
         try {
             base64Pw = Base64.encodeToString(pw.getBytes("utf-8"), Base64.DEFAULT).trim();
@@ -287,7 +278,7 @@ public class LoginModulImpl implements LoginContract.LoginModul {
                     public void onComplete() {
 
                     }
-                });
+                });*/
     }
 
     @Override

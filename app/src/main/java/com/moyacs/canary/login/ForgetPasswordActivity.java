@@ -1,21 +1,19 @@
 package com.moyacs.canary.login;
 
-import android.os.Bundle;
 import android.os.CountDownTimer;
-import android.support.annotation.Nullable;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.util.Base64;
-import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 
 import com.blankj.utilcode.util.SPUtils;
 import com.blankj.utilcode.util.ToastUtils;
+import com.moyacs.canary.base.BaseActivity;
 import com.moyacs.canary.common.AppConstans;
+import com.moyacs.canary.network.BaseObservable;
 import com.moyacs.canary.network.ServerManger;
 import com.moyacs.canary.network.ServerResult;
 
@@ -24,15 +22,11 @@ import java.util.HashMap;
 import java.util.Map;
 
 import butterknife.BindView;
-import butterknife.ButterKnife;
-import io.reactivex.Observer;
 import io.reactivex.android.schedulers.AndroidSchedulers;
-import io.reactivex.disposables.Disposable;
 import io.reactivex.schedulers.Schedulers;
-import retrofit2.Response;
 import www.moyacs.com.myapplication.R;
 
-public class ForgetPasswordActivity extends AppCompatActivity {
+public class ForgetPasswordActivity extends BaseActivity {
 
     @BindView(R.id.et_phone)
     EditText etPhone;
@@ -50,13 +44,28 @@ public class ForgetPasswordActivity extends AppCompatActivity {
     private String phone, id;
 
     @Override
-    protected void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_forget_password);
-        ButterKnife.bind(this);
-        initEdViewListener();
-        initListener();
+    protected int getLayoutId() {
+        return R.layout.activity_forget_password;
+    }
+
+    @Override
+    protected void initView() {
         setBtnSubmitStatue();
+    }
+
+    @Override
+    protected void intListener() {
+        initEdViewListener();
+        btnGetCode.setOnClickListener(v -> {
+            downTimer.start();
+            getCode();
+        });
+        btnSubmit.setOnClickListener(v -> forgetPassword());
+        toolbar.setNavigationOnClickListener(v -> finish());
+    }
+
+    @Override
+    protected void initData() {
         if (!TextUtils.isEmpty(SPUtils.getInstance().getString(AppConstans.USER_PHONE))) {
             etPhone.setText(SPUtils.getInstance().getString(AppConstans.USER_PHONE));
         }
@@ -115,28 +124,6 @@ public class ForgetPasswordActivity extends AppCompatActivity {
         });
     }
 
-    private void initListener() {
-        btnGetCode.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                downTimer.start();
-                getCode();
-            }
-        });
-        btnSubmit.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                forgetPassword();
-            }
-        });
-        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                finish();
-            }
-        });
-    }
-
     private void setBtnSubmitStatue() {
         if (TextUtils.isEmpty(etPhone.getText().toString())
                 || TextUtils.isEmpty(etCode.getText().toString())
@@ -156,36 +143,24 @@ public class ForgetPasswordActivity extends AppCompatActivity {
             ToastUtils.showShort("输入的手机号码不符合规范");
             return;
         }
-        ServerManger.getInstance().getServer().getCode(phone)
+        addSubscribe(ServerManger.getInstance().getServer().getCode(phone)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Observer<Response<ServerResult<String>>>() {
-                    @Override
-                    public void onSubscribe(Disposable d) {
-
-                    }
-
-                    @Override
-                    public void onNext(Response<ServerResult<String>> serverResultResponse) {
-                        ServerResult<String> serverResult = serverResultResponse.body();
-                        if (serverResultResponse.isSuccessful() && serverResult != null && serverResult.isSuccess()) {
-                            ToastUtils.showShort("验证码已下发，请注意查收");
-                            id = serverResult.getData();
-                        } else {
-                            onError(new Throwable("服务器异常，请稍后再试！"));
-                        }
-                    }
-
+                .subscribeWith(new BaseObservable<ServerResult<String>>() {
                     @Override
                     public void onError(Throwable e) {
+
                         ToastUtils.showShort(e.getMessage());
                     }
 
-                    @Override
-                    public void onComplete() {
 
+                    @Override
+                    protected void requestSuccess(ServerResult<String> data) {
+                        id = data.getData();
+                        ToastUtils.showShort("验证码已下发，请注意查收");
                     }
-                });
+                }));
+
     }
 
     private void forgetPassword() {
@@ -195,7 +170,7 @@ public class ForgetPasswordActivity extends AppCompatActivity {
             ToastUtils.showShort("您输入的验证码不符合规范");
             return;
         }
-        if (TextUtils.isEmpty(pwd) || pwd.length() < 6) {
+        if (TextUtils.isEmpty(pwd) || pwd.length() < 6 || pwd.length() > 12) {
             ToastUtils.showShort("您输入的密码不符合规范");
             return;
         }
@@ -213,35 +188,20 @@ public class ForgetPasswordActivity extends AppCompatActivity {
             return;
         }
         map.put("password", base64Pw);
-        ServerManger.getInstance().getServer().forgetPassWord(map)
+        addSubscribe(ServerManger.getInstance().getServer().forgetPassWord(map)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Observer<ServerResult<String>>() {
-                    @Override
-                    public void onSubscribe(Disposable d) {
-
-                    }
-
-                    @Override
-                    public void onNext(ServerResult<String> stringServerResult) {
-                        if (stringServerResult.isSuccess()) {
-                            ToastUtils.showShort("密码重置成功");
-                            finish();
-                        } else {
-                            onError(new Exception("服务器异常，请稍后再试！"));
-                        }
-                    }
-
+                .subscribeWith(new BaseObservable<ServerResult<String>>() {
                     @Override
                     public void onError(Throwable e) {
                         ToastUtils.showShort(e.getMessage());
                     }
 
                     @Override
-                    public void onComplete() {
-
+                    protected void requestSuccess(ServerResult<String> data) {
+                        ToastUtils.showShort("密码重置成功");
                     }
-                });
+                }));
     }
 
     /**

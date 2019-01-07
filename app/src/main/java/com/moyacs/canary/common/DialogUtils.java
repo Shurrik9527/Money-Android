@@ -5,7 +5,7 @@ import android.content.Intent;
 import android.graphics.Color;
 
 import com.blankj.utilcode.util.SPUtils;
-import com.moyacs.canary.login.LoginActivity2;
+import com.moyacs.canary.login.LoginActivity;
 
 import net.lemonsoft.lemonhello.LemonHello;
 import net.lemonsoft.lemonhello.LemonHelloAction;
@@ -41,7 +41,7 @@ public class DialogUtils {
                     @Override
                     public void onClick(LemonHelloView lemonHelloView, LemonHelloInfo lemonHelloInfo, LemonHelloAction lemonHelloAction) {
                         SPUtils.getInstance().clear();
-                        context.startActivity(new Intent(context, LoginActivity2.class));
+                        context.startActivity(new Intent(context, LoginActivity.class));
                         lemonHelloView.hide();
                     }
                 }))

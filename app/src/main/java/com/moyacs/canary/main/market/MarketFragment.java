@@ -1,7 +1,6 @@
 
 package com.moyacs.canary.main.market;
 
-import android.graphics.Color;
 import android.os.Handler;
 import android.os.Looper;
 import android.text.TextUtils;
@@ -21,7 +20,6 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
-import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -32,26 +30,15 @@ import com.moyacs.canary.base.BaseFragment2;
 import com.moyacs.canary.common.AppConstans;
 import com.moyacs.canary.common.DialogUtils;
 import com.moyacs.canary.common.NumberUtils;
-import com.moyacs.canary.login.LoginActivity2;
-import com.moyacs.canary.main.MainActivity2;
 import com.moyacs.canary.main.market.contract.MarketContract;
 import com.moyacs.canary.main.market.contract.MarketPresenterImpl;
 import com.moyacs.canary.main.market.net.MarketDataBean;
 import com.moyacs.canary.main.market.net.TradeVo;
 import com.moyacs.canary.netty.codec.Quotation;
-import com.moyacs.canary.product_fxbtg.Optional;
 import com.moyacs.canary.product_fxbtg.ProductActivity;
-import com.moyacs.canary.service.SocketService;
 import com.moyacs.canary.widget.UnderLineTextView;
-import com.moyacs.canary.widget.pullrefreshlayout.ClassicsHeader;
 import com.yan.pullrefreshlayout.PullRefreshLayout;
 
-
-import net.lemonsoft.lemonhello.LemonHello;
-import net.lemonsoft.lemonhello.LemonHelloAction;
-import net.lemonsoft.lemonhello.LemonHelloInfo;
-import net.lemonsoft.lemonhello.LemonHelloView;
-import net.lemonsoft.lemonhello.interfaces.LemonHelloActionDelegate;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
@@ -59,15 +46,11 @@ import org.greenrobot.eventbus.ThreadMode;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.TimeUnit;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.Unbinder;
-import io.reactivex.Observable;
-import io.reactivex.android.schedulers.AndroidSchedulers;
-import io.reactivex.functions.Consumer;
 import www.moyacs.com.myapplication.R;
 
 
@@ -77,9 +60,9 @@ import www.moyacs.com.myapplication.R;
  * 说明：行情页面
  */
 
-public class MarketFragment2 extends BaseFragment2 implements MarketContract.MarketView {
+public class MarketFragment extends BaseFragment2 implements MarketContract.MarketView {
 
-    private static final String TAG = "MarketFragment2";
+    private static final String TAG = "MarketFragment";
     @BindView(R.id.tab1)
     UnderLineTextView tab1;
     @BindView(R.id.tab2)

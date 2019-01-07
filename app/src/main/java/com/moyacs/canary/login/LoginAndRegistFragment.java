@@ -2,7 +2,6 @@ package com.moyacs.canary.login;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 
@@ -11,7 +10,6 @@ import com.moyacs.canary.login.contract.LoginContract;
 import com.moyacs.canary.login.contract.LoginContract.LoginView;
 import com.moyacs.canary.login.contract.LoginPresenterImpl;
 import com.moyacs.canary.login.net.MT4Users;
-import com.moyacs.canary.network.HttpResult;
 import com.moyacs.canary.network.ServerResult;
 
 /**

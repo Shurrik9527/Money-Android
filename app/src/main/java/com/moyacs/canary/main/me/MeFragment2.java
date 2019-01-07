@@ -1,14 +1,11 @@
 package com.moyacs.canary.main.me;
 
-import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -23,12 +20,11 @@ import com.moyacs.canary.base.BaseFragment2;
 import com.moyacs.canary.common.AppConstans;
 import com.moyacs.canary.common.DialogUtils;
 import com.moyacs.canary.im.KefuActivity;
-import com.moyacs.canary.login.LoginActivity2;
+import com.moyacs.canary.login.LoginActivity;
 import com.moyacs.canary.network.ServerManger;
 import com.moyacs.canary.network.ServerResult;
 import com.moyacs.canary.news.NewsActivity;
 import com.moyacs.canary.widget.CircleImageView;
-import com.moyacs.canary.widget.RoundProgressBar;
 import com.netease.nimlib.sdk.NIMClient;
 import com.netease.nimlib.sdk.RequestCallback;
 import com.netease.nimlib.sdk.auth.AuthService;
@@ -169,7 +165,7 @@ public class MeFragment2 extends BaseFragment2 {
         switch (view.getId()) {
             case R.id.btn_login:
                 //登录
-                intent = new Intent(context, LoginActivity2.class);
+                intent = new Intent(context, LoginActivity.class);
                 startActivity(intent);
                 break;
             case R.id.rl_openaccount:

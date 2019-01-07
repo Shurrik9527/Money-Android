@@ -12,6 +12,4 @@ public interface BasePresenter {
      * 解除所有订阅，防止内存泄漏
      */
     void unsubscribe();
-
-
 }

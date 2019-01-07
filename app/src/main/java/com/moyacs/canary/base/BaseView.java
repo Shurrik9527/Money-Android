@@ -7,11 +7,11 @@ package com.moyacs.canary.base;
  */
 
 public interface BaseView {
-
     /**
      * 解除所有订阅，防止内存泄漏
      */
     void unsubscribe();
+
     /**
      * 显示加载框
      */
@@ -21,6 +21,4 @@ public interface BaseView {
      * 取消加载框
      */
     void dismissLoadingDialog();
-
-
 }

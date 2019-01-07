@@ -14,7 +14,7 @@
         android:background="@drawable/input_login_stork_round">
 
         <EditText
-            android:id="@+id/ed_uname"
+            android:id="@+id/et_phone"
             android:layout_width="match_parent"
             android:layout_height="@dimen/margin_45dp"
             android:layout_centerVertical="true"
