@@ -32,7 +32,6 @@ import www.moyacs.com.myapplication.R;
  */
 
 public class MyApplication extends Application {
-
     //    private WebView mWebView ;
     @Override
     public void onCreate() {

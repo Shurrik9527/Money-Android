@@ -4,6 +4,7 @@ import com.blankj.utilcode.util.LogUtils;
 import com.moyacs.canary.main.homepage.net.BannerDate;
 import com.moyacs.canary.main.homepage.net.DealChanceDate;
 import com.moyacs.canary.main.market.net.MarketDataBean;
+import com.moyacs.canary.main.market.net.TradeVo;
 import com.moyacs.canary.network.HttpConstants;
 import com.moyacs.canary.network.HttpResult;
 import com.moyacs.canary.network.ServerManger;
@@ -34,8 +35,8 @@ public class MarketPresenterImpl implements MarketContract.MarketPresenter, Mark
     }
 
     @Override
-    public void getMarketList(String server,String type) {
-        modul.getMarketList(server,type);
+    public void getMarketList(String server, String type) {
+        modul.getMarketList(server, type);
     }
 
     @Override
@@ -118,5 +119,20 @@ public class MarketPresenterImpl implements MarketContract.MarketPresenter, Mark
     @Override
     public void doOnNext(List<MarketDataBean> result) {
         view.doOnNext(result);
+    }
+
+    @Override
+    public void getTradListSuccess(List<TradeVo.Trade> list) {
+        view.getTradListSuccess(list);
+    }
+
+    @Override
+    public void getTradListFiled(String filedMsg) {
+        view.getTradListFiled(filedMsg);
+    }
+
+    @Override
+    public void getTradList() {
+        modul.getTradList();
     }
 }

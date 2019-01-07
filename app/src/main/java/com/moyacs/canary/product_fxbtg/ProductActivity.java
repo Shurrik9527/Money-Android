@@ -705,7 +705,6 @@ public class ProductActivity extends BaseActivity2 implements OnClickListener {
 
         } else if (id == R.id.line_product_line) {//辅助线
 
-
         } else if (id == R.id.line_productqa) {//帮助说明
 
         } else if (id == R.id.goWeipanListView) {

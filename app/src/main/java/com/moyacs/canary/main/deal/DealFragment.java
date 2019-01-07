@@ -36,8 +36,6 @@ import www.moyacs.com.myapplication.R;
  */
 
 public class DealFragment extends BaseFragment2 {
-
-
     private static final String TAG = "DealFragment";
     Unbinder unbinder;
     @BindView(R.id.desView)
@@ -68,12 +66,10 @@ public class DealFragment extends BaseFragment2 {
         View rootView = inflater.inflate(R.layout.fragment_deal, null, false);
         unbinder = ButterKnife.bind(this, rootView);
         initFragments();
-
+        viewpager.setOffscreenPageLimit(2);
         MyPagerAdapter myPagerAdapter = new MyPagerAdapter(getChildFragmentManager());
         viewpager.setAdapter(myPagerAdapter);
         tablayout.setViewPager(viewpager);
-//        viewpager.setCurrentItem(0);
-
         return rootView;
     }
 
@@ -111,7 +107,6 @@ public class DealFragment extends BaseFragment2 {
         Deal_tab2_Fragment deal_tab2_fragment = new Deal_tab2_Fragment();
         mFragments.add(deal_tab2_fragment);
         mFragments.add(new Deal_tab3_Fragment());
-
     }
 
     @Override
@@ -139,7 +134,6 @@ public class DealFragment extends BaseFragment2 {
                 break;
             case R.id.btn_help_trade://标题右侧
                 break;
-
         }
     }
 
@@ -163,6 +157,4 @@ public class DealFragment extends BaseFragment2 {
             return mFragments.get(position);
         }
     }
-
-
 }

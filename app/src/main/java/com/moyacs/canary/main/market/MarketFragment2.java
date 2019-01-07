@@ -203,7 +203,7 @@ public class MarketFragment2 extends BaseFragment2 implements MarketContract.Mar
         /**
          * 获取自选列表
          */
-//        presenter.getMarketList("13232323636", "DEMO");
+//        presenter.getMarketList_type("13232323636", "2");
     }
 
     @Override
@@ -594,17 +594,16 @@ public class MarketFragment2 extends BaseFragment2 implements MarketContract.Mar
     public void getTradList(List<TradeVo.Trade> list) {
         tradeList = new ArrayList<>();
         tradeList.addAll(list);
+        presenter.getMarketList_type("live", String.valueOf(type_showTab));
     }
 
     public class MyRecyclerAdapter extends RecyclerView.Adapter<MyRecyclerAdapter.ViewHolder> {
         public static final int TYPE_FOOTER = 1;  //说明是带有Footer的
         public static final int TYPE_NORMAL = 2;  //说明是不带有header和footer的
 
-
         public void setFooterView(View footerView) {
             notifyItemInserted(getItemCount() - 1);
         }
-
 
         @Override
         public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
@@ -710,7 +709,7 @@ public class MarketFragment2 extends BaseFragment2 implements MarketContract.Mar
                         }
 
                         //价格  执行动画
-//                    getAnimator(holder.tvPrice, Animatorcolor);
+                        getAnimator(holder.tvPrice, Animatorcolor);
                         //买入价的字体颜色 ，与 涨跌幅的背景颜色一致
                         holder.tvPrice.setTextColor(rangeColor);
                         holder.tvSale.setTextColor(rangeColor);
@@ -811,11 +810,6 @@ public class MarketFragment2 extends BaseFragment2 implements MarketContract.Mar
                     holder.itemView.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
-                            /*int mt4id = SPUtils.getInstance().getInt(AppConstans.mt4id, -1);
-                            if (mt4id == -1) {
-4
-                                return;
-                            }*/
                             //跳转详情页面
                             Intent intent = new Intent(getContext(), ProductActivity.class);
                             //中文名
@@ -919,9 +913,9 @@ public class MarketFragment2 extends BaseFragment2 implements MarketContract.Mar
     /**
      * 渐变动画
      */
-    private void getAnimator(View view, int resultColor) {
+    private void getAnimator(final View view, final int resultColor) {
         colorAnim = ObjectAnimator.ofInt(view, "backgroundColor", getResources().getColor(R.color.white), resultColor);
-        colorAnim.setDuration(80); // 动画时间为2s
+        colorAnim.setDuration(500); // 动画时间为2s
         colorAnim.setEvaluator(new ArgbEvaluator()); // 设置估值器
         //监听动画执行完毕
         colorAnim.addListener(new AnimatorListenerAdapter() {

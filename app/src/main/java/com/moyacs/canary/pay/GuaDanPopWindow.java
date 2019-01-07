@@ -1,7 +1,6 @@
 package com.moyacs.canary.pay;
 
 import android.app.Activity;
-import android.content.Context;
 import android.content.Intent;
 import android.graphics.drawable.ColorDrawable;
 import android.text.TextUtils;
@@ -9,7 +8,6 @@ import android.view.Gravity;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.PopupWindow;
 import android.widget.SeekBar;
@@ -17,7 +15,6 @@ import android.widget.TextView;
 
 import com.blankj.utilcode.util.LogUtils;
 import com.blankj.utilcode.util.SPUtils;
-import com.blankj.utilcode.util.SpanUtils;
 import com.blankj.utilcode.util.ToastUtils;
 import com.moyacs.canary.common.AppConstans;
 import com.moyacs.canary.common.RSAKeyManger;
@@ -30,7 +27,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Observable;
 
 import io.reactivex.Observer;
 import io.reactivex.android.schedulers.AndroidSchedulers;
@@ -67,12 +63,13 @@ public class GuaDanPopWindow implements View.OnClickListener {
     private TextView tvTotalMoney;//总价
     private TextView tvTradeName; // 产品名字
     private TextView tvTradeValue;//产品价格
-    private Button btnSubmit;
+    private Button btnSubmit; // 下单
     private TextView tvNightFee; //过夜费
-    private TextView tvFee;
+    private TextView tvFee; //手续费
     private TextView tvRateTips; // 波动提示
-    private EditText etGuaDanLot;// 挂单浮动
-    private EditText etGuaDanPic;//挂单单价
+    private LotEditText etGuaDanLot;// 挂单浮动
+    private MoneyEditText etGuaDanPic;//挂单单价
+    private TextView tvRange;//挂单范围
 
 
     private List<TextView> textViewList;
@@ -158,6 +155,7 @@ public class GuaDanPopWindow implements View.OnClickListener {
         tvRateTips = view.findViewById(R.id.tv_rateTips);
         etGuaDanLot = view.findViewById(R.id.et_guaDanLot);
         etGuaDanPic = view.findViewById(R.id.et_guaDanPic);
+        tvRange = view.findViewById(R.id.tv_range);
         //充值
         TextView tvRecharge = view.findViewById(R.id.tv_recharge);
 
@@ -183,9 +181,22 @@ public class GuaDanPopWindow implements View.OnClickListener {
         btnZhiyingLess.setOnClickListener(this);
         btnZhiyingAdd.setOnClickListener(this);
         btnSubmit.setOnClickListener(this);
-        onClick(tvBuyUp);
-        onClick(tvMongey01);
-        onClick(tvSize01);
+        etGuaDanPic.setTextChangeListener(new MoneyEditText.TextChangeListener() {
+            @Override
+            public void textChangeCallBack(float textValue) {
+                float startValue = textValue - etGuaDanLot.getTextValue();
+                float endValue = etGuaDanLot.getTextValue() + textValue;
+                tvRange.setText("成交价格范围：" + startValue + "~" + endValue);
+            }
+        });
+        etGuaDanLot.setTextChangeListener(new LotEditText.TextChangeListener() {
+            @Override
+            public void onTextChangeCallBack(int lot) {
+                float startValue = etGuaDanPic.getTextValue() - lot;
+                float endValue = lot + etGuaDanPic.getTextValue();
+                tvRange.setText("成交价格范围：" + startValue + "~" + endValue);
+            }
+        });
         setValue();
     }
 
@@ -197,6 +208,9 @@ public class GuaDanPopWindow implements View.OnClickListener {
         tvTradeValue.setText(priceBuy);
         tvTradeName.setText(symbolName);
 
+        onClick(tvBuyUp);
+        onClick(tvMongey01);
+        onClick(tvSize01);
     }
 
     public void showWindow(View view) {

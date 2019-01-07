@@ -29,8 +29,6 @@ import www.moyacs.com.myapplication.R;
  * 完善用户资料页面
  */
 public class UserInformationActivity extends BaseActivity2 {
-
-
     private WebView webView;
     private String url;
 

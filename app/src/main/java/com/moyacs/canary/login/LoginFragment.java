@@ -5,6 +5,7 @@ import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.Editable;
@@ -223,7 +224,6 @@ public class LoginFragment extends LoginAndRegistFragment {
         LogUtils.d("doOnNext  :  " + result.getData());
         //将 token 存入本地
         SPUtils.getInstance().put(AppConstans.token, result.getData());
-
     }
 
     /**
@@ -346,6 +346,7 @@ public class LoginFragment extends LoginAndRegistFragment {
     @Override
     public void uploadPubKeySuccess() {
         ToastUtils.showShort("登陆成功");
+        SPUtils.getInstance().put(AppConstans.USER_PHONE,userName);
         startActivity(new Intent(getContext(), MainActivity2.class));
     }
 }

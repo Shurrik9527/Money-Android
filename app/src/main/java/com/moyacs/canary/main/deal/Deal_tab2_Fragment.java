@@ -2,6 +2,7 @@ package com.moyacs.canary.main.deal;
 
 import android.graphics.Color;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -103,13 +104,6 @@ public class Deal_tab2_Fragment extends BaseFragment3 implements ChiCangCountrac
     }
 
     @Override
-    public void setUserVisibleHint(boolean isVisibleToUser) {
-        super.setUserVisibleHint(isVisibleToUser);
-        Log.i(TAG, "setUserVisibleHint:  " + isVisibleToUser);
-    }
-
-
-    @Override
     protected void initBundleData(Bundle bundle) {
 
     }
@@ -128,7 +122,7 @@ public class Deal_tab2_Fragment extends BaseFragment3 implements ChiCangCountrac
         if (presenter == null) {
             return;
         }
-        presenter.getChiCangList();
+//        presenter.getChiCangList();
     }
 
     /**
@@ -139,6 +133,8 @@ public class Deal_tab2_Fragment extends BaseFragment3 implements ChiCangCountrac
         manager.setOrientation(LinearLayoutManager.VERTICAL);
         recyclerView.addItemDecoration(new MyDecoration(getActivity(), LinearLayoutManager.VERTICAL));
         recyclerView.setLayoutManager(manager);
+        myRecyclerAdapter = new MyRecyclerAdapter();
+        recyclerView.setAdapter(myRecyclerAdapter);
     }
 
     @Override
@@ -156,7 +152,7 @@ public class Deal_tab2_Fragment extends BaseFragment3 implements ChiCangCountrac
             @Override
             public void onRefresh() {
                 Log.i("Deal_tab3_Fragment", "onRefresh: ");
-                presenter.getChiCangList();
+//                presenter.getChiCangList();
             }
 
             @Override
@@ -225,10 +221,7 @@ public class Deal_tab2_Fragment extends BaseFragment3 implements ChiCangCountrac
                     }
                 }
             }
-            if (myRecyclerAdapter == null) {
-                myRecyclerAdapter = new MyRecyclerAdapter();
-            }
-            recyclerView.setAdapter(myRecyclerAdapter);
+            myRecyclerAdapter.notifyDataSetChanged();
         }
     }
 
@@ -312,6 +305,11 @@ public class Deal_tab2_Fragment extends BaseFragment3 implements ChiCangCountrac
         }
 
         @Override
+        public void onBindViewHolder(@NonNull ViewHolder viewHolder, int i) {
+
+        }
+
+        /*    @Override
         public void onBindViewHolder(final ViewHolder holder, final int position) {
             final TransactionRecordVo.Record record = recyclerList.get(position);
             //品种名称
@@ -408,14 +406,16 @@ public class Deal_tab2_Fragment extends BaseFragment3 implements ChiCangCountrac
                 holder.tvRateChange.setText(s1);
                 holder.tvRateChange.setTextColor(getResources().getColor(R.color.color_opt_lt));
             }
-        }
+        }*/
 
         @Override
         public int getItemCount() {
-            if (recyclerList == null) {
+           /* if (recyclerList == null) {
                 return 0;
             }
-            return recyclerList.size();
+            return recyclerList.size();*/
+
+            return 10;
         }
 
         /**

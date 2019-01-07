@@ -60,16 +60,17 @@
                         android:textColor="@color/app_common_content"
                         android:textSize="@dimen/text_size_15sp" />
 
-                    <EditText
-                        android:inputType="numberDecimal"
+                    <com.moyacs.canary.pay.MoneyEditText
                         android:id="@+id/et_guaDanPic"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="@dimen/margin_16dp"
                         android:background="@drawable/et_guadan_bg"
                         android:hint="请输入挂单价"
+                        android:inputType="numberDecimal"
                         android:singleLine="true"
-                        android:textSize="@dimen/text_size_15sp" />
+                        android:textColorHint="@color/blackTransparent"
+                        android:textSize="@dimen/text_size_14sp" />
                 </LinearLayout>
 
                 <LinearLayout
@@ -85,15 +86,15 @@
                         android:textColor="@color/app_common_content"
                         android:textSize="@dimen/text_size_14sp" />
 
-                    <EditText
-                        android:inputType="number"
+                    <com.moyacs.canary.pay.LotEditText
                         android:id="@+id/et_guaDanLot"
                         android:layout_width="@dimen/margin_50dp"
                         android:layout_height="wrap_content"
                         android:background="@drawable/et_guadan_bg"
                         android:gravity="center"
+                        android:inputType="number"
                         android:singleLine="true"
-                        android:text="0"
+                        android:text="3"
                         android:textSize="@dimen/text_size_14sp" />
 
                     <TextView
@@ -106,6 +107,7 @@
                 </LinearLayout>
 
                 <TextView
+                    android:id="@+id/tv_range"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/margin_10dp"

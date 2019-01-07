@@ -41,7 +41,7 @@ public abstract class BaseActivity2 extends AppCompatActivity {
         avLoading = findViewById(R.id.avi_loading);
         appBarLayout = findViewById(R.id.appbarlayout);
         initContentView();
-        initToolbar("汇大师");
+        initToolbar(getString(R.string.app_name));
         Intent intent = getIntent();
         initIntentData(intent);
 
@@ -93,7 +93,7 @@ public abstract class BaseActivity2 extends AppCompatActivity {
         //显示返回按钮
         if (isShowBack()) {
             //设置返回键为白色
-            Drawable upArrow = ContextCompat.getDrawable(this, R.drawable.abc_ic_ab_back_material);
+            Drawable upArrow = ContextCompat.getDrawable(this, R.drawable.ic_break);
             upArrow.setColorFilter(getResources().getColor(R.color.white), PorterDuff.Mode.SRC_ATOP);
             getSupportActionBar().setHomeAsUpIndicator(upArrow);
 

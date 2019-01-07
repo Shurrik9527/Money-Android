@@ -10,6 +10,7 @@ import com.moyacs.canary.main.homepage.net.BannerDate;
 import com.moyacs.canary.main.homepage.net.DealChanceDate;
 import com.moyacs.canary.main.homepage.net.HomePageServer;
 import com.moyacs.canary.main.market.net.MarketDataBean;
+import com.moyacs.canary.main.market.net.TradeVo;
 import com.moyacs.canary.network.HttpExceptionHandler;
 import com.moyacs.canary.network.HttpResult;
 import com.moyacs.canary.network.HttpServerManager;
@@ -213,6 +214,38 @@ public class MarketMudulImpl implements MarketContract.MarketModul {
                     public void onError(Throwable e) {
                         String throwable = HttpExceptionHandler.getThrowable(e);
                         listener.getDealChanceListResponseFailed(throwable);
+                    }
+
+                    @Override
+                    public void onComplete() {
+
+                    }
+                });
+    }
+
+    @Override
+    public void getTradList() {
+        ServerManger.getInstance().getServer().getTradList("0", "0")
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Observer<ServerResult<TradeVo>>() {
+                    @Override
+                    public void onSubscribe(Disposable d) {
+
+                    }
+
+                    @Override
+                    public void onNext(ServerResult<TradeVo> tradeVoServerResult) {
+                        if (tradeVoServerResult.isSuccess()) {
+                            listener.getTradListSuccess(tradeVoServerResult.getData().getList());
+                        } else {
+                            listener.getTradListFiled("服务器异常");
+                        }
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        listener.getTradListFiled("服务器异常");
                     }
 
                     @Override

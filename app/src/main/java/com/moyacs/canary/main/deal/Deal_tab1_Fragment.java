@@ -63,7 +63,6 @@ public class Deal_tab1_Fragment extends BaseFragment2 {
         recyclerView.setLayoutManager(manager);
         MyRecyclerAdapter myRecyclerAdapter = new MyRecyclerAdapter();
         recyclerView.setAdapter(myRecyclerAdapter);
-
     }
 
     /**
@@ -98,7 +97,6 @@ public class Deal_tab1_Fragment extends BaseFragment2 {
             @Override
             public void onLoading() {
                 LogUtils.d("pullrefreshLayout :    onLoading ");
-
             }
         });
 

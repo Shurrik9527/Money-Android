@@ -368,7 +368,9 @@ public class Deal_tab3_Fragment extends BaseFragment3 implements FundCountract.F
 
     @Override
     public void getFundSucess(UserAmountVo result) {
-        Log.i("Deal_tab3_Fragment", "getFundSucess:获取资金数据成功 ");
+        if (result == null) {
+            return;
+        }
         balance = result.getBalance();
         //设置余额和保证金
         tvTotalMoney.setText(balance);

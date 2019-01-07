@@ -16,6 +16,7 @@ import android.support.annotation.Nullable;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -53,7 +54,9 @@ import com.moyacs.canary.main.homepage.contract.MarketPresenterImpl;
 import com.moyacs.canary.main.homepage.net.BannerDate;
 import com.moyacs.canary.main.homepage.net.DealChanceDate;
 import com.moyacs.canary.main.market.net.MarketDataBean;
+import com.moyacs.canary.main.market.net.TradeVo;
 import com.moyacs.canary.netty.codec.Quotation;
+import com.moyacs.canary.product_fxbtg.ProductActivity;
 import com.moyacs.canary.widget.pullrefreshlayout.ClassicsHeader;
 import com.yan.pullrefreshlayout.PullRefreshLayout;
 import com.youth.banner.Banner;
@@ -130,6 +133,8 @@ public class HomepageFragment2 extends BaseFragment2 implements MarketContract.M
      */
     private BaseDelegateAdapter horizontalRecyclerAdapter;
 
+    private List<TradeVo.Trade> tradeList; // 可交易外汇列表
+
     @Override
     protected View addChildInflaterView(LayoutInflater inflater) {
         Log.i(TAG, "onCreateView:   addChildInflaterView");
@@ -175,8 +180,8 @@ public class HomepageFragment2 extends BaseFragment2 implements MarketContract.M
             presenter.getDealChanceList(10, 0);
         }
         //防止重复加载数据
-        if (list_recycler == null) {
-            presenter.getMarketList("demo", "");
+        if (tradeList == null) {
+            presenter.getTradList();
         }
         SPUtils instance = SPUtils.getInstance(AppConstans.allMarket);
         String allMarket = instance.getString(AppConstans.allMarket, "");
@@ -212,6 +217,9 @@ public class HomepageFragment2 extends BaseFragment2 implements MarketContract.M
             @Override
             public void onRefresh() {
                 if (presenter == null) {
+                    return;
+                }
+                if (tradeList == null && tradeList.size() <= 0) {
                     return;
                 }
                 presenter.getMarketList("demo", "");
@@ -316,10 +324,7 @@ public class HomepageFragment2 extends BaseFragment2 implements MarketContract.M
                 LinearLayout.LayoutParams layoutParams_new1 =
                         new LinearLayout.LayoutParams(0, layoutParams_old1.height, 100 - range);
                 iv_tradeDown.setLayoutParams(layoutParams_new1);
-
-
             }
-
         };
         adapters.add(baseDelegateAdapter_vertical_item);
     }
@@ -345,7 +350,6 @@ public class HomepageFragment2 extends BaseFragment2 implements MarketContract.M
             @Override
             public void onBindViewHolder(BaseViewHolder holder, int position) {
                 super.onBindViewHolder(holder, position);
-
                 RecyclerView recyclerView = holder.getView(R.id.recyclerView);
                 LinearLayoutManager linearLayoutManager = new LinearLayoutManager(context);
                 linearLayoutManager.setOrientation(LinearLayoutManager.HORIZONTAL);
@@ -353,9 +357,7 @@ public class HomepageFragment2 extends BaseFragment2 implements MarketContract.M
 
                 myHorizontalRecyclerAdapter = new MyHorizontalRecyclerAdapter();
                 recyclerView.setAdapter(myHorizontalRecyclerAdapter);
-
             }
-
         };
         adapters.add(horizontalRecyclerAdapter);
     }
@@ -387,10 +389,7 @@ public class HomepageFragment2 extends BaseFragment2 implements MarketContract.M
                         startActivity(new Intent(getContext(), KefuActivity.class));
                     }
                 });
-
-
             }
-
         };
         adapters.add(baseDelegateAdapter);
     }
@@ -498,20 +497,24 @@ public class HomepageFragment2 extends BaseFragment2 implements MarketContract.M
             myHorizontalRecyclerAdapter.notifyDataSetChanged();
             return;
         }
-        //给全局对象赋值
-        marketDataBeanList = new ArrayList<>(result);
-        list_recycler = new ArrayList<>(result);
-        for (int i = 0; i < list_recycler.size(); i++) {
-            MarketDataBean marketDataBean = list_recycler.get(i);
-            if (marketDataBean.getSymbol().endsWith("Min")) {
-                list_recycler.remove(i);
+        List<MarketDataBean> listData = new ArrayList<>();
+        for (int i = 0; i < result.size(); i++) {
+            MarketDataBean marketDataBean = result.get(i);
+            for (TradeVo.Trade trade : tradeList) {
+                if (TextUtils.equals(marketDataBean.getSymbol(), trade.getSymbolCode())) {
+                    marketDataBean.setTrade(trade);
+                    listData.add(marketDataBean);
+                }
             }
         }
+        //给全局对象赋值
+        marketDataBeanList = new ArrayList<>(listData);
+        list_recycler = new ArrayList<>(listData);
         myHorizontalRecyclerAdapter.notifyDataSetChanged();
         //将所有的品种 按照  （英文 - 中文）  这种格式存入 sp
         SPUtils spUtils = SPUtils.getInstance(AppConstans.allMarket_en_cn);
-        for (int i = 0; i < result.size(); i++) {
-            MarketDataBean marketDataBean = result.get(i);
+        for (int i = 0; i < listData.size(); i++) {
+            MarketDataBean marketDataBean = listData.get(i);
             spUtils.put(marketDataBean.getSymbol(), marketDataBean.getSymbol_cn());
         }
     }
@@ -565,6 +568,22 @@ public class HomepageFragment2 extends BaseFragment2 implements MarketContract.M
         Log.i(TAG, "doOnNext:    " + s);
     }
 
+    @Override
+    public void getTradListSuccess(List<TradeVo.Trade> list) {
+        if (tradeList == null) {
+            tradeList = new ArrayList<>();
+        }
+        tradeList.clear();
+        tradeList.addAll(list);
+        presenter.getMarketList("live", "");
+    }
+
+
+    @Override
+    public void getTradListFiled(String filedMsg) {
+
+    }
+
     /**
      * 上一次的价格
      */
@@ -602,7 +621,7 @@ public class HomepageFragment2 extends BaseFragment2 implements MarketContract.M
         }
 
         @Override
-        public void onBindViewHolder(ViewHolder holder, int position) {
+        public void onBindViewHolder(ViewHolder holder, final int position) {
             if (list_recycler == null) {
                 return;
             }
@@ -616,7 +635,6 @@ public class HomepageFragment2 extends BaseFragment2 implements MarketContract.M
 
 //                    即将赋值的价格
 //                    double newPrice_d = marketDataBean.getPrice_buy();
-
                 double newPrice_d = marketDataBean.getPrice_buy() == 0 ? marketDataBean.getOpen() : marketDataBean.getPrice_buy();
                 //根据保留的小数位截取数据
                 String newPrice_d_scale = NumberUtils.setScale(newPrice_d, marketDataBean.getDigit());
@@ -678,6 +696,13 @@ public class HomepageFragment2 extends BaseFragment2 implements MarketContract.M
                     holder.tvvalueAndRate.setTextColor(rangeColor);
                 }
             }
+            //外汇点击进入详情
+            holder.itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    intentProductActivity(marketDataBeanList.get(position));
+                }
+            });
         }
 
      /*   @Override
@@ -809,7 +834,7 @@ public class HomepageFragment2 extends BaseFragment2 implements MarketContract.M
      * 渐变动画
      */
     private void getAnimator(final View view, final int resultColor) {
-        if (colorAnim != null && colorAnim.isRunning()) {
+  /*      if (colorAnim != null && colorAnim.isRunning()) {
             colorAnim.cancel();
             colorAnim = null;
         }
@@ -834,6 +859,62 @@ public class HomepageFragment2 extends BaseFragment2 implements MarketContract.M
                 view.setBackgroundColor(resultColor);
             }
         });
+        colorAnim.start();*/
+
+        colorAnim = ObjectAnimator.ofInt(view, "backgroundColor", getResources().getColor(R.color.white), resultColor);
+        colorAnim.setDuration(500); // 动画时间为2s
+        colorAnim.setEvaluator(new ArgbEvaluator()); // 设置估值器
+        //监听动画执行完毕
+        colorAnim.addListener(new AnimatorListenerAdapter() {
+            @Override
+            public void onAnimationEnd(Animator animation) {
+                colorAnim = null;
+            }
+        });
+        colorAnim.setRepeatCount(1);
+        colorAnim.setRepeatMode(ValueAnimator.REVERSE); // 设置变化反转效果，即第一次动画执行完后再次执行时背景色时从后面的颜色值往前面的变化
         colorAnim.start();
+    }
+
+    /**
+     * 跳转到购买详情
+     *
+     * @param marketDataBean
+     */
+    private void intentProductActivity(MarketDataBean marketDataBean) {
+        //跳转详情页面
+        Intent intent = new Intent(getContext(), ProductActivity.class);
+        //中文名
+        intent.putExtra(AppConstans.symbol_cn, marketDataBean.getSymbol_cn());
+        //英文名
+        intent.putExtra(AppConstans.symbol, marketDataBean.getSymbol());
+        //时间
+        intent.putExtra(AppConstans.time, time);
+        //涨跌幅
+        intent.putExtra(AppConstans.range, range_);
+        //买入价
+        intent.putExtra(AppConstans.price_buy, marketDataBean.getPrice_buy() + "");
+        //卖出价
+        intent.putExtra(AppConstans.price_sell, marketDataBean.getPrice_sale() + "");
+        //涨跌值
+        intent.putExtra(AppConstans.value, value);
+        //今开
+        intent.putExtra(AppConstans.open, NumberUtils.setScale(marketDataBean.getOpen(), marketDataBean.getDigit()));
+        //昨收
+        intent.putExtra(AppConstans.close, marketDataBean.getClose());
+        //最高
+        intent.putExtra(AppConstans.high, NumberUtils.setScale(marketDataBean.getHigh(), marketDataBean.getDigit()));
+        //最低
+        intent.putExtra(AppConstans.low, NumberUtils.setScale(marketDataBean.getLow(), marketDataBean.getDigit()));
+        //买入价的小数点位数
+        intent.putExtra(AppConstans.digit, marketDataBean.getDigit());
+        //止损止盈点位
+        intent.putExtra(AppConstans.stops_level, marketDataBean.getStops_level());
+        // ture 为红色， false 为绿色
+        intent.putExtra(AppConstans.whatColor, whatColor);
+        //excode 字段，老版代码所需要
+        intent.putExtra("excode", "FXBTG");
+        intent.putExtra("trade", marketDataBean.getTrade());
+        startActivity(intent);
     }
 }
