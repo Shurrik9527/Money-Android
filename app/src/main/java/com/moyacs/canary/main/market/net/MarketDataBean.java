@@ -1,5 +1,6 @@
 package com.moyacs.canary.main.market.net;
 
+import java.io.Serializable;
 import java.util.List;
 
 /**
@@ -8,7 +9,7 @@ import java.util.List;
  * 说明：行情 数据结构
  */
 
-public class MarketDataBean {
+public class MarketDataBean implements Serializable {
     /*  *
      * symbol : EURUSD
      * symbol_cn : 欧元/美元
@@ -36,17 +37,23 @@ public class MarketDataBean {
     //卖出价，通过 socket 获取
     private Double price_sale = 0.00000;
 
-
     //涨跌幅，（最新买入价 - 昨收）/昨收
     private String rang_ = "0.00%";
     //止损点位
     private int stops_level;
 
-
     //买入价 卖出价 涨跌幅背景的字体颜色
     private int rangeColor = 0;
 
     private TradeVo.Trade trade;
+
+    //涨跌幅 显示文本
+    private String rangString;
+    //涨跌值  显示文本
+    private String rangValue;
+    //当前是否是上涨
+    private boolean isUp;
+
 
     public void setStops_level(int stops_level) {
         this.stops_level = stops_level;
@@ -166,6 +173,30 @@ public class MarketDataBean {
 
     public void setTrade(TradeVo.Trade trade) {
         this.trade = trade;
+    }
+
+    public String getRangString() {
+        return rangString;
+    }
+
+    public void setRangString(String rangString) {
+        this.rangString = rangString;
+    }
+
+    public String getRangValue() {
+        return rangValue;
+    }
+
+    public void setRangValue(String rangValue) {
+        this.rangValue = rangValue;
+    }
+
+    public boolean isUp() {
+        return isUp;
+    }
+
+    public void setUp(boolean up) {
+        isUp = up;
     }
 
     @Override

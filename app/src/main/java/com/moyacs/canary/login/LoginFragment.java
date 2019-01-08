@@ -52,7 +52,6 @@ public class LoginFragment extends BaseFragment {
     private String userName;//登录的账号
     private String passWord;//登录密码
     private boolean isShowPwd;//是否显示密码
-    private String TAG = "LoginFragment";
 
     @Override
     protected int getLayoutId() {
@@ -135,7 +134,7 @@ public class LoginFragment extends BaseFragment {
                     public void onError(Throwable e) {
                         super.onError(e);
                         showMag(e.getMessage());
-                        diesLoadingDialog();
+                        dismissLoadingDialog();
                     }
                 }));
     }
@@ -162,7 +161,7 @@ public class LoginFragment extends BaseFragment {
                     @Override
                     public void onComplete() {
                         super.onComplete();
-                        diesLoadingDialog();
+                        dismissLoadingDialog();
                     }
                 }));
     }

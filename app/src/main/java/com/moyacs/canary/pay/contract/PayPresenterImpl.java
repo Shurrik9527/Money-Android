@@ -1,11 +1,5 @@
 package com.moyacs.canary.pay.contract;
 
-import android.util.Log;
-
-import com.blankj.utilcode.util.LogUtils;
-import com.google.gson.JsonObject;
-import com.moyacs.canary.network.HttpConstants;
-import com.moyacs.canary.network.HttpResult;
 import com.moyacs.canary.network.ServerResult;
 
 import java.util.Map;
@@ -40,7 +34,7 @@ public class PayPresenterImpl implements PayCountract.PayPresenter, PayCountract
 
     @Override
     public void beforeRequest() {
-        view.showLoadingDailog();
+        view.showLoadingDialog();
     }
 
     @Override

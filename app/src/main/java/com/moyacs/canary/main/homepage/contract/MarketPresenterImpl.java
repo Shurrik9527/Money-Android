@@ -3,14 +3,30 @@ package com.moyacs.canary.main.homepage.contract;
 import com.blankj.utilcode.util.LogUtils;
 import com.moyacs.canary.main.homepage.net.BannerDate;
 import com.moyacs.canary.main.homepage.net.DealChanceDate;
+import com.moyacs.canary.main.homepage.net.HomePageServer;
 import com.moyacs.canary.main.market.net.MarketDataBean;
 import com.moyacs.canary.main.market.net.TradeVo;
+import com.moyacs.canary.network.BaseMoaObservable;
+import com.moyacs.canary.network.BaseObservable;
 import com.moyacs.canary.network.HttpConstants;
+import com.moyacs.canary.network.HttpExceptionHandler;
 import com.moyacs.canary.network.HttpResult;
+import com.moyacs.canary.network.HttpServerManager;
+import com.moyacs.canary.network.RxUtils;
 import com.moyacs.canary.network.ServerManger;
 import com.moyacs.canary.network.ServerResult;
 
+import java.io.IOException;
 import java.util.List;
+
+import io.reactivex.Observer;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.disposables.CompositeDisposable;
+import io.reactivex.disposables.Disposable;
+import io.reactivex.functions.Action;
+import io.reactivex.functions.Consumer;
+import io.reactivex.schedulers.Schedulers;
+import retrofit2.Response;
 
 /**
  * 作者：luoshen on 2018/3/7 0007 10:17
@@ -18,121 +34,70 @@ import java.util.List;
  * 说明：
  */
 
-public class MarketPresenterImpl implements MarketContract.MarketPresenter, MarketContract.MarketListRequestListener {
-
-    private MarketContract.MarketView view;
-
-    private MarketContract.MarketModul modul;
+public class MarketPresenterImpl implements MarketContract.MarketPresenter {
+    private MarketContract.MarketView mView;
+    private CompositeDisposable disposable;
+    private HomePageServer homePageServer;
 
     public MarketPresenterImpl(MarketContract.MarketView view) {
-        this.view = view;
-        modul = new MarketMudulImpl(this);
+        this.mView = view;
+        disposable = new CompositeDisposable();
+        homePageServer = HttpServerManager.getInstance().create(HomePageServer.class);
     }
 
     @Override
     public void unsubscribe() {
-        modul.unsubscribe();
+        disposable.clear();
     }
 
     @Override
     public void getMarketList(String server, String type) {
-        modul.getMarketList(server, type);
+        disposable.add(homePageServer.getMarketList(server, type)
+                .subscribeOn(Schedulers.io())//指定网络请求所在的线程
+                .observeOn(AndroidSchedulers.mainThread())//指定的是它之后（下方）执行的操作所在的线程
+                .subscribeWith(new BaseMoaObservable<HttpResult<List<MarketDataBean>>>() {
+                    @Override
+                    protected void requestSuccess(HttpResult<List<MarketDataBean>> data) {
+                        mView.setMarketList(data.getDataObject());
+                    }
+                }));
     }
 
     @Override
-    public void getBannerList(int size) {
-        modul.getBannerList(size);
+    public void getBannerList() {
+        disposable.add(ServerManger.getInstance().getServer().getBannerList("0", "0")
+                .compose(RxUtils.rxSchedulerHelper())
+                .subscribeWith(new BaseObservable<ServerResult<BannerDate>>() {
+                    @Override
+                    protected void requestSuccess(ServerResult<BannerDate> data) {
+                        mView.setBannerList(data.getData().getList());
+                    }
+                }));
+
     }
 
     @Override
     public void getDealChanceList(int size, int page) {
-        modul.getDealChanceList(size, page);
+        disposable.add(homePageServer.getDealChanceList(size, page)
+                .compose(RxUtils.rxSchedulerHelper())
+                .subscribeWith(new BaseMoaObservable<HttpResult<List<DealChanceDate>>>() {
+                    @Override
+                    protected void requestSuccess(HttpResult<List<DealChanceDate>> data) {
+                        mView.setDealChanceList(data.getDataObject());
+                    }
+                }));
     }
 
-    @Override
-    public void beforeRequest() {
-        view.showLoadingDailog();
-    }
-
-    @Override
-    public void afterRequest() {
-        view.dismissLoadingDialog();
-    }
-
-    @Override
-    public void getMarketListResponseSucessed(HttpResult<List<MarketDataBean>> result) {
-        if (result == null) {
-            view.getMarketListFailed("数据为空");
-        }
-        int result1 = result.getCode();
-        LogUtils.d("服务器返回的数据字段  code   " + result1);
-        if (result1 == HttpConstants.result_sucess) {
-            view.getMarketListSucessed(result.getDataObject());
-        } else {
-            view.getMarketListFailed("服务器返回数据错误");
-        }
-    }
-
-    @Override
-    public void getMarketListResponseFailed(String errormsg) {
-        view.getMarketListFailed(errormsg);
-    }
-
-    @Override
-    public void getBannerListResponseSucessed(ServerResult<BannerDate> result) {
-        if (result == null) {
-            view.getBannerListFailed("数据为空");
-        }
-        int result1 = result.getMsgCode();
-        LogUtils.d("服务器返回的数据字段  code   " + result1);
-        if (result1 == HttpConstants.result_sucess) {
-            view.getBannerListSucessed(result.getData().getList());
-        } else {
-            view.getBannerListFailed("服务器返回数据错误");
-        }
-    }
-
-    @Override
-    public void getBannerListResponseFailed(String errormsg) {
-        view.getBannerListFailed(errormsg);
-    }
-
-    @Override
-    public void getDealChanceListResponseSucessed(HttpResult<List<DealChanceDate>> result) {
-        if (result == null) {
-            view.getDealChanceListResponseFailed("数据为空");
-        }
-        int result1 = result.getCode();
-        LogUtils.d("服务器返回的数据字段  code   " + result1);
-        if (result1 == HttpConstants.result_sucess) {
-            view.getDealChanceListResponseSucessed(result.getDataObject());
-        } else {
-            view.getDealChanceListResponseFailed("服务器返回数据错误");
-        }
-    }
-
-    @Override
-    public void getDealChanceListResponseFailed(String errormsg) {
-        view.getDealChanceListResponseFailed(errormsg);
-    }
-
-    @Override
-    public void doOnNext(List<MarketDataBean> result) {
-        view.doOnNext(result);
-    }
-
-    @Override
-    public void getTradListSuccess(List<TradeVo.Trade> list) {
-        view.getTradListSuccess(list);
-    }
-
-    @Override
-    public void getTradListFiled(String filedMsg) {
-        view.getTradListFiled(filedMsg);
-    }
 
     @Override
     public void getTradList() {
-        modul.getTradList();
+        disposable.add(ServerManger.getInstance().getServer().getTradList("0", "0")
+                .compose(RxUtils.rxSchedulerHelper())
+                .subscribeWith(new BaseObservable<ServerResult<TradeVo>>() {
+                    @Override
+                    protected void requestSuccess(ServerResult<TradeVo> data) {
+                        mView.setTradList(data.getData().getList());
+                    }
+                }));
     }
 }

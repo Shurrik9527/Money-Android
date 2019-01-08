@@ -66,8 +66,6 @@
                     app:lineColor="@color/under_line"
                     app:mlineHeight="3dip"
                     app:upOrunder="under" />
-
-
             </LinearLayout>
 
             <com.moyacs.canary.kchart.chart.candle.KLineView
@@ -137,6 +135,7 @@
                             app:lineColor="@color/under_line"
                             app:mlineHeight="3dip"
                             app:upOrunder="under" />
+
                         <com.moyacs.canary.widget.UnderLineTextView
                             android:id="@+id/tab_KDJ"
                             android:layout_width="0dip"
@@ -150,6 +149,7 @@
                             app:lineColor="@color/under_line"
                             app:mlineHeight="3dip"
                             app:upOrunder="under" />
+
                         <com.moyacs.canary.widget.UnderLineTextView
                             android:id="@+id/tab_RSI"
                             android:layout_width="0dip"
@@ -278,6 +278,6 @@
     </RelativeLayout>
 
     <!--<include-->
-        <!--android:id="@+id/layoutLoding"-->
-        <!--layout="@layout/app_common_progressbar" />-->
+    <!--android:id="@+id/layoutLoding"-->
+    <!--layout="@layout/app_common_progressbar" />-->
 </RelativeLayout>

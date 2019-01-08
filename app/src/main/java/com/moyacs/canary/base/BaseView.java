@@ -15,7 +15,7 @@ public interface BaseView {
     /**
      * 显示加载框
      */
-    void showLoadingDailog();
+    void showLoadingDialog();
 
     /**
      * 取消加载框

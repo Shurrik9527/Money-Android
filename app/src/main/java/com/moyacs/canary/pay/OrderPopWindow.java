@@ -1,5 +1,6 @@
 package com.moyacs.canary.pay;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.graphics.drawable.ColorDrawable;
 import android.view.Gravity;
@@ -217,7 +218,7 @@ public class OrderPopWindow implements View.OnClickListener {
     Button btnSubmit;
     private TextView tvOverNight;
 
-    private BaseActivity2 baseActivity2;
+    private Activity baseActivity2;
 
     /**
      * 建仓 和 类型 点击切换状态时候的 第三方变量，记录当前选中的 view
@@ -247,7 +248,7 @@ public class OrderPopWindow implements View.OnClickListener {
     private String symbolCode; //产品编码
     private TradeVo.Trade trade;
 
-    public OrderPopWindow(String price_buy, String symbol_cn, int textColor, String symbolCode, TradeVo.Trade trade, BaseActivity2 baseActivity2) {
+    public OrderPopWindow(String price_buy, String symbol_cn, int textColor, String symbolCode, TradeVo.Trade trade, Activity baseActivity2) {
         this.price_buy = price_buy;
         this.symbol_cn = symbol_cn;
         this.textColor = textColor;
@@ -888,5 +889,9 @@ public class OrderPopWindow implements View.OnClickListener {
 
                     }
                 });
+    }
+
+    public boolean isShow() {
+        return popupWindow_order.isShowing();
     }
 }

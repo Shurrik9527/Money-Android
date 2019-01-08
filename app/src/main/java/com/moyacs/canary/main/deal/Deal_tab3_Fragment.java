@@ -350,7 +350,7 @@ public class Deal_tab3_Fragment extends BaseFragment3 implements FundCountract.F
     }
 
     @Override
-    public void showLoadingDailog() {
+    public void showLoadingDialog() {
         rlRequestFailed.setVisibility(View.GONE);
 //        startLoading();
         if (pullrefreshLayout.isRefreshing()) {

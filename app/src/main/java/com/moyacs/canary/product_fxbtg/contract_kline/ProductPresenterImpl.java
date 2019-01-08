@@ -38,7 +38,7 @@ public class ProductPresenterImpl implements ProductPresenter, ProductContract.P
 
     @Override
     public void beforeRequest() {
-        view.showLoadingDailog();
+        view.showLoadingDialog();
     }
 
     @Override

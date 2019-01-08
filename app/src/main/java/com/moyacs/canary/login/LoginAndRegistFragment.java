@@ -49,7 +49,7 @@ public abstract class LoginAndRegistFragment extends BaseFragment2 implements Lo
     }
 
     @Override
-    public void showLoadingDailog() {
+    public void showLoadingDialog() {
         stopLoading();
     }
 

@@ -39,7 +39,7 @@ public class WithdrawPresenterImpl implements WithdrawCountract.WithdrawPresente
 
     @Override
     public void beforeRequest() {
-        view.showLoadingDailog();
+        view.showLoadingDialog();
     }
 
     @Override

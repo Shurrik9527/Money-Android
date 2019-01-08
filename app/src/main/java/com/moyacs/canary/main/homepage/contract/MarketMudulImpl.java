@@ -1,3 +1,4 @@
+/*
 package com.moyacs.canary.main.homepage.contract;
 
 import android.util.Log;
@@ -29,15 +30,16 @@ import io.reactivex.functions.Consumer;
 import io.reactivex.schedulers.Schedulers;
 import retrofit2.Response;
 
+*/
 /**
  * 作者：luoshen on 2018/3/7 0007 10:18
  * 邮箱：rsf411613593@gmail.com
  * 说明：
- */
+ *//*
 
-public class MarketMudulImpl implements MarketContract.MarketModul {
 
-    private MarketContract.MarketListRequestListener listener;
+public class MarketMudulImpl {
+
     private CompositeDisposable mCompositeDisposable;
     private final HomePageServer homePageServer;
 
@@ -225,33 +227,7 @@ public class MarketMudulImpl implements MarketContract.MarketModul {
 
     @Override
     public void getTradList() {
-        ServerManger.getInstance().getServer().getTradList("0", "0")
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Observer<ServerResult<TradeVo>>() {
-                    @Override
-                    public void onSubscribe(Disposable d) {
 
-                    }
-
-                    @Override
-                    public void onNext(ServerResult<TradeVo> tradeVoServerResult) {
-                        if (tradeVoServerResult.isSuccess()) {
-                            listener.getTradListSuccess(tradeVoServerResult.getData().getList());
-                        } else {
-                            listener.getTradListFiled("服务器异常");
-                        }
-                    }
-
-                    @Override
-                    public void onError(Throwable e) {
-                        listener.getTradListFiled("服务器异常");
-                    }
-
-                    @Override
-                    public void onComplete() {
-
-                    }
-                });
     }
 }
+*/

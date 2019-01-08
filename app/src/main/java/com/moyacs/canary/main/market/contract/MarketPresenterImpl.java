@@ -50,7 +50,7 @@ public class MarketPresenterImpl implements MarketContract.MarketPresenter, Mark
 
     @Override
     public void beforeRequest() {
-        view.showLoadingDailog();
+        view.showLoadingDialog();
     }
 
     @Override

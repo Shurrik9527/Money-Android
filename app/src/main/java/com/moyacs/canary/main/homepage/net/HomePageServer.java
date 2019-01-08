@@ -29,7 +29,7 @@ public interface HomePageServer {
      */
     @FormUrlEncoded
     @POST("banner")
-    Observable<Response<HttpResult<List<BannerDate>>>> getBannerList(@Field("size") int size);
+    Observable<HttpResult<List<BannerDate>>> getBannerList(@Field("size") int size);
 
     /**
      * 首页 交易机会列表
@@ -40,7 +40,7 @@ public interface HomePageServer {
      */
     @FormUrlEncoded
     @POST("chance")
-    Observable<Response<HttpResult<List<DealChanceDate>>>> getDealChanceList(@Field("size") int size,
+    Observable<HttpResult<List<DealChanceDate>>> getDealChanceList(@Field("size") int size,
                                                                              @Field("page") int page);
 
     /**
@@ -49,6 +49,6 @@ public interface HomePageServer {
      * @return
      */
     @GET("price/symbols")
-    Observable<Response<HttpResult<List<MarketDataBean>>>> getMarketList(@Query(HttpConstants.server) String server,
+    Observable<HttpResult<List<MarketDataBean>>> getMarketList(@Query(HttpConstants.server) String server,
                                                                          @Query(HttpConstants.type) String type);
 }

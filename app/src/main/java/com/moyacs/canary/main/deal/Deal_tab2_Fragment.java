@@ -174,7 +174,7 @@ public class Deal_tab2_Fragment extends BaseFragment3 implements ChiCangCountrac
     }
 
     @Override
-    public void showLoadingDailog() {
+    public void showLoadingDialog() {
         if (isCheXiaoAndPingCang) {
             return;
         }

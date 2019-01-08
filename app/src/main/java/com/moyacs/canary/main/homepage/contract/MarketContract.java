@@ -27,63 +27,28 @@ public interface MarketContract {
          *
          * @param result
          */
-        void getMarketListSucessed(List<MarketDataBean> result);
-
-        /**
-         * 获取行情列表失败
-         *
-         * @param errormsg
-         */
-        void getMarketListFailed(String errormsg);
+        void setMarketList(List<MarketDataBean> result);
 
         /**
          * 获取 banner 列表成功
          *
          * @param result
          */
-        void getBannerListSucessed(List<BannerDate.Banner> result);
-
-        /**
-         * 获取 banner 列表失败
-         *
-         * @param errormsg
-         */
-        void getBannerListFailed(String errormsg);
+        void setBannerList(List<BannerDate.Banner> result);
 
         /**
          * 获取 交易机会 列表成功
          *
          * @param result
          */
-        void getDealChanceListResponseSucessed(List<DealChanceDate> result);
-
-        /**
-         * 获取 交易机会 列表失败
-         *
-         * @param errormsg
-         */
-        void getDealChanceListResponseFailed(String errormsg);
-
-        /**
-         * 对数据进行二次处理 所有行情列表
-         *
-         * @param result
-         */
-        void doOnNext(List<MarketDataBean> result);
+        void setDealChanceList(List<DealChanceDate> result);
 
         /**
          * 获取可以交易的外汇列表
          *
          * @param list 外汇列表
          */
-        void getTradListSuccess(List<TradeVo.Trade> list);
-
-        /**
-         * 可交易的外汇列表失败
-         *
-         * @param filedMsg 失败信息
-         */
-        void getTradListFiled(String filedMsg);
+        void setTradList(List<TradeVo.Trade> list);
     }
 
     interface MarketPresenter extends BasePresenter {
@@ -94,10 +59,8 @@ public interface MarketContract {
 
         /**
          * banner 列表
-         *
-         * @param size
          */
-        void getBannerList(int size);
+        void getBannerList();
 
         /**
          * 交易机会列表
@@ -108,96 +71,5 @@ public interface MarketContract {
         void getDealChanceList(int size, int page);
 
         void getTradList();
-
-    }
-
-    interface MarketModul extends BaseModul {
-        /**
-         * 获取行情列表
-         */
-        void getMarketList(String server, String type);
-
-        /**
-         * banner 列表
-         *
-         * @param size
-         */
-        void getBannerList(int size);
-
-        /**
-         * 交易机会列表
-         *
-         * @param size
-         * @param page
-         */
-        void getDealChanceList(int size, int page);
-
-        void getTradList();
-    }
-
-    interface MarketListRequestListener extends BaseRequestListener {
-
-        /**
-         * 行情列表请求成功
-         *
-         * @param result
-         */
-        void getMarketListResponseSucessed(HttpResult<List<MarketDataBean>> result);
-
-        /**
-         * 行情列表请求失败
-         *
-         * @param errormsg
-         */
-        void getMarketListResponseFailed(String errormsg);
-
-        /**
-         * 获取 banner 列表成功
-         *
-         * @param result
-         */
-        void getBannerListResponseSucessed(ServerResult<BannerDate> result);
-
-        /**
-         * 获取 banner 列表失败
-         *
-         * @param errormsg
-         */
-        void getBannerListResponseFailed(String errormsg);
-
-        /**
-         * 获取 交易机会 列表成功
-         *
-         * @param result
-         */
-        void getDealChanceListResponseSucessed(HttpResult<List<DealChanceDate>> result);
-
-        /**
-         * 获取 交易机会 列表失败
-         *
-         * @param errormsg
-         */
-        void getDealChanceListResponseFailed(String errormsg);
-
-        /**
-         * 对数据进行二次处理 所有行情列表
-         *
-         * @param result
-         */
-        void doOnNext(List<MarketDataBean> result);
-
-        /**
-         * 获取可以交易的外汇列表
-         *
-         * @param list 外汇列表
-         */
-        void getTradListSuccess(List<TradeVo.Trade> list);
-
-        /**
-         * 可交易的外汇列表失败
-         *
-         * @param filedMsg 失败信息
-         */
-        void getTradListFiled(String filedMsg);
     }
 }

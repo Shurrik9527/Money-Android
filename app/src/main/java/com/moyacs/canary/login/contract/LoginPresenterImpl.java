@@ -4,12 +4,9 @@ import android.util.Log;
 
 import com.blankj.utilcode.util.LogUtils;
 import com.moyacs.canary.login.LoginAndRegistFragment;
-import com.moyacs.canary.login.contract.LoginContract;
 import com.moyacs.canary.login.contract.LoginContract.LoginPresenter;
-import com.moyacs.canary.login.contract.LoginModulImpl;
 import com.moyacs.canary.login.net.MT4Users;
 import com.moyacs.canary.network.HttpConstants;
-import com.moyacs.canary.network.HttpResult;
 import com.moyacs.canary.network.ServerResult;
 
 /**
@@ -61,7 +58,7 @@ public class LoginPresenterImpl implements LoginPresenter, LoginContract.LoginRe
 
     @Override
     public void beforeRequest() {
-        view.showLoadingDailog();
+        view.showLoadingDialog();
     }
 
     @Override

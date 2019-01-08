@@ -18,14 +18,13 @@ import com.moyacs.canary.base.BaseActivity;
 import com.moyacs.canary.common.AppConstans;
 import com.moyacs.canary.common.DialogUtils;
 import com.moyacs.canary.main.deal.DealFragment;
-import com.moyacs.canary.main.homepage.HomepageFragment2;
+import com.moyacs.canary.main.homepage.HomepageFragment;
 import com.moyacs.canary.main.market.MarketFragment;
 import com.moyacs.canary.main.me.MeFragment2;
 import com.moyacs.canary.service.SocketService;
 import com.moyacs.canary.widget.SwitchSlidingViewPager;
 
 import java.util.ArrayList;
-import java.util.List;
 
 import butterknife.BindView;
 import www.moyacs.com.myapplication.R;
@@ -145,7 +144,7 @@ public class MainActivity extends BaseActivity {
 
     private void getFragmentList() {
         fragments = new ArrayList<>();
-        fragments.add(new HomepageFragment2());
+        fragments.add(new HomepageFragment());
         marketFragment = new MarketFragment();
         fragments.add(marketFragment);
         fragments.add(new DealFragment());

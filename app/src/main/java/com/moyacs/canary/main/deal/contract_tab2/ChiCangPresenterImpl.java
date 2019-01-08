@@ -1,16 +1,8 @@
 package com.moyacs.canary.main.deal.contract_tab2;
 
-import android.util.Log;
-
-import com.blankj.utilcode.util.LogUtils;
 import com.moyacs.canary.main.deal.contract_tab2.ChiCangCountract.ChiCangPresenter;
-import com.moyacs.canary.main.deal.net_tab2.ChiCangDateBean;
 import com.moyacs.canary.main.deal.net_tab3.TransactionRecordVo;
-import com.moyacs.canary.network.HttpConstants;
-import com.moyacs.canary.network.HttpResult;
 import com.moyacs.canary.network.ServerResult;
-
-import java.util.List;
 
 /**
  * 作者：luoshen on 2018/4/17 0017 09:37
@@ -39,7 +31,7 @@ public class ChiCangPresenterImpl implements ChiCangPresenter, ChiCangCountract.
 
     @Override
     public void beforeRequest() {
-        view.showLoadingDailog();
+        view.showLoadingDialog();
     }
 
     @Override

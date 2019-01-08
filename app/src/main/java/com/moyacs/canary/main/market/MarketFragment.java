@@ -413,7 +413,7 @@ public class MarketFragment extends BaseFragment2 implements MarketContract.Mark
     }
 
     @Override
-    public void showLoadingDailog() {
+    public void showLoadingDialog() {
         textView_failed.setVisibility(View.GONE);
         if (pullrefreshLayout.isRefreshing()) {
             return;
@@ -795,37 +795,9 @@ public class MarketFragment extends BaseFragment2 implements MarketContract.Mark
                         public void onClick(View v) {
                             //跳转详情页面
                             Intent intent = new Intent(getContext(), ProductActivity.class);
-                            //中文名
-                            intent.putExtra(AppConstans.symbol_cn, marketDataBean.getSymbol_cn());
-                            //英文名
-                            intent.putExtra(AppConstans.symbol, marketDataBean.getSymbol());
                             //时间
                             intent.putExtra(AppConstans.time, time);
-                            //涨跌幅
-                            intent.putExtra(AppConstans.range, range_);
-                            //买入价
-                            intent.putExtra(AppConstans.price_buy, marketDataBean.getPrice_buy() + "");
-                            //卖出价
-                            intent.putExtra(AppConstans.price_sell, marketDataBean.getPrice_sale() + "");
-                            //涨跌值
-                            intent.putExtra(AppConstans.value, value);
-                            //今开
-                            intent.putExtra(AppConstans.open, NumberUtils.setScale(marketDataBean.getOpen(), marketDataBean.getDigit()));
-                            //昨收
-                            intent.putExtra(AppConstans.close, marketDataBean.getClose());
-                            //最高
-                            intent.putExtra(AppConstans.high, NumberUtils.setScale(marketDataBean.getHigh(), marketDataBean.getDigit()));
-                            //最低
-                            intent.putExtra(AppConstans.low, NumberUtils.setScale(marketDataBean.getLow(), marketDataBean.getDigit()));
-                            //买入价的小数点位数
-                            intent.putExtra(AppConstans.digit, marketDataBean.getDigit());
-                            //止损止盈点位
-                            intent.putExtra(AppConstans.stops_level, marketDataBean.getStops_level());
-                            // ture 为红色， false 为绿色
-                            intent.putExtra(AppConstans.whatColor, whatColor);
-                            //excode 字段，老版代码所需要
-                            intent.putExtra("excode", "FXBTG");
-                            intent.putExtra("trade", marketDataBean.getTrade());
+                            intent.putExtra("marketData", marketDataBean);
                             startActivity(intent);
                         }
                     });

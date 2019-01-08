@@ -57,13 +57,13 @@ public class FundPresenterImpl implements FundCountract.FundPresenter, FundCount
 
     @Override
     public void getTransactionRecordList(String transactionStatus) {
-        view.showLoadingDailog();
+        view.showLoadingDialog();
         modul.getTransactionRecordList(transactionStatus);
     }
 
     @Override
     public void beforeRequest() {
-        view.showLoadingDailog();
+        view.showLoadingDialog();
     }
 
     @Override

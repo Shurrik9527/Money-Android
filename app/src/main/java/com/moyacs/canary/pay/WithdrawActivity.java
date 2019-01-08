@@ -523,7 +523,7 @@ public class WithdrawActivity extends BaseActivity2 implements WithdrawCountract
     }
 
     @Override
-    public void showLoadingDailog() {
+    public void showLoadingDialog() {
         startLoading();
 
     }

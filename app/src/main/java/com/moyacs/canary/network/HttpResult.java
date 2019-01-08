@@ -44,6 +44,10 @@ public class HttpResult<T> {
         this.message = message;
     }
 
+    public boolean isSuccess() {
+        return getCode() == 0;
+    }
+
     @Override
     public String toString() {
         return "HttpResult{" +

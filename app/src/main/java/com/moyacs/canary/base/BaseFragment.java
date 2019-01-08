@@ -19,23 +19,24 @@ import butterknife.Unbinder;
 import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.disposables.Disposable;
 
-public abstract class BaseFragment extends Fragment {
+public abstract class BaseFragment extends Fragment implements BaseView {
     private boolean isRegisterEventBus;
     protected Activity mActivity;
     private CompositeDisposable disposables;
     Unbinder unbinder;
     private LoadingDialog loadingDialog;
+    protected View mView;
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         mActivity = getActivity();
-        View view = LayoutInflater.from(mActivity).inflate(getLayoutId(), container, false);
-        unbinder = ButterKnife.bind(this, view);
+        mView = LayoutInflater.from(mActivity).inflate(getLayoutId(), container, false);
+        unbinder = ButterKnife.bind(this, mView);
         initView();
         intListener();
         initData();
-        return view;
+        return mView;
     }
 
     @Override
@@ -49,6 +50,7 @@ public abstract class BaseFragment extends Fragment {
             loadingDialog.cancel();
             loadingDialog = null;
         }
+        unsubscribe();
         super.onDestroyView();
     }
 
@@ -64,14 +66,16 @@ public abstract class BaseFragment extends Fragment {
         ToastUtils.showShort(msg);
     }
 
-    protected void showLoadingDialog() {
+    @Override
+    public void showLoadingDialog() {
         if (loadingDialog == null) {
             loadingDialog = new LoadingDialog(mActivity);
         }
         loadingDialog.show();
     }
 
-    protected void diesLoadingDialog() {
+    @Override
+    public void dismissLoadingDialog() {
         if (loadingDialog != null) {
             loadingDialog.dismiss();
         }
@@ -93,5 +97,10 @@ public abstract class BaseFragment extends Fragment {
         if (isRegisterEventBus) {
             EventBus.getDefault().unregister(this);
         }
+    }
+
+    @Override
+    public void unsubscribe() {
+
     }
 }

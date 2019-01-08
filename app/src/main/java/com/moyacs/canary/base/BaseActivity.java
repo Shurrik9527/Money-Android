@@ -14,7 +14,7 @@ import butterknife.Unbinder;
 import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.disposables.Disposable;
 
-public abstract class BaseActivity extends AppCompatActivity {
+public abstract class BaseActivity extends AppCompatActivity implements BaseView {
     private boolean isRegisterEventBus;
     private CompositeDisposable disposables;
     private Unbinder bind;
@@ -40,6 +40,7 @@ public abstract class BaseActivity extends AppCompatActivity {
     @Override
     protected void onDestroy() {
         unRegisterEventBus();
+        unsubscribe();
         bind.unbind();
         if (disposables != null) {
             disposables.clear();
@@ -59,18 +60,20 @@ public abstract class BaseActivity extends AppCompatActivity {
 
     protected abstract void initData();
 
-    protected void showMag(String msg) {
+    protected void showMsg(String msg) {
         ToastUtils.showShort(msg);
     }
 
-    protected void showLoadingDialog() {
+    @Override
+    public void showLoadingDialog() {
         if (loadingDialog == null) {
             loadingDialog = new LoadingDialog(this);
         }
         loadingDialog.show();
     }
 
-    protected void diesLoadingDialog() {
+    @Override
+    public void dismissLoadingDialog() {
         if (loadingDialog != null) {
             loadingDialog.dismiss();
         }
@@ -87,4 +90,8 @@ public abstract class BaseActivity extends AppCompatActivity {
         }
     }
 
+    @Override
+    public void unsubscribe() {
+
+    }
 }

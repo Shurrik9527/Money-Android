@@ -837,7 +837,7 @@ public class ShiJiaDanFragment2 extends BaseFragment2 implements PayCountract.Pa
     }
 
     @Override
-    public void showLoadingDailog() {
+    public void showLoadingDialog() {
 
     }
 

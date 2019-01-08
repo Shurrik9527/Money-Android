@@ -50,10 +50,10 @@ public interface ServerApi {
     @FormUrlEncoded
     @POST("login/register")
     Observable<ServerResult<String>> register(@Field("id") String id,
-                                                        @Field("loginName") String mobile,
-                                                        @Field("password") String password,
-                                                        @Field("userName") String fullname,
-                                                        @Field("verificationCode") String vcode);
+                                              @Field("loginName") String mobile,
+                                              @Field("password") String password,
+                                              @Field("userName") String fullname,
+                                              @Field("verificationCode") String vcode);
 
     /**
      * 上传公钥
@@ -72,7 +72,7 @@ public interface ServerApi {
      */
     @FormUrlEncoded
     @POST("banner/getList")
-    Observable<Response<ServerResult<BannerDate>>> getBannerList(@Field("page") String size, @Field("pageSize") String pageSize);
+    Observable<ServerResult<BannerDate>> getBannerList(@Field("page") String size, @Field("pageSize") String pageSize);
 
     /**
      * 获取可以交易品种

@@ -531,4 +531,8 @@ public class GuaDanPopWindow implements View.OnClickListener {
                 });
     }
 
+    public boolean isShow() {
+        return guaDanWindow.isShowing();
+    }
+
 }

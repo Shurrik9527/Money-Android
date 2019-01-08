@@ -1087,7 +1087,7 @@ public class GuaDanFragment extends BaseFragment2 implements PayCountract.PayVie
     }
 
     @Override
-    public void showLoadingDailog() {
+    public void showLoadingDialog() {
 
     }
 
