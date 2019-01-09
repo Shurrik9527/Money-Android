@@ -1,15 +1,11 @@
 package com.moyacs.canary.main.market.net;
 
-import android.support.v4.media.session.PlaybackStateCompat;
-
-import com.moyacs.canary.common.AppConstans;
 import com.moyacs.canary.network.HttpConstants;
 import com.moyacs.canary.network.HttpResult;
 
 import java.util.List;
 
 import io.reactivex.Observable;
-import retrofit2.Response;
 import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
@@ -39,7 +35,7 @@ public interface MarketServer {
      */
     @FormUrlEncoded
     @POST("price/private")
-    Observable<Response<HttpResult<List<MarketDataBean>>>> getMarketList_optional(@Field("username") String userName,
+    Observable<HttpResult<List<MarketDataBean>>> getMarketList_optional(@Field("username") String userName,
                                                                                   @Field(HttpConstants.server) String server);
 
     /**
@@ -48,6 +44,6 @@ public interface MarketServer {
      * @return
      */
     @GET("price/symbols")
-    Observable<Response<HttpResult<List<MarketDataBean>>>> getMarketList_type(@Query(HttpConstants.server) String server,
+    Observable<HttpResult<List<MarketDataBean>>> getMarketList_type(@Query(HttpConstants.server) String server,
                                                                          @Query(HttpConstants.type) String type);
 }

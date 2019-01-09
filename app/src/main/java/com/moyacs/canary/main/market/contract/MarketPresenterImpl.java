@@ -1,15 +1,19 @@
 package com.moyacs.canary.main.market.contract;
 
-import android.util.Log;
-
-import com.blankj.utilcode.util.LogUtils;
-
 import com.moyacs.canary.main.market.net.MarketDataBean;
+import com.moyacs.canary.main.market.net.MarketServer;
 import com.moyacs.canary.main.market.net.TradeVo;
-import com.moyacs.canary.network.HttpConstants;
+import com.moyacs.canary.network.BaseMoaObservable;
+import com.moyacs.canary.network.BaseObservable;
 import com.moyacs.canary.network.HttpResult;
+import com.moyacs.canary.network.HttpServerManager;
+import com.moyacs.canary.network.RxUtils;
+import com.moyacs.canary.network.ServerManger;
+import com.moyacs.canary.network.ServerResult;
 
 import java.util.List;
+
+import io.reactivex.disposables.CompositeDisposable;
 
 /**
  * 作者：luoshen on 2018/3/7 0007 10:17
@@ -17,88 +21,86 @@ import java.util.List;
  * 说明：
  */
 
-public class MarketPresenterImpl implements MarketContract.MarketPresenter, MarketContract.MarketListRequestListener {
-
+public class MarketPresenterImpl implements MarketContract.MarketPresenter {
     private MarketContract.MarketView view;
-
-    private MarketContract.MarketModul modul;
+    private CompositeDisposable disposable;
+    private MarketServer marketServer;
 
     public MarketPresenterImpl(MarketContract.MarketView view) {
         this.view = view;
-        modul = new MarketMudulImpl(this);
+        disposable = new CompositeDisposable();
+        marketServer = HttpServerManager.getInstance().create(MarketServer.class);
     }
 
     @Override
     public void unsubscribe() {
-        modul.unsubscribe();
+        disposable.clear();
     }
 
     @Override
     public void getMarketList(String username, String server) {
-        modul.getMarketList(username, server);
+        disposable.add(marketServer.getMarketList_optional(username, server)
+                .compose(RxUtils.rxSchedulerHelper())
+                .subscribeWith(new BaseMoaObservable<HttpResult<List<MarketDataBean>>>() {
+                    @Override
+                    protected void requestSuccess(HttpResult<List<MarketDataBean>> data) {
+                        view.setMarketOptionalList(data.getDataObject());
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        super.onError(e);
+                        view.getMarketOptionalListFiled("服务器异常");
+                    }
+
+                    @Override
+                    public void onComplete() {
+                        super.onComplete();
+                        view.dismissLoadingDialog();
+                    }
+                }));
     }
 
     @Override
     public void getMarketList_type(String server, String type) {
-        modul.getMarketList_type(server, type);
+        disposable.add(marketServer.getMarketList_type(server, type)
+                .compose(RxUtils.rxSchedulerHelper())
+                .subscribeWith(new BaseMoaObservable<HttpResult<List<MarketDataBean>>>() {
+                    @Override
+                    protected void requestSuccess(HttpResult<List<MarketDataBean>> data) {
+                        view.setMarketTypeList(data.getDataObject());
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        super.onError(e);
+                        view.getMarkTypeListFiled("服务器异常");
+                    }
+
+                    @Override
+                    public void onComplete() {
+                        super.onComplete();
+                        view.dismissLoadingDialog();
+                    }
+                }));
+
     }
 
     @Override
     public void getTradeList() {
-        modul.getTradeList();
-    }
+        disposable.add(ServerManger.getInstance().getServer().getTradList("0", "0")
+                .compose(RxUtils.rxSchedulerHelper())
+                .subscribeWith(new BaseObservable<ServerResult<TradeVo>>() {
+                    @Override
+                    protected void requestSuccess(ServerResult<TradeVo> data) {
+                        view.setTradList(data.getData().getList());
+                    }
 
-    @Override
-    public void beforeRequest() {
-        view.showLoadingDialog();
-    }
-
-    @Override
-    public void afterRequest() {
-        view.dismissLoadingDialog();
-    }
-
-    @Override
-    public void getMarketListResponseSucessed(HttpResult<List<MarketDataBean>> result) {
-        if (result == null) {
-            view.getMarketListFailed("数据为空");
-        }
-        int result1 = result.getCode();
-        Log.i("getMarketListResponse", "getMarketListResponseSucessed:  " + result.toString());
-        LogUtils.d("服务器返回的数据字段  code   " + result1);
-        if (result1 == HttpConstants.result_sucess) {
-            view.getMarketListSucessed(result.getDataObject());
-        } else {
-            view.getMarketListFailed("服务器返回数据错误");
-        }
-    }
-
-    @Override
-    public void getMarketListResponseFailed(String errormsg) {
-        view.getMarketListFailed(errormsg);
-    }
-
-    @Override
-    public void getMarketListResponseSucessed_type(HttpResult<List<MarketDataBean>> result) {
-        if (result == null) {
-            view.getMarketListFailed_type("数据为空");
-        }
-        int result1 = result.getCode();
-        LogUtils.d("服务器返回的数据字段  code   " + result1);
-        if (result1 == HttpConstants.result_sucess) {
-            view.getMarketListSucessed_type(result.getDataObject());
-        } else {
-            view.getMarketListFailed_type("服务器返回数据错误");
-        }
-    }
-
-    @Override
-    public void getMarketListResponseFailed_type(String errormsg) {
-        view.getMarketListFailed_type(errormsg);
-    }
-
-    @Override
-    public void getTradeList(List<TradeVo.Trade> list) {
-        view.getTradList(list);
+                    @Override
+                    public void onError(Throwable e) {
+                        super.onError(e);
+                        view.getTradListFiled("服务器异常");
+                    }
+                }));
     }
 }

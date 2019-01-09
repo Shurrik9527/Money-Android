@@ -2,25 +2,16 @@ package com.moyacs.canary.network;
 
 
 import android.content.Context;
-import android.text.TextUtils;
-import android.util.Log;
 
 import com.blankj.utilcode.util.LogUtils;
-import com.blankj.utilcode.util.SPUtils;
-import com.moyacs.canary.common.AppConstans;
 
-import java.io.File;
 import java.io.IOException;
-import java.security.interfaces.RSAPrivateKey;
-import java.util.List;
 import java.util.concurrent.TimeUnit;
 
-import okhttp3.Cache;
 import okhttp3.Interceptor;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
-
 import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Retrofit;
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
@@ -83,9 +74,9 @@ public class HttpServerManager {
         loggingInterceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
         OkHttpClient.Builder client = new OkHttpClient().newBuilder()
                 .retryOnConnectionFailure(true)//失败重试
-                .connectTimeout(HttpConstants.default_connectTimeout, TimeUnit.MILLISECONDS)
-                .readTimeout(HttpConstants.default_readTimeout, TimeUnit.MINUTES)
-                .writeTimeout(HttpConstants.default_writeTimeout, TimeUnit.MINUTES)
+                .connectTimeout(10, TimeUnit.SECONDS)
+                .readTimeout(10, TimeUnit.SECONDS)
+                .writeTimeout(10, TimeUnit.SECONDS)
                 .addInterceptor(loggingInterceptor)
                 //添加请求头
                 .addInterceptor(new HeadersInterceptor());

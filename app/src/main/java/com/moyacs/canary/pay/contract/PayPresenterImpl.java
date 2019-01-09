@@ -1,8 +1,14 @@
 package com.moyacs.canary.pay.contract;
 
+import com.moyacs.canary.network.BaseObservable;
+import com.moyacs.canary.network.ServerManger;
 import com.moyacs.canary.network.ServerResult;
 
 import java.util.Map;
+
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.disposables.CompositeDisposable;
+import io.reactivex.schedulers.Schedulers;
 
 /**
  * 作者：luoshen on 2018/4/15 0015 10:51
@@ -10,50 +16,43 @@ import java.util.Map;
  * 说明：
  */
 
-public class PayPresenterImpl implements PayCountract.PayPresenter, PayCountract.SubmitOrderRequestListener {
+public class PayPresenterImpl implements PayContract.PayPresenter {
+    private PayContract.PayView view;
+    private CompositeDisposable disposable;
 
-
-    private PayCountract.PayView view;
-
-    private PayCountract.PayModul modul;
-
-    public PayPresenterImpl(PayCountract.PayView view) {
+    public PayPresenterImpl(PayContract.PayView view) {
         this.view = view;
-        modul = new PayModulImpl(this);
+        disposable = new CompositeDisposable();
     }
 
     @Override
     public void unsubscribe() {
-        modul.unsubscribe();
+        disposable.clear();
     }
 
     @Override
-    public void submitOrder(Map<String, Object> map) {
-        modul.submitOrder(map);
-    }
-
-    @Override
-    public void beforeRequest() {
+    public void closeOrder(Map<String, Object> map) {
         view.showLoadingDialog();
-    }
+        ServerManger.getInstance().getServer().transactionSell(map)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new BaseObservable<ServerResult<String>>() {
+                    @Override
+                    protected void requestSuccess(ServerResult<String> data) {
+                        view.closeOrderSuccess();
+                    }
 
-    @Override
-    public void afterRequest() {
-        view.dismissLoadingDialog();
-    }
+                    @Override
+                    public void onError(Throwable e) {
+                        super.onError(e);
+                        view.closeOrderFailed("服务器异常");
+                    }
 
-    @Override
-    public void submitOrderResponseSucessed(ServerResult<String> result) {
-        if (result.isSuccess()) {
-            view.submitOrderSucess(result.getMsg());
-        } else {
-            view.submitOrderFailed("服务器返回数据错误");
-        }
+                    @Override
+                    public void onComplete() {
+                        super.onComplete();
+                        view.dismissLoadingDialog();
+                    }
+                });
     }
-
-    @Override
-    public void submitOrderResponseFailed(String errormsg) {
-        view.submitOrderFailed(errormsg);
-    }
-
 }

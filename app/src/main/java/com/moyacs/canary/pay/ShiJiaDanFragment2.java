@@ -10,7 +10,6 @@ import android.text.TextWatcher;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -24,7 +23,7 @@ import com.moyacs.canary.base.BaseFragment2;
 import com.moyacs.canary.common.AppConstans;
 import com.moyacs.canary.common.NumberUtils;
 import com.moyacs.canary.common.StringUtil;
-import com.moyacs.canary.pay.contract.PayCountract;
+import com.moyacs.canary.pay.contract.PayContract;
 import com.moyacs.canary.pay.contract.PayPresenterImpl;
 
 import butterknife.BindView;
@@ -39,7 +38,7 @@ import www.moyacs.com.myapplication.R;
  * 说明：市价单 新版
  */
 
-public class ShiJiaDanFragment2 extends BaseFragment2 implements PayCountract.PayView {
+public class ShiJiaDanFragment2 extends BaseFragment2 implements PayContract.PayView {
 
     Unbinder unbinder;
     /**
@@ -677,7 +676,7 @@ public class ShiJiaDanFragment2 extends BaseFragment2 implements PayCountract.Pa
                 } else {
                     tp = 0D;
                 }
-//                payPresenter.submitOrder(server, mt4id, symbol, type, multiply.intValue(), sl, tp, null, 0, "");
+//                payPresenter.closeOrder(server, mt4id, symbol, type, multiply.intValue(), sl, tp, null, 0, "");
                 Log.i("mt4id", "mt4id: " + mt4id + "      server : " + server);
                 break;
         }
@@ -847,13 +846,13 @@ public class ShiJiaDanFragment2 extends BaseFragment2 implements PayCountract.Pa
     }
 
     @Override
-    public void submitOrderSucess(Object result) {
-        Log.i("submitOrderSucess", "submitOrderSucess:    下单成功了");
+    public void closeOrderSuccess(Object result) {
+        Log.i("closeOrderSuccess", "closeOrderSuccess:    下单成功了");
     }
 
     @Override
-    public void submitOrderFailed(String errormsg) {
-        Log.i("submitOrderFailed", "submitOrderSucess:    下单失败  ：" + errormsg);
+    public void closeOrderFailed(String errormsg) {
+        Log.i("closeOrderFailed", "closeOrderSuccess:    下单失败  ：" + errormsg);
     }
 
 }

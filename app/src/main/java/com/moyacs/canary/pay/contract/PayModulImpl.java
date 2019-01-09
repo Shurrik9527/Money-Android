@@ -1,45 +1,36 @@
+/*
 package com.moyacs.canary.pay.contract;
 
 
-import android.view.View;
-
-import com.blankj.utilcode.util.LogUtils;
-import com.moyacs.canary.main.market.net.MarketDataBean;
-import com.moyacs.canary.main.market.net.MarketServer;
-import com.moyacs.canary.network.HttpExceptionHandler;
-import com.moyacs.canary.network.HttpResult;
 import com.moyacs.canary.network.HttpServerManager;
 import com.moyacs.canary.network.ServerManger;
 import com.moyacs.canary.network.ServerResult;
 import com.moyacs.canary.pay.net.PayServer;
 
-import java.io.IOException;
-import java.util.List;
 import java.util.Map;
 
 import io.reactivex.Observer;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.disposables.Disposable;
-import io.reactivex.functions.Action;
-import io.reactivex.functions.Consumer;
 import io.reactivex.schedulers.Schedulers;
-import retrofit2.Response;
 
+*/
 /**
  * 作者：luoshen on 2018/4/15 0015 10:53
  * 邮箱：rsf411613593@gmail.com
  * 说明：
- */
+ *//*
 
-public class PayModulImpl implements PayCountract.PayModul {
 
-    private PayCountract.SubmitOrderRequestListener listener;
+public class PayModulImpl implements PayContract.PayModul {
+
+    private PayContract.SubmitOrderRequestListener listener;
 
     private CompositeDisposable mCompositeDisposable;
     private final PayServer payServer;
 
-    public PayModulImpl(PayCountract.SubmitOrderRequestListener listener) {
+    public PayModulImpl(PayContract.SubmitOrderRequestListener listener) {
         this.listener = listener;
         mCompositeDisposable = new CompositeDisposable();
         payServer = HttpServerManager.getInstance().create(PayServer.class);
@@ -52,7 +43,8 @@ public class PayModulImpl implements PayCountract.PayModul {
 
     @Override
     public void submitOrder(Map<String, Object> map) {
-      /*  payServer.submitOrder(server, mt4id, symbol, type, volume, sl, tp, ticket, price, expiredDate)
+      */
+/*  payServer.closeOrder(server, mt4id, symbol, type, volume, sl, tp, ticket, price, expiredDate)
                 .subscribeOn(Schedulers.io())//指定网络请求所在的线程
                 .doOnSubscribe(new Consumer<Disposable>() {
                     @Override
@@ -101,7 +93,8 @@ public class PayModulImpl implements PayCountract.PayModul {
                     public void onComplete() {
 
                     }
-                });*/
+                });*//*
+
         ServerManger.getInstance().getServer().transactionSell(map)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
@@ -129,3 +122,4 @@ public class PayModulImpl implements PayCountract.PayModul {
     }
 
 }
+*/

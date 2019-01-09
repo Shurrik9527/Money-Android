@@ -1,8 +1,15 @@
 package com.moyacs.canary.main.deal.contract_tab2;
 
+import com.blankj.utilcode.util.SPUtils;
+import com.moyacs.canary.common.AppConstans;
 import com.moyacs.canary.main.deal.contract_tab2.ChiCangCountract.ChiCangPresenter;
 import com.moyacs.canary.main.deal.net_tab3.TransactionRecordVo;
+import com.moyacs.canary.network.BaseObservable;
+import com.moyacs.canary.network.RxUtils;
+import com.moyacs.canary.network.ServerManger;
 import com.moyacs.canary.network.ServerResult;
+
+import io.reactivex.disposables.CompositeDisposable;
 
 /**
  * 作者：luoshen on 2018/4/17 0017 09:37
@@ -10,49 +17,36 @@ import com.moyacs.canary.network.ServerResult;
  * 说明：
  */
 
-public class ChiCangPresenterImpl implements ChiCangPresenter, ChiCangCountract.GetChiCangListRequestListener {
+public class ChiCangPresenterImpl implements ChiCangPresenter {
     private ChiCangCountract.ChiCangView view;
-    private ChiCangCountract.ChiCangModul modul;
+    private CompositeDisposable disposable;
 
     public ChiCangPresenterImpl(ChiCangCountract.ChiCangView view) {
         this.view = view;
-        modul = new ChiCangModulImpl(this);
+        disposable = new CompositeDisposable();
     }
 
     @Override
     public void unsubscribe() {
-        modul.unsubscribe();
+        disposable.clear();
     }
 
     @Override
-    public void getChiCangList() {
-        modul.getChiCangList();
-    }
+    public void getRecordList() {
+        disposable.add(ServerManger.getInstance().getServer().getTransactionRecordList(SPUtils.getInstance().getString(AppConstans.USER_PHONE),
+                "1")
+                .compose(RxUtils.rxSchedulerHelper())
+                .subscribeWith(new BaseObservable<ServerResult<TransactionRecordVo>>() {
+                    @Override
+                    protected void requestSuccess(ServerResult<TransactionRecordVo> data) {
+                        view.setRecordList(data.getData().getList());
+                    }
 
-    @Override
-    public void beforeRequest() {
-        view.showLoadingDialog();
-    }
-
-    @Override
-    public void afterRequest() {
-        view.dismissLoadingDialog();
-    }
-
-    @Override
-    public void getChiCangListResponseSucessed(ServerResult<TransactionRecordVo> result) {
-        if (result == null) {
-            view.getChiCangListFailed("数据为空");
-        }
-        if (result.isSuccess()) {
-            view.getChiCangListSucess(result.getData().getList());
-        } else {
-            view.getChiCangListFailed("服务器返回数据错误");
-        }
-    }
-
-    @Override
-    public void getChiCangListResponseFailed(String errormsg) {
-        view.getChiCangListFailed(errormsg);
+                    @Override
+                    public void onError(Throwable e) {
+                        super.onError(e);
+                        view.getRecordListFailed("服务器异常");
+                    }
+                }));
     }
 }

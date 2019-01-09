@@ -226,7 +226,7 @@ public class MarketMudulImpl {
     }
 
     @Override
-    public void getTradList() {
+    public void setTradList() {
 
     }
 }

@@ -50,7 +50,7 @@ import www.moyacs.com.myapplication.R;
  * 说明：tab3 资金页面
  */
 
-public class Deal_tab3_Fragment extends BaseFragment3 implements FundCountract.FundView {
+public class DealTab3Fragment extends BaseFragment3 implements FundCountract.FundView {
 
     @BindView(R.id.tv_totalMoney)
     TextView tvTotalMoney;
@@ -381,7 +381,7 @@ public class Deal_tab3_Fragment extends BaseFragment3 implements FundCountract.F
 
     @Override
     public void getFundFailed(String errormsg) {
-        Log.i("Deal_tab3_Fragment", "getFundFailed: 获取资金数据失败");
+        Log.i("DealTab3Fragment", "getFundFailed: 获取资金数据失败");
     }
 
     @Override

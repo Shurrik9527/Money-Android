@@ -1,3 +1,4 @@
+/*
 package com.moyacs.canary.main.deal.contract_tab2;
 
 import com.blankj.utilcode.util.LogUtils;
@@ -25,11 +26,13 @@ import io.reactivex.functions.Consumer;
 import io.reactivex.schedulers.Schedulers;
 import retrofit2.Response;
 
+*/
 /**
  * 作者：luoshen on 2018/4/17 0017 09:40
  * 邮箱：rsf411613593@gmail.com
  * 说明：
- */
+ *//*
+
 
 public class ChiCangModulImpl implements ChiCangCountract.ChiCangModul {
 
@@ -49,7 +52,8 @@ public class ChiCangModulImpl implements ChiCangCountract.ChiCangModul {
 
     @Override
     public void getChiCangList() {
-     /*   chiCangTabServer.getChiCangList(mt4id, server, startDate, endDate)
+     */
+/*   chiCangTabServer.getRecordList(mt4id, server, startDate, endDate)
                 .subscribeOn(Schedulers.io())//指定网络请求所在的线程
                 .doOnSubscribe(new Consumer<Disposable>() {
                     @Override
@@ -98,7 +102,8 @@ public class ChiCangModulImpl implements ChiCangCountract.ChiCangModul {
                     public void onComplete() {
 
                     }
-                });*/
+                });*//*
+
 
         ServerManger.getInstance().getServer().getTransactionRecordList(SPUtils.getInstance().getString(AppConstans.USER_PHONE), "1")
                 .subscribeOn(Schedulers.io())
@@ -128,3 +133,4 @@ public class ChiCangModulImpl implements ChiCangCountract.ChiCangModul {
 
     }
 }
+*/

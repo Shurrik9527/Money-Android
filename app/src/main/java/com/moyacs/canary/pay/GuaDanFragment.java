@@ -34,7 +34,7 @@ import com.moyacs.canary.base.BaseFragment2;
 import com.moyacs.canary.common.AppConstans;
 import com.moyacs.canary.common.NumberUtils;
 import com.moyacs.canary.common.StringUtil;
-import com.moyacs.canary.pay.contract.PayCountract;
+import com.moyacs.canary.pay.contract.PayContract;
 import com.moyacs.canary.pay.contract.PayPresenterImpl;
 
 import java.text.SimpleDateFormat;
@@ -53,7 +53,7 @@ import www.moyacs.com.myapplication.R;
  * 说明：挂单
  */
 
-public class GuaDanFragment extends BaseFragment2 implements PayCountract.PayView {
+public class GuaDanFragment extends BaseFragment2 implements PayContract.PayView {
 
     Unbinder unbinder;
     /**
@@ -880,7 +880,7 @@ public class GuaDanFragment extends BaseFragment2 implements PayCountract.PayVie
                     String s1 = NumberUtils.setScale(aDouble, digit);
                     price = Double.valueOf(s1);
                 }
-                Log.i("submitOrder", "server: " + server + "\n" +
+                Log.i("closeOrder", "server: " + server + "\n" +
                         "mt4id: " + mt4id + "\n" +
                         "symbol: " + symbol + "\n" +
                         "type: " + type + "\n" +
@@ -891,7 +891,7 @@ public class GuaDanFragment extends BaseFragment2 implements PayCountract.PayVie
                         "expiredDate: " + expiredDate + "\n"
                 );
                 PayPresenterImpl payPresenter = new PayPresenterImpl(this);
-//                payPresenter.submitOrder(server, mt4id, symbol, type, multiply.intValue(), sl, tp, "", price, expiredDate);
+//                payPresenter.closeOrder(server, mt4id, symbol, type, multiply.intValue(), sl, tp, "", price, expiredDate);
                 Log.i("mt4id", "mt4id: " + mt4id + "      server : " + server);
                 break;
         }
@@ -1097,13 +1097,13 @@ public class GuaDanFragment extends BaseFragment2 implements PayCountract.PayVie
     }
 
     @Override
-    public void submitOrderSucess(Object result) {
-        Log.i("submitOrderSucess", "submitOrderSucess:    下单成功了");
+    public void closeOrderSuccess(Object result) {
+        Log.i("closeOrderSuccess", "closeOrderSuccess:    下单成功了");
     }
 
     @Override
-    public void submitOrderFailed(String errormsg) {
-        Log.i("submitOrderFailed", "submitOrderSucess:    下单失败  ：" + errormsg);
+    public void closeOrderFailed(String errormsg) {
+        Log.i("closeOrderFailed", "closeOrderSuccess:    下单失败  ：" + errormsg);
     }
 
     private void showPop(View view) {

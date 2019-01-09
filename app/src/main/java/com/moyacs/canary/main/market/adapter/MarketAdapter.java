@@ -7,7 +7,6 @@ import android.animation.ObjectAnimator;
 import android.animation.ValueAnimator;
 import android.annotation.SuppressLint;
 import android.content.Context;
-import android.content.Intent;
 import android.graphics.drawable.GradientDrawable;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
@@ -17,13 +16,10 @@ import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.blankj.utilcode.util.LogUtils;
 import com.moyacs.canary.MyApplication;
-import com.moyacs.canary.common.AppConstans;
 import com.moyacs.canary.common.NumberUtils;
-import com.moyacs.canary.main.market.MarketFragment;
 import com.moyacs.canary.main.market.net.MarketDataBean;
-import com.moyacs.canary.product_fxbtg.ProductActivity;
-import com.moyacs.canary.util.AnimatorUtil;
 
 import java.util.List;
 
@@ -46,10 +42,15 @@ public class MarketAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
     private int rangeColor;
     private String rangeString;
     private String rangeValue;
-    private boolean isShowDianCha; //是否显示点差
+    private boolean isShowDianCha = false; //是否显示点差
     private ObjectAnimator colorAnim;
     private AdapterClickListener clickListener;
+    private boolean isShowFootView; // 是否显示底部View
 
+    public MarketAdapter(List<MarketDataBean> marketList, Context context) {
+        this.marketList = marketList;
+        this.context = context;
+    }
 
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
@@ -169,6 +170,7 @@ public class MarketAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
                             gradientDrawable.setColor(rangeColor);
                             ((ViewHolder) holder).tvRange.setText(rangeString);
                         }
+
                         //缓存涨跌幅
                        /* switch (type_showTab) {
                             case 0:
@@ -252,6 +254,14 @@ public class MarketAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
                     clickListener.onItemClickListener(marketDataBean);
                 }
             });
+            //是否显示点差
+            ((ViewHolder) holder).tvRange.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    isShowDianCha = !isShowDianCha;
+                    notifyDataSetChanged();
+                }
+            });
         } else if (holder instanceof FootViewHolder) {
             holder.itemView.setOnClickListener(v -> {
                 if (clickListener != null) {
@@ -263,7 +273,11 @@ public class MarketAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
 
     @Override
     public int getItemCount() {
-        return marketList.size() + 1;
+        if (isShowFootView) {
+            return marketList.size() + 1;
+        } else {
+            return marketList.size();
+        }
     }
 
     /**
@@ -271,15 +285,16 @@ public class MarketAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
      */
     @Override
     public int getItemViewType(int position) {
-        //如果是最后一个条目，应该架子啊脚布局
-        if (position == getItemCount() - 1) {
-            //最后一个,应该加载Footer
-            return TYPE_FOOTER;
+        //最后一个,应该加载Footer
+        if (isShowFootView) {
+            if ((position + 1) == getItemCount()) {
+                return TYPE_FOOTER;
+            }
         }
         return TYPE_NORMAL;
     }
 
-    public class ViewHolder extends RecyclerView.ViewHolder {
+    class ViewHolder extends RecyclerView.ViewHolder {
         @BindView(R.id.tv_chinaname)
         TextView tvChinaname;
         @BindView(R.id.tv_englishname)
@@ -334,4 +349,13 @@ public class MarketAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
     public void setAdapterClickListener(AdapterClickListener clickListener) {
         this.clickListener = clickListener;
     }
+
+    /***
+     * 设置显示底部View
+     * @param isShowFootView 是否显示底部View
+     */
+    public void setIsShowFootView(boolean isShowFootView) {
+        this.isShowFootView = isShowFootView;
+    }
+
 }
