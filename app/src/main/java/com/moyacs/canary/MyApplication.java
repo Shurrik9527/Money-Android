@@ -33,9 +33,11 @@ import www.moyacs.com.myapplication.R;
 
 public class MyApplication extends Application {
     //    private WebView mWebView ;
+    public static MyApplication instance;
     @Override
     public void onCreate() {
         super.onCreate();
+        instance = this;
         //AndroidUtilsCode 工具类初始化
         Utils.init(this);
         initLogUtils();

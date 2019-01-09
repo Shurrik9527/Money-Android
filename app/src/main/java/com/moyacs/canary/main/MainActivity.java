@@ -97,15 +97,12 @@ public class MainActivity extends BaseActivity {
                     case 1:
                         initToolbar(getResources().getString(R.string.app_name) + "行情");
                         //如果 行情页面显示的是 自选 tab ，就弹出提示登录
-                        int type_showTab = marketFragment.getType_showTab();
+                        /*int type_showTab = marketFragment.getType_showTab();
                         if (type_showTab == 0 && !isLogin()) {
                             return;
-                        }
+                        }*/
                         break;
                     case 2:
-                        if (!isLogin()) {
-                            return;
-                        }
                         toolbar.setVisibility(View.GONE);
                         break;
                     case 3:
@@ -114,7 +111,6 @@ public class MainActivity extends BaseActivity {
                 }
                 vpContent.setCurrentItem(position);
             }
-
 
             @Override
             public void onTabReselect(int position) {

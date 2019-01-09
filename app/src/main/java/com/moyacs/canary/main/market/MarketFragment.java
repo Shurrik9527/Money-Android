@@ -6,16 +6,10 @@ import android.os.Looper;
 import android.text.TextUtils;
 import android.view.View;
 
-import android.animation.Animator;
-import android.animation.AnimatorListenerAdapter;
-import android.animation.ArgbEvaluator;
-import android.animation.ObjectAnimator;
 import android.animation.ValueAnimator;
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.graphics.drawable.GradientDrawable;
-import android.os.Bundle;
-import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -26,7 +20,7 @@ import android.widget.TextView;
 
 import com.blankj.utilcode.util.LogUtils;
 import com.blankj.utilcode.util.SPUtils;
-import com.moyacs.canary.base.BaseFragment2;
+import com.moyacs.canary.base.BaseFragment;
 import com.moyacs.canary.common.AppConstans;
 import com.moyacs.canary.common.DialogUtils;
 import com.moyacs.canary.common.NumberUtils;
@@ -36,11 +30,11 @@ import com.moyacs.canary.main.market.net.MarketDataBean;
 import com.moyacs.canary.main.market.net.TradeVo;
 import com.moyacs.canary.netty.codec.Quotation;
 import com.moyacs.canary.product_fxbtg.ProductActivity;
+import com.moyacs.canary.util.AnimatorUtil;
 import com.moyacs.canary.widget.UnderLineTextView;
 import com.yan.pullrefreshlayout.PullRefreshLayout;
 
 
-import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 
@@ -50,7 +44,6 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
-import butterknife.Unbinder;
 import www.moyacs.com.myapplication.R;
 
 
@@ -60,7 +53,7 @@ import www.moyacs.com.myapplication.R;
  * 说明：行情页面
  */
 
-public class MarketFragment extends BaseFragment2 implements MarketContract.MarketView {
+public class MarketFragment extends BaseFragment implements MarketContract.MarketView {
 
     private static final String TAG = "MarketFragment";
     @BindView(R.id.tab1)
@@ -73,141 +66,84 @@ public class MarketFragment extends BaseFragment2 implements MarketContract.Mark
     UnderLineTextView tab4;
     @BindView(R.id.tab5)
     UnderLineTextView tab5;
-    @BindView(R.id.textView1)
-    TextView textView1;
-
-    RecyclerView recyclerMarket;
+    @BindView(R.id.recycler_market)
+    RecyclerView rvMarket;
     @BindView(R.id.pullrefreshLayout)
-    PullRefreshLayout pullrefreshLayout;
-
+    PullRefreshLayout freshLayout;
+    @BindView(R.id.tv_failed)
+    TextView tvFailedView; //加载数据失败的时候显示的提示信息
     @BindView(R.id.zhang_die_fu)
     TextView tvZhangDieFu;
 
-    Unbinder unbinder;
-    private View rootView;
-    /**
-     * 顶部 tab 集合
-     */
+    //顶部 tab 集合
     private ArrayList<UnderLineTextView> tabList;
-    /**
-     * 五个 tab 公用的 数据源
-     */
-    private ArrayList<MarketDataBean> recyclerListData;
-    /**
-     * recycler 数据源 自选
-     */
-    private ArrayList<MarketDataBean> list_zixuan;
-
+    //五个 tab 公用的 数据源
+    private ArrayList<MarketDataBean> marketList;
+    //recycler 数据源 自选
+    private ArrayList<MarketDataBean> ziXuanList;
     private MyRecyclerAdapter myRecyclerAdapter;
-
     private MarketContract.MarketPresenter presenter;
-
     //属性动画
     private ValueAnimator colorAnim;
     private Intent intent;
-    private NumberUtils numberUtils;
     // 记录 价格改变时间
     private String time;
-
     //涨跌值
     private String value;
     private View footerView;
-    /**
-     * 1:外汇 2:贵金属 3:原油  4:全球指数 “” 代表所有 ，是为了请求对应数据
-     */
+    //1:外汇 2:贵金属 3:原油  4:全球指数 “” 代表所有 ，是为了请求对应数据
     private String type;
-    /**
-     * 为了确定当前页面显示的是哪个tab
-     * 0 自选 1:外汇 2:贵金属 3:原油  4:全球指数
-     */
+    //为了确定当前页面显示的是哪个tab * 0 自选 1:外汇 2:贵金属 3:原油  4:全球指数
     private int type_showTab = 1;
-    /**
-     * 外汇 数据源
-     */
-    private ArrayList<MarketDataBean> list_waihui;
-    /**
-     * 贵金属 数据源
-     */
-    private ArrayList<MarketDataBean> list_guijinshu;
-    /**
-     * 原油 数据源
-     */
-    private ArrayList<MarketDataBean> list_yuanyou;
-    /**
-     * 全球指数  数据源
-     */
-    private ArrayList<MarketDataBean> list_quanqiuzhishu;
-    /**
-     * 加载数据失败的时候显示的提示信息
-     */
-    private TextView textView_failed;
-
+    //外汇 数据源
+    private ArrayList<MarketDataBean> waiHuiList;
+    //贵金属 数据源
+    private ArrayList<MarketDataBean> guiJinShuList;
+    ///原油 数据源
+    private ArrayList<MarketDataBean> yuanYouList;
+    //全球指数  数据源
+    private ArrayList<MarketDataBean> quanQiuZhiShuList;
     //可交易品种列表
     private List<TradeVo.Trade> tradeList;
 
     @Override
-    protected View addChildInflaterView(LayoutInflater inflater) {
-        EventBus.getDefault().register(this);
-        rootView = inflater.inflate(R.layout.fragment_market, null, false);
-        unbinder = ButterKnife.bind(this, rootView);
-        recyclerMarket = rootView.findViewById(R.id.recycler_market);
-        textView_failed = rootView.findViewById(R.id.tv_failed);
+    protected int getLayoutId() {
+        return R.layout.fragment_market;
+    }
+
+    @Override
+    protected void initView() {
         initTabList();
         //初始化 tab 选中外汇
         setTabSelect(1);
         //初始化 recyclerView
-        initrecyclerView();
+        initRecyclerView();
         //初始化下拉刷新框架
         initRefreshLayout();
-        if (myRecyclerAdapter == null) {
-            myRecyclerAdapter = new MyRecyclerAdapter();
-        }
-        recyclerMarket.setAdapter(myRecyclerAdapter);
-        return rootView;
     }
 
     @Override
-    protected void initBundleData(Bundle bundle) {
+    protected void intListener() {
+
     }
 
-    private int tag = 0;
-
     @Override
-    protected void loadData() {
-        if (presenter == null) {
-            presenter = new MarketPresenterImpl(this);
-        }
+    protected void initData() {
+        registerEventBus();
+        presenter = new MarketPresenterImpl(this);
         //获取可以交类型列表
         presenter.getTradeList();
-        //防止重复加载数据
-        if (list_zixuan != null && list_zixuan.size() >= 0) {
-            return;
-        }
-        /**
-         * 获取自选列表
-         */
-//        presenter.getMarketList_type("13232323636", "2");
-    }
-
-    @Override
-    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
-//        if (recyclerListData != null && recyclerListData.size() > 0) {
-//            myRecyclerAdapter = new MyRecyclerAdapter();
-//            recyclerMarket.setAdapter(myRecyclerAdapter);
-//            recyclerView 底部添加自选布局
-//            footerView = LayoutInflater.from(getActivity()).inflate(R.layout.item_recycler_market_footer, null, false);
-//            myRecyclerAdapter.notifyItemInserted(myRecyclerAdapter.getItemCount() - 1);
-//        }
     }
 
     /**
      * 初始化 recyclerView
      */
-    private void initrecyclerView() {
+    private void initRecyclerView() {
         LinearLayoutManager manager = new LinearLayoutManager(getActivity());
         manager.setOrientation(LinearLayoutManager.VERTICAL);
-        recyclerMarket.setLayoutManager(manager);
+        rvMarket.setLayoutManager(manager);
+        myRecyclerAdapter = new MyRecyclerAdapter();
+        rvMarket.setAdapter(myRecyclerAdapter);
     }
 
     /**
@@ -215,16 +151,17 @@ public class MarketFragment extends BaseFragment2 implements MarketContract.Mark
      */
     private void initRefreshLayout() {
         //刷新监听
-        pullrefreshLayout.setOnRefreshListener(new PullRefreshLayout.OnRefreshListener() {
+        freshLayout.setOnRefreshListener(new PullRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
                 if (tab1.isSelected())
                     presenter.getMarketList("13232323636", "DEMO");
                 else {
+                    // 模拟刷新  实际上什么都没做
                     new Handler(Looper.getMainLooper()).postDelayed(new Runnable() {
                         @Override
                         public void run() {
-                            pullrefreshLayout.refreshComplete();
+                            freshLayout.refreshComplete();
                         }
                     }, 600);
                 }
@@ -232,7 +169,7 @@ public class MarketFragment extends BaseFragment2 implements MarketContract.Mark
 
             @Override
             public void onLoading() {
-                LogUtils.d("pullrefreshLayout :    onLoading ");
+                LogUtils.d("freshLayout :    onLoading ");
             }
         });
     }
@@ -254,84 +191,7 @@ public class MarketFragment extends BaseFragment2 implements MarketContract.Mark
      */
     private void setTabSelect(int tabSelect) {
         type_showTab = tabSelect;
-        int size = tabList.size();
-        if (tabSelect > size || tabSelect < 0) {
-            return;
-        }
-        for (int i = 0; i < tabList.size(); i++) {
-            UnderLineTextView underLineTextView = tabList.get(i);
-            if (i == tabSelect) {
-                underLineTextView.setSelected(true);
-            } else {
-                underLineTextView.setSelected(false);
-            }
-        }
-    }
-
-    @Override
-    public void onDestroyView() {
-        super.onDestroyView();
-        unbinder.unbind();
-        EventBus.getDefault().unregister(this);
-        tag = 0;
-    }
-
-
-    @Subscribe(threadMode = ThreadMode.MAIN)
-    public void onGetNettyData(Quotation quotation) {
-        //如果没有获取行情列表数据就返回
-        if (recyclerListData == null) {
-            return;
-        }
-        //如果 fragment 不可见，不解析数据
-        if (!isVisibleToUser) {
-            return;
-        }
-        //遍历比对名称
-        for (int i = 0; i < recyclerListData.size(); i++) {
-            MarketDataBean marketDataBean = recyclerListData.get(i);
-            String symbol = marketDataBean.getSymbol();
-            //名称比对成功，就更改价格数据，并更新 对应条目
-            if (symbol.equals(quotation.getSymbol())) {
-                //设置买入价
-                marketDataBean.setPrice_buy(quotation.getAsk());
-                //设置卖出价
-                marketDataBean.setPrice_sale(quotation.getBid());
-                time = quotation.getTime();
-                //主要是为了缓存 对应 tab 的买入价 和 卖出价
-                switch (type_showTab) {
-                    case 0:
-                        if (list_zixuan != null) {
-                            list_zixuan.set(i, marketDataBean);
-                        }
-                        break;
-                    case 1:
-                        if (list_waihui != null) {
-                            list_waihui.set(i, marketDataBean);
-                        }
-                        break;
-                    case 2:
-                        if (list_guijinshu != null) {
-                            list_guijinshu.set(i, marketDataBean);
-                        }
-                        break;
-                    case 3:
-                        if (list_yuanyou != null) {
-                            list_yuanyou.set(i, marketDataBean);
-                        }
-                        break;
-                    case 4:
-                        if (list_quanqiuzhishu != null) {
-                            list_quanqiuzhishu.set(i, marketDataBean);
-                        }
-                        break;
-                }
-                recyclerListData.set(i, marketDataBean);
-                //第二个参数不为 0 ，表示可以更新item 中的一部分 ui，对应 adapter 中的 三个参数的 onbindviewHolder
-                myRecyclerAdapter.notifyItemChanged(i, i);
-            }
-            marketDataBean = null;
-        }
+        tabList.get(tabSelect).setSelected(true);
     }
 
     /**
@@ -350,32 +210,31 @@ public class MarketFragment extends BaseFragment2 implements MarketContract.Mark
                 }
                 setTabSelect(0);
                 //防止重复加载数据
-                if (list_zixuan == null) {
+                if (ziXuanList == null) {
                     presenter.getMarketList("13232323636", "DEMO");
                 } else {
-                    recyclerListData = new ArrayList<>(list_zixuan);
-                    myRecyclerAdapter.notifyDataSetChanged();
+                    replaceMarketList(ziXuanList);
                 }
                 break;
             case R.id.tab2:
                 type = "1";
                 setTabSelect(1);
-                requestDate(list_waihui);
+                replaceMarketList(waiHuiList);
                 break;
             case R.id.tab3:
                 type = "2";
                 setTabSelect(2);
-                requestDate(list_guijinshu);
+                replaceMarketList(guiJinShuList);
                 break;
             case R.id.tab4:
                 type = "3";
                 setTabSelect(3);
-                requestDate(list_yuanyou);
+                replaceMarketList(yuanYouList);
                 break;
             case R.id.tab5:
                 type = "4";
                 setTabSelect(4);
-                requestDate(list_quanqiuzhishu);
+                replaceMarketList(quanQiuZhiShuList);
                 break;
             case R.id.ll_zhangdiefu:
                 /*isShowDianCha = !isShowDianCha;
@@ -390,19 +249,15 @@ public class MarketFragment extends BaseFragment2 implements MarketContract.Mark
     }
 
     /**
-     * 防止重复加载数据
-     *
-     * @param list
+     * 替换数据源
      */
-    private void requestDate(List<MarketDataBean> list) {
-        if (tradeList == null) {
-            return;
-        }
-        textView_failed.setVisibility(View.GONE);//加载数据隐藏异常状态提醒
+    private void replaceMarketList(List<MarketDataBean> list) {
+        tvFailedView.setVisibility(View.GONE);//加载数据隐藏异常状态提醒
+        rvMarket.setVisibility(View.VISIBLE);
         if (list == null) {
             presenter.getMarketList_type("DEMO", type);
         } else {
-            recyclerListData = new ArrayList<>(list);
+            marketList = new ArrayList<>(list);
             myRecyclerAdapter.notifyDataSetChanged();
         }
     }
@@ -412,61 +267,117 @@ public class MarketFragment extends BaseFragment2 implements MarketContract.Mark
         presenter.unsubscribe();
     }
 
-    @Override
-    public void showLoadingDialog() {
-        textView_failed.setVisibility(View.GONE);
-        if (pullrefreshLayout.isRefreshing()) {
-            return;
-        }
-        //自动刷新，但是不触发刷新回调
-        pullrefreshLayout.autoRefresh(false);
-    }
-
-    @Override
-    public void dismissLoadingDialog() {
-        if (pullrefreshLayout != null) {
-            pullrefreshLayout.refreshComplete();
-        }
-    }
-
     /**
      * 请求自选列表成功
-     *
-     * @param result
      */
     @Override
     public void getMarketListSucessed(List<MarketDataBean> result) {
         //隐藏自选按钮
-        if (footerView != null) {
-            footerView.setVisibility(View.VISIBLE);
-        }
-        textView_failed.setVisibility(View.GONE);
-        LogUtils.d("获取自选列表成功");
-        for (int i = 0; i < result.size(); i++) {
-            int stops_level = result.get(i).getStops_level();
-            Log.i("stops_level", "stops_level:   " + stops_level);
-
-            double close = result.get(i).getClose();
-            LogUtils.d(close);
-            LogUtils.d("保留小数点位数  ：  " + result.get(i).getDigit());
-        }
-        list_zixuan = new ArrayList<>(result);
-        recyclerListData = new ArrayList<>(result);
-        myRecyclerAdapter = new MyRecyclerAdapter();
-        recyclerMarket.setAdapter(myRecyclerAdapter);
-        //recyclerview 底部添加自选布局
-        footerView = LayoutInflater.from(getActivity()).inflate(R.layout.item_recycler_market_footer, recyclerMarket, false);
-        myRecyclerAdapter.notifyItemInserted(myRecyclerAdapter.getItemCount() - 1);
-        //底部添加自选布局 点击事件
-        footerView.findViewById(R.id.ll_footer).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
+        if (footerView == null) {
+            footerView = LayoutInflater.from(getActivity()).inflate(R.layout.item_recycler_market_footer, rvMarket, false);
+            //底部添加自选布局 点击事件
+            footerView.findViewById(R.id.ll_footer).setOnClickListener(v -> {
                 Intent intent = new Intent(getContext(), OptionalActivity.class);
                 startActivity(intent);
-            }
-        });
-        numberUtils = new NumberUtils();
+            });
+        } else {
+            footerView.setVisibility(View.VISIBLE);
+        }
+        ziXuanList = new ArrayList<>(result);
+        replaceMarketList(ziXuanList);
+        //recyclerView 底部添加自选布局
+        myRecyclerAdapter.notifyItemInserted(myRecyclerAdapter.getItemCount() - 1);
     }
+
+
+    /**
+     * 请求自选列表失败
+     *
+     * @param errormsg
+     */
+    @Override
+    public void getMarketListFailed(String errormsg) {
+        rvMarket.setVisibility(View.GONE);
+        tvFailedView.setVisibility(View.VISIBLE);
+        tvFailedView.setText("自选列表获取失败");
+    }
+
+    /**
+     * 获取行情列表成功
+     *
+     * @param result
+     */
+    @Override
+    public void getMarketListSucessed_type(List<MarketDataBean> result) {
+        Log.i(TAG, "getMarketListSucessed_type: 获取行情列表成功");
+        List<MarketDataBean> listData = new ArrayList<>();
+        //过滤数据
+        if (tradeList != null) {
+            for (MarketDataBean mb : result) {
+                for (TradeVo.Trade t : tradeList) {
+                    if (TextUtils.equals(mb.getSymbol(), t.getSymbolCode())) {
+                        mb.setTrade(t);
+                        listData.add(mb);
+                    }
+                }
+            }
+        }
+        switch (type_showTab) {
+            case 1:
+                waiHuiList = new ArrayList<>(listData);
+                break;
+            case 2:
+                guiJinShuList = new ArrayList<>(listData);
+                break;
+            case 3:
+                yuanYouList = new ArrayList<>(listData);
+                break;
+            case 4:
+                quanQiuZhiShuList = new ArrayList<>(listData);
+                break;
+        }
+        rvMarket.setVisibility(View.VISIBLE);
+        marketList = new ArrayList<>(listData);
+        myRecyclerAdapter.notifyDataSetChanged();
+        //隐藏自选按钮
+        if (footerView != null) {
+            footerView.setVisibility(View.GONE);
+        }
+        tvFailedView.setVisibility(View.GONE);
+    }
+
+    /**
+     * 获取行情列表失败
+     *
+     * @param errormsg
+     */
+    @Override
+    public void getMarketListFailed_type(String errormsg) {
+        switch (type_showTab) {
+            case 1:
+                tvFailedView.setText("外汇列表获取失败");
+                break;
+            case 2:
+                tvFailedView.setText("贵金属列表获取失败");
+                break;
+            case 3:
+                tvFailedView.setText("原油列表获取失败");
+                break;
+            case 4:
+                tvFailedView.setText("全球指数列表获取失败");
+                break;
+        }
+        rvMarket.setVisibility(View.GONE);
+        tvFailedView.setVisibility(View.VISIBLE);
+    }
+
+    @Override
+    public void getTradList(List<TradeVo.Trade> list) {
+        tradeList = new ArrayList<>();
+        tradeList.addAll(list);
+        presenter.getMarketList_type("live", String.valueOf(type_showTab));
+    }
+
 
     /**
      * 上一次的价格
@@ -488,97 +399,6 @@ public class MarketFragment extends BaseFragment2 implements MarketContract.Mark
     private boolean whatColor;
     //昨收
     private double close;
-
-    /**
-     * 请求自选列表失败
-     *
-     * @param errormsg
-     */
-    @Override
-    public void getMarketListFailed(String errormsg) {
-        if (recyclerListData != null) {
-            recyclerListData.clear();
-        }
-        myRecyclerAdapter.notifyDataSetChanged();
-        textView_failed.setVisibility(View.VISIBLE);
-        textView_failed.setText("自选列表获取失败");
-    }
-
-    /**
-     * 获取行情列表成功
-     *
-     * @param result
-     */
-    @Override
-    public void getMarketListSucessed_type(List<MarketDataBean> result) {
-        List<MarketDataBean> listData = new ArrayList<>();
-        //过滤数据
-        if (tradeList != null) {
-            for (MarketDataBean mb : result) {
-                for (TradeVo.Trade t : tradeList) {
-                    if (TextUtils.equals(mb.getSymbol(), t.getSymbolCode())) {
-                        mb.setTrade(t);
-                        listData.add(mb);
-                    }
-                }
-            }
-        }
-        switch (type_showTab) {
-            case 1:
-                list_waihui = new ArrayList<>(listData);
-                break;
-            case 2:
-                list_guijinshu = new ArrayList<>(listData);
-                break;
-            case 3:
-                list_yuanyou = new ArrayList<>(listData);
-                break;
-            case 4:
-                list_quanqiuzhishu = new ArrayList<>(listData);
-                break;
-        }
-        Log.i(TAG, "getMarketListSucessed_type: 获取行情列表成功");
-        recyclerListData = new ArrayList<>(listData);
-        myRecyclerAdapter.notifyDataSetChanged();
-        //隐藏自选按钮
-        if (footerView != null) {
-            footerView.setVisibility(View.GONE);
-        }
-        textView_failed.setVisibility(View.GONE);
-    }
-
-    /**
-     * 获取行情列表失败
-     *
-     * @param errormsg
-     */
-    @Override
-    public void getMarketListFailed_type(String errormsg) {
-        textView_failed.setVisibility(View.VISIBLE);
-        switch (type_showTab) {
-            case 1:
-                textView_failed.setText("外汇列表获取失败");
-                break;
-            case 2:
-                textView_failed.setText("贵金属列表获取失败");
-                break;
-            case 3:
-                textView_failed.setText("原油列表获取失败");
-                break;
-            case 4:
-                textView_failed.setText("全球指数列表获取失败");
-                break;
-        }
-        Log.i(TAG, "getMarketListFailed_type: 获取行情列表失败");
-    }
-
-
-    @Override
-    public void getTradList(List<TradeVo.Trade> list) {
-        tradeList = new ArrayList<>();
-        tradeList.addAll(list);
-        presenter.getMarketList_type("live", String.valueOf(type_showTab));
-    }
 
     public class MyRecyclerAdapter extends RecyclerView.Adapter<MyRecyclerAdapter.ViewHolder> {
         public static final int TYPE_FOOTER = 1;  //说明是带有Footer的
@@ -618,7 +438,7 @@ public class MarketFragment extends BaseFragment2 implements MarketContract.Mark
                 onBindViewHolder(holder, position);
                 //表示，viewHolder 的一部分数据改变
             } else {
-                final MarketDataBean marketDataBean = recyclerListData.get(position);
+                final MarketDataBean marketDataBean = marketList.get(position);
                 //数据不为空
                 if (marketDataBean != null) {
 //                    获取旧价格，String类型
@@ -645,20 +465,20 @@ public class MarketFragment extends BaseFragment2 implements MarketContract.Mark
                     if (oldPrice != null && !oldPrice.equals("null") && !oldPrice.equals("")) {
                         oldprice_d = Double.valueOf(oldPrice);
                         //比较昨收价格  与 最新买入价 大小
-                        int compare = numberUtils.compare(newPrice_d, close);
+                        int compare = NumberUtils.compare(newPrice_d, close);
                         //比较，新旧买入价
-                        int compare2 = numberUtils.compare(newPrice_d, oldprice_d);
+                        int compare2 = NumberUtils.compare(newPrice_d, oldprice_d);
 
                         //主要是为了保证 相减始终为正数，正负号手动添加
                         if (compare == -1) {// 新价格 < 昨收价格
                             whatColor = false;
                             //计算新旧价格差
-                            subtract = numberUtils.subtract(close, newPrice_d);
+                            subtract = NumberUtils.subtract(close, newPrice_d);
                             rangeColor = getResources().getColor(R.color.trade_down);
                             //计算涨跌值
-                            value = "-" + numberUtils.doubleToString(subtract);
+                            value = "-" + NumberUtils.doubleToString(subtract);
                             //计算涨跌幅
-                            range = numberUtils.divide(subtract, close, 4);
+                            range = NumberUtils.divide(subtract, close, 4);
                             //涨跌幅数据格式化
                             String s = NumberUtils.setScale2(range);
                             //跌 加 - 号
@@ -668,11 +488,11 @@ public class MarketFragment extends BaseFragment2 implements MarketContract.Mark
                         } else {//新价格 > 昨收价格
                             whatColor = true;
                             rangeColor = getResources().getColor(R.color.color_opt_gt);
-                            subtract = numberUtils.subtract(newPrice_d, close);
+                            subtract = NumberUtils.subtract(newPrice_d, close);
                             //计算涨跌值
-                            value = "+" + numberUtils.doubleToString(subtract);
+                            value = "+" + NumberUtils.doubleToString(subtract);
                             //计算涨跌幅
-                            range = numberUtils.divide(subtract, close, 4);
+                            range = NumberUtils.divide(subtract, close, 4);
                             //涨跌幅数据格式化
                             String s = NumberUtils.setScale2(range);
                             //涨 加 + 号
@@ -692,7 +512,7 @@ public class MarketFragment extends BaseFragment2 implements MarketContract.Mark
                         }
 
                         //价格  执行动画
-                        getAnimator(holder.tvPrice, Animatorcolor);
+                        AnimatorUtil.startAnimatorRGB(holder.tvPrice, Animatorcolor);
                         //买入价的字体颜色 ，与 涨跌幅的背景颜色一致
                         holder.tvPrice.setTextColor(rangeColor);
                         holder.tvSale.setTextColor(rangeColor);
@@ -714,28 +534,28 @@ public class MarketFragment extends BaseFragment2 implements MarketContract.Mark
                         //缓存涨跌幅
                         switch (type_showTab) {
                             case 0:
-                                if (list_zixuan != null) {
-                                    list_zixuan.set(position, marketDataBean);
+                                if (ziXuanList != null) {
+                                    ziXuanList.set(position, marketDataBean);
                                 }
                                 break;
                             case 1:
-                                if (list_waihui != null) {
-                                    list_waihui.set(position, marketDataBean);
+                                if (waiHuiList != null) {
+                                    waiHuiList.set(position, marketDataBean);
                                 }
                                 break;
                             case 2:
-                                if (list_guijinshu != null) {
-                                    list_guijinshu.set(position, marketDataBean);
+                                if (guiJinShuList != null) {
+                                    guiJinShuList.set(position, marketDataBean);
                                 }
                                 break;
                             case 3:
-                                if (list_yuanyou != null) {
-                                    list_yuanyou.set(position, marketDataBean);
+                                if (yuanYouList != null) {
+                                    yuanYouList.set(position, marketDataBean);
                                 }
                                 break;
                             case 4:
-                                if (list_quanqiuzhishu != null) {
-                                    list_quanqiuzhishu.set(position, marketDataBean);
+                                if (quanQiuZhiShuList != null) {
+                                    quanQiuZhiShuList.set(position, marketDataBean);
                                 }
                                 break;
                         }
@@ -756,7 +576,7 @@ public class MarketFragment extends BaseFragment2 implements MarketContract.Mark
                         holder.tvRange.setTextColor(getResources().getColor(R.color.white));
                         holder.tvRange.setBackground(getResources().getDrawable(R.drawable.bg_market_text_item));
                     }
-                    final MarketDataBean marketDataBean = recyclerListData.get(position);
+                    final MarketDataBean marketDataBean = marketList.get(position);
                     if (marketDataBean == null) {
                         return;
                     }
@@ -808,12 +628,12 @@ public class MarketFragment extends BaseFragment2 implements MarketContract.Mark
 
         @Override
         public int getItemCount() {
-            if (recyclerListData == null || recyclerListData.size() <= 0) {
+            if (marketList == null || marketList.size() <= 0) {
                 return 0;
             } else if (footerView != null) {
-                return recyclerListData.size() + 1;
+                return marketList.size() + 1;
             } else {
-                return recyclerListData.size();
+                return marketList.size();
             }
         }
 
@@ -868,7 +688,7 @@ public class MarketFragment extends BaseFragment2 implements MarketContract.Mark
     /**
      * 渐变动画
      */
-    private void getAnimator(final View view, final int resultColor) {
+  /*  private void getAnimator(final View view, final int resultColor) {
         colorAnim = ObjectAnimator.ofInt(view, "backgroundColor", getResources().getColor(R.color.white), resultColor);
         colorAnim.setDuration(500); // 动画时间为2s
         colorAnim.setEvaluator(new ArgbEvaluator()); // 设置估值器
@@ -882,9 +702,61 @@ public class MarketFragment extends BaseFragment2 implements MarketContract.Mark
         colorAnim.setRepeatCount(1);
         colorAnim.setRepeatMode(ValueAnimator.REVERSE); // 设置变化反转效果，即第一次动画执行完后再次执行时背景色时从后面的颜色值往前面的变化
         colorAnim.start();
-    }
-
-    public int getType_showTab() {
-        return type_showTab;
+    }*/
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onGetNettyData(Quotation quotation) {
+        //如果没有获取行情列表数据就返回
+        if (marketList == null) {
+            return;
+        }
+        //如果 fragment 不可见，不解析数据
+        if (isHidden()) {
+            return;
+        }
+        //遍历比对名称
+        for (int i = 0; i < marketList.size(); i++) {
+            MarketDataBean marketDataBean = marketList.get(i);
+            String symbol = marketDataBean.getSymbol();
+            //名称比对成功，就更改价格数据，并更新 对应条目
+            if (symbol.equals(quotation.getSymbol())) {
+                //设置买入价
+                marketDataBean.setPrice_buy(quotation.getAsk());
+                //设置卖出价
+                marketDataBean.setPrice_sale(quotation.getBid());
+                time = quotation.getTime();
+                //主要是为了缓存 对应 tab 的买入价 和 卖出价
+                switch (type_showTab) {
+                    case 0:
+                        if (ziXuanList != null) {
+                            ziXuanList.set(i, marketDataBean);
+                        }
+                        break;
+                    case 1:
+                        if (waiHuiList != null) {
+                            waiHuiList.set(i, marketDataBean);
+                        }
+                        break;
+                    case 2:
+                        if (guiJinShuList != null) {
+                            guiJinShuList.set(i, marketDataBean);
+                        }
+                        break;
+                    case 3:
+                        if (yuanYouList != null) {
+                            yuanYouList.set(i, marketDataBean);
+                        }
+                        break;
+                    case 4:
+                        if (quanQiuZhiShuList != null) {
+                            quanQiuZhiShuList.set(i, marketDataBean);
+                        }
+                        break;
+                }
+                marketList.set(i, marketDataBean);
+                //第二个参数不为 0 ，表示可以更新item 中的一部分 ui，对应 adapter 中的 三个参数的 onbindviewHolder
+                myRecyclerAdapter.notifyItemChanged(i, i);
+            }
+            marketDataBean = null;
+        }
     }
 }

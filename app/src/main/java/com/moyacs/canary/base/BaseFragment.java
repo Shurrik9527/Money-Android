@@ -25,18 +25,18 @@ public abstract class BaseFragment extends Fragment implements BaseView {
     private CompositeDisposable disposables;
     Unbinder unbinder;
     private LoadingDialog loadingDialog;
-    protected View mView;
+    protected View rootView;
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         mActivity = getActivity();
-        mView = LayoutInflater.from(mActivity).inflate(getLayoutId(), container, false);
-        unbinder = ButterKnife.bind(this, mView);
+        rootView = LayoutInflater.from(mActivity).inflate(getLayoutId(), container, false);
+        unbinder = ButterKnife.bind(this, rootView);
         initView();
         intListener();
         initData();
-        return mView;
+        return rootView;
     }
 
     @Override

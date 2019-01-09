@@ -109,11 +109,11 @@ public class KLineFragment extends BaseFragment implements OnKCrossLineMoveListe
     @Override
     protected void initView() {
         isEvent4SMA = false;
-        landTypeView = mView.findViewById(R.id.landTypeView);
-        KCrossLineView crossLineView = mView.findViewById(R.id.crossLineView);
+        landTypeView = rootView.findViewById(R.id.landTypeView);
+        KCrossLineView crossLineView = rootView.findViewById(R.id.crossLineView);
 //        crossLineView.setLayerType(View.LAYER_TYPE_SOFTWARE, null);
         //十字线出现的时候 详细信息。这里是activity 绑定的
-        crossInfoView = mView.findViewById(R.id.crossInfoView);
+        crossInfoView = rootView.findViewById(R.id.crossInfoView);
         tvTime = crossInfoView.findViewById(R.id.tv_time);
         tvOpen = crossInfoView.findViewById(R.id.tv_open);
         tvClose = crossInfoView.findViewById(R.id.tv_close);
@@ -123,7 +123,7 @@ public class KLineFragment extends BaseFragment implements OnKCrossLineMoveListe
         tvRateChange = crossInfoView.findViewById(R.id.tv_rateChange);
         LogUtils.d("digit  :    " + digit);
 
-        kLineView = mView.findViewById(R.id.klineView);
+        kLineView = rootView.findViewById(R.id.klineView);
         //设置精度
         kLineView.setNumberScal(digit);
         //设置配置的k线颜色
@@ -140,20 +140,20 @@ public class KLineFragment extends BaseFragment implements OnKCrossLineMoveListe
         //不显示显示指标线的值 SMA10:100 RSI:这些tips不显示
         kLineView.setShowTips(true);
 
-        mainNormal = mView.findViewById(R.id.mainNormal);
-        subNormal = mView.findViewById(R.id.subNormal);
-        mainNormalView = mView.findViewById(R.id.tab_SMA);
-        subNormalView = mView.findViewById(R.id.tab_MACD);
+        mainNormal = rootView.findViewById(R.id.mainNormal);
+        subNormal = rootView.findViewById(R.id.subNormal);
+        mainNormalView = rootView.findViewById(R.id.tab_SMA);
+        subNormalView = rootView.findViewById(R.id.tab_MACD);
         mainNormalView.setSelected(true);
         subNormalView.setSelected(true);
 
-        mainNormalViewLand = mView.findViewById(R.id.tab_SMA_land);
-        subNormalViewLand = mView.findViewById(R.id.tab_MACD_land);
+        mainNormalViewLand = rootView.findViewById(R.id.tab_SMA_land);
+        subNormalViewLand = rootView.findViewById(R.id.tab_MACD_land);
         mainNormalViewLand.setSelected(true);
         subNormalViewLand.setSelected(true);
 
-        layoutContent = mView.findViewById(R.id.layoutContent);
-        layoutLoading = mView.findViewById(R.id.layoutLoding);
+        layoutContent = rootView.findViewById(R.id.layoutContent);
+        layoutLoading = rootView.findViewById(R.id.layoutLoding);
 
         if (getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE) {
             //当前为横屏
@@ -170,18 +170,18 @@ public class KLineFragment extends BaseFragment implements OnKCrossLineMoveListe
 
     @Override
     protected void intListener() {
-        mView.findViewById(R.id.tab_SMA).setOnClickListener(normalListener);
-        mView.findViewById(R.id.tab_EMA).setOnClickListener(normalListener);
-        mView.findViewById(R.id.tab_BOLL).setOnClickListener(normalListener);
-        mView.findViewById(R.id.tab_MACD).setOnClickListener(normalListener);
-        mView.findViewById(R.id.tab_RSI).setOnClickListener(normalListener);
-        mView.findViewById(R.id.tab_KDJ).setOnClickListener(normalListener);
-        mView.findViewById(R.id.tab_SMA_land).setOnClickListener(normalListener);
-        mView.findViewById(R.id.tab_EMA_land).setOnClickListener(normalListener);
-        mView.findViewById(R.id.tab_BOLL_land).setOnClickListener(normalListener);
-        mView.findViewById(R.id.tab_MACD_land).setOnClickListener(normalListener);
-        mView.findViewById(R.id.tab_RSI_land).setOnClickListener(normalListener);
-        mView.findViewById(R.id.tab_KDJ_land).setOnClickListener(normalListener);
+        rootView.findViewById(R.id.tab_SMA).setOnClickListener(normalListener);
+        rootView.findViewById(R.id.tab_EMA).setOnClickListener(normalListener);
+        rootView.findViewById(R.id.tab_BOLL).setOnClickListener(normalListener);
+        rootView.findViewById(R.id.tab_MACD).setOnClickListener(normalListener);
+        rootView.findViewById(R.id.tab_RSI).setOnClickListener(normalListener);
+        rootView.findViewById(R.id.tab_KDJ).setOnClickListener(normalListener);
+        rootView.findViewById(R.id.tab_SMA_land).setOnClickListener(normalListener);
+        rootView.findViewById(R.id.tab_EMA_land).setOnClickListener(normalListener);
+        rootView.findViewById(R.id.tab_BOLL_land).setOnClickListener(normalListener);
+        rootView.findViewById(R.id.tab_MACD_land).setOnClickListener(normalListener);
+        rootView.findViewById(R.id.tab_RSI_land).setOnClickListener(normalListener);
+        rootView.findViewById(R.id.tab_KDJ_land).setOnClickListener(normalListener);
 
         //十字线出现的滑动逻辑
         kLineView.setOnKCrossLineMoveListener(this);
@@ -338,7 +338,7 @@ public class KLineFragment extends BaseFragment implements OnKCrossLineMoveListe
                 mainNormalView = view;
                 mainNormalView.setSelected(true);
                 mainNormalViewLand.setSelected(false);
-                mainNormalViewLand = mView.findViewById(R.id.tab_SMA_land);
+                mainNormalViewLand = rootView.findViewById(R.id.tab_SMA_land);
                 mainNormalViewLand.setSelected(true);
             }
             if (id == R.id.tab_EMA) {
@@ -347,7 +347,7 @@ public class KLineFragment extends BaseFragment implements OnKCrossLineMoveListe
                 mainNormalView = view;
                 mainNormalView.setSelected(true);
                 mainNormalViewLand.setSelected(false);
-                mainNormalViewLand = mView.findViewById(R.id.tab_EMA_land);
+                mainNormalViewLand = rootView.findViewById(R.id.tab_EMA_land);
                 mainNormalViewLand.setSelected(true);
             }
             if (id == R.id.tab_BOLL) {
@@ -356,7 +356,7 @@ public class KLineFragment extends BaseFragment implements OnKCrossLineMoveListe
                 mainNormalView = view;
                 mainNormalView.setSelected(true);
                 mainNormalViewLand.setSelected(false);
-                mainNormalViewLand = mView.findViewById(R.id.tab_BOLL_land);
+                mainNormalViewLand = rootView.findViewById(R.id.tab_BOLL_land);
                 mainNormalViewLand.setSelected(true);
             }
 
@@ -367,7 +367,7 @@ public class KLineFragment extends BaseFragment implements OnKCrossLineMoveListe
                 subNormalView = view;
                 subNormalView.setSelected(true);
                 subNormalViewLand.setSelected(false);
-                subNormalViewLand = mView.findViewById(R.id.tab_MACD_land);
+                subNormalViewLand = rootView.findViewById(R.id.tab_MACD_land);
                 subNormalViewLand.setSelected(true);
             }
             if (id == R.id.tab_RSI) {
@@ -376,7 +376,7 @@ public class KLineFragment extends BaseFragment implements OnKCrossLineMoveListe
                 subNormalView = view;
                 subNormalView.setSelected(true);
                 subNormalViewLand.setSelected(false);
-                subNormalViewLand = mView.findViewById(R.id.tab_RSI_land);
+                subNormalViewLand = rootView.findViewById(R.id.tab_RSI_land);
                 subNormalViewLand.setSelected(true);
             }
             if (id == R.id.tab_KDJ) {
@@ -385,26 +385,26 @@ public class KLineFragment extends BaseFragment implements OnKCrossLineMoveListe
                 subNormalView = view;
                 subNormalView.setSelected(true);
                 subNormalViewLand.setSelected(false);
-                subNormalViewLand = mView.findViewById(R.id.tab_KDJ_land);
+                subNormalViewLand = rootView.findViewById(R.id.tab_KDJ_land);
                 subNormalViewLand.setSelected(true);
             }
             if (id == R.id.tab_SMA_land) {
-                mView.findViewById(R.id.tab_SMA).performClick();
+                rootView.findViewById(R.id.tab_SMA).performClick();
             }
             if (id == R.id.tab_EMA_land) {
-                mView.findViewById(R.id.tab_EMA).performClick();
+                rootView.findViewById(R.id.tab_EMA).performClick();
             }
             if (id == R.id.tab_BOLL_land) {
-                mView.findViewById(R.id.tab_BOLL).performClick();
+                rootView.findViewById(R.id.tab_BOLL).performClick();
             }
             if (id == R.id.tab_MACD_land) {
-                mView.findViewById(R.id.tab_MACD).performClick();
+                rootView.findViewById(R.id.tab_MACD).performClick();
             }
             if (id == R.id.tab_RSI_land) {
-                mView.findViewById(R.id.tab_RSI).performClick();
+                rootView.findViewById(R.id.tab_RSI).performClick();
             }
             if (id == R.id.tab_KDJ_land) {
-                mView.findViewById(R.id.tab_KDJ).performClick();
+                rootView.findViewById(R.id.tab_KDJ).performClick();
             }
         }
     };
