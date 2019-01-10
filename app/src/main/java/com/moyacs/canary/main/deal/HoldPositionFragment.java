@@ -3,7 +3,6 @@ package com.moyacs.canary.main.deal;
 import android.graphics.Color;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
 
@@ -49,7 +48,7 @@ import static com.moyacs.canary.common.AppConstans.marketDataBeanList;
  * 说明：tab2 持仓页面
  */
 
-public class DealTab2Fragment extends BaseFragment implements ChiCangCountract.ChiCangView, PayContract.PayView {
+public class HoldPositionFragment extends BaseFragment implements ChiCangCountract.ChiCangView, PayContract.PayView {
     @BindView(R.id.recyclerView)
     RecyclerView recyclerView;
     @BindView(R.id.pullrefreshLayout)
@@ -99,11 +98,11 @@ public class DealTab2Fragment extends BaseFragment implements ChiCangCountract.C
     protected void initData() {
         registerEventBus();
         chiCangPresenter = new ChiCangPresenterImpl(this);
-        //所有品种行情尚未获取成功
-        if (AppConstans.marketDataBeanList == null || AppConstans.marketDataBeanList.size() <= 0) {
-            return;
-        }
         chiCangPresenter.getRecordList();
+        //所有品种行情尚未获取成功
+       /* if (AppConstans.marketDataBeanList == null || AppConstans.marketDataBeanList.size() <= 0) {
+            return;
+        }*/
     }
 
     /**
@@ -127,13 +126,12 @@ public class DealTab2Fragment extends BaseFragment implements ChiCangCountract.C
         pullrefreshLayout.setOnRefreshListener(new PullRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-                Log.i("DealTab3Fragment", "onRefresh: ");
                 chiCangPresenter.getRecordList();
             }
 
             @Override
             public void onLoading() {
-                LogUtils.d("pullrefreshLayout :    onLoading ");
+                LogUtils.d("freshLayout :    onLoading ");
             }
         });
     }
@@ -146,6 +144,7 @@ public class DealTab2Fragment extends BaseFragment implements ChiCangCountract.C
 
     @Override
     public void setRecordList(List<TransactionRecordVo.Record> result) {
+        pullrefreshLayout.refreshComplete();
         if (result == null || result.size() <= 0) {
             recyclerView.setVisibility(View.GONE);
             tvError.setVisibility(View.VISIBLE);
@@ -174,10 +173,11 @@ public class DealTab2Fragment extends BaseFragment implements ChiCangCountract.C
     }
 
     @Override
-    public void getRecordListFailed(String errormsg) {
+    public void getRecordListFailed(String msg) {
+        pullrefreshLayout.refreshComplete();
         recyclerView.setVisibility(View.GONE);
         tvError.setVisibility(View.VISIBLE);
-        tvError.setText(errormsg);
+        tvError.setText(msg);
     }
 
     /**

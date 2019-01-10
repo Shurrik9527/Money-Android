@@ -76,8 +76,8 @@ public class DealFragment extends BaseFragment {
      */
     private void initFragments() {
         mFragments = new ArrayList<>();
-        mFragments.add(new DealTab2Fragment());
-        mFragments.add(new DealTab3Fragment());
+        mFragments.add(new HoldPositionFragment());
+        mFragments.add(new CapitalFragment());
     }
 
 

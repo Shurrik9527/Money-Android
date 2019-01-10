@@ -142,7 +142,7 @@
             app:upOrunder="under" />
 
         <com.moyacs.canary.widget.UnderLineTextView
-            android:id="@+id/tv_4"
+            android:id="@+id/tv_2"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
@@ -157,7 +157,7 @@
             app:upOrunder="under" />
 
         <com.moyacs.canary.widget.UnderLineTextView
-            android:id="@+id/tv_2"
+            android:id="@+id/tv_3"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_marginLeft="0dip"
@@ -174,7 +174,7 @@
             app:upOrunder="under" />
 
         <com.moyacs.canary.widget.UnderLineTextView
-            android:id="@+id/tv_3"
+            android:id="@+id/tv_4"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_marginLeft="0dip"

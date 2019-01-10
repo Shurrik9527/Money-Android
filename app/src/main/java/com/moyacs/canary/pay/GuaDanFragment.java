@@ -1097,7 +1097,7 @@ public class GuaDanFragment extends BaseFragment2 implements PayContract.PayView
     }
 
     @Override
-    public void closeOrderSuccess(Object result) {
+    public void closeOrderSuccess() {
         Log.i("closeOrderSuccess", "closeOrderSuccess:    下单成功了");
     }
 

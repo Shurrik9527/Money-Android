@@ -81,7 +81,7 @@ public class Deal_tab1_Fragment extends BaseFragment2 {
         pullrefreshLayout.setOnRefreshListener(new PullRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-                LogUtils.d("pullrefreshLayout :    onRefresh ");
+                LogUtils.d("freshLayout :    onRefresh ");
                 pullrefreshLayout.postDelayed(new Runnable() {
                     @Override
                     public void run() {
@@ -96,7 +96,7 @@ public class Deal_tab1_Fragment extends BaseFragment2 {
 
             @Override
             public void onLoading() {
-                LogUtils.d("pullrefreshLayout :    onLoading ");
+                LogUtils.d("freshLayout :    onLoading ");
             }
         });
 

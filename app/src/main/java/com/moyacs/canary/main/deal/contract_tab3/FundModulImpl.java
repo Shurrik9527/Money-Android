@@ -1,3 +1,4 @@
+/*
 package com.moyacs.canary.main.deal.contract_tab3;
 
 import com.blankj.utilcode.util.LogUtils;
@@ -27,19 +28,21 @@ import io.reactivex.functions.Consumer;
 import io.reactivex.schedulers.Schedulers;
 import retrofit2.Response;
 
+*/
 /**
  * 作者：luoshen on 2018/4/18 0018 11:47
  * 邮箱：rsf411613593@gmail.com
  * 说明：
- */
+ *//*
 
-public class FundModulImpl implements FundCountract.FundModul {
+
+public class FundModulImpl implements FundContract.FundModul {
 
     private CompositeDisposable mCompositeDisposable;
-    private FundCountract.GetFundRequestListener listener;
+    private FundContract.GetFundRequestListener listener;
     private final FundServer fundServer;
 
-    public FundModulImpl(FundCountract.GetFundRequestListener listener) {
+    public FundModulImpl(FundContract.GetFundRequestListener listener) {
         this.listener = listener;
         mCompositeDisposable = new CompositeDisposable();
         fundServer = HttpServerManager.getInstance().create(FundServer.class);
@@ -52,7 +55,8 @@ public class FundModulImpl implements FundCountract.FundModul {
 
     @Override
     public void getFund(int mt4id) {
-     /*   fundServer.getFund()
+     */
+/*   fundServer.getAccountInfo()
                 .subscribeOn(Schedulers.io())//指定网络请求所在的线程
                 .doOnSubscribe(new Consumer<Disposable>() {
                     @Override
@@ -100,7 +104,8 @@ public class FundModulImpl implements FundCountract.FundModul {
                     public void onComplete() {
 
                     }
-                });*/
+                });*//*
+
         ServerManger.getInstance().getServer().getUserAmountInfo()
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
@@ -266,10 +271,10 @@ public class FundModulImpl implements FundCountract.FundModul {
                         int code = httpResultResponse.code();
                         LogUtils.d("服务器返回的响应码：  " + code);
                         if (code == 200) {
-//                            listener.getTradingRecordsSucessed(httpResultResponse.body());
+//                            listener.setTradingRecordList(httpResultResponse.body());
                         } else {
 //                            try {
-////                                listener.setTransactionRecordsListFailed(httpResultResponse.errorBody().string());
+////                                listener.getTransactionRecordsListFailed(httpResultResponse.errorBody().string());
 //                            } catch (IOException e) {
 //                                e.printStackTrace();
 //                            }
@@ -279,7 +284,7 @@ public class FundModulImpl implements FundCountract.FundModul {
                     @Override
                     public void onError(Throwable e) {
                         String throwable = HttpExceptionHandler.getThrowable(e);
-//                        listener.setTransactionRecordsListFailed(throwable);
+//                        listener.getTransactionRecordsListFailed(throwable);
                     }
 
                     @Override
@@ -322,3 +327,4 @@ public class FundModulImpl implements FundCountract.FundModul {
 
     }
 }
+*/

@@ -1,7 +1,6 @@
 package com.moyacs.canary.main.deal;
 
 import android.content.Intent;
-import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.View;
@@ -25,7 +24,6 @@ import www.moyacs.com.myapplication.R;
  */
 
 public class WithdrawalDealActivity extends BaseActivity2 {
-
     @BindView(R.id.tv_1)
     TextView tv1;
     @BindView(R.id.tv_2)
@@ -71,9 +69,9 @@ public class WithdrawalDealActivity extends BaseActivity2 {
         String rightBottomString;
         if (status.equals("DONE")) {
             rightBottomString = "已转账";
-        }else if(status.equals("WAIT")){
+        } else if (status.equals("WAIT")) {
             rightBottomString = "等待处理";
-        }else {
+        } else {
             rightBottomString = contentBean.getCommit();
             if (rightBottomString == null || rightBottomString.equals("") || rightBottomString.equals("null")) {
                 rightBottomString = "提现失败";

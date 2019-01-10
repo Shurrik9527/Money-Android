@@ -846,8 +846,9 @@ public class ShiJiaDanFragment2 extends BaseFragment2 implements PayContract.Pay
     }
 
     @Override
-    public void closeOrderSuccess(Object result) {
+    public void closeOrderSuccess() {
         Log.i("closeOrderSuccess", "closeOrderSuccess:    下单成功了");
+
     }
 
     @Override

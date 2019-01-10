@@ -1,17 +1,15 @@
 package com.moyacs.canary.main.deal.contract_tab3;
 
-import android.util.Log;
-
-import com.blankj.utilcode.util.LogUtils;
-import com.moyacs.canary.main.deal.net_tab3.PaymentDateBean;
+import com.blankj.utilcode.util.SPUtils;
+import com.moyacs.canary.common.AppConstans;
 import com.moyacs.canary.main.deal.net_tab3.TransactionRecordVo;
 import com.moyacs.canary.main.deal.net_tab3.UserAmountVo;
-import com.moyacs.canary.main.deal.net_tab3.WithdrawalDataBean;
-import com.moyacs.canary.network.HttpConstants;
-import com.moyacs.canary.network.HttpResult;
+import com.moyacs.canary.network.BaseObservable;
+import com.moyacs.canary.network.RxUtils;
+import com.moyacs.canary.network.ServerManger;
 import com.moyacs.canary.network.ServerResult;
 
-import java.util.List;
+import io.reactivex.disposables.CompositeDisposable;
 
 /**
  * 作者：luoshen on 2018/4/18 0018 11:45
@@ -19,143 +17,59 @@ import java.util.List;
  * 说明：
  */
 
-public class FundPresenterImpl implements FundCountract.FundPresenter, FundCountract.GetFundRequestListener {
+public class FundPresenterImpl implements FundContract.FundPresenter {
 
-    private FundCountract.FundView view;
-    private FundCountract.FundModul modul;
+    private FundContract.FundView view;
+    private CompositeDisposable disposable;
 
-    public FundPresenterImpl(FundCountract.FundView view) {
+    public FundPresenterImpl(FundContract.FundView view) {
         this.view = view;
-        modul = new FundModulImpl(this);
-
+        disposable = new CompositeDisposable();
     }
 
     @Override
     public void unsubscribe() {
-        modul.unsubscribe();
+        disposable.clear();
     }
 
     @Override
-    public void getFund(int mt4id) {
-        modul.getFund(mt4id);
+    public void getAccountInfo() {
+        disposable.add(ServerManger.getInstance().getServer().getUserAmountInfo()
+                .compose(RxUtils.rxSchedulerHelper())
+                .subscribeWith(new BaseObservable<ServerResult<UserAmountVo>>() {
+                    @Override
+                    protected void requestSuccess(ServerResult<UserAmountVo> data) {
+                        view.setAccountInfo(data.getData());
+                    }
+                }));
     }
 
     @Override
-    public void getWithdrawal(int mt4id, String startDate, String endDate, int pageSize, int pageNumber) {
-        modul.getWithdrawal(mt4id, startDate, endDate, pageSize, pageNumber);
+    public void getTransactionRecordList(final String transactionStatus) {
+        ServerManger.getInstance().getServer()
+                .getTransactionRecordList(SPUtils.getInstance().getString(AppConstans.USER_PHONE), transactionStatus)
+                .compose(RxUtils.rxSchedulerHelper())
+                .subscribe(new BaseObservable<ServerResult<TransactionRecordVo>>() {
+                    @Override
+                    protected void requestSuccess(ServerResult<TransactionRecordVo> data) {
+                        view.setTradingRecordList(data.getData().getList(), transactionStatus);
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        super.onError(e);
+                        view.getTradingRecordsFailed("服务器异常", transactionStatus);
+                    }
+                });
     }
 
     @Override
-    public void getPayment(int mt4id, String startDate, String endDate, int pageSize, int pageNumber) {
-        modul.getPayment(mt4id, startDate, endDate, pageSize, pageNumber);
+    public void getWithdrawal() {
+
     }
 
     @Override
-    public void getTradingRecords(int mt4id, String server, String startDate, String endDate) {
-        modul.getTradingRecords(mt4id, server, startDate, endDate);
-    }
+    public void getPayment() {
 
-    @Override
-    public void getTransactionRecordList(String transactionStatus) {
-        view.showLoadingDialog();
-        modul.getTransactionRecordList(transactionStatus);
-    }
-
-    @Override
-    public void beforeRequest() {
-        view.showLoadingDialog();
-    }
-
-    @Override
-    public void afterRequest() {
-        view.dismissLoadingDialog();
-    }
-
-    @Override
-    public void getFundResponseSucessed(ServerResult<UserAmountVo> result) {
-        if (result == null) {
-            view.getFundFailed("数据为空");
-        }
-        int result1 = result.getMsgCode();
-        LogUtils.d("服务器返回的数据字段  code   " + result1);
-        Log.i("ChiCangPresenterImpl", "result.toString()  : " + result.toString());
-        if (result.isSuccess()) {
-            view.getFundSucess(result.getData());
-        } else {
-            view.getFundFailed("服务器返回数据错误");
-        }
-    }
-
-    @Override
-    public void getFundtResponseFailed(String errormsg) {
-        view.getFundFailed(errormsg);
-    }
-
-    @Override
-    public void getWithdrawalResponseSucessed(HttpResult<WithdrawalDataBean> result) {
-        if (result == null) {
-            view.getWithdrawalFailed("数据为空");
-        }
-        int result1 = result.getCode();
-        LogUtils.d("服务器返回的数据字段  code   " + result1);
-        Log.i("ChiCangPresenterImpl", "result.toString()  : " + result.toString());
-        if (result1 == HttpConstants.result_sucess) {
-            view.getWithdrawalSucess(result.getDataObject());
-        } else {
-            view.getWithdrawalFailed("服务器返回数据错误");
-        }
-    }
-
-    @Override
-    public void getWithdrawalResponseFailed(String errormsg) {
-        view.getWithdrawalFailed(errormsg);
-    }
-
-    @Override
-    public void getPaymentResponseSucessed(HttpResult<PaymentDateBean> result) {
-        if (result == null) {
-            view.getPaymentFailed("数据为空");
-        }
-        int result1 = result.getCode();
-        LogUtils.d("服务器返回的数据字段  code   " + result1);
-        Log.i("ChiCangPresenterImpl", "result.toString()  : " + result.toString());
-        if (result1 == HttpConstants.result_sucess) {
-            view.getPaymentSucess(result.getDataObject());
-        } else {
-            view.getPaymentFailed("服务器返回数据错误");
-        }
-    }
-
-    @Override
-    public void getPaymentResponseFailed(String errormsg) {
-        view.getPaymentFailed(errormsg);
-    }
-
-    @Override
-    public void getTradingRecordsSucessed(ServerResult<TransactionRecordVo> result) {
-        view.dismissLoadingDialog();
-        if (result == null) {
-            view.getTradingRecordsFailed("数据为空");
-        }
-        int result1 = result.getMsgCode();
-        LogUtils.d("服务器返回的数据字段  code   " + result1);
-        Log.i("ChiCangPresenterImpl", "result.toString()  : " + result.toString());
-        if (result.isSuccess()) {
-            view.getTradingRecordsSucessed(result.getData().getList());
-        } else {
-            view.getTradingRecordsFailed("服务器返回数据错误");
-        }
-    }
-
-    @Override
-    public void setTransactionRecordsListFailed(String errormsg, String type) {
-        view.dismissLoadingDialog();
-        view.setTransactionRecordsListFailed(errormsg, type);
-    }
-
-    @Override
-    public void setTransactionRecordList(List<TransactionRecordVo.Record> list, String typ) {
-        view.dismissLoadingDialog();
-        view.setTransactionRecordList(list, typ);
     }
 }

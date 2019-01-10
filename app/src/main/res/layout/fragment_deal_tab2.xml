@@ -28,7 +28,6 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerInParent="true"
-        android:text="建仓交易获取为空"
         android:textSize="@dimen/text_size_14sp"
         android:visibility="gone" />
 </RelativeLayout>
