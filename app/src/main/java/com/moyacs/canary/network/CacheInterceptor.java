@@ -1,6 +1,8 @@
 package com.moyacs.canary.network;
 
-import com.blankj.utilcode.util.NetworkUtils;
+
+import com.moyacs.canary.MyApplication;
+import com.moyacs.canary.util.NetworkUtils;
 
 import java.io.IOException;
 
@@ -20,14 +22,14 @@ public class CacheInterceptor implements Interceptor {
     public Response intercept(Chain chain) throws IOException {
         // 对请求进行拦截：无网络是强制读取缓存
         Request request = chain.request();
-        if (!NetworkUtils.isAvailableByPing()) {
+        if (!NetworkUtils.isNetworkAvailable(MyApplication.instance)) {
             request = request.newBuilder().cacheControl(CacheControl.FORCE_CACHE)
                     .build();
         }
         //对响应进行拦截
         //有网络时，移除header，设置缓存超时时间为1小时
         okhttp3.Response response = chain.proceed(request);
-        if (NetworkUtils.isAvailableByPing()) {
+        if (NetworkUtils.isNetworkAvailable(MyApplication.instance)) {
             int maxAge = 60 * 60;             //1小时
             response.newBuilder()
                     .removeHeader("Pragma")

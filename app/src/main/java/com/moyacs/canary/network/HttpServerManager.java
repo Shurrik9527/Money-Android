@@ -3,7 +3,7 @@ package com.moyacs.canary.network;
 
 import android.content.Context;
 
-import com.blankj.utilcode.util.LogUtils;
+import com.moyacs.canary.util.LogUtils;
 
 import java.io.IOException;
 import java.util.concurrent.TimeUnit;

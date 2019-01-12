@@ -1,9 +1,114 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".main.market.OptionalActivity">
+    android:background="@color/white"
+    android:orientation="vertical">
 
-</android.support.constraint.ConstraintLayout>
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/margin_50dp"
+        android:background="@color/theme">
+
+        <ImageView
+            android:id="@+id/iv_break"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:paddingLeft="@dimen/margin_16dp"
+            android:paddingRight="@dimen/margin_16dp"
+            android:src="@drawable/ic_break" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:text="我的自选"
+            android:textColor="@color/white"
+            android:textSize="@dimen/text_size_16sp" />
+    </RelativeLayout>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/bg_gray"
+        android:paddingLeft="@dimen/margin_16dp"
+        android:paddingTop="@dimen/margin_8dp"
+        android:paddingBottom="@dimen/margin_8dp"
+        android:text="我的自选（点击删除）" />
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/tv_myOptional"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/bg_gray"
+        android:paddingLeft="@dimen/margin_16dp"
+        android:paddingTop="@dimen/margin_8dp"
+        android:paddingBottom="@dimen/margin_8dp"
+        android:text="点击添加品种" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <com.moyacs.canary.widget.UnderLineTextView
+            android:id="@+id/tv_1"
+            android:layout_width="wrap_content"
+            android:layout_height="@dimen/dp_40"
+            android:gravity="center"
+            android:paddingLeft="@dimen/margin_16dp"
+            android:paddingRight="@dimen/margin_16dp"
+            android:text="外汇"
+            android:textColor="@color/trade_money_tab"
+            app:isLineEnable="true"
+            app:lineColor="@color/under_line"
+            app:mlineHeight="3dip"
+            app:mlineWidth="@dimen/margin_30dp"
+            app:upOrunder="under" />
+
+        <com.moyacs.canary.widget.UnderLineTextView
+            android:id="@+id/tv_2"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:paddingLeft="@dimen/margin_16dp"
+            android:paddingRight="@dimen/margin_16dp"
+            android:text="金属"
+            android:textColor="@color/trade_money_tab"
+            app:isLineEnable="false"
+            app:lineColor="@color/under_line"
+            app:mlineHeight="3dip"
+            app:mlineWidth="@dimen/margin_30dp"
+            app:upOrunder="under" />
+
+        <com.moyacs.canary.widget.UnderLineTextView
+            android:id="@+id/tv_3"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:paddingLeft="@dimen/margin_16dp"
+            android:paddingRight="@dimen/margin_16dp"
+            android:text="原油"
+            android:textColor="@color/trade_money_tab"
+            app:isLineEnable="false"
+            app:lineColor="@color/under_line"
+            app:mlineHeight="3dip"
+            app:mlineWidth="@dimen/margin_30dp"
+            app:upOrunder="under" />
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/margin_0.5dp"
+        android:background="@color/line" />
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/rv_optional"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+</LinearLayout>

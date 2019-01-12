@@ -4,7 +4,7 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 
-import com.blankj.utilcode.util.ToastUtils;
+import com.moyacs.canary.util.ToastUtils;
 import com.moyacs.canary.widget.LoadingDialog;
 
 import org.greenrobot.eventbus.EventBus;

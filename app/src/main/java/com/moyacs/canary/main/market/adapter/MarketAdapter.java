@@ -16,7 +16,6 @@ import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.blankj.utilcode.util.LogUtils;
 import com.moyacs.canary.MyApplication;
 import com.moyacs.canary.common.NumberUtils;
 import com.moyacs.canary.main.market.net.MarketDataBean;

@@ -6,18 +6,17 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.allen.library.SuperTextView;
-import com.blankj.utilcode.util.TimeUtils;
 import com.moyacs.canary.common.NumberUtils;
 import com.moyacs.canary.main.deal.net_tab3.PaymentDateBean;
+import com.moyacs.canary.util.DateUtil;
 
-import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 import www.moyacs.com.myapplication.R;
 
 public class RechargeAdapter extends RecyclerView.Adapter<RechargeAdapter.ViewHolder> {
     private List<PaymentDateBean.ContentBean> paymentList;
-    private SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 
     public RechargeAdapter(List<PaymentDateBean.ContentBean> paymentList) {
         this.paymentList = paymentList;
@@ -39,7 +38,8 @@ public class RechargeAdapter extends RecyclerView.Adapter<RechargeAdapter.ViewHo
         PaymentDateBean.ContentBean contentBean = paymentList.get(position);
         //时间
         long date = contentBean.getDate();
-        String time = TimeUtils.millis2String(date, simpleDateFormat);
+        String simpleDateFormat = "yyyy-MM-dd HH:mm:ss";
+        String time = DateUtil.parseDateToStr(new Date(date), simpleDateFormat);
         holder.superTextView.setLeftBottomString(time);
         //金额
         double amount = contentBean.getAmount();

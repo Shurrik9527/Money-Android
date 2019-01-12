@@ -1,13 +1,12 @@
 package com.moyacs.canary.main.deal.contract_tab3;
 
-import com.blankj.utilcode.util.SPUtils;
-import com.moyacs.canary.common.AppConstans;
 import com.moyacs.canary.main.deal.net_tab3.TransactionRecordVo;
 import com.moyacs.canary.main.deal.net_tab3.UserAmountVo;
 import com.moyacs.canary.network.BaseObservable;
 import com.moyacs.canary.network.RxUtils;
 import com.moyacs.canary.network.ServerManger;
 import com.moyacs.canary.network.ServerResult;
+import com.moyacs.canary.util.SharePreferencesUtil;
 
 import io.reactivex.disposables.CompositeDisposable;
 
@@ -46,10 +45,10 @@ public class FundPresenterImpl implements FundContract.FundPresenter {
 
     @Override
     public void getTransactionRecordList(final String transactionStatus) {
-        ServerManger.getInstance().getServer()
-                .getTransactionRecordList(SPUtils.getInstance().getString(AppConstans.USER_PHONE), transactionStatus)
+        disposable.add(ServerManger.getInstance().getServer()
+                .getTransactionRecordList(SharePreferencesUtil.getInstance().getUserPhone(), transactionStatus)
                 .compose(RxUtils.rxSchedulerHelper())
-                .subscribe(new BaseObservable<ServerResult<TransactionRecordVo>>() {
+                .subscribeWith(new BaseObservable<ServerResult<TransactionRecordVo>>() {
                     @Override
                     protected void requestSuccess(ServerResult<TransactionRecordVo> data) {
                         view.setTradingRecordList(data.getData().getList(), transactionStatus);
@@ -60,7 +59,7 @@ public class FundPresenterImpl implements FundContract.FundPresenter {
                         super.onError(e);
                         view.getTradingRecordsFailed("服务器异常", transactionStatus);
                     }
-                });
+                }));
     }
 
     @Override

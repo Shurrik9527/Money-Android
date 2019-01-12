@@ -7,14 +7,12 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import com.blankj.utilcode.util.SPUtils;
-import com.blankj.utilcode.util.TimeUtils;
-import com.moyacs.canary.common.AppConstans;
 import com.moyacs.canary.common.NumberUtils;
 import com.moyacs.canary.main.deal.net_tab3.TransactionRecordVo;
+import com.moyacs.canary.util.DateUtil;
 import com.moyacs.canary.util.ViewListenerAbs;
 
-import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 import butterknife.BindView;
@@ -24,7 +22,6 @@ import www.moyacs.com.myapplication.R;
 public class ChiCangAdapter extends RecyclerView.Adapter<ChiCangAdapter.ViewHolder> {
     private Context context;
     private List<TransactionRecordVo.Record> recordList;
-    private SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
     private ViewListenerAbs.ItemClickListener itemClickListener;
 
     public ChiCangAdapter(Context context, List<TransactionRecordVo.Record> recordList) {
@@ -43,11 +40,11 @@ public class ChiCangAdapter extends RecyclerView.Adapter<ChiCangAdapter.ViewHold
     public void onBindViewHolder(final ChiCangAdapter.ViewHolder holder, final int position) {
         final TransactionRecordVo.Record record = recordList.get(position);
         //品种名称
-        String symbol_cn = SPUtils.getInstance(AppConstans.allMarket_en_cn).getString(record.getSymbolCode());
+       /* String symbol_cn = SPUtils.getInstance(AppConstans.allMarket_en_cn).getString(record.getSymbolCode());
         if (symbol_cn == null || symbol_cn.equals("")) {
             return;
-        }
-        holder.tvSymbolCn.setText(symbol_cn);
+        }*/
+        holder.tvSymbolCn.setText("外汇名称");
         //买或者卖
         int type = record.getTransactionStatus();
 
@@ -75,7 +72,8 @@ public class ChiCangAdapter extends RecyclerView.Adapter<ChiCangAdapter.ViewHold
             holder.tvProfit.setTextColor(context.getResources().getColor(R.color.color_opt_lt));
         }
         //建仓时间
-        String openTime = TimeUtils.millis2String(record.getCreateTime(), simpleDateFormat);
+        String simpleDateFormat = "yyyy-MM-dd HH:mm:ss";
+        String openTime = DateUtil.parseDateToStr(new Date(record.getCreateTime()), simpleDateFormat);
         holder.tvJiancangTime.setText(openTime);
         //建仓价
         double open_price = record.getExponent();

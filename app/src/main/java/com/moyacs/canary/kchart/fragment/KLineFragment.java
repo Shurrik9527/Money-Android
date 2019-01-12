@@ -9,9 +9,6 @@ import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-
-import com.blankj.utilcode.util.LogUtils;
-import com.blankj.utilcode.util.TimeUtils;
 import com.moyacs.canary.base.BaseFragment;
 import com.moyacs.canary.common.NumberUtils;
 import com.moyacs.canary.kchart.chart.candle.KLineView;
@@ -31,6 +28,7 @@ import com.moyacs.canary.product_fxbtg.Product_constans;
 import com.moyacs.canary.product_fxbtg.contract_kline.ProductContract;
 import com.moyacs.canary.product_fxbtg.contract_kline.ProductPresenterImpl;
 import com.moyacs.canary.product_fxbtg.net_kline.KLineData;
+import com.moyacs.canary.util.DateUtil;
 
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
@@ -39,7 +37,6 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-import java.util.Locale;
 
 import www.moyacs.com.myapplication.R;
 
@@ -76,7 +73,7 @@ public class KLineFragment extends BaseFragment implements OnKCrossLineMoveListe
     //P 层对象
     private ProductContract.ProductPresenter presenter;
     //时间格式化
-    private SimpleDateFormat simpleDateFormat;
+    private String simpleDateFormat;
     private int digit;
     //K 线图数据 请求开始时间
     private String startDate;
@@ -121,7 +118,6 @@ public class KLineFragment extends BaseFragment implements OnKCrossLineMoveListe
         tvLow = crossInfoView.findViewById(R.id.tv_low);
         tvRate = crossInfoView.findViewById(R.id.tv_rate);
         tvRateChange = crossInfoView.findViewById(R.id.tv_rateChange);
-        LogUtils.d("digit  :    " + digit);
 
         kLineView = rootView.findViewById(R.id.klineView);
         //设置精度
@@ -200,9 +196,7 @@ public class KLineFragment extends BaseFragment implements OnKCrossLineMoveListe
 
     protected void initBundleData() {
         startDate = getArguments().getString("startDate");
-        LogUtils.d("startDate:        " + startDate);
         endDate = getArguments().getString("endDate");
-        LogUtils.d("endDate:        " + endDate);
         code = getArguments().getString("code");
         //一分钟，五分钟等的代号 ，一个 String 类型的数字
         cycle = getArguments().getString("interval");
@@ -537,13 +531,10 @@ public class KLineFragment extends BaseFragment implements OnKCrossLineMoveListe
 
     @Override
     public void getKLineDataSucessed(List<KLineData> result) {
-        LogUtils.d("获取 K 线数据长度  ：" + result.size());
         Log.i(TAG, "获取 K 线数据长度  ：" + result.size());
-
         //如果没有这行代码，全屏时候回崩溃。
         if (!isAdded())
             return;
-
         //当前的时间周期
         Integer cycle_custom = Integer.valueOf(cycle);
 
@@ -559,21 +550,19 @@ public class KLineFragment extends BaseFragment implements OnKCrossLineMoveListe
             //昨收
             kCandleObj.setClose(kLineData.getClose());
 //            long timeLong = kLineData.getTime() ;
-            LogUtils.d("kLineData.getTime()  :  " + kLineData.getTime());
             long timeLong = kLineData.getTime() - 3 * 60 * 60 * 1000;
             //天之前的时间格式
             if (cycle_custom < cycle_standard) {
-                simpleDateFormat = new SimpleDateFormat("MM-dd HH:mm", Locale.getDefault());
+                simpleDateFormat = "MM-dd HH:mm";
             } else {//以天为单位的时间格式
-                simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
+                simpleDateFormat = "yyyy-MM-dd";
             }
 
-            String time_format = TimeUtils.millis2String(timeLong, simpleDateFormat);
+            String time_format = DateUtil.parseDateToStr(new Date(timeLong),simpleDateFormat);
             //long 类型时间
             kCandleObj.setTimeLong(timeLong);
             //格式化的时间字符串
             kCandleObj.setTime(time_format);
-            LogUtils.d("K线 历史数据：  " + kCandleObj.toString());
             Log.i(TAG, "K线 历史数据：  : " + kCandleObj.toString());
             listData.add(kCandleObj);
         }
@@ -588,7 +577,6 @@ public class KLineFragment extends BaseFragment implements OnKCrossLineMoveListe
 
     @Override
     public void getKLineDataFailed(String errormsg) {
-        LogUtils.d("获取 K 线数据失败   ：" + errormsg);
     }
 
 
@@ -778,7 +766,7 @@ public class KLineFragment extends BaseFragment implements OnKCrossLineMoveListe
         kCandleObj_refresh.setLow(ask);
         kCandleObj_refresh.setOpen(ask);
         kCandleObj_refresh.setClose(ask);
-        String time = TimeUtils.millis2String(l, simpleDateFormat);
+        String time = DateUtil.parseDateToStr(new Date(l), simpleDateFormat);
         kCandleObj_refresh.setTime(quotation.getTime());
         kCandleObj_refresh.setTime(time);
         //获取 socket 数据之前，是否绘制完毕

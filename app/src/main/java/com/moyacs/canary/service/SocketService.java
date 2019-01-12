@@ -5,8 +5,8 @@ import android.content.Intent;
 import android.os.IBinder;
 import android.support.annotation.Nullable;
 
-import com.blankj.utilcode.util.LogUtils;
 import com.moyacs.canary.netty.NettyClientBootstrap;
+import com.moyacs.canary.util.LogUtils;
 
 import org.apache.mina.core.future.ConnectFuture;
 import org.apache.mina.core.session.IoSession;
@@ -41,7 +41,6 @@ public class SocketService extends Service {
     public void onCreate() {
         super.onCreate();
         LogUtils.d("SocketService  :  onCreate");
-
         try {
             nettyClientBootstrap = new NettyClientBootstrap();
             nettyClientBootstrap.init();

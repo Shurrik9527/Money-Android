@@ -10,6 +10,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.LruCache;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.animation.Animation;
@@ -19,9 +20,6 @@ import android.widget.LinearLayout;
 import android.widget.PopupWindow;
 import android.widget.TextView;
 
-import com.blankj.utilcode.util.LogUtils;
-import com.blankj.utilcode.util.SPUtils;
-import com.blankj.utilcode.util.TimeUtils;
 import com.moyacs.canary.base.BaseActivity;
 import com.moyacs.canary.common.AppConstans;
 import com.moyacs.canary.common.NumberUtils;
@@ -32,13 +30,15 @@ import com.moyacs.canary.netty.codec.Quotation;
 import com.moyacs.canary.pay.GuaDanPopWindow;
 import com.moyacs.canary.pay.OrderPopWindow;
 import com.moyacs.canary.product_fxbtg.adapter.ProductAdapter;
+import com.moyacs.canary.util.DateUtil;
+import com.moyacs.canary.util.LogUtils;
 import com.moyacs.canary.util.ViewListenerAbs;
 
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import www.moyacs.com.myapplication.R;
@@ -80,7 +80,7 @@ public class ProductActivity extends BaseActivity implements OnClickListener {
     private String time;
     //品种中文名称
     private String symbol_cn;
-    private SPUtils spUtils;
+    private LruCache<String,Object> lruCache;
     //下单页面
     private OrderPopWindow orderPopWindow;
     private GuaDanPopWindow guaDanPopWindow;
@@ -93,7 +93,7 @@ public class ProductActivity extends BaseActivity implements OnClickListener {
     //问号弹窗
     private PopupWindow popWinForMoreOption;
     //时间格式化
-    private SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss");
+    private String simpleDateFormat = "dd-MM-yyyy HH:mm:ss";
     private ProductAdapter productAdapter; // 竖屏标题适配器
     private ProductAdapter landProductAdapter; //横屏标题适配器
     private List<KlineCycle> klineCycles;
@@ -220,7 +220,7 @@ public class ProductActivity extends BaseActivity implements OnClickListener {
             //时间
             Long unixTime = quotation.getUnixTime();
             //时间
-            String time1 = TimeUtils.millis2String(unixTime + 5 * 60 * 60 * 1000, simpleDateFormat);
+            String time1 = DateUtil.parseDateToStr(new Date(unixTime + 5 * 60 * 60 * 1000), simpleDateFormat);
             //竖屏
             if (tv_latest != null) {
                 //设置最新买入价
@@ -434,16 +434,15 @@ public class ProductActivity extends BaseActivity implements OnClickListener {
             tv_latest.setTextColor(this.textColor);
             tvRate.setTextColor(this.textColor);
         }
-
-        spUtils = SPUtils.getInstance();
+        lruCache = new LruCache<>((int)(Runtime.getRuntime().maxMemory()/4));
         //获取最新买入价
-        String price_sp = spUtils.getString(AppConstans.price_buy);
+        String price_sp = (String) lruCache.get(AppConstans.price_buy);
         //获取最新涨跌值和涨跌幅
-        String rate_sp = spUtils.getString("rate", this.rate);
+        String rate_sp = (String) lruCache.get("rate");
         //获取字体颜色
-        int textColor_sp = spUtils.getInt("textColor");
+        int textColor_sp = (int) lruCache.get("textColor");
         //获取时间
-        String time_sp = spUtils.getString("time");
+        String time_sp = (String) lruCache.get("time");
         if (time_sp.equals("")) {
             return;
         }
@@ -491,12 +490,12 @@ public class ProductActivity extends BaseActivity implements OnClickListener {
         } else if (id == R.id.line_productnotice) {//提醒
         } else if (id == R.id.line_product_fullscr) {//全屏
             //保存最新买入价
-            spUtils.put(AppConstans.price_buy, priceBuy);
+            lruCache.put(AppConstans.price_buy, priceBuy);
             //保存最新涨跌值和涨跌幅
-            spUtils.put("rate", rate);
+            lruCache.put("rate", rate);
             //保存字体颜色
-            spUtils.put("textColor", textColor);
-            spUtils.put("time", time);
+            lruCache.put("textColor", textColor);
+            lruCache.put("time", time);
             if (Configuration.ORIENTATION_LANDSCAPE == getResources()
                     .getConfiguration().orientation) {
                 setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
@@ -530,18 +529,18 @@ public class ProductActivity extends BaseActivity implements OnClickListener {
     private String[] getStartDateAndEndDate(String code) {
         String[] arr = new String[2];
         //获取当前时间戳
-        long nowMills = TimeUtils.getNowMills();
+        long nowMills = System.currentTimeMillis();
         //当前的 code
         Integer code_int_custom = Integer.valueOf(code);
         //格式化之后的  结束时间
-        String endDate = TimeUtils.millis2String(nowMills, simpleDateFormat);
+        String endDate = DateUtil.parseDateToStr(new Date(nowMills), simpleDateFormat);
         LogUtils.d("传递之前的  endDate    :  " + endDate);
         //计算往前推 50 个 code 的毫秒数 ,要先转 long 类型，否则计算失真
         long intervalMills = ((long) code_int_custom) * 60 * 1000 * 50;
         //计算开始时间的毫秒数
         long startMills = nowMills - intervalMills;
         //格式化之后的  开始时间
-        String startDate = TimeUtils.millis2String(startMills, simpleDateFormat);
+        String startDate = DateUtil.parseDateToStr(new Date(startMills), simpleDateFormat);
         LogUtils.d("传递之前的  startDate    :  " + startDate);
         arr[0] = startDate;
         arr[1] = endDate;

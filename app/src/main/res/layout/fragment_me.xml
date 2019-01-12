@@ -166,7 +166,6 @@
                                 android:layout_width="@dimen/margin_27dp"
                                 android:layout_height="@dimen/margin_24dp"
                                 android:src="@mipmap/me_open_account" />
-
                         </RelativeLayout>
 
                         <TextView
@@ -181,11 +180,6 @@
                     </LinearLayout>
                 </RelativeLayout>
 
-
-                <View
-                    android:layout_width="@dimen/margin_1dp"
-                    android:layout_height="match_parent"
-                    android:visibility="gone" />
                 <!--登录成功 显示-->
                 <RelativeLayout
                     android:id="@+id/rl_intergral_market"
@@ -339,7 +333,7 @@
                 android:id="@+id/super_huidashi"
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
-                android_custom:sLeftTextString="一分钟了解汇大师"
+                android_custom:sLeftTextString="一分钟了解掌上投"
                 android_custom:sRightIconRes="@mipmap/me_icon_more" />
 
             <com.allen.library.SuperTextView

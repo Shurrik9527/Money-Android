@@ -9,7 +9,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.blankj.utilcode.util.ToastUtils;
+import com.moyacs.canary.util.ToastUtils;
 import com.moyacs.canary.widget.LoadingDialog;
 
 import org.greenrobot.eventbus.EventBus;

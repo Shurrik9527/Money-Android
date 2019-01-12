@@ -9,13 +9,12 @@ import android.util.Base64;
 import android.widget.Button;
 import android.widget.EditText;
 
-import com.blankj.utilcode.util.SPUtils;
-import com.blankj.utilcode.util.ToastUtils;
 import com.moyacs.canary.base.BaseActivity;
-import com.moyacs.canary.common.AppConstans;
 import com.moyacs.canary.network.BaseObservable;
 import com.moyacs.canary.network.ServerManger;
 import com.moyacs.canary.network.ServerResult;
+import com.moyacs.canary.util.SharePreferencesUtil;
+import com.moyacs.canary.util.ToastUtils;
 
 import java.io.UnsupportedEncodingException;
 import java.util.HashMap;
@@ -66,8 +65,8 @@ public class ForgetPasswordActivity extends BaseActivity {
 
     @Override
     protected void initData() {
-        if (!TextUtils.isEmpty(SPUtils.getInstance().getString(AppConstans.USER_PHONE))) {
-            etPhone.setText(SPUtils.getInstance().getString(AppConstans.USER_PHONE));
+        if (!TextUtils.isEmpty(SharePreferencesUtil.getInstance().getUserPhone())) {
+            etPhone.setText(SharePreferencesUtil.getInstance().getUserPhone());
         }
         downTimer = new GetCodeCountDownTimer(60000, 1000);
     }

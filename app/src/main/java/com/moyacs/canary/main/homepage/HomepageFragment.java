@@ -1,34 +1,21 @@
 package com.moyacs.canary.main.homepage;
 
-import android.animation.Animator;
-import android.animation.AnimatorListenerAdapter;
-import android.animation.ArgbEvaluator;
-import android.animation.ObjectAnimator;
-import android.animation.ValueAnimator;
 import android.content.Intent;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
-import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
-import android.widget.RelativeLayout;
-import android.widget.TextView;
 
 import com.alibaba.android.vlayout.DelegateAdapter;
 import com.alibaba.android.vlayout.VirtualLayoutManager;
 import com.alibaba.android.vlayout.layout.LinearLayoutHelper;
 import com.alibaba.android.vlayout.layout.SingleLayoutHelper;
 import com.alibaba.android.vlayout.layout.StickyLayoutHelper;
-import com.blankj.utilcode.util.LogUtils;
-import com.blankj.utilcode.util.SPUtils;
 import com.chad.library.adapter.base.BaseViewHolder;
-import com.google.gson.Gson;
+import com.just.library.LogUtils;
 import com.moyacs.canary.base.BaseDelegateAdapter;
 import com.moyacs.canary.base.BaseFragment;
 import com.moyacs.canary.common.AppConstans;
-import com.moyacs.canary.common.NumberUtils;
 import com.moyacs.canary.im.KefuActivity;
 import com.moyacs.canary.main.homepage.adapter.DealChanceAdapter;
 import com.moyacs.canary.main.homepage.adapter.TradeHorizontalAdapter;
@@ -40,12 +27,9 @@ import com.moyacs.canary.main.market.net.MarketDataBean;
 import com.moyacs.canary.main.market.net.TradeVo;
 import com.moyacs.canary.netty.codec.Quotation;
 import com.moyacs.canary.product_fxbtg.ProductActivity;
-import com.moyacs.canary.util.ScreenUtil;
-import com.moyacs.canary.util.ViewListenerAbs;
 import com.yan.pullrefreshlayout.PullRefreshLayout;
 import com.youth.banner.Banner;
 
-import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 
@@ -54,7 +38,6 @@ import java.util.LinkedList;
 import java.util.List;
 
 import butterknife.BindView;
-import butterknife.ButterKnife;
 import www.moyacs.com.myapplication.R;
 
 import static com.moyacs.canary.common.AppConstans.marketDataBeanList;
@@ -206,7 +189,7 @@ public class HomepageFragment extends BaseFragment implements MarketContract.Mar
                 super.onBindViewHolder(holder, position);
                 //新手学堂布局
                 View view = holder.getView(R.id.rl_home_newuser_classroom);
-                view.setOnClickListener(v -> LogUtils.d("新手学堂"));
+                view.setOnClickListener(v -> LogUtils.e("","新手学堂"));
                 //在线客服
                 View view1 = holder.getView(R.id.rl_home_newuser_gold);
                 view1.setOnClickListener(v -> {
@@ -313,7 +296,6 @@ public class HomepageFragment extends BaseFragment implements MarketContract.Mar
 
     @Override
     public void setMarketList(List<MarketDataBean> result) {
-        LogUtils.d("获取所有品种详情成功");
         if (marketDataBeans != null && marketDataBeans.size() > 0) {
             tradeHorizontalAdapter.notifyDataSetChanged();
             return;
@@ -333,11 +315,11 @@ public class HomepageFragment extends BaseFragment implements MarketContract.Mar
         marketDataBeans = new ArrayList<>(listData);
         tradeHorizontalAdapter.notifyDataSetChanged();
         //将所有的品种 按照  （英文 - 中文）  这种格式存入 sp
-        SPUtils spUtils = SPUtils.getInstance(AppConstans.allMarket_en_cn);
+        /*SPUtils spUtils = SPUtils.getInstance(AppConstans.allMarket_en_cn);
         for (int i = 0; i < listData.size(); i++) {
             MarketDataBean marketDataBean = listData.get(i);
             spUtils.put(marketDataBean.getSymbol(), marketDataBean.getSymbol_cn());
-        }
+        }*/
     }
 
     @Override
@@ -345,7 +327,6 @@ public class HomepageFragment extends BaseFragment implements MarketContract.Mar
         bannerList = new ArrayList<>(result);
         //更新 banner 数据源
         bannerAdapter.notifyDataSetChanged();
-        LogUtils.d("获取 banner 列表成功");
     }
 
     @Override

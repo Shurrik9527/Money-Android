@@ -10,18 +10,17 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import com.blankj.utilcode.util.SPUtils;
 import com.flyco.tablayout.CommonTabLayout;
 import com.flyco.tablayout.listener.CustomTabEntity;
 import com.flyco.tablayout.listener.OnTabSelectListener;
 import com.moyacs.canary.base.BaseActivity;
-import com.moyacs.canary.common.AppConstans;
 import com.moyacs.canary.common.DialogUtils;
 import com.moyacs.canary.main.deal.DealFragment;
 import com.moyacs.canary.main.homepage.HomepageFragment;
 import com.moyacs.canary.main.market.MarketFragment;
-import com.moyacs.canary.main.me.MeFragment2;
+import com.moyacs.canary.main.me.MeFragment;
 import com.moyacs.canary.service.SocketService;
+import com.moyacs.canary.util.SharePreferencesUtil;
 import com.moyacs.canary.widget.SwitchSlidingViewPager;
 
 import java.util.ArrayList;
@@ -96,11 +95,6 @@ public class MainActivity extends BaseActivity {
                         break;
                     case 1:
                         initToolbar(getResources().getString(R.string.app_name) + "行情");
-                        //如果 行情页面显示的是 自选 tab ，就弹出提示登录
-                        /*int type_showTab = marketFragment.getType_showTab();
-                        if (type_showTab == 0 && !isLogin()) {
-                            return;
-                        }*/
                         break;
                     case 2:
                         toolbar.setVisibility(View.GONE);
@@ -144,7 +138,7 @@ public class MainActivity extends BaseActivity {
         marketFragment = new MarketFragment();
         fragments.add(marketFragment);
         fragments.add(new DealFragment());
-        fragments.add(new MeFragment2());
+        fragments.add(new MeFragment());
     }
 
     private class MyPagerAdapter extends FragmentPagerAdapter {
@@ -174,7 +168,7 @@ public class MainActivity extends BaseActivity {
     }
 
     private boolean isLogin() {
-        String userPhone = SPUtils.getInstance().getString(AppConstans.USER_PHONE, "");
+        String userPhone = SharePreferencesUtil.getInstance().getUserPhone();
         if (TextUtils.isEmpty(userPhone)) {
             DialogUtils.login_please("请先登录", MainActivity.this);
             return false;

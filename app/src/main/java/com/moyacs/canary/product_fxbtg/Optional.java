@@ -4,7 +4,7 @@ import android.util.Log;
 
 import com.j256.ormlite.field.DatabaseField;
 import com.moyacs.canary.common.NumberUtils;
-import com.moyacs.canary.common.StringUtil;
+import com.moyacs.canary.util.StringUtil;
 import com.moyacs.canary.kchart.entity.KCandleObj;
 
 

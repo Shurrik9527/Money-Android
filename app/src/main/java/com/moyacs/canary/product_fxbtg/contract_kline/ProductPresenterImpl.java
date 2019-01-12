@@ -2,11 +2,11 @@ package com.moyacs.canary.product_fxbtg.contract_kline;
 
 import android.util.Log;
 
-import com.blankj.utilcode.util.LogUtils;
 import com.moyacs.canary.network.HttpConstants;
 import com.moyacs.canary.network.HttpResult;
 import com.moyacs.canary.product_fxbtg.contract_kline.ProductContract.ProductPresenter;
 import com.moyacs.canary.product_fxbtg.net_kline.KLineData;
+import com.moyacs.canary.util.LogUtils;
 
 import java.util.List;
 

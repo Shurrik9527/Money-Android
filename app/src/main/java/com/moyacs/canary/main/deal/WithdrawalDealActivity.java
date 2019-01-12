@@ -7,12 +7,12 @@ import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.blankj.utilcode.util.TimeUtils;
 import com.moyacs.canary.base.BaseActivity2;
 import com.moyacs.canary.common.NumberUtils;
 import com.moyacs.canary.main.deal.net_tab3.WithdrawalDataBean;
+import com.moyacs.canary.util.DateUtil;
 
-import java.text.SimpleDateFormat;
+import java.util.Date;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -41,10 +41,6 @@ public class WithdrawalDealActivity extends BaseActivity2 {
     @BindView(R.id.tv_8)
     TextView tv8;
     private Unbinder unbinder;
-    /**
-     * 展示时候的格式
-     */
-    private SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 
     @Override
     protected void updateOptionsMenu(Menu menu) {
@@ -62,7 +58,12 @@ public class WithdrawalDealActivity extends BaseActivity2 {
         tv1.setText(s);
         //提现时间
         long date = contentBean.getDate();
-        String s1 = TimeUtils.millis2String(date, simpleDateFormat);
+        /*
+      展示时候的格式
+     */ /**
+         * 展示时候的格式
+         */String simpleDateFormat = "yyyy-MM-dd HH:mm:ss";
+        String s1 = DateUtil.parseDateToStr(new Date(date), simpleDateFormat);
         tv2.setText(s1);
         //处理状态
         String status = contentBean.getStatus();
@@ -94,7 +95,6 @@ public class WithdrawalDealActivity extends BaseActivity2 {
         tv7.setText(contentBean.getBankName());
         //银行支行
         tv8.setText(contentBean.getBankAddress());
-
     }
 
     @Override

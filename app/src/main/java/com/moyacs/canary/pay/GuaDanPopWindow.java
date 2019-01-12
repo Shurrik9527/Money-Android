@@ -13,15 +13,13 @@ import android.widget.PopupWindow;
 import android.widget.SeekBar;
 import android.widget.TextView;
 
-import com.blankj.utilcode.util.LogUtils;
-import com.blankj.utilcode.util.SPUtils;
-import com.blankj.utilcode.util.ToastUtils;
-import com.moyacs.canary.common.AppConstans;
 import com.moyacs.canary.common.RSAKeyManger;
 import com.moyacs.canary.main.market.net.TradeVo;
 import com.moyacs.canary.network.ServerManger;
 import com.moyacs.canary.network.ServerResult;
 import com.moyacs.canary.util.ForeignUtil;
+import com.moyacs.canary.util.SharePreferencesUtil;
+import com.moyacs.canary.util.ToastUtils;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -119,7 +117,7 @@ public class GuaDanPopWindow implements View.OnClickListener {
             }
         });
         initView(popView);
-        initSeekbar();
+        initSeekBar();
     }
 
     private void initView(View view) {
@@ -226,7 +224,7 @@ public class GuaDanPopWindow implements View.OnClickListener {
         activity.getWindow().setAttributes(lp);
     }
 
-    private void initSeekbar() {
+    private void initSeekBar() {
         //初始化 止损seekbar
         seekBarZhisun.setMax(71);
         seekBarZhisun.setProgress(0);
@@ -279,7 +277,6 @@ public class GuaDanPopWindow implements View.OnClickListener {
 
                 // 止盈钱数 = 10美元/手  * 1手 * progress / 100
                 int i = buyUnity * buySize;
-                LogUtils.d("countSize  : " + buySize);
                 float i1 = (float) i * progress / 100;
                 tvZhiyingMoney.setText("(" + "$ " + i1 + ")");
             }
@@ -484,7 +481,7 @@ public class GuaDanPopWindow implements View.OnClickListener {
             return;
         }
         Map<String, Object> map = new HashMap<>();
-        map.put("loginName", SPUtils.getInstance().getString(AppConstans.USER_PHONE));
+        map.put("loginName", SharePreferencesUtil.getInstance().getUserPhone());
         map.put("transactionStatus", "1"); // 1 是建仓
         map.put("symbolCode", symbolCode);
         map.put("ransactionType", isUp ? "1" : "2");//1是涨 2是跌

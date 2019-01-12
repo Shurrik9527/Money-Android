@@ -6,11 +6,7 @@ import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.os.Environment;
 import android.support.multidex.MultiDex;
-import android.support.v4.content.ContextCompat;
 
-import com.blankj.utilcode.util.LogUtils;
-import com.blankj.utilcode.util.ToastUtils;
-import com.blankj.utilcode.util.Utils;
 import com.moyacs.canary.main.MainActivity;
 import com.moyacs.canary.network.HttpServerManager;
 import com.netease.nimlib.sdk.NIMClient;
@@ -22,7 +18,6 @@ import com.netease.nimlib.sdk.uinfo.UserInfoProvider;
 import com.netease.nimlib.sdk.uinfo.model.UserInfo;
 import com.netease.nimlib.sdk.util.NIMUtil;
 
-
 import www.moyacs.com.myapplication.R;
 
 /**
@@ -32,15 +27,13 @@ import www.moyacs.com.myapplication.R;
  */
 
 public class MyApplication extends Application {
-    //    private WebView mWebView ;
     public static MyApplication instance;
+
     @Override
     public void onCreate() {
         super.onCreate();
         instance = this;
         //AndroidUtilsCode 工具类初始化
-        Utils.init(this);
-        initLogUtils();
         HttpServerManager.setContext(this);
 
         // SDK初始化（启动后台服务，若已经存在用户登录信息， SDK 将完成自动登录）
@@ -52,24 +45,11 @@ public class MyApplication extends Application {
         }
         // okhttp 有网和无网的缓存策略
 //        RetrofitCache.getInstance().init(this).setDefaultTimeUnit(TimeUnit.MINUTES).setDefaultTime(5);
-        ToastUtils.setMsgColor(ContextCompat.getColor(this, R.color.white));
-    }
-
-    /**
-     * 初始化 Log 日志
-     */
-    private void initLogUtils() {
-        LogUtils.getConfig()
-                .setLogSwitch(true)//设置 Log 总开关
-                .setLogHeadSwitch(true)//设置头部信息开关，即是否显示位置和所在线程
-                .setGlobalTag("TAG（Akame）")//设置全局 TAG
-                .setBorderSwitch(true);//设置边框开关
     }
 
     // 如果返回值为 null，则全部使用默认参数。
     private SDKOptions options() {
         SDKOptions options = new SDKOptions();
-
         // 如果将新消息通知提醒托管给 SDK 完成，需要添加以下配置。否则无需设置。
         StatusBarNotificationConfig config = new StatusBarNotificationConfig();
         config.notificationEntrance = MainActivity.class; // 点击通知栏跳转到该Activity
@@ -94,7 +74,6 @@ public class MyApplication extends Application {
 
         // 用户资料提供者, 目前主要用于提供用户资料，用于新消息通知栏中显示消息来源的头像和昵称
         options.userInfoProvider = new UserInfoProvider() {
-
             @Override
             public UserInfo getUserInfo(String account) {
                 return null;
@@ -112,7 +91,6 @@ public class MyApplication extends Application {
         };
         return options;
     }
-
 
     // 如果已经存在用户登录信息，返回LoginInfo，否则返回null即可
     private LoginInfo loginInfo() {

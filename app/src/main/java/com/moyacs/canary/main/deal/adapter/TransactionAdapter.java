@@ -7,13 +7,12 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import com.blankj.utilcode.util.SPUtils;
-import com.blankj.utilcode.util.TimeUtils;
 import com.moyacs.canary.common.AppConstans;
 import com.moyacs.canary.common.NumberUtils;
 import com.moyacs.canary.main.deal.net_tab3.TransactionRecordVo;
+import com.moyacs.canary.util.DateUtil;
 
-import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 import butterknife.BindView;
@@ -23,7 +22,6 @@ import www.moyacs.com.myapplication.R;
 public class TransactionAdapter extends RecyclerView.Adapter<TransactionAdapter.ViewHolder> {
     private List<TransactionRecordVo.Record> recordList;
     private Context context;
-    private SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 
     public TransactionAdapter(Context context, List<TransactionRecordVo.Record> recordList) {
         this.recordList = recordList;
@@ -40,14 +38,13 @@ public class TransactionAdapter extends RecyclerView.Adapter<TransactionAdapter.
 
     @Override
     public void onBindViewHolder(final TransactionAdapter.ViewHolder holder, final int position) {
-
         TransactionRecordVo.Record chiCangDateBean = recordList.get(position);
         //品种名称
-        String symbol_cn = SPUtils.getInstance(AppConstans.allMarket_en_cn).getString(chiCangDateBean.getSymbolCode());
+        /*String symbol_cn = SPUtils.getInstance(AppConstans.allMarket_en_cn).getString(chiCangDateBean.getSymbolCode());
         if (symbol_cn == null || symbol_cn.equals("")) {
             return;
-        }
-        holder.tvSymbolCn.setText(symbol_cn);
+        }*/
+        holder.tvSymbolCn.setText("品牌名称");
         //买或者卖
         String type = chiCangDateBean.getRansactionType();
         int color = 0;
@@ -82,7 +79,8 @@ public class TransactionAdapter extends RecyclerView.Adapter<TransactionAdapter.
         holder.tvProfit.setText(profit_s);
         holder.tvProfit.setTextColor(color);
         //建仓时间
-        String openTime = TimeUtils.millis2String(chiCangDateBean.getCreateTime(), simpleDateFormat);
+        String simpleDateFormat = "yyyy-MM-dd HH:mm:ss";
+        String openTime = DateUtil.parseDateToStr(new Date(chiCangDateBean.getCreateTime()), simpleDateFormat);
         holder.tvTime.setText(openTime);
     }
 

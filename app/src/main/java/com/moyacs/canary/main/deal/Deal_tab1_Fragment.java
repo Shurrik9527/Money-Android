@@ -10,8 +10,8 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import com.blankj.utilcode.util.LogUtils;
 import com.moyacs.canary.base.BaseFragment2;
+import com.moyacs.canary.util.LogUtils;
 import com.moyacs.canary.widget.pullrefreshlayout.ClassicsHeader;
 import com.yan.pullrefreshlayout.PullRefreshLayout;
 

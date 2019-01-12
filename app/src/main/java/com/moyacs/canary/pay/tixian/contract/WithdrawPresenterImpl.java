@@ -2,10 +2,10 @@ package com.moyacs.canary.pay.tixian.contract;
 
 import android.util.Log;
 
-import com.blankj.utilcode.util.LogUtils;
 import com.moyacs.canary.network.HttpConstants;
 import com.moyacs.canary.network.HttpResult;
 import com.moyacs.canary.pay.WithdrawActivity;
+import com.moyacs.canary.util.LogUtils;
 
 /**
  * 作者：luoshen on 2018/4/15 0015 10:51

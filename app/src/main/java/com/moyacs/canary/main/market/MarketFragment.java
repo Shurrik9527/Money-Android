@@ -10,11 +10,8 @@ import android.text.TextUtils;
 import android.view.View;
 import android.widget.TextView;
 
-import com.blankj.utilcode.util.LogUtils;
-import com.blankj.utilcode.util.SPUtils;
 import com.moyacs.canary.base.BaseFragment;
 import com.moyacs.canary.common.AppConstans;
-import com.moyacs.canary.common.DialogUtils;
 import com.moyacs.canary.main.market.adapter.MarketAdapter;
 import com.moyacs.canary.main.market.contract.MarketContract;
 import com.moyacs.canary.main.market.contract.MarketPresenterImpl;
@@ -22,6 +19,7 @@ import com.moyacs.canary.main.market.net.MarketDataBean;
 import com.moyacs.canary.main.market.net.TradeVo;
 import com.moyacs.canary.netty.codec.Quotation;
 import com.moyacs.canary.product_fxbtg.ProductActivity;
+import com.moyacs.canary.util.LogUtils;
 import com.moyacs.canary.widget.UnderLineTextView;
 import com.yan.pullrefreshlayout.PullRefreshLayout;
 
@@ -119,7 +117,7 @@ public class MarketFragment extends BaseFragment implements MarketContract.Marke
 
             @Override
             public void onFootItemClickListener() {
-                LogUtils.d("====我被点击了吗？====");
+                LogUtils.e("====我被点击了吗？====");
                 Intent intent = new Intent(mActivity, OptionalActivity.class);
                 startActivity(intent);
             }
@@ -198,8 +196,10 @@ public class MarketFragment extends BaseFragment implements MarketContract.Marke
         showLoadingDialog();
         switch (view.getId()) {
             case R.id.tab1:
-                String userPhone = SPUtils.getInstance().getString(AppConstans.USER_PHONE, "");
-                if (TextUtils.isEmpty(userPhone)) {
+                dismissLoadingDialog();
+                Intent intent = new Intent(mActivity, OptionalActivity.class);
+                startActivity(intent);
+                /*if (TextUtils.isEmpty(SharePreferencesUtil.getInstance().getUserPhone())) {
                     DialogUtils.login_please("请先登录", getContext());
                     return;
                 }
@@ -209,7 +209,7 @@ public class MarketFragment extends BaseFragment implements MarketContract.Marke
                     presenter.getMarketList("13232323636", "DEMO");
                 } else {
                     replaceMarketList(ziXuanList);
-                }
+                }*/
                 break;
             case R.id.tab2:
                 type = "1";
@@ -243,10 +243,12 @@ public class MarketFragment extends BaseFragment implements MarketContract.Marke
     private void replaceMarketList(List<MarketDataBean> list) {
         tvFailedView.setVisibility(View.GONE);//加载数据隐藏异常状态提醒
         rvMarket.setVisibility(View.VISIBLE);
+        dismissLoadingDialog();
         if (list == null) {
-            presenter.getMarketList_type("DEMO", type);
+            rvMarket.setVisibility(View.GONE);
+            tvFailedView.setVisibility(View.VISIBLE);
+            tvFailedView.setText("当前数据为空");
         } else {
-            dismissLoadingDialog();
             marketList.clear();
             marketList.addAll(list);
             marketAdapter.notifyDataSetChanged();

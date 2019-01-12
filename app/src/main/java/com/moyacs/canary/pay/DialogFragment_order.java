@@ -21,8 +21,8 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import com.blankj.utilcode.util.ScreenUtils;
-import com.moyacs.canary.base.BaseActivity2;
+import com.moyacs.canary.MyApplication;
+import com.moyacs.canary.util.ScreenUtil;
 import com.moyacs.canary.widget.SwitchSlidingViewPager;
 import com.moyacs.canary.widget.UnderLineTextView;
 
@@ -159,11 +159,8 @@ public class DialogFragment_order extends DialogFragment {
         params.gravity = Gravity.BOTTOM;
         // 使用ViewGroup.LayoutParams，以便Dialog 宽度充满整个屏幕
         params.width = ViewGroup.LayoutParams.MATCH_PARENT;
-        int screenHeight = ScreenUtils.getScreenHeight() / 3 * 2;
-        params.height = screenHeight;
+        params.height = ScreenUtil.getScreenHeight(MyApplication.instance) / 3 * 2;
         win.setAttributes(params);
-
-
     }
 
 

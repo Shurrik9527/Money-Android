@@ -1,8 +1,5 @@
 package com.moyacs.canary.netty.codec;
 
-import android.util.Log;
-
-import com.blankj.utilcode.util.LogUtils;
 
 import io.netty.buffer.ByteBuf;
 import io.netty.channel.ChannelHandlerContext;

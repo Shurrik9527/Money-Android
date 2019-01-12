@@ -4,7 +4,7 @@ package com.moyacs.canary.kchart.data;
 
 import android.util.Log;
 
-import com.moyacs.canary.common.StringUtil;
+import com.moyacs.canary.util.StringUtil;
 import com.moyacs.canary.kchart.entity.KCandleObj;
 import com.moyacs.canary.product_fxbtg.Product_constans;
 
@@ -13,8 +13,6 @@ import org.json.JSONObject;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
 import java.util.List;
 
 /**

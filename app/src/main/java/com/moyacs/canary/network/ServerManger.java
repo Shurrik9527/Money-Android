@@ -1,9 +1,9 @@
 package com.moyacs.canary.network;
 
-import android.content.Context;
 import android.text.TextUtils;
 
-import com.blankj.utilcode.util.LogUtils;
+import com.moyacs.canary.util.LogUtils;
+import com.moyacs.canary.util.SharePreferencesUtil;
 
 import java.io.IOException;
 import java.util.concurrent.TimeUnit;
@@ -112,17 +112,17 @@ public class ServerManger {
             Response response = chain.proceed(chain.request());
             String header = response.header(HttpConstants.header_key);
             if (!TextUtils.isEmpty(header)) {
-                HttpConstants.header_value = header;
+                SharePreferencesUtil.getInstance().setServerAuthor(header);
             }
             Request request = chain.request()
                     .newBuilder()
-                    .header(HttpConstants.header_key,  HttpConstants.header_value)
+                    .header(HttpConstants.header_key, SharePreferencesUtil.getInstance().getServerAuthor())
 //                    .header(HttpConstants.header_key, HttpConstants.header_value + headerValue)
                     //注册的 请求头
 //                    .header("Referer", "android")
                     .build();
 //            LogUtils.d("请求头的 key ：" + HttpConstants.header_key);
-            LogUtils.d("本次请求头：" + HttpConstants.header_value);
+            LogUtils.d("本次请求头：" + SharePreferencesUtil.getInstance().getServerAuthor());
             return chain.proceed(request);
         }
     }

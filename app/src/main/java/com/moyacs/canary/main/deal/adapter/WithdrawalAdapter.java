@@ -6,19 +6,18 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.allen.library.SuperTextView;
-import com.blankj.utilcode.util.TimeUtils;
 import com.moyacs.canary.common.NumberUtils;
 import com.moyacs.canary.main.deal.net_tab3.WithdrawalDataBean;
+import com.moyacs.canary.util.DateUtil;
 import com.moyacs.canary.util.ViewListenerAbs;
 
-import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 import www.moyacs.com.myapplication.R;
 
 public class WithdrawalAdapter extends RecyclerView.Adapter<WithdrawalAdapter.ViewHolder> {
     private List<WithdrawalDataBean.ContentBean> withdrawalList;
-    private SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
     private ViewListenerAbs.ItemClickListener itemClickListener;
 
     public WithdrawalAdapter(List<WithdrawalDataBean.ContentBean> withdrawalList) {
@@ -37,7 +36,8 @@ public class WithdrawalAdapter extends RecyclerView.Adapter<WithdrawalAdapter.Vi
         final WithdrawalDataBean.ContentBean contentBean = withdrawalList.get(position);
         //时间
         long date = contentBean.getDate();
-        String time = TimeUtils.millis2String(date, simpleDateFormat);
+        String simpleDateFormat = "yyyy-MM-dd HH:mm:ss";
+        String time = DateUtil.parseDateToStr(new Date(date), simpleDateFormat);
         holder.superTextView.setLeftBottomString(time);
 
         //金额

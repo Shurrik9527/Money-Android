@@ -26,20 +26,16 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.bigkoo.pickerview.builder.TimePickerBuilder;
-import com.bigkoo.pickerview.listener.OnTimeSelectListener;
 import com.bigkoo.pickerview.view.TimePickerView;
-import com.blankj.utilcode.util.SPUtils;
-import com.blankj.utilcode.util.TimeUtils;
 import com.moyacs.canary.base.BaseFragment2;
 import com.moyacs.canary.common.AppConstans;
 import com.moyacs.canary.common.NumberUtils;
-import com.moyacs.canary.common.StringUtil;
 import com.moyacs.canary.pay.contract.PayContract;
 import com.moyacs.canary.pay.contract.PayPresenterImpl;
+import com.moyacs.canary.util.DateUtil;
+import com.moyacs.canary.util.StringUtil;
 
-import java.text.SimpleDateFormat;
 import java.util.Calendar;
-import java.util.Date;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -199,7 +195,7 @@ public class GuaDanFragment extends BaseFragment2 implements PayContract.PayView
     @BindView(R.id.btn_order)
     Button btnOrder;
     Unbinder unbinder1;
-//    @BindView(R.id.textUpView2)
+    //    @BindView(R.id.textUpView2)
 //    TextView textUpView2;
 //    @BindView(R.id.upView2)
 //    RelativeLayout upView2;
@@ -647,7 +643,7 @@ public class GuaDanFragment extends BaseFragment2 implements PayContract.PayView
     }
 
 
-    @OnClick({ R.id.lessnumView, R.id.addnumView, R.id.lossViewLeft,
+    @OnClick({R.id.lessnumView, R.id.addnumView, R.id.lossViewLeft,
             R.id.lessLossView, R.id.addLossView, R.id.profitViewLeft, R.id.lessProfitView,
             R.id.addProfitView, R.id.tv_cashin, R.id.btn_order,
             R.id.lessnumView2, R.id.addnumView2, R.id.rl_guadan_type,
@@ -814,7 +810,7 @@ public class GuaDanFragment extends BaseFragment2 implements PayContract.PayView
 //                showTimeDialog();
 //                break;
             case R.id.tv_cashin://充值
-                long nowMills = TimeUtils.getNowMills();
+                long nowMills = System.currentTimeMillis();
                 String url = "http://uc.moyacs.com/my.account-deposit.funds_app_v2.html?v=" + nowMills + "&mt4id=812999&token=xxxxxxx";
                 Intent intent = new Intent(getContext(), PayActivity.class);
                 intent.putExtra("url", url);
@@ -822,9 +818,9 @@ public class GuaDanFragment extends BaseFragment2 implements PayContract.PayView
                 break;
             case R.id.btn_order://下单
                 // MT4 ID
-                int mt4id = SPUtils.getInstance().getInt(AppConstans.mt4id);
+/*                int mt4id = SPUtils.getInstance().getInt(AppConstans.mt4id);
                 //server
-                String server = SPUtils.getInstance().getString(AppConstans.type);
+                String server = SPUtils.getInstance().getString(AppConstans.type);*/
 
 
                 String trim = edNum.getText().toString().trim();
@@ -880,19 +876,9 @@ public class GuaDanFragment extends BaseFragment2 implements PayContract.PayView
                     String s1 = NumberUtils.setScale(aDouble, digit);
                     price = Double.valueOf(s1);
                 }
-                Log.i("closeOrder", "server: " + server + "\n" +
-                        "mt4id: " + mt4id + "\n" +
-                        "symbol: " + symbol + "\n" +
-                        "type: " + type + "\n" +
-                        "multiply.intValue(): " + multiply.intValue() + "\n" +
-                        "sl: " + sl + "\n" +
-                        "tp: " + tp + "\n" +
-                        "price: " + price + "\n" +
-                        "expiredDate: " + expiredDate + "\n"
-                );
                 PayPresenterImpl payPresenter = new PayPresenterImpl(this);
 //                payPresenter.closeOrder(server, mt4id, symbol, type, multiply.intValue(), sl, tp, "", price, expiredDate);
-                Log.i("mt4id", "mt4id: " + mt4id + "      server : " + server);
+//                Log.i("mt4id", "mt4id: " + mt4id + "      server : " + server);
                 break;
         }
     }
@@ -912,13 +898,10 @@ public class GuaDanFragment extends BaseFragment2 implements PayContract.PayView
         endDate.set(2100, 11, 31);
 
         //选中事件回调
-        pvTime = new TimePickerBuilder(getContext(), new OnTimeSelectListener() {
-            @Override
-            public void onTimeSelect(Date date, View v) {//选中事件回调
-                tvDate.setText(TimeUtils.date2String(date, new SimpleDateFormat("yyyy-MM-dd HH:mm" + ":00")));
-                //提交订单时，所需要的时间
-                expiredDate = TimeUtils.date2String(date, new SimpleDateFormat("dd-MM-yyyy HH:mm" + ":00"));
-            }
+        pvTime = new TimePickerBuilder(getContext(), (date, v) -> {//选中事件回调
+            tvDate.setText(DateUtil.parseDateToStr(date, "yyyy-MM-dd HH:mm" + ":00"));
+            //提交订单时，所需要的时间
+            expiredDate = DateUtil.parseDateToStr(date, "dd-MM-yyyy HH:mm" + ":00");
         })
                 .setType(new boolean[]{true, true, true, true, true, false})// 默认全部显示
                 .setCancelText("取消")//取消按钮文字
@@ -1133,6 +1116,7 @@ public class GuaDanFragment extends BaseFragment2 implements PayContract.PayView
 
     /**
      * 初始化 pop 相关
+     *
      * @param popView
      */
     private void initPopViews(final View popView) {
@@ -1221,7 +1205,6 @@ public class GuaDanFragment extends BaseFragment2 implements PayContract.PayView
         lp.alpha = bgAlpha; // 0.0-1.0
         getActivity().getWindow().setAttributes(lp);
     }
-
 
 
 }

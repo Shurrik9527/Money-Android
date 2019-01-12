@@ -1,8 +1,5 @@
 package com.moyacs.canary.network;
 
-import com.blankj.utilcode.util.SPUtils;
-import com.moyacs.canary.common.AppConstans;
-
 /**
  * Created by Administrator on 2017/12/12 0012.
  * <p>
@@ -48,11 +45,7 @@ public class HttpConstants {
     public static final String goods_id = "goods_id";//商品id
     public static final String activity_id = "activity_id";//商品id
 
-
     public static final String code = "code";
 
-
     public static final String source = "source";
-
-
 }

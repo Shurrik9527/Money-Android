@@ -3,10 +3,9 @@ package com.moyacs.canary.product_fxbtg;
 import android.content.Context;
 
 
-import com.moyacs.canary.common.StringUtil;
+import com.moyacs.canary.util.StringUtil;
 
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 /**

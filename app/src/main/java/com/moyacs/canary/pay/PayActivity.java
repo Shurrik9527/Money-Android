@@ -3,12 +3,10 @@ package com.moyacs.canary.pay;
 import android.app.Activity;
 import android.content.DialogInterface;
 import android.content.Intent;
-
 import android.graphics.Bitmap;
 import android.net.Uri;
 import android.support.v7.app.AlertDialog;
 import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,9 +17,8 @@ import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.LinearLayout;
 
-import com.blankj.utilcode.util.LogUtils;
 import com.moyacs.canary.base.BaseActivity2;
-import com.moyacs.canary.widget.ProgressWebView;
+import com.moyacs.canary.util.LogUtils;
 
 import www.moyacs.com.myapplication.R;
 

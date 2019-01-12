@@ -1,8 +1,9 @@
 package com.moyacs.canary.network;
 
-import com.blankj.utilcode.util.LogUtils;
-import com.blankj.utilcode.util.NetworkUtils;
 import com.google.gson.JsonSyntaxException;
+import com.moyacs.canary.MyApplication;
+import com.moyacs.canary.util.LogUtils;
+import com.moyacs.canary.util.NetworkUtils;
 
 import java.net.ConnectException;
 import java.net.SocketException;
@@ -29,19 +30,18 @@ public class HttpExceptionHandler {
         String error = e.toString();
         LogUtils.d("网络请求异常信息：：" + error);
         if (e instanceof UnknownHostException || e instanceof HttpException) {
-            if (NetworkUtils.isConnected()) {//判断网络是否可用
+            if (NetworkUtils.isNetworkAvailable(MyApplication.instance)) {//判断网络是否可用
                 //服务器挂了
                 return HttpConstants.Exception_server;
             } else {
                 //网络错误
                 return HttpConstants.Exception_http;
-
             }
         } else if (e instanceof ConnectException || e instanceof SocketTimeoutException || e instanceof SocketException) {
             //网络连接超时
             return HttpConstants.Exception_http_connect;
 
-        } else if (e instanceof NumberFormatException || e instanceof  IllegalArgumentException || e instanceof JsonSyntaxException) {
+        } else if (e instanceof NumberFormatException || e instanceof IllegalArgumentException || e instanceof JsonSyntaxException) {
             //json 解析异常
             return HttpConstants.Exception_json;
 
@@ -52,6 +52,5 @@ public class HttpExceptionHandler {
             //未知错误
             return HttpConstants.Exception_other;
         }
-
     }
 }

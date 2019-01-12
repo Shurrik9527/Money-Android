@@ -2,12 +2,12 @@ package com.moyacs.canary.login.contract;
 
 import android.util.Log;
 
-import com.blankj.utilcode.util.LogUtils;
 import com.moyacs.canary.login.LoginAndRegistFragment;
 import com.moyacs.canary.login.contract.LoginContract.LoginPresenter;
 import com.moyacs.canary.login.net.MT4Users;
 import com.moyacs.canary.network.HttpConstants;
 import com.moyacs.canary.network.ServerResult;
+import com.moyacs.canary.util.LogUtils;
 
 /**
  * 作者：luoshen on 2018/3/5 0005 16:15

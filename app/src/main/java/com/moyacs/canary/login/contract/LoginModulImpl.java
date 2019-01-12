@@ -2,11 +2,10 @@ package com.moyacs.canary.login.contract;
 
 import android.util.Base64;
 
-import com.blankj.utilcode.util.LogUtils;
-import com.blankj.utilcode.util.ToastUtils;
 import com.moyacs.canary.network.ServerApi;
 import com.moyacs.canary.network.ServerManger;
 import com.moyacs.canary.network.ServerResult;
+import com.moyacs.canary.util.ToastUtils;
 
 import java.io.UnsupportedEncodingException;
 
@@ -166,7 +165,6 @@ public class LoginModulImpl implements LoginContract.LoginModul {
 
     @Override
     public void getCode(String mobile) {
-        LogUtils.e("========获取验证码=======");
       /*  loginServer.getCode(mobile)
                 .subscribeOn(Schedulers.io())//指定网络请求所在的线程
                 .doOnSubscribe(new Consumer<Disposable>() {

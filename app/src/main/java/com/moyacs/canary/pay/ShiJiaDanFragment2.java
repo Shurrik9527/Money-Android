@@ -17,12 +17,10 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import com.blankj.utilcode.util.SPUtils;
-import com.blankj.utilcode.util.TimeUtils;
 import com.moyacs.canary.base.BaseFragment2;
 import com.moyacs.canary.common.AppConstans;
 import com.moyacs.canary.common.NumberUtils;
-import com.moyacs.canary.common.StringUtil;
+import com.moyacs.canary.util.StringUtil;
 import com.moyacs.canary.pay.contract.PayContract;
 import com.moyacs.canary.pay.contract.PayPresenterImpl;
 
@@ -634,7 +632,7 @@ public class ShiJiaDanFragment2 extends BaseFragment2 implements PayContract.Pay
                 setProfitEditText(true);
                 break;
             case R.id.tv_cashin://充值
-                long nowMills = TimeUtils.getNowMills();
+                long nowMills = System.currentTimeMillis();
                 String url = "http://uc.moyacs.com/my.account-deposit.funds_app_v2.html?v=" + nowMills + "&mt4id=812999&token=xxxxxxx";
                 Intent intent = new Intent(getContext(), PayActivity.class);
                 intent.putExtra("url", url);
@@ -642,9 +640,9 @@ public class ShiJiaDanFragment2 extends BaseFragment2 implements PayContract.Pay
                 break;
             case R.id.btn_order://下单
                 //mt4 id
-                int mt4id = SPUtils.getInstance().getInt(AppConstans.mt4id);
+              /*  int mt4id = SPUtils.getInstance().getInt(AppConstans.mt4id);
                 //server
-                String server = SPUtils.getInstance().getString(AppConstans.type);
+                String server = SPUtils.getInstance().getString(AppConstans.type);*/
                 //type
                 String type = null;
                 if (type_order == 1) {
@@ -677,7 +675,6 @@ public class ShiJiaDanFragment2 extends BaseFragment2 implements PayContract.Pay
                     tp = 0D;
                 }
 //                payPresenter.closeOrder(server, mt4id, symbol, type, multiply.intValue(), sl, tp, null, 0, "");
-                Log.i("mt4id", "mt4id: " + mt4id + "      server : " + server);
                 break;
         }
     }

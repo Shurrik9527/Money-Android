@@ -24,10 +24,8 @@ import android.widget.TextView;
 import com.bigkoo.pickerview.builder.OptionsPickerBuilder;
 import com.bigkoo.pickerview.listener.OnOptionsSelectListener;
 import com.bigkoo.pickerview.view.OptionsPickerView;
-import com.blankj.utilcode.util.SPUtils;
 import com.google.gson.Gson;
 import com.moyacs.canary.base.BaseActivity2;
-import com.moyacs.canary.common.AppConstans;
 import com.moyacs.canary.pay.tixian.BankBean;
 import com.moyacs.canary.pay.tixian.BankNumberUtils;
 import com.moyacs.canary.pay.tixian.GetJsonDataUtil;
@@ -149,6 +147,7 @@ public class WithdrawActivity extends BaseActivity2 implements WithdrawCountract
         initViews();
 
     }
+
     //上次输入框中的内容
     private String lastString;
     //光标的位置
@@ -161,90 +160,90 @@ public class WithdrawActivity extends BaseActivity2 implements WithdrawCountract
     private void initViews() {
 
 
-       edInputBankNumber.addTextChangedListener(new TextWatcher() {
-        @Override
-        public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-        }
-
-
-        /**
-         * 当输入框内容改变时的回调
-         * @param s  改变后的字符串
-         * @param start 改变之后的光标下标
-         * @param before 删除了多少个字符
-         * @param count 添加了多少个字符
-         */
-        @Override
-        public void onTextChanged(CharSequence s, int start, int before, int count) {
-
-            //如果"."在起始位置,则起始位置自动补0
-            if (s.toString().trim().substring(0).equals(".")) {
-                s = "0" + s;
-                edInputBankNumber.setText(s);
-                edInputBankNumber.setSelection(2);
+        edInputBankNumber.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
             }
 
-            //因为重新排序之后setText的存在
-            //会导致输入框的内容从0开始输入，这里是为了避免这种情况产生一系列问题
-            if (start == 0 && count > 1) {
-                return;
-            }
-            String textTrim = BankNumberUtils.getTextTrim(edInputBankNumber);
-            if (TextUtils.isEmpty(textTrim)) {
-                return;
-            }
-            //如果before > 0,代表此次操作是删除操作
-            if (before > 0) {
-                selectPosition = start;
-                if (TextUtils.isEmpty(lastString)) {
+
+            /**
+             * 当输入框内容改变时的回调
+             * @param s  改变后的字符串
+             * @param start 改变之后的光标下标
+             * @param before 删除了多少个字符
+             * @param count 添加了多少个字符
+             */
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+                //如果"."在起始位置,则起始位置自动补0
+                if (s.toString().trim().substring(0).equals(".")) {
+                    s = "0" + s;
+                    edInputBankNumber.setText(s);
+                    edInputBankNumber.setSelection(2);
+                }
+
+                //因为重新排序之后setText的存在
+                //会导致输入框的内容从0开始输入，这里是为了避免这种情况产生一系列问题
+                if (start == 0 && count > 1) {
                     return;
                 }
-                //将上次的字符串去空格 和 改变之后的字符串去空格 进行比较
-                //如果一致，代表本次操作删除的是空格
-                if (textTrim.equals(lastString.replaceAll(" ", ""))) {
-                    //帮助用户删除该删除的字符，而不是空格
-                    StringBuffer stringBuffer = new StringBuffer(lastString);
-                    stringBuffer.deleteCharAt(start - 1);
-                    selectPosition = start - 1;
-                    edInputBankNumber.setText(stringBuffer.toString());
+                String textTrim = BankNumberUtils.getTextTrim(edInputBankNumber);
+                if (TextUtils.isEmpty(textTrim)) {
+                    return;
                 }
-            } else {
-                //此处代表是添加操作
-                //当光标位于空格之前，添加字符时，需要让光标跳过空格，再按照之前的逻辑计算光标位置
-                //第一次空格出现的位置是4，第二次是4+1(空格)+4=9，第三次是4+1(空格)+4+1(空格)+4=14
-                //如果按照数学公式，则当start = 5n-1时，需要让光标跳过空格
-                //也就是当stat%5 == 4时
-                if (start % 5 == 4) {
-                    selectPosition = start + count + 1;
+                //如果before > 0,代表此次操作是删除操作
+                if (before > 0) {
+                    selectPosition = start;
+                    if (TextUtils.isEmpty(lastString)) {
+                        return;
+                    }
+                    //将上次的字符串去空格 和 改变之后的字符串去空格 进行比较
+                    //如果一致，代表本次操作删除的是空格
+                    if (textTrim.equals(lastString.replaceAll(" ", ""))) {
+                        //帮助用户删除该删除的字符，而不是空格
+                        StringBuffer stringBuffer = new StringBuffer(lastString);
+                        stringBuffer.deleteCharAt(start - 1);
+                        selectPosition = start - 1;
+                        edInputBankNumber.setText(stringBuffer.toString());
+                    }
                 } else {
-                    selectPosition = start + count;
+                    //此处代表是添加操作
+                    //当光标位于空格之前，添加字符时，需要让光标跳过空格，再按照之前的逻辑计算光标位置
+                    //第一次空格出现的位置是4，第二次是4+1(空格)+4=9，第三次是4+1(空格)+4+1(空格)+4=14
+                    //如果按照数学公式，则当start = 5n-1时，需要让光标跳过空格
+                    //也就是当stat%5 == 4时
+                    if (start % 5 == 4) {
+                        selectPosition = start + count + 1;
+                    } else {
+                        selectPosition = start + count;
+                    }
                 }
             }
-        }
 
 
-        @Override
-        public void afterTextChanged(Editable s) {
+            @Override
+            public void afterTextChanged(Editable s) {
 
-            //获取输入框中的内容,不可以去空格
-            String etContent = BankNumberUtils.getText(edInputBankNumber);
+                //获取输入框中的内容,不可以去空格
+                String etContent = BankNumberUtils.getText(edInputBankNumber);
 
-            //重新拼接字符串
-            String newContent = BankNumberUtils.addSpeaceByCredit(etContent);
-            //保存本次字符串数据
-            lastString = newContent;
+                //重新拼接字符串
+                String newContent = BankNumberUtils.addSpeaceByCredit(etContent);
+                //保存本次字符串数据
+                lastString = newContent;
 
-            //如果有改变，则重新填充
-            //防止EditText无限setText()产生死循环
-            if (!newContent.equals(etContent)) {
-                edInputBankNumber.setText(newContent);
-                //保证光标的位置
-                edInputBankNumber.setSelection(selectPosition > newContent.length() ? newContent.length() : selectPosition);
+                //如果有改变，则重新填充
+                //防止EditText无限setText()产生死循环
+                if (!newContent.equals(etContent)) {
+                    edInputBankNumber.setText(newContent);
+                    //保证光标的位置
+                    edInputBankNumber.setSelection(selectPosition > newContent.length() ? newContent.length() : selectPosition);
+                }
+
+
             }
-
-
-        }
-    });
+        });
     }
 
 
@@ -341,6 +340,7 @@ public class WithdrawActivity extends BaseActivity2 implements WithdrawCountract
 
     /**
      * 问号按钮的 pop
+     *
      * @param view
      */
     private void showPopopWindow_help(View view) {
@@ -356,7 +356,8 @@ public class WithdrawActivity extends BaseActivity2 implements WithdrawCountract
      */
     private void submit() {
         //mt4id
-        int mt4id = SPUtils.getInstance().getInt(AppConstans.mt4id);
+//        int mt4id = SPUtils.getInstance().getInt(AppConstans.mt4id);
+        int mt4id = 0;
         //type
         String type = "WireTransfer";
         //金额
@@ -364,7 +365,7 @@ public class WithdrawActivity extends BaseActivity2 implements WithdrawCountract
         double amount;
         if (amount2.equals("") || amount2.endsWith(".")) {
             amount = 0;
-        }else {
+        } else {
             amount = Double.valueOf(amount2);
         }
         //账号
@@ -384,7 +385,7 @@ public class WithdrawActivity extends BaseActivity2 implements WithdrawCountract
                 + "bankAddress:" + bankAddress + "\n"
 
         );
-        presenter.withdraw(mt4id,type,amount,accountNumber,accountName,bankName,bankAddress);
+        presenter.withdraw(mt4id, type, amount, accountNumber, accountName, bankName, bankAddress);
 
     }
 
@@ -543,7 +544,7 @@ public class WithdrawActivity extends BaseActivity2 implements WithdrawCountract
                         helloView.hide();
                     }
                 }))
-               .show(this);
+                .show(this);
 
     }
 

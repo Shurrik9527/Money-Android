@@ -6,11 +6,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.TextView;
 
-import com.blankj.utilcode.util.LogUtils;
-import com.blankj.utilcode.util.SPUtils;
-import com.blankj.utilcode.util.ToastUtils;
 import com.moyacs.canary.base.BaseFragment;
-import com.moyacs.canary.common.AppConstans;
 import com.moyacs.canary.common.MyDecoration;
 import com.moyacs.canary.common.RSAKeyManger;
 import com.moyacs.canary.main.deal.adapter.ChiCangAdapter;
@@ -21,6 +17,8 @@ import com.moyacs.canary.main.market.net.MarketDataBean;
 import com.moyacs.canary.netty.codec.Quotation;
 import com.moyacs.canary.pay.contract.PayContract;
 import com.moyacs.canary.pay.contract.PayPresenterImpl;
+import com.moyacs.canary.util.SharePreferencesUtil;
+import com.moyacs.canary.util.ToastUtils;
 import com.yan.pullrefreshlayout.PullRefreshLayout;
 
 import net.lemonsoft.lemonhello.LemonHello;
@@ -131,7 +129,6 @@ public class HoldPositionFragment extends BaseFragment implements ChiCangCountra
 
             @Override
             public void onLoading() {
-                LogUtils.d("freshLayout :    onLoading ");
             }
         });
     }
@@ -206,7 +203,7 @@ public class HoldPositionFragment extends BaseFragment implements ChiCangCountra
             payPresenter = new PayPresenterImpl(this);
         }
         Map<String, Object> map = new HashMap<>();
-        map.put("loginName", SPUtils.getInstance().getString(AppConstans.USER_PHONE));
+        map.put("loginName", SharePreferencesUtil.getInstance().getUserPhone());
         map.put("transactionStatus", "2");
         map.put("symbolCode", record.getSymbolCode());
         map.put("ransactionType", record.getRansactionType());

@@ -14,16 +14,14 @@ import android.widget.RelativeLayout;
 import android.widget.SeekBar;
 import android.widget.TextView;
 
-import com.blankj.utilcode.util.LogUtils;
-import com.blankj.utilcode.util.SPUtils;
-import com.blankj.utilcode.util.ToastUtils;
-import com.moyacs.canary.base.BaseActivity2;
-import com.moyacs.canary.common.AppConstans;
 import com.moyacs.canary.common.RSAKeyManger;
 import com.moyacs.canary.main.market.net.TradeVo;
 import com.moyacs.canary.network.ServerManger;
 import com.moyacs.canary.network.ServerResult;
 import com.moyacs.canary.util.ForeignUtil;
+import com.moyacs.canary.util.LogUtils;
+import com.moyacs.canary.util.SharePreferencesUtil;
+import com.moyacs.canary.util.ToastUtils;
 import com.moyacs.canary.widget.UnderLineTextView;
 
 import java.util.HashMap;
@@ -850,7 +848,7 @@ public class OrderPopWindow implements View.OnClickListener {
 
     private void transactionBuy() {
         Map<String, Object> map = new HashMap<>();
-        map.put("loginName", SPUtils.getInstance().getString(AppConstans.USER_PHONE));
+        map.put("loginName", SharePreferencesUtil.getInstance().getUserPhone());
         map.put("transactionStatus", "1"); //1 建仓
         map.put("symbolCode", symbolCode);
         map.put("ransactionType", isUp ? "1" : "2");//1买张 2买跌

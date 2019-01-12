@@ -10,18 +10,15 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 
-import com.blankj.utilcode.util.LogUtils;
-import com.blankj.utilcode.util.RegexUtils;
-import com.blankj.utilcode.util.SPUtils;
-import com.blankj.utilcode.util.ToastUtils;
 import com.moyacs.canary.base.BaseFragment;
-import com.moyacs.canary.common.AppConstans;
 import com.moyacs.canary.common.RSAKeyManger;
 import com.moyacs.canary.main.MainActivity;
 import com.moyacs.canary.network.BaseObservable;
 import com.moyacs.canary.network.RxUtils;
 import com.moyacs.canary.network.ServerManger;
 import com.moyacs.canary.network.ServerResult;
+import com.moyacs.canary.util.SharePreferencesUtil;
+import com.moyacs.canary.util.ToastUtils;
 
 import java.io.UnsupportedEncodingException;
 
@@ -93,7 +90,7 @@ public class LoginFragment extends BaseFragment {
                 //账号密码格式不正确的提示信息
                 userName = etPhoneNun.getText().toString();
                 passWord = etPwd.getText().toString();
-                if (!RegexUtils.isMobileExact(userName)) {
+                if (userName == null || userName.length() != 11) {
                     ToastUtils.showShort("请输入正确的电话号码");
                     return;
                 } else if (passWord.length() < 6 || passWord.length() > 12) {
@@ -125,7 +122,6 @@ public class LoginFragment extends BaseFragment {
                 .subscribeWith(new BaseObservable<ServerResult<String>>() {
                     @Override
                     protected void requestSuccess(ServerResult<String> data) {
-                        LogUtils.d("========登录成功 上传公钥======");
                         uploadPubKey(RSAKeyManger.pubKey);
                     }
 
@@ -147,7 +143,7 @@ public class LoginFragment extends BaseFragment {
                     @Override
                     protected void requestSuccess(ServerResult<String> data) {
                         showMag("登录成功");
-                        SPUtils.getInstance().put(AppConstans.USER_PHONE, userName);
+                        SharePreferencesUtil.getInstance().setUserPhone(userName);
                         startActivity(new Intent(getContext(), MainActivity.class));
                         mActivity.finish();
                     }

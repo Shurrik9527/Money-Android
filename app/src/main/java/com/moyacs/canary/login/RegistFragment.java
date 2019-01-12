@@ -13,13 +13,12 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import com.blankj.utilcode.util.RegexUtils;
-import com.blankj.utilcode.util.ToastUtils;
 import com.moyacs.canary.base.BaseFragment;
 import com.moyacs.canary.network.BaseObservable;
 import com.moyacs.canary.network.RxUtils;
 import com.moyacs.canary.network.ServerManger;
 import com.moyacs.canary.network.ServerResult;
+import com.moyacs.canary.util.ToastUtils;
 
 import java.io.UnsupportedEncodingException;
 
@@ -94,7 +93,7 @@ public class RegistFragment extends BaseFragment {
             case R.id.btnGetCode://获取验证码按钮
                 phone = etPhone.getText().toString();
                 //开始倒计时 60 秒
-                if (!RegexUtils.isMobileExact(phone)) {
+                if (phone.equals("null")||phone.length()!=11) {
                     ToastUtils.showShort("请输入正确的手机号码");
                     return;
                 }

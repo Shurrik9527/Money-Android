@@ -9,7 +9,6 @@ import android.view.View;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import com.blankj.utilcode.util.TimeUtils;
 import com.moyacs.canary.base.BaseFragment;
 import com.moyacs.canary.common.NumberUtils;
 import com.moyacs.canary.main.deal.adapter.RechargeAdapter;
@@ -190,7 +189,7 @@ public class CapitalFragment extends BaseFragment implements FundContract.FundVi
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.btn_chongzhi:
-                long nowMills = TimeUtils.getNowMills();
+                long nowMills = System.currentTimeMillis();
                 String url = "http://uc.moyacs.com/my.account-deposit.funds_app_v2.html?v=" + nowMills + "&mt4id=812999&token=xxxxxxx";
                 Intent intent = new Intent(getContext(), PayActivity.class);
                 intent.putExtra("url", url);

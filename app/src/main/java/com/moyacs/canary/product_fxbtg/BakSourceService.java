@@ -5,7 +5,7 @@ import android.content.Context;
 
 import com.moyacs.canary.common.AppSetting;
 import com.moyacs.canary.common.NumberUtils;
-import com.moyacs.canary.common.StringUtil;
+import com.moyacs.canary.util.StringUtil;
 import com.moyacs.canary.kchart.data.HttpClientHelper;
 import com.moyacs.canary.kchart.data.JSONObjectUtil;
 

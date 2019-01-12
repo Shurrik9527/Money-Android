@@ -1,13 +1,12 @@
 package com.moyacs.canary.main.deal.contract_tab2;
 
-import com.blankj.utilcode.util.SPUtils;
-import com.moyacs.canary.common.AppConstans;
 import com.moyacs.canary.main.deal.contract_tab2.ChiCangCountract.ChiCangPresenter;
 import com.moyacs.canary.main.deal.net_tab3.TransactionRecordVo;
 import com.moyacs.canary.network.BaseObservable;
 import com.moyacs.canary.network.RxUtils;
 import com.moyacs.canary.network.ServerManger;
 import com.moyacs.canary.network.ServerResult;
+import com.moyacs.canary.util.SharePreferencesUtil;
 
 import io.reactivex.disposables.CompositeDisposable;
 
@@ -33,7 +32,7 @@ public class ChiCangPresenterImpl implements ChiCangPresenter {
 
     @Override
     public void getRecordList() {
-        disposable.add(ServerManger.getInstance().getServer().getTransactionRecordList(SPUtils.getInstance().getString(AppConstans.USER_PHONE),
+        disposable.add(ServerManger.getInstance().getServer().getTransactionRecordList(SharePreferencesUtil.getInstance().getUserPhone(),
                 "1")
                 .compose(RxUtils.rxSchedulerHelper())
                 .subscribeWith(new BaseObservable<ServerResult<TransactionRecordVo>>() {

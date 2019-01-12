@@ -1,8 +1,8 @@
 package com.moyacs.canary.main.market.mina;
 
-import com.blankj.utilcode.util.LogUtils;
 
-import org.apache.mina.core.buffer.SimpleBufferAllocator;
+import com.moyacs.canary.util.LogUtils;
+
 import org.apache.mina.core.service.IoHandlerAdapter;
 import org.apache.mina.core.session.IdleStatus;
 import org.apache.mina.core.session.IoSession;

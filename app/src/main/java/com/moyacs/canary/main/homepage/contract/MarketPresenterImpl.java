@@ -1,6 +1,5 @@
 package com.moyacs.canary.main.homepage.contract;
 
-import com.blankj.utilcode.util.LogUtils;
 import com.moyacs.canary.main.homepage.net.BannerDate;
 import com.moyacs.canary.main.homepage.net.DealChanceDate;
 import com.moyacs.canary.main.homepage.net.HomePageServer;
@@ -8,25 +7,17 @@ import com.moyacs.canary.main.market.net.MarketDataBean;
 import com.moyacs.canary.main.market.net.TradeVo;
 import com.moyacs.canary.network.BaseMoaObservable;
 import com.moyacs.canary.network.BaseObservable;
-import com.moyacs.canary.network.HttpConstants;
-import com.moyacs.canary.network.HttpExceptionHandler;
 import com.moyacs.canary.network.HttpResult;
 import com.moyacs.canary.network.HttpServerManager;
 import com.moyacs.canary.network.RxUtils;
 import com.moyacs.canary.network.ServerManger;
 import com.moyacs.canary.network.ServerResult;
 
-import java.io.IOException;
 import java.util.List;
 
-import io.reactivex.Observer;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.CompositeDisposable;
-import io.reactivex.disposables.Disposable;
-import io.reactivex.functions.Action;
-import io.reactivex.functions.Consumer;
 import io.reactivex.schedulers.Schedulers;
-import retrofit2.Response;
 
 /**
  * 作者：luoshen on 2018/3/7 0007 10:17

@@ -3,7 +3,7 @@ package com.moyacs.canary.product_fxbtg;
 
 
 import com.moyacs.canary.common.NumberUtils;
-import com.moyacs.canary.common.StringUtil;
+import com.moyacs.canary.util.StringUtil;
 
 import java.io.Serializable;
 

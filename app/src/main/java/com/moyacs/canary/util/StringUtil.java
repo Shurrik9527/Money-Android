@@ -1,15 +1,13 @@
-package com.moyacs.canary.common;
+package com.moyacs.canary.util;
 
 import android.content.Context;
 import android.net.wifi.WifiInfo;
 import android.net.wifi.WifiManager;
-import android.os.Build;
 import android.telephony.TelephonyManager;
 import android.util.Base64;
 import android.util.Log;
 
-import com.blankj.utilcode.util.DeviceUtils;
-import com.blankj.utilcode.util.ToastUtils;
+import com.moyacs.canary.common.PreferenceSetting;
 import com.ta.utdid2.device.UTDevice;
 
 import java.io.BufferedReader;
@@ -619,8 +617,8 @@ public class StringUtil {
     public static String getDeviceInfo() {
         StringBuilder str = new StringBuilder();
         try {
-            str.append("BRAND=" + DeviceUtils.getManufacturer());//厂商meizu
-            str.append("|MODEL=" + DeviceUtils.getModel());//型号mx5
+//            str.append("BRAND=" + DeviceUtils.getManufacturer());//厂商meizu
+//            str.append("|MODEL=" + DeviceUtils.getModel());//型号mx5
 //            str.append("|RELEASE=" + ConvertUtil.NVL(Build.VERSION.RELEASE, ""));//5.1
 //            str.append("|SDK_INT=" + ConvertUtil.NVL(Build.VERSION.SDK_INT, ""));//22
 //            str.append("|CPU_ABI_=" + ConvertUtil.NVL(Build.CPU_ABI, ""));//cpu1

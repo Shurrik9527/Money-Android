@@ -10,7 +10,7 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 
-import com.blankj.utilcode.util.LogUtils;
+import com.just.library.LogUtils;
 import com.moyacs.canary.base.BaseActivity2;
 import com.netease.nimlib.sdk.NIMClient;
 import com.netease.nimlib.sdk.Observer;
@@ -53,7 +53,6 @@ public class KefuActivity extends BaseActivity2 {
 
     @Override
     protected void initIntentData(Intent intent) {
-        LogUtils.d("initIntentData");
         Observer<List<IMMessage>> incomingMessageObserver =
                 new Observer<List<IMMessage>>() {
                     @Override
@@ -71,7 +70,6 @@ public class KefuActivity extends BaseActivity2 {
 
     @Override
     protected View addChildContentView(LinearLayout rootLayout) {
-        LogUtils.d("addChildContentView");
         View view = LayoutInflater.from(this).inflate(R.layout.activity_kefu, null, false);
         unbinder = ButterKnife.bind(this, view);
         LinearLayoutManager mLayoutManager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
