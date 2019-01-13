@@ -1,7 +1,5 @@
 package com.moyacs.canary.network;
 
-import android.text.TextUtils;
-
 public class ServerResult<T> {
     private String msgCode;
     private String msg;
@@ -9,7 +7,7 @@ public class ServerResult<T> {
     private String msgTime;
 
     public int getMsgCode() {
-        return Integer.parseInt(msgCode);
+        return msgCode == null ? -1 : Integer.parseInt(msgCode);
     }
 
     public void setMsgCode(String msgCode) {

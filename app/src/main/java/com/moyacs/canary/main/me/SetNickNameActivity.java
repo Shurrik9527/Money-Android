@@ -9,6 +9,7 @@ import com.moyacs.canary.network.BaseObservable;
 import com.moyacs.canary.network.RxUtils;
 import com.moyacs.canary.network.ServerManger;
 import com.moyacs.canary.network.ServerResult;
+import com.moyacs.canary.util.SharePreferencesUtil;
 import com.moyacs.canary.util.ToastUtils;
 
 import org.greenrobot.eventbus.EventBus;
@@ -29,7 +30,11 @@ public class SetNickNameActivity extends BaseActivity {
 
     @Override
     protected void initView() {
-
+        String nickName = SharePreferencesUtil.getInstance().getNickName();
+        if (!TextUtils.isEmpty(nickName)) {
+            etNickName.setText(SharePreferencesUtil.getInstance().getNickName());
+            etNickName.setSelection(etNickName.getText().length());
+        }
     }
 
     @Override
@@ -41,7 +46,6 @@ public class SetNickNameActivity extends BaseActivity {
     protected void initData() {
 
     }
-
 
     @OnClick({R.id.iv_back, R.id.tv_confirm})
     public void onViewClicked(View view) {
@@ -56,6 +60,7 @@ public class SetNickNameActivity extends BaseActivity {
     }
 
     private void uploadNickName(String nickName) {
+        showLoadingDialog();
         if (TextUtils.isEmpty(nickName)) {
             ToastUtils.showShort("昵称不能为空");
             return;
@@ -74,6 +79,12 @@ public class SetNickNameActivity extends BaseActivity {
                     public void onError(Throwable e) {
                         super.onError(e);
                         ToastUtils.showShort("服务器异常");
+                    }
+
+                    @Override
+                    public void onComplete() {
+                        super.onComplete();
+                        dismissLoadingDialog();
                     }
                 }));
     }

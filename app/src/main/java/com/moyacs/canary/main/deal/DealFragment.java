@@ -59,6 +59,7 @@ public class DealFragment extends BaseFragment {
         viewPager.setOffscreenPageLimit(2);
         viewPager.setAdapter(new MyPagerAdapter(getChildFragmentManager()));
         tabLayout.setViewPager(viewPager);
+
     }
 
     @Override

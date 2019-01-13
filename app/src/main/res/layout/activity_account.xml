@@ -79,9 +79,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginRight="@dimen/margin_26dp"
-            android:text="7758257"
             android:textColor="@color/app_common_content"
-            android:textSize="@dimen/text_size_12sp" />
+            android:textSize="@dimen/text_size_14sp" />
 
         <ImageView
             android:layout_width="wrap_content"
@@ -115,7 +114,7 @@
             android:layout_height="wrap_content"
             android:text="15158835049"
             android:textColor="@color/app_common_content"
-            android:textSize="@dimen/text_size_12sp" />
+            android:textSize="@dimen/text_size_14sp" />
 
         <ImageView
             android:layout_width="wrap_content"
@@ -126,6 +125,7 @@
     </LinearLayout>
 
     <View
+        android:visibility="gone"
         android:layout_width="match_parent"
         android:layout_height="@dimen/margin_0.5dp"
         android:background="@color/line" />
@@ -137,6 +137,7 @@
         android:background="@color/white"
         android:gravity="center_vertical"
         android:orientation="horizontal"
+        android:visibility="gone"
         android:padding="@dimen/margin_16dp">
 
         <TextView

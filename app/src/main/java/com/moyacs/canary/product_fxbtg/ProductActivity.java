@@ -80,7 +80,7 @@ public class ProductActivity extends BaseActivity implements OnClickListener {
     private String time;
     //品种中文名称
     private String symbol_cn;
-    private LruCache<String,Object> lruCache;
+    private LruCache<String, Object> lruCache;
     //下单页面
     private OrderPopWindow orderPopWindow;
     private GuaDanPopWindow guaDanPopWindow;
@@ -434,16 +434,16 @@ public class ProductActivity extends BaseActivity implements OnClickListener {
             tv_latest.setTextColor(this.textColor);
             tvRate.setTextColor(this.textColor);
         }
-        lruCache = new LruCache<>((int)(Runtime.getRuntime().maxMemory()/4));
+        lruCache = new LruCache<>((int) (Runtime.getRuntime().maxMemory() / 4));
         //获取最新买入价
         String price_sp = (String) lruCache.get(AppConstans.price_buy);
         //获取最新涨跌值和涨跌幅
         String rate_sp = (String) lruCache.get("rate");
         //获取字体颜色
-        int textColor_sp = (int) lruCache.get("textColor");
+        int textColor_sp = lruCache.get("textColor") == null ? 0 : (int) lruCache.get("textColor");
         //获取时间
         String time_sp = (String) lruCache.get("time");
-        if (time_sp.equals("")) {
+        if (time_sp == null || time_sp.equals("")) {
             return;
         }
         //横屏

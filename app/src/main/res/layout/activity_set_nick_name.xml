@@ -45,7 +45,7 @@
         android:layout_marginTop="@dimen/margin_10dp"
         android:background="@color/white"
         android:hint="请输入您的昵称"
-        android:maxLength="6"
+        android:maxLength="11"
         android:paddingLeft="@dimen/margin_16dp"
         android:textSize="@dimen/text_size_14sp" />
 </LinearLayout>

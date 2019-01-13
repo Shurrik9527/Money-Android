@@ -66,8 +66,15 @@ public class MeFragment extends BaseFragment {
      * 登录成功之后，改变相关状态
      */
     private void setNickName() {
-        String nickName = SharePreferencesUtil.getInstance().getNickName();
-        tvNickName.setText(nickName);
+        if (TextUtils.isEmpty(SharePreferencesUtil.getInstance().getUserPhone())) {
+            llUnLogin.setVisibility(View.VISIBLE);
+            llLogin.setVisibility(View.GONE);
+        } else {
+            llLogin.setVisibility(View.VISIBLE);
+            llUnLogin.setVisibility(View.GONE);
+            String nickName = SharePreferencesUtil.getInstance().getNickName();
+            tvNickName.setText(nickName);
+        }
     }
 
     @OnClick({R.id.btn_login, R.id.rl_openaccount, R.id.rl_intergral_market, R.id.rl_mission_center,
@@ -157,13 +164,18 @@ public class MeFragment extends BaseFragment {
                         llUnLogin.setVisibility(View.GONE);
                         llLogin.setVisibility(View.VISIBLE);
                         SharePreferencesUtil.getInstance().setNickName(data.getData().getLoginName());
-                        setNickName();
                     }
 
                     @Override
                     public void onError(Throwable e) {
                         super.onError(e);
                         ToastUtils.showShort("服务器异常");
+                    }
+
+                    @Override
+                    public void onComplete() {
+                        super.onComplete();
+                        setNickName();
                     }
                 }));
     }

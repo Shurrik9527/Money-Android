@@ -23,18 +23,40 @@ public class DialogUtils {
      * @param title   显示的提示消息
      * @param context 山下文
      */
+    public static void login_please(String title, final Context context, DialogMenuClickListener menuClickListener) {
+        LemonHello.getInformationHello(title, "")
+                .setContentFontSize(14)
+                .addAction(new LemonHelloAction("取消", Color.GRAY, (helloView, helloInfo, helloAction) -> {
+                    helloView.hide();
+                    menuClickListener.onCancelListener();
+                }))
+                .addAction(new LemonHelloAction("确定", (lemonHelloView, lemonHelloInfo, lemonHelloAction) -> {
+                    lemonHelloView.hide();
+                    menuClickListener.onConfirmListener();
+                }))
+                .show(context);
+    }
+
     public static void login_please(String title, final Context context) {
         LemonHello.getInformationHello(title, "")
                 .setContentFontSize(14)
                 //取消图标
 //                .setIconWidth(0)
-                .addAction(new LemonHelloAction("取消", Color.GRAY, (helloView, helloInfo, helloAction) -> helloView.hide()))
+                .addAction(new LemonHelloAction("取消", Color.GRAY, (helloView, helloInfo, helloAction) -> {
+                    helloView.hide();
+                }))
                 .addAction(new LemonHelloAction("确定", (lemonHelloView, lemonHelloInfo, lemonHelloAction) -> {
                     SharePreferencesUtil.getInstance().clean();
                     context.startActivity(new Intent(context, LoginActivity.class));
                     lemonHelloView.hide();
                 }))
                 .show(context);
+    }
+
+    public interface DialogMenuClickListener {
+        void onCancelListener();
+
+        void onConfirmListener();
     }
 
 }

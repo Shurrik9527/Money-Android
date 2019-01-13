@@ -1,6 +1,7 @@
 package com.moyacs.canary.main;
 
 import android.content.Intent;
+import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
@@ -15,6 +16,7 @@ import com.flyco.tablayout.listener.CustomTabEntity;
 import com.flyco.tablayout.listener.OnTabSelectListener;
 import com.moyacs.canary.base.BaseActivity;
 import com.moyacs.canary.common.DialogUtils;
+import com.moyacs.canary.login.LoginActivity;
 import com.moyacs.canary.main.deal.DealFragment;
 import com.moyacs.canary.main.homepage.HomepageFragment;
 import com.moyacs.canary.main.market.MarketFragment;
@@ -48,6 +50,7 @@ public class MainActivity extends BaseActivity {
     private Intent serviceIntent;
     private MarketFragment marketFragment;
     private ArrayList<CustomTabEntity> mTabEntities = new ArrayList<>();
+    private int oldSelectPos;
 
     @Override
     protected int getLayoutId() {
@@ -86,32 +89,53 @@ public class MainActivity extends BaseActivity {
             mTabEntities.add(new TabEntity(mTitles[i], mIconSelectIds[i], mIconUnselectIds[i]));
         }
         commonTabLayout.setTabData(mTabEntities);
-        commonTabLayout.setOnTabSelectListener(new OnTabSelectListener() {
-            @Override
-            public void onTabSelect(int position) {
-                switch (position) {
-                    case 0:
-                        initToolbar(getResources().getString(R.string.app_name));
-                        break;
-                    case 1:
-                        initToolbar(getResources().getString(R.string.app_name) + "行情");
-                        break;
-                    case 2:
-                        toolbar.setVisibility(View.GONE);
-                        break;
-                    case 3:
-                        toolbar.setVisibility(View.GONE);
-                        break;
-                }
-                vpContent.setCurrentItem(position);
-            }
-
-            @Override
-            public void onTabReselect(int position) {
-
-            }
-        });
+        commonTabLayout.setOnTabSelectListener(tabListener);
     }
+
+    private OnTabSelectListener tabListener = new OnTabSelectListener() {
+        @Override
+        public void onTabSelect(int position) {
+            switch (position) {
+                case 0:
+                    initToolbar(getResources().getString(R.string.app_name));
+                    oldSelectPos = 0;
+                    break;
+                case 1:
+                    initToolbar(getResources().getString(R.string.app_name) + "行情");
+                    oldSelectPos = 1;
+                    break;
+                case 2:
+                    if (TextUtils.isEmpty(SharePreferencesUtil.getInstance().getUserPhone())) {
+                        DialogUtils.login_please("请先登录", MainActivity.this, new DialogUtils.DialogMenuClickListener() {
+                            @Override
+                            public void onCancelListener() {
+                                commonTabLayout.setCurrentTab(oldSelectPos);
+                                onTabSelect(oldSelectPos);
+                            }
+
+                            @Override
+                            public void onConfirmListener() {
+                                startActivityForResult(new Intent(MainActivity.this, LoginActivity.class), 0x11);
+                            }
+                        });
+                    } else {
+                        oldSelectPos = 2;
+                    }
+                    toolbar.setVisibility(View.GONE);
+                    break;
+                case 3:
+                    toolbar.setVisibility(View.GONE);
+                    oldSelectPos = 3;
+                    break;
+            }
+            vpContent.setCurrentItem(position);
+        }
+
+        @Override
+        public void onTabReselect(int position) {
+
+        }
+    };
 
     /**
      * 初始化 viewpager
@@ -167,12 +191,14 @@ public class MainActivity extends BaseActivity {
         }
     }
 
-    private boolean isLogin() {
-        String userPhone = SharePreferencesUtil.getInstance().getUserPhone();
-        if (TextUtils.isEmpty(userPhone)) {
-            DialogUtils.login_please("请先登录", MainActivity.this);
-            return false;
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == 0x11) {
+            if (TextUtils.isEmpty(SharePreferencesUtil.getInstance().getUserPhone())) {
+                tabListener.onTabSelect(2);
+                commonTabLayout.setCurrentTab(2);
+            }
         }
-        return true;
     }
 }
