@@ -1,6 +1,5 @@
 package com.moyacs.canary.main.market;
 
-import android.graphics.Canvas;
 import android.graphics.Rect;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.GridLayoutManager;
@@ -10,8 +9,15 @@ import android.widget.LinearLayout;
 
 import com.moyacs.canary.base.BaseActivity;
 import com.moyacs.canary.main.market.adapter.MyOptionalAdapter;
+import com.moyacs.canary.main.market.contract.OptionalContract;
+import com.moyacs.canary.main.market.contract.OptionalPresenter;
+import com.moyacs.canary.main.market.net.TradeVo;
 import com.moyacs.canary.util.ScreenUtil;
+import com.moyacs.canary.util.ToastUtils;
 import com.moyacs.canary.widget.UnderLineTextView;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -20,7 +26,7 @@ import www.moyacs.com.myapplication.R;
 /**
  * 自选页面
  */
-public class OptionalActivity extends BaseActivity {
+public class OptionalActivity extends BaseActivity implements OptionalContract.View {
     @BindView(R.id.tv_myOptional)
     RecyclerView rvMyOptional;
     @BindView(R.id.tv_1)
@@ -35,6 +41,15 @@ public class OptionalActivity extends BaseActivity {
     private UnderLineTextView oldSelectView;
     private MyOptionalAdapter myOptionalAdapter;
     private MyOptionalAdapter optionalAdapter;
+    private OptionalPresenter presenter;
+    private List<TradeVo.Trade> waiHuiList;
+    private List<TradeVo.Trade> guiJinShuList;
+    private List<TradeVo.Trade> yuanYouList;
+    private List<TradeVo.Trade> myChoiceList;
+    private List<TradeVo.Trade> optionalList;
+    private int selectPos;// 选择的位置
+    private TradeVo.Trade targetTrade; // 操作目标的外汇 也许是删除 也许是添加
+    private int targetPos;//操作目标的位置
 
     @Override
     protected int getLayoutId() {
@@ -43,26 +58,48 @@ public class OptionalActivity extends BaseActivity {
 
     @Override
     protected void initView() {
-        onViewClicked(tv1);
-        myOptionalAdapter = new MyOptionalAdapter(true);
+        myChoiceList = new ArrayList<>();
+        waiHuiList = new ArrayList<>();
+        guiJinShuList = new ArrayList<>();
+        yuanYouList = new ArrayList<>();
+        optionalList = new ArrayList<>();
+        myOptionalAdapter = new MyOptionalAdapter(true, myChoiceList);
         rvMyOptional.setLayoutManager(new GridLayoutManager(this, 3, LinearLayout.VERTICAL, false));
         rvMyOptional.addItemDecoration(new MyItemDecoration());
         rvMyOptional.setAdapter(myOptionalAdapter);
 
-        optionalAdapter = new MyOptionalAdapter(false);
+        optionalAdapter = new MyOptionalAdapter(false, optionalList);
         rvOptional.setLayoutManager(new GridLayoutManager(this, 3, LinearLayout.VERTICAL, false));
         rvOptional.addItemDecoration(new MyItemDecoration());
         rvOptional.setAdapter(optionalAdapter);
+        onViewClicked(tv1);
     }
 
     @Override
     protected void intListener() {
-
+        myOptionalAdapter.setItemClickListener((view, pos) -> {
+            targetTrade = myChoiceList.get(pos);
+            targetPos = pos;
+        });
+        optionalAdapter.setItemClickListener((view, pos) -> {
+            //添加自选
+            if (selectPos == 1) {
+                targetTrade = waiHuiList.get(pos);
+            } else if (selectPos == 2) {
+                targetTrade = guiJinShuList.get(pos);
+            } else if (selectPos == 3) {
+                targetTrade = yuanYouList.get(pos);
+            }
+            targetPos = pos;
+            presenter.addOptional(targetTrade.getSymbolCode());
+        });
     }
 
     @Override
     protected void initData() {
-
+        presenter = new OptionalPresenter(this);
+        presenter.getMyChoice();
+        presenter.getOptionalList();
     }
 
     @OnClick({R.id.iv_break, R.id.tv_1, R.id.tv_2, R.id.tv_3})
@@ -73,12 +110,18 @@ public class OptionalActivity extends BaseActivity {
                 break;
             case R.id.tv_1:
                 setSelectTabView(tv1);
+                selectPos = 1;
+                replaceOptionalList();
                 break;
             case R.id.tv_2:
                 setSelectTabView(tv2);
+                selectPos = 2;
+                replaceOptionalList();
                 break;
             case R.id.tv_3:
                 setSelectTabView(tv3);
+                selectPos = 3;
+                replaceOptionalList();
                 break;
         }
     }
@@ -89,6 +132,70 @@ public class OptionalActivity extends BaseActivity {
         }
         selectTabView.setSelected(true);
         oldSelectView = selectTabView;
+    }
+
+    @Override
+    public void setMyChoice(List<TradeVo.Trade> tradeList) {
+        myChoiceList.addAll(tradeList);
+        myOptionalAdapter.notifyDataSetChanged();
+        ToastUtils.showShort("获取到的自选数量" + tradeList.size());
+    }
+
+    @Override
+    public void setOptionalList(List<TradeVo.Trade> tradeList) {
+        for (TradeVo.Trade t : tradeList) {
+            if (t.getSymbolType() == 1) {
+                //外汇
+                waiHuiList.add(t);
+            } else if (t.getSymbolType() == 2) {
+                //贵金属
+                guiJinShuList.add(t);
+            } else if (t.getSymbolType() == 3) {
+                //原油
+                yuanYouList.add(t);
+            }
+        }
+        replaceOptionalList();
+    }
+
+    @Override
+    public void addOptionalSuccess() {
+        myChoiceList.add(targetTrade);
+        myOptionalAdapter.notifyDataSetChanged();
+        if (selectPos == 1) {
+            waiHuiList.remove(targetPos);
+        } else if (selectPos == 2) {
+            guiJinShuList.remove(targetPos);
+        } else if (selectPos == 3) {
+            yuanYouList.remove(targetPos);
+        }
+        replaceOptionalList();
+    }
+
+    @Override
+    public void deleteOptionalSuccess() {
+        myChoiceList.remove(targetPos);
+        myOptionalAdapter.notifyDataSetChanged();
+        if (selectPos == 1) {
+            waiHuiList.add(targetTrade);
+        } else if (selectPos == 2) {
+            guiJinShuList.add(targetTrade);
+        } else if (selectPos == 3) {
+            yuanYouList.add(targetTrade);
+        }
+        replaceOptionalList();
+    }
+
+    private void replaceOptionalList() {
+        optionalList.clear();
+        if (selectPos == 1) {
+            optionalList.addAll(waiHuiList);
+        } else if (selectPos == 2) {
+            optionalList.addAll(guiJinShuList);
+        } else if (selectPos == 3) {
+            optionalList.addAll(yuanYouList);
+        }
+        optionalAdapter.notifyDataSetChanged();
     }
 
     private class MyItemDecoration extends RecyclerView.ItemDecoration {
@@ -107,5 +214,11 @@ public class OptionalActivity extends BaseActivity {
             outRect.bottom = offset;
             outRect.left = offset;
         }
+    }
+
+    @Override
+    public void unsubscribe() {
+        super.unsubscribe();
+        presenter.unsubscribe();
     }
 }

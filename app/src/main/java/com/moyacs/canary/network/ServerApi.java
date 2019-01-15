@@ -9,7 +9,6 @@ import com.moyacs.canary.main.me.UserInfoVo;
 import java.util.Map;
 
 import io.reactivex.Observable;
-import retrofit2.Response;
 import retrofit2.http.Field;
 import retrofit2.http.FieldMap;
 import retrofit2.http.FormUrlEncoded;
@@ -137,5 +136,25 @@ public interface ServerApi {
     @FormUrlEncoded
     @POST("transaction/sell")
     Observable<ServerResult<String>> transactionSell(@FieldMap Map<String, Object> map);
+
+    /**
+     * 获取我的自选列表
+     */
+    @POST("userSymbol/getList")
+    Observable<ServerResult<TradeVo>> getMyChoiceList();
+
+    /**
+     * 添加自选
+     */
+    @POST("userSymbol/save")
+    @FormUrlEncoded
+    Observable<ServerResult<String>> saveOptional(@Field("symbolCode") String symbolCode);
+
+    /**
+     * 删除自选
+     */
+    @POST("userSymbol/delete")
+    @FormUrlEncoded
+    Observable<ServerResult<String>> deleteOptional(@Field("symbolCode") String symbolCode);
 
 }

@@ -7,11 +7,13 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.moyacs.canary.main.market.net.TradeVo;
 import com.moyacs.canary.util.ViewListenerAbs;
+
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import retrofit2.http.POST;
 import www.moyacs.com.myapplication.R;
 
 /**
@@ -22,9 +24,11 @@ import www.moyacs.com.myapplication.R;
 public class MyOptionalAdapter extends RecyclerView.Adapter<MyOptionalAdapter.ViewHolder> {
     private boolean isSelect;
     private ViewListenerAbs.ItemClickListener itemClickListener;
+    private List<TradeVo.Trade> tradeList;
 
-    public MyOptionalAdapter(boolean isSelect) {
+    public MyOptionalAdapter(boolean isSelect, List<TradeVo.Trade> tradeList) {
         this.isSelect = isSelect;
+        this.tradeList = tradeList;
     }
 
     @NonNull
@@ -42,11 +46,12 @@ public class MyOptionalAdapter extends RecyclerView.Adapter<MyOptionalAdapter.Vi
                 itemClickListener.onItemClickListener(v, i);
             }
         });
+        viewHolder.tvOptional.setText(tradeList.get(i).getSymbolName());
     }
 
     @Override
     public int getItemCount() {
-        return 5;
+        return tradeList.size();
     }
 
     class ViewHolder extends RecyclerView.ViewHolder {
