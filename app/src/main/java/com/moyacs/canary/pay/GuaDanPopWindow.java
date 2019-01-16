@@ -199,9 +199,9 @@ public class GuaDanPopWindow implements View.OnClickListener {
     }
 
     private void setValue() {
-        tvMongey01.setText(trade.getUnit_price_one() + "美元/手");
-        tvMongey02.setText(trade.getUnit_price_two() + "美元/手");
-        tvMongey03.setText(trade.getUnit_price_three() + "美元/手");
+        tvMongey01.setText(trade.getUnitPriceOne() + "美元/手");
+        tvMongey02.setText(trade.getUnitPriceTwo() + "美元/手");
+        tvMongey03.setText(trade.getUnitPriceThree() + "美元/手");
         tvTradeValue.setTextColor(textColor);
         tvTradeValue.setText(priceBuy);
         tvTradeName.setText(symbolName);
@@ -309,15 +309,15 @@ public class GuaDanPopWindow implements View.OnClickListener {
                 isUp = false;
                 break;
             case R.id.tv_mongey01:
-                buyUnity = trade.getUnit_price_one();
+                buyUnity = trade.getUnitPriceOne();
                 setMoneyView(v);
                 break;
             case R.id.tv_mongey02:
-                buyUnity = trade.getUnit_price_two();
+                buyUnity = trade.getUnitPriceTwo();
                 setMoneyView(v);
                 break;
             case R.id.tv_mongey03:
-                buyUnity = trade.getUnit_price_three();
+                buyUnity = trade.getUnitPriceThree();
                 setMoneyView(v);
                 break;
             case R.id.tv_size01:
@@ -382,16 +382,16 @@ public class GuaDanPopWindow implements View.OnClickListener {
     private void setMoneyValue() {
         tvTotalMoney.setText("$ " + buySize * buyUnity);
         int totalMoney = buyUnity * buySize;
-        tvNightFee.setText("过夜费" + totalMoney * trade.getQuantity_overnight_fee() + "美元/天，默认开启，建仓后可手动关闭"); // 过夜费
-        int shouXufei = trade.getQuantity_commission_charges() * buySize;
+        tvNightFee.setText("过夜费" + totalMoney * trade.getQuantityOvernightFee() + "美元/天，默认开启，建仓后可手动关闭"); // 过夜费
+        float shouXufei = trade.getQuantityCommissionCharges() * buySize;
         tvFee.setText("（手续费：$" + shouXufei + "）"); //手续费
         int boDongNum = 0;
-        if (buyUnity == trade.getUnit_price_one()) {
-            boDongNum = trade.getQuantity_one();
-        } else if (buyUnity == trade.getUnit_price_two()) {
-            boDongNum = trade.getQuantity_two();
+        if (buyUnity == trade.getUnitPriceOne()) {
+            boDongNum = trade.getQuantityOne();
+        } else if (buyUnity == trade.getUnitPriceTwo()) {
+            boDongNum = trade.getQuantityTwo();
         } else {
-            boDongNum = trade.getQuantity_three();
+            boDongNum = trade.getQuantityThree();
         }
         int heJiNum = boDongNum * buySize;
         tvRateTips.setText("共计约合量" + heJiNum + ForeignUtil.formatForeignUtil(trade.getSymbolCode())

@@ -280,9 +280,9 @@ public class OrderPopWindow implements View.OnClickListener {
         //品种价格
         tvPrice01.setText(price_buy);
         tvPrice01.setTextColor(textColor);
-        tvMongey01.setText(trade.getUnit_price_one() + "元/手");
-        tvMongey02.setText(trade.getUnit_price_two() + "元/手");
-        tvMongey03.setText(trade.getUnit_price_three() + "元/手");
+        tvMongey01.setText(trade.getUnitPriceOne() + "元/手");
+        tvMongey02.setText(trade.getUnitPriceTwo() + "元/手");
+        tvMongey03.setText(trade.getUnitPriceThree() + "元/手");
     }
 
     /**
@@ -545,11 +545,11 @@ public class OrderPopWindow implements View.OnClickListener {
      */
     private void valueLeiXing() {
         if (leiXingView.equals(tvMongey01)) {
-            leiXingPrice = trade.getUnit_price_one();
+            leiXingPrice = trade.getUnitPriceOne();
         } else if (leiXingView.equals(tvMongey02)) {
-            leiXingPrice = trade.getUnit_price_two();
+            leiXingPrice = trade.getUnitPriceTwo();
         } else if (leiXingView.equals(tvMongey03)) {
-            leiXingPrice = trade.getUnit_price_three();
+            leiXingPrice = trade.getUnitPriceThree();
         }
     }
 
@@ -558,21 +558,21 @@ public class OrderPopWindow implements View.OnClickListener {
      */
     private void setTvTotalMoney() {
         int totalMoney = leiXingPrice * countSize;
-        int shouXufei = trade.getQuantity_commission_charges() * countSize;
+        float shouXufei = trade.getQuantityCommissionCharges() * countSize;
         tvTotalMoney.setText("$" + (totalMoney + shouXufei)); //总金额
-        tvOverNight.setText("过夜费" + totalMoney * trade.getQuantity_overnight_fee() + "美元/天，默认开启，建仓后可手动关闭"); // 过夜费
+        tvOverNight.setText("过夜费" + totalMoney * trade.getQuantityOvernightFee() + "美元/天，默认开启，建仓后可手动关闭"); // 过夜费
         tvFee.setText("（手续费：$" + shouXufei + "）"); //手续费
         int boDongNum = 0;
-        if (leiXingPrice == trade.getUnit_price_one()) {
-            boDongNum = trade.getQuantity_one();
-        } else if (leiXingPrice == trade.getUnit_price_two()) {
-            boDongNum = trade.getQuantity_two();
+        if (leiXingPrice == trade.getUnitPriceOne()) {
+            boDongNum = trade.getQuantityOne();
+        } else if (leiXingPrice == trade.getUnitPriceTwo()) {
+            boDongNum = trade.getQuantityTwo();
         } else {
-            boDongNum = trade.getQuantity_three();
+            boDongNum = trade.getQuantityThree();
         }
         int heJiNum = boDongNum * countSize;
         textRatetips.setText("共计约合量" + heJiNum + ForeignUtil.formatForeignUtil(trade.getSymbolCode())
-                + "每波动一个点，收益$" + trade.getQuantity_price_fluctuation() * countSize * heJiNum);
+                + "每波动一个点，收益$" + trade.getQuantityPriceFluctuation() * countSize * heJiNum);
     }
 
 

@@ -1,3 +1,4 @@
+/*
 package com.moyacs.canary.login;
 
 import android.os.Bundle;
@@ -8,15 +9,16 @@ import android.view.View;
 import com.moyacs.canary.base.BaseFragment2;
 import com.moyacs.canary.login.contract.LoginContract;
 import com.moyacs.canary.login.contract.LoginContract.LoginView;
-import com.moyacs.canary.login.contract.LoginPresenterImpl;
 import com.moyacs.canary.login.net.MT4Users;
 import com.moyacs.canary.network.ServerResult;
 
+*/
 /**
  * 作者：luoshen on 2018/3/5 0005 15:59
  * 邮箱：rsf411613593@gmail.com
  * 说明：登录和注册 fragment 的基类
- */
+ *//*
+
 
 public abstract class LoginAndRegistFragment extends BaseFragment2 implements LoginView {
     // P 层 引用
@@ -120,3 +122,4 @@ public abstract class LoginAndRegistFragment extends BaseFragment2 implements Lo
 
     }
 }
+*/

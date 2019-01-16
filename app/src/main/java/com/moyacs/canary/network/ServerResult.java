@@ -1,13 +1,15 @@
 package com.moyacs.canary.network;
 
+import android.text.TextUtils;
+
 public class ServerResult<T> {
     private String msgCode;
     private String msg;
     private T data;
     private String msgTime;
 
-    public int getMsgCode() {
-        return msgCode == null ? -1 : Integer.parseInt(msgCode);
+    public String getMsgCode() {
+        return msgCode;
     }
 
     public void setMsgCode(String msgCode) {
@@ -39,6 +41,6 @@ public class ServerResult<T> {
     }
 
     public boolean isSuccess() {
-        return 0 == getMsgCode();
+        return 0 == ((getMsgCode() == null || TextUtils.isEmpty(getMsgCode())) ? -1 : Integer.parseInt(getMsgCode()));
     }
 }

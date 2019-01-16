@@ -1,3 +1,4 @@
+/*
 package com.moyacs.canary.login.contract;
 
 import android.util.Log;
@@ -9,11 +10,13 @@ import com.moyacs.canary.network.HttpConstants;
 import com.moyacs.canary.network.ServerResult;
 import com.moyacs.canary.util.LogUtils;
 
+*/
 /**
  * 作者：luoshen on 2018/3/5 0005 16:15
  * 邮箱：rsf411613593@gmail.com
  * 说明：
- */
+ *//*
+
 
 public class LoginPresenterImpl implements LoginPresenter, LoginContract.LoginRequestListener {
 
@@ -159,3 +162,4 @@ public class LoginPresenterImpl implements LoginPresenter, LoginContract.LoginRe
         view.LoginFailed(errormsg);
     }
 }
+*/

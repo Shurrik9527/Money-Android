@@ -13,13 +13,12 @@ import www.moyacs.com.myapplication.BuildConfig;
  * @Description:
  */
 public class LogUtils {
-
     public static void d(Object log) {
         if (BuildConfig.DEBUG) Logger.d(log);
     }
 
     public static void e(String log) {
-        if (BuildConfig.DEBUG) Logger.e(log, log);
+        Logger.e(log, log);
     }
 
     public static void xml(String xml) {

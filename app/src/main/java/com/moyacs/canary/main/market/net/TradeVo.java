@@ -22,23 +22,23 @@ public class TradeVo implements Serializable {
         //1可交易 2不可交易
         private String status;
         //1外汇 2贵金属 3原油 4全球指数
-        private int symbolType;
+        private String symbolType;
         //手续费单价
-        private int quantity_commission_charges;
+        private float quantityCommissionCharges;
         //过夜费单价
-        private int quantity_overnight_fee;
+        private float quantityOvernightFee;
         //每个数量对应的波动价格
-        private int quantity_price_fluctuation;
+        private float quantityPriceFluctuation;
         //挂单点位浮动单价
-        private int entryOrders;
+        private float entryOrders;
         //1展示 2不展示
         private String symbolShow;
-        private int unit_price_one; // 单价一
-        private int unit_price_two;
-        private int unit_price_three;
-        private int quantity_one; //数量一
-        private int quantity_two;
-        private int quantity_three;
+        private int unitPriceOne; // 单价一
+        private int unitPriceTwo;
+        private int unitPriceThree;
+        private int quantityOne; //数量一
+        private int quantityTwo;
+        private int quantityThree;
 
 
         public String getSymbolCode() {
@@ -70,42 +70,42 @@ public class TradeVo implements Serializable {
         }
 
         public int getSymbolType() {
-            return symbolType;
+            return Integer.parseInt(symbolType);
         }
 
-        public void setSymbolType(int symbolType) {
+        public void setSymbolType(String symbolType) {
             this.symbolType = symbolType;
         }
 
-        public int getQuantity_commission_charges() {
-            return quantity_commission_charges;
+        public float getQuantityCommissionCharges() {
+            return quantityCommissionCharges;
         }
 
-        public void setQuantity_commission_charges(int quantity_commission_charges) {
-            this.quantity_commission_charges = quantity_commission_charges;
+        public void setQuantityCommissionCharges(float quantityCommissionCharges) {
+            this.quantityCommissionCharges = quantityCommissionCharges;
         }
 
-        public int getQuantity_overnight_fee() {
-            return quantity_overnight_fee;
+        public float getQuantityOvernightFee() {
+            return quantityOvernightFee;
         }
 
-        public void setQuantity_overnight_fee(int quantity_overnight_fee) {
-            this.quantity_overnight_fee = quantity_overnight_fee;
+        public void setQuantityOvernightFee(float quantityOvernightFee) {
+            this.quantityOvernightFee = quantityOvernightFee;
         }
 
-        public int getQuantity_price_fluctuation() {
-            return quantity_price_fluctuation;
+        public float getQuantityPriceFluctuation() {
+            return quantityPriceFluctuation;
         }
 
-        public void setQuantity_price_fluctuation(int quantity_price_fluctuation) {
-            this.quantity_price_fluctuation = quantity_price_fluctuation;
+        public void setQuantityPriceFluctuation(int quantityPriceFluctuation) {
+            this.quantityPriceFluctuation = quantityPriceFluctuation;
         }
 
-        public int getEntryOrders() {
+        public float getEntryOrders() {
             return entryOrders;
         }
 
-        public void setEntryOrders(int entryOrders) {
+        public void setEntryOrders(float entryOrders) {
             this.entryOrders = entryOrders;
         }
 
@@ -117,52 +117,52 @@ public class TradeVo implements Serializable {
             this.symbolShow = symbolShow;
         }
 
-        public int getUnit_price_one() {
-            return unit_price_one;
+        public int getUnitPriceOne() {
+            return unitPriceOne;
         }
 
-        public void setUnit_price_one(int unit_price_one) {
-            this.unit_price_one = unit_price_one;
+        public void setUnitPriceOne(int unitPriceOne) {
+            this.unitPriceOne = unitPriceOne;
         }
 
-        public int getUnit_price_two() {
-            return unit_price_two;
+        public int getUnitPriceTwo() {
+            return unitPriceTwo;
         }
 
-        public void setUnit_price_two(int unit_price_two) {
-            this.unit_price_two = unit_price_two;
+        public void setUnitPriceTwo(int unitPriceTwo) {
+            this.unitPriceTwo = unitPriceTwo;
         }
 
-        public int getUnit_price_three() {
-            return unit_price_three;
+        public int getUnitPriceThree() {
+            return unitPriceThree;
         }
 
-        public void setUnit_price_three(int unit_price_three) {
-            this.unit_price_three = unit_price_three;
+        public void setUnitPriceThree(int unitPriceThree) {
+            this.unitPriceThree = unitPriceThree;
         }
 
-        public int getQuantity_one() {
-            return quantity_one;
+        public int getQuantityOne() {
+            return quantityOne;
         }
 
-        public void setQuantity_one(int quantity_one) {
-            this.quantity_one = quantity_one;
+        public void setQuantityOne(int quantityOne) {
+            this.quantityOne = quantityOne;
         }
 
-        public int getQuantity_two() {
-            return quantity_two;
+        public int getQuantityTwo() {
+            return quantityTwo;
         }
 
-        public void setQuantity_two(int quantity_two) {
-            this.quantity_two = quantity_two;
+        public void setQuantityTwo(int quantityTwo) {
+            this.quantityTwo = quantityTwo;
         }
 
-        public int getQuantity_three() {
-            return quantity_three;
+        public int getQuantityThree() {
+            return quantityThree;
         }
 
-        public void setQuantity_three(int quantity_three) {
-            this.quantity_three = quantity_three;
+        public void setQuantityThree(int quantityThree) {
+            this.quantityThree = quantityThree;
         }
     }
 

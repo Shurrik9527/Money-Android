@@ -80,6 +80,7 @@ public class OptionalActivity extends BaseActivity implements OptionalContract.V
         myOptionalAdapter.setItemClickListener((view, pos) -> {
             targetTrade = myChoiceList.get(pos);
             targetPos = pos;
+            presenter.deleteOptional(myChoiceList.get(targetPos).getSymbolCode());
         });
         optionalAdapter.setItemClickListener((view, pos) -> {
             //添加自选
@@ -98,8 +99,8 @@ public class OptionalActivity extends BaseActivity implements OptionalContract.V
     @Override
     protected void initData() {
         presenter = new OptionalPresenter(this);
-        presenter.getMyChoice();
         presenter.getOptionalList();
+        presenter.getMyChoice();
     }
 
     @OnClick({R.id.iv_break, R.id.tv_1, R.id.tv_2, R.id.tv_3})
