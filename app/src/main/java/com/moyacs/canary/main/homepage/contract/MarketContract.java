@@ -1,15 +1,11 @@
 package com.moyacs.canary.main.homepage.contract;
 
-import com.moyacs.canary.base.BaseModul;
 import com.moyacs.canary.base.BasePresenter;
-import com.moyacs.canary.base.BaseRequestListener;
 import com.moyacs.canary.base.BaseView;
 import com.moyacs.canary.main.homepage.net.BannerDate;
 import com.moyacs.canary.main.homepage.net.DealChanceDate;
 import com.moyacs.canary.main.market.net.MarketDataBean;
 import com.moyacs.canary.main.market.net.TradeVo;
-import com.moyacs.canary.network.HttpResult;
-import com.moyacs.canary.network.ServerResult;
 
 import java.util.List;
 
@@ -49,6 +45,11 @@ public interface MarketContract {
          * @param list 外汇列表
          */
         void setTradList(List<TradeVo.Trade> list);
+
+        /**
+         * 结束刷新
+         */
+        void refreshFinish();
     }
 
     interface MarketPresenter extends BasePresenter {

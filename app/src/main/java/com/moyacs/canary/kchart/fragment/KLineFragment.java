@@ -79,8 +79,7 @@ public class KLineFragment extends BaseFragment implements OnKCrossLineMoveListe
     private String startDate;
     //结束时间
     private String endDate;
-    private SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss");
-    private KCandleObj kCandleObj_refresh;
+    private KCandleObj kCandleObjRefresh;
     //K线数据是否设置成功
     private boolean isEvent4SMA = false;
 
@@ -292,7 +291,6 @@ public class KLineFragment extends BaseFragment implements OnKCrossLineMoveListe
 
 
     private void event4SMA() {
-
         kLineView.setMainNormal(KLineNormal.NORMAL_SMA);
         if (Product_constans.PARAM_KLINE_5M_WEIPAN_new.equals(cycle)
                 || Product_constans.PARAM_KLINE_5M.equals(cycle)
@@ -305,7 +303,6 @@ public class KLineFragment extends BaseFragment implements OnKCrossLineMoveListe
             kLineView.setMainLineData(KParseUtils.getSMAData(listData,
                     KParamConfig.getSMAcfg(getActivity(), true)));
         }
-
         isEvent4SMA = true;
     }
 
@@ -344,6 +341,7 @@ public class KLineFragment extends BaseFragment implements OnKCrossLineMoveListe
                 mainNormalViewLand = rootView.findViewById(R.id.tab_EMA_land);
                 mainNormalViewLand.setSelected(true);
             }
+
             if (id == R.id.tab_BOLL) {
                 event4BOLL();
                 mainNormalView.setSelected(false);
@@ -537,7 +535,6 @@ public class KLineFragment extends BaseFragment implements OnKCrossLineMoveListe
             return;
         //当前的时间周期
         Integer cycle_custom = Integer.valueOf(cycle);
-
         for (int i = 0; i < result.size(); i++) {
             KLineData kLineData = result.get(i);
             KCandleObj kCandleObj = new KCandleObj();
@@ -731,15 +728,12 @@ public class KLineFragment extends BaseFragment implements OnKCrossLineMoveListe
 
     }
 
-
     public String formatDate(Date aDate, String formatStr) {
         if (aDate == null)
             return "";
-        formatter = new SimpleDateFormat(formatStr);
+        SimpleDateFormat formatter = new SimpleDateFormat(formatStr);
         return formatter.format(aDate);
-
     }
-
 
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onGetNettyDate(Quotation quotation) {
@@ -747,32 +741,32 @@ public class KLineFragment extends BaseFragment implements OnKCrossLineMoveListe
         if (!code.equals(quotation.getSymbol())) {
             return;
         }
-        if (kCandleObj_refresh != null) {
-            kCandleObj_refresh = null;
+        if (kCandleObjRefresh != null) {
+            kCandleObjRefresh = null;
         }
         if (listData == null || listData.size() <= 0) {
             return;
         }
-        kCandleObj_refresh = new KCandleObj();
+        kCandleObjRefresh = new KCandleObj();
 
         Long unixTime = quotation.getUnixTime();
         long l = unixTime + 5 * 60 * 60 * 1000;
         //设置 long 时间
-//        kCandleObj_refresh.setTimeLong(quotation.getUnixTime());
-        kCandleObj_refresh.setTimeLong(l);
+//        kCandleObjRefresh.setTimeLong(quotation.getUnixTime());
+        kCandleObjRefresh.setTimeLong(l);
         //最新买入价
         double ask = quotation.getAsk();
-        kCandleObj_refresh.setHigh(ask);
-        kCandleObj_refresh.setLow(ask);
-        kCandleObj_refresh.setOpen(ask);
-        kCandleObj_refresh.setClose(ask);
+        kCandleObjRefresh.setHigh(ask);
+        kCandleObjRefresh.setLow(ask);
+        kCandleObjRefresh.setOpen(ask);
+        kCandleObjRefresh.setClose(ask);
         String time = DateUtil.parseDateToStr(new Date(l), simpleDateFormat);
-        kCandleObj_refresh.setTime(quotation.getTime());
-        kCandleObj_refresh.setTime(time);
+        kCandleObjRefresh.setTime(quotation.getTime());
+        kCandleObjRefresh.setTime(time);
         //获取 socket 数据之前，是否绘制完毕
         if (isEvent4SMA) {
             //刷新数据
-            setLastKData(kCandleObj_refresh);
+            setLastKData(kCandleObjRefresh);
         }
     }
 

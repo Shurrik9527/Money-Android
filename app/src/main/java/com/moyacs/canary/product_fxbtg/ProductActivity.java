@@ -67,6 +67,7 @@ public class ProductActivity extends BaseActivity implements OnClickListener {
     private View fragmentContainer = null;
     private TextView tv_latest, tv_latest_land;
     private View klineFullscreenView;
+    //前往交易大厅
     private View goWeiPanListView;
     //昨收价格
     private double close;

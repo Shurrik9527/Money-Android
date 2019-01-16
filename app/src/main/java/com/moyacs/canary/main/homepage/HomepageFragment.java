@@ -89,8 +89,7 @@ public class HomepageFragment extends BaseFragment implements MarketContract.Mar
                 if (tradeList == null && tradeList.size() <= 0) {
                     return;
                 }
-                presenter.getMarketList("demo", "");
-                presenter.getBannerList();
+                //刷新交易机会
                 presenter.getDealChanceList(10, 0);
             }
 
@@ -159,10 +158,10 @@ public class HomepageFragment extends BaseFragment implements MarketContract.Mar
                 if (bannerList == null || bannerList.size() <= 0) {
                     return;
                 }
+                //添加数据
                 for (int i = 0; i < bannerList.size(); i++) {
                     imageUrls.add(bannerList.get(i).getImage());
                 }
-                //添加数据
                 //设置图片加载器
                 banner.setImageLoader(new BannerImageLoader());
                 //设置图片集合
@@ -189,7 +188,7 @@ public class HomepageFragment extends BaseFragment implements MarketContract.Mar
                 super.onBindViewHolder(holder, position);
                 //新手学堂布局
                 View view = holder.getView(R.id.rl_home_newuser_classroom);
-                view.setOnClickListener(v -> LogUtils.e("","新手学堂"));
+                view.setOnClickListener(v -> LogUtils.e("", "新手学堂"));
                 //在线客服
                 View view1 = holder.getView(R.id.rl_home_newuser_gold);
                 view1.setOnClickListener(v -> {
@@ -343,6 +342,11 @@ public class HomepageFragment extends BaseFragment implements MarketContract.Mar
         tradeList.clear();
         tradeList.addAll(list);
         presenter.getMarketList("live", "");
+    }
+
+    @Override
+    public void refreshFinish() {
+        pullrefreshLayout.refreshComplete();
     }
 
     /**

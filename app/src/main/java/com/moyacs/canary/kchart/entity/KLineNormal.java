@@ -14,6 +14,4 @@ public class KLineNormal {
     public static final int NORMAL_KDJ = 101;
     public static final int NORMAL_MACD = 102;
     public static final int NORMAL_VOL = 103;
-
-
 }

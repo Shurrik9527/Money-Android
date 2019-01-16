@@ -76,9 +76,14 @@ public class MarketPresenterImpl implements MarketContract.MarketPresenter {
                     protected void requestSuccess(HttpResult<List<DealChanceDate>> data) {
                         mView.setDealChanceList(data.getDataObject());
                     }
+
+                    @Override
+                    public void onComplete() {
+                        super.onComplete();
+                        mView.refreshFinish();
+                    }
                 }));
     }
-
 
     @Override
     public void getTradList() {

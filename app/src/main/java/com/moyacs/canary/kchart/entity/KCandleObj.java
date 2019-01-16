@@ -36,8 +36,6 @@ public class KCandleObj implements Serializable {
     //交易中间休盘时间
     private String middleTime;
 
-
-
     public KCandleObj (){}
 
     public KCandleObj(double normValue) {

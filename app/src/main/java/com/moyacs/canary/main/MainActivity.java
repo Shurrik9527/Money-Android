@@ -48,7 +48,6 @@ public class MainActivity extends BaseActivity {
             R.mipmap.main_tab_weipan_1_selected_1, R.mipmap.main_tab_me_selected};
     private ArrayList<Fragment> fragments;
     private Intent serviceIntent;
-    private MarketFragment marketFragment;
     private ArrayList<CustomTabEntity> mTabEntities = new ArrayList<>();
     private int oldSelectPos;
 
@@ -159,7 +158,7 @@ public class MainActivity extends BaseActivity {
     private void getFragmentList() {
         fragments = new ArrayList<>();
         fragments.add(new HomepageFragment());
-        marketFragment = new MarketFragment();
+        MarketFragment marketFragment = new MarketFragment();
         fragments.add(marketFragment);
         fragments.add(new DealFragment());
         fragments.add(new MeFragment());

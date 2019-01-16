@@ -7,7 +7,6 @@ import com.moyacs.canary.network.HttpResult;
 import java.util.List;
 
 import io.reactivex.Observable;
-import retrofit2.Response;
 import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
@@ -41,7 +40,7 @@ public interface HomePageServer {
     @FormUrlEncoded
     @POST("chance")
     Observable<HttpResult<List<DealChanceDate>>> getDealChanceList(@Field("size") int size,
-                                                                             @Field("page") int page);
+                                                                   @Field("page") int page);
 
     /**
      * 获取全部行情列表
@@ -50,5 +49,5 @@ public interface HomePageServer {
      */
     @GET("price/symbols")
     Observable<HttpResult<List<MarketDataBean>>> getMarketList(@Query(HttpConstants.server) String server,
-                                                                         @Query(HttpConstants.type) String type);
+                                                               @Query(HttpConstants.type) String type);
 }
