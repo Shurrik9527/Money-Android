@@ -125,7 +125,6 @@ public class LoginFragment extends BaseFragment {
                         uploadPubKey(RSAKeyManger.pubKey);
                     }
 
-
                     @Override
                     public void onError(Throwable e) {
                         super.onError(e);

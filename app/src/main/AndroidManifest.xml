@@ -61,16 +61,9 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name="com.moyacs.canary.login.LoginActivity">
-
-            <!--
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-            -->
-        </activity>
+        <activity
+            android:name="com.moyacs.canary.login.LoginActivity"
+            android:launchMode="singleTop" />
 
         <service android:name="com.moyacs.canary.service.SocketService" />
 
@@ -132,7 +125,7 @@
         <activity android:name="com.moyacs.canary.main.market.OptionalActivity" />
         <activity android:name="com.moyacs.canary.login.ForgetPasswordActivity" />
         <activity android:name="com.moyacs.canary.main.me.AccountActivity" />
-        <activity android:name="com.moyacs.canary.main.me.SetNickNameActivity"></activity>
+        <activity android:name="com.moyacs.canary.main.me.SetNickNameActivity" />
     </application>
 
 </manifest>

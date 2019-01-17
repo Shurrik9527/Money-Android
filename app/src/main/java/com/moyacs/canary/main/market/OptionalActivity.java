@@ -4,6 +4,7 @@ import android.graphics.Rect;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.LinearLayout;
 
@@ -13,7 +14,6 @@ import com.moyacs.canary.main.market.contract.OptionalContract;
 import com.moyacs.canary.main.market.contract.OptionalPresenter;
 import com.moyacs.canary.main.market.net.TradeVo;
 import com.moyacs.canary.util.ScreenUtil;
-import com.moyacs.canary.util.ToastUtils;
 import com.moyacs.canary.widget.UnderLineTextView;
 
 import java.util.ArrayList;
@@ -99,7 +99,6 @@ public class OptionalActivity extends BaseActivity implements OptionalContract.V
     @Override
     protected void initData() {
         presenter = new OptionalPresenter(this);
-        presenter.getOptionalList();
         presenter.getMyChoice();
     }
 
@@ -139,21 +138,30 @@ public class OptionalActivity extends BaseActivity implements OptionalContract.V
     public void setMyChoice(List<TradeVo.Trade> tradeList) {
         myChoiceList.addAll(tradeList);
         myOptionalAdapter.notifyDataSetChanged();
-        ToastUtils.showShort("获取到的自选数量" + tradeList.size());
+        presenter.getOptionalList(); //获取可选择列表
     }
 
     @Override
     public void setOptionalList(List<TradeVo.Trade> tradeList) {
         for (TradeVo.Trade t : tradeList) {
-            if (t.getSymbolType() == 1) {
-                //外汇
-                waiHuiList.add(t);
-            } else if (t.getSymbolType() == 2) {
-                //贵金属
-                guiJinShuList.add(t);
-            } else if (t.getSymbolType() == 3) {
-                //原油
-                yuanYouList.add(t);
+            boolean isBreak = false;
+            for (TradeVo.Trade my : myChoiceList) {
+                if (TextUtils.equals(t.getSymbolCode(), my.getSymbolCode())) {
+                    isBreak= true;
+                    break;
+                }
+            }
+            if(!isBreak){
+                if (t.getSymbolType() == 1) {
+                    //外汇
+                    waiHuiList.add(t);
+                } else if (t.getSymbolType() == 2) {
+                    //贵金属
+                    guiJinShuList.add(t);
+                } else if (t.getSymbolType() == 3) {
+                    //原油
+                    yuanYouList.add(t);
+                }
             }
         }
         replaceOptionalList();

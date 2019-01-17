@@ -1,9 +1,13 @@
 package com.moyacs.canary.network;
 
 import android.text.TextUtils;
+import android.util.Log;
 
-import com.moyacs.canary.util.LogUtils;
+import com.google.gson.JsonObject;
 import com.moyacs.canary.util.SharePreferencesUtil;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.io.IOException;
 import java.util.concurrent.TimeUnit;
@@ -12,6 +16,7 @@ import okhttp3.Interceptor;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
+import okhttp3.ResponseBody;
 import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Retrofit;
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
@@ -40,10 +45,6 @@ public class ServerManger {
      * @return
      */
     private OkHttpClient initOkHttpClient() {
-
-
-//        File cacheFile = new File(context.getExternalCacheDir().getAbsolutePath(), "mycache");
-//        Cache cache = new Cache(cacheFile, 1024 * 1024 * 20);
         HttpLoggingInterceptor loggingInterceptor = new HttpLoggingInterceptor();
         loggingInterceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
         OkHttpClient.Builder client = new OkHttpClient().newBuilder()
@@ -54,26 +55,6 @@ public class ServerManger {
                 .addInterceptor(loggingInterceptor)
                 //添加请求头
                 .addInterceptor(new HeadersInterceptor());
-//                .cache(cache)//缓存目录
-//                .addNetworkInterceptor(new CacheInterceptorOnNet())//在线缓存
-//                .addInterceptor(new CacheForceInterceptorNoNet())//离线缓存
-
-
-//        client.interceptors().add(new Interceptor() {
-//            @Override
-//            public Response intercept(Chain chain) throws IOException {
-//                // 获取 Cookie
-//                Response resp = chain.proceed(chain.request());
-//                List<String> cookies = resp.headers("Set-Cookie");
-//                String cookieStr = "";
-//                if (cookies != null && cookies.size() > 0) {
-//                    for (int i = 0; i < cookies.size(); i++) {
-//                        cookieStr += cookies.get(i);
-//                    }
-//                }
-//                return resp;
-//            }
-//        });
         return client.build();
     }
 
@@ -109,21 +90,92 @@ public class ServerManger {
     private class HeadersInterceptor implements Interceptor {
         @Override
         public Response intercept(Chain chain) throws IOException {
-            Response response = chain.proceed(chain.request());
+           /* Response response = chain.proceed(chain.request());
             String header = response.header(HttpConstants.header_key);
             if (!TextUtils.isEmpty(header)) {
                 SharePreferencesUtil.getInstance().setServerAuthor(header);
             }
-            Request request = chain.request()
-                    .newBuilder()
+            if(isAuthExpired(response)){
+                getNewAuth();
+            }
+            Request request = chain.request().newBuilder()
                     .header(HttpConstants.header_key, SharePreferencesUtil.getInstance().getServerAuthor())
-//                    .header(HttpConstants.header_key, HttpConstants.header_value + headerValue)
-                    //注册的 请求头
-//                    .header("Referer", "android")
                     .build();
-//            LogUtils.d("请求头的 key ：" + HttpConstants.header_key);
-            LogUtils.d("本次请求头：" + SharePreferencesUtil.getInstance().getServerAuthor());
-            return chain.proceed(request);
+            Log.d("TAG",request.url()+"======请求头===" + SharePreferencesUtil.getInstance().getServerAuthor());
+            return chain.proceed(request);*/
+
+
+            Request request = chain.request().newBuilder()
+                    .addHeader(HttpConstants.header_key, SharePreferencesUtil.getInstance().getServerAuthor()).build();
+            Response response = chain.proceed(request); //前往网络请求
+            String auth = response.header(HttpConstants.header_key); // 获取请求头的auth
+            Log.d("TAG", request.url() + "======请求头===" + SharePreferencesUtil.getInstance().getServerAuthor());
+            if (!TextUtils.isEmpty(auth)) {
+                //当前服务器返回auth不为空的话 更新auth
+                SharePreferencesUtil.getInstance().setServerAuthor(auth);
+            }
+
+            String requestBody = response.body().string();
+            String msgCode = "";
+            try {
+                JSONObject jsonObject = new JSONObject(requestBody);
+                msgCode = jsonObject.getString("msgCode");
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+            //判断auth是否过期
+            if (TextUtils.equals("-111", msgCode)) {
+                //更新auth
+                getNewAuth();
+                //重新配置
+                Request newRequest = chain.request().newBuilder()
+                        .addHeader(HttpConstants.header_key, SharePreferencesUtil.getInstance().getServerAuthor())
+                        .build();
+                Log.d("TAG", newRequest.url() + "======请求头===" + SharePreferencesUtil.getInstance().getServerAuthor());
+                return chain.proceed(newRequest); //再次发起请求
+            } else {
+                return createNewResponse(response, requestBody, response.code());
+            }
         }
+    }
+
+
+   /* private boolean isAuthExpired(Response response) {
+        try {
+
+            if (TextUtils.equals("-111", msgCode)) {
+                return true;
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        return false;
+    }*/
+
+    private void getNewAuth() {
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl(HttpConstants.SERVER_HOST)
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
+        retrofit2.Response<JsonObject> tokenJson = null;
+        try {
+            tokenJson = retrofit.create(ServerApi.class).getAuth().execute();
+            assert tokenJson.body() != null;
+            String auth = tokenJson.body().get("data").toString();
+            if (TextUtils.isEmpty(auth)) {
+                Log.e("TAG", "========获取的auth为空======");
+                return;
+            }
+            SharePreferencesUtil.getInstance().setServerAuthor(auth);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+
+    private Response createNewResponse(Response response, String content, int code) {
+        return response.newBuilder().body(ResponseBody.create(response.body().contentType(), content)).code(code).build();
     }
 }

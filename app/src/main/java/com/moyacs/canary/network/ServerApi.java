@@ -1,5 +1,6 @@
 package com.moyacs.canary.network;
 
+import com.google.gson.JsonObject;
 import com.moyacs.canary.main.deal.net_tab3.TransactionRecordVo;
 import com.moyacs.canary.main.deal.net_tab3.UserAmountVo;
 import com.moyacs.canary.main.homepage.net.BannerDate;
@@ -9,6 +10,7 @@ import com.moyacs.canary.main.me.UserInfoVo;
 import java.util.Map;
 
 import io.reactivex.Observable;
+import retrofit2.Call;
 import retrofit2.http.Field;
 import retrofit2.http.FieldMap;
 import retrofit2.http.FormUrlEncoded;
@@ -157,4 +159,9 @@ public interface ServerApi {
     @FormUrlEncoded
     Observable<ServerResult<String>> deleteOptional(@Field("symbolCode") String symbolCode);
 
+    /**
+     * 刷新auth
+     */
+    @POST("login/refreshJWT")
+    Call<JsonObject> getAuth();
 }
