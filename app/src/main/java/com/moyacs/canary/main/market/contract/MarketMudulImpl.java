@@ -51,12 +51,12 @@ public class MarketMudulImpl implements MarketContract.MarketModul {
     }
 
     @Override
-    public void getMarketList(String username, String server) {
+    public void getMyChoiceList(String username, String server) {
 
     }
 
     @Override
-    public void getMarketList_type(String page, String pageSize) {
+    public void getMarketList(String page, String pageSize) {
 
     }
 

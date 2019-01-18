@@ -37,20 +37,19 @@ public class MarketPresenterImpl implements MarketContract.MarketPresenter {
         disposable.clear();
     }
 
-    @Override
-    public void getMarketList(String username, String server) {
-        disposable.add(marketServer.getMarketList_optional(username, server)
+    public void getMyChoiceList() {
+        disposable.add(ServerManger.getInstance().getServer().getMyChoiceList()
                 .compose(RxUtils.rxSchedulerHelper())
-                .subscribeWith(new BaseMoaObservable<HttpResult<List<MarketDataBean>>>() {
+                .subscribeWith(new BaseObservable<ServerResult<TradeVo>>() {
                     @Override
-                    protected void requestSuccess(HttpResult<List<MarketDataBean>> data) {
-                        view.setMarketOptionalList(data.getDataObject());
+                    protected void requestSuccess(ServerResult<TradeVo> data) {
+                        view.setMyChoiceList(data.getData().getList());
                     }
 
                     @Override
-                    public void onError(Throwable e) {
-                        super.onError(e);
-                        view.getMarketOptionalListFiled("服务器异常");
+                    protected void onStart() {
+                        super.onStart();
+                        view.showLoadingDialog();
                     }
 
                     @Override
@@ -61,14 +60,13 @@ public class MarketPresenterImpl implements MarketContract.MarketPresenter {
                 }));
     }
 
-    @Override
-    public void getMarketList_type(String server, String type) {
-        disposable.add(marketServer.getMarketList_type(server, type)
+    public void getMarketList() {
+        disposable.add(marketServer.getMarketList_type("live", "")
                 .compose(RxUtils.rxSchedulerHelper())
                 .subscribeWith(new BaseMoaObservable<HttpResult<List<MarketDataBean>>>() {
                     @Override
                     protected void requestSuccess(HttpResult<List<MarketDataBean>> data) {
-                        view.setMarketTypeList(data.getDataObject());
+                        view.setMarketList(data.getDataObject());
                     }
 
                     @Override

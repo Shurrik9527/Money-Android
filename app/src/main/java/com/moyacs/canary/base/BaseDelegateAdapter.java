@@ -15,7 +15,6 @@ import com.chad.library.adapter.base.BaseViewHolder;
  */
 
 public class BaseDelegateAdapter extends DelegateAdapter.Adapter<BaseViewHolder> {
-
     private LayoutHelper mLayoutHelper;
     private int mCount = -1;
     private int mLayoutId = -1;
@@ -65,7 +64,7 @@ public class BaseDelegateAdapter extends DelegateAdapter.Adapter<BaseViewHolder>
         return mCount;
     }
 
-    public void setmCount(int mCount){
+    public void setmCount(int mCount) {
         this.mCount = mCount;
     }
 }

@@ -68,8 +68,8 @@ public class MarketPresenterImpl implements MarketContract.MarketPresenter {
     }
 
     @Override
-    public void getDealChanceList(int size, int page) {
-        disposable.add(homePageServer.getDealChanceList(size, page)
+    public void getDealChanceList() {
+        disposable.add(homePageServer.getDealChanceList()
                 .compose(RxUtils.rxSchedulerHelper())
                 .subscribeWith(new BaseMoaObservable<HttpResult<List<DealChanceDate>>>() {
                     @Override

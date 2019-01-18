@@ -65,11 +65,8 @@ public interface MarketContract {
 
         /**
          * 交易机会列表
-         *
-         * @param size
-         * @param page
          */
-        void getDealChanceList(int size, int page);
+        void getDealChanceList();
 
         void getTradList();
     }

@@ -163,7 +163,7 @@ public class MeFragment extends BaseFragment {
                     protected void requestSuccess(ServerResult<UserInfoVo> data) {
                         llUnLogin.setVisibility(View.GONE);
                         llLogin.setVisibility(View.VISIBLE);
-                        SharePreferencesUtil.getInstance().setNickName(data.getData().getLoginName());
+                        SharePreferencesUtil.getInstance().setNickName(data.getData().getUserName());
                     }
 
                     @Override

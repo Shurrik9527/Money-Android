@@ -32,15 +32,9 @@ public interface HomePageServer {
 
     /**
      * 首页 交易机会列表
-     *
-     * @param size 每页数据数量
-     * @param page 第几页
-     * @return
      */
-    @FormUrlEncoded
     @POST("chance")
-    Observable<HttpResult<List<DealChanceDate>>> getDealChanceList(@Field("size") int size,
-                                                                   @Field("page") int page);
+    Observable<HttpResult<List<DealChanceDate>>> getDealChanceList();
 
     /**
      * 获取全部行情列表

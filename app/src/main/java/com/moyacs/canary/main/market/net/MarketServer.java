@@ -23,7 +23,7 @@ public interface MarketServer {
 
 //    @FormUrlEncoded
 //    @POST("/price/symbols")
-//    Observable<Response<HttpResult<List<MarketDataBean>>>> getMarketList();
+//    Observable<Response<HttpResult<List<MarketDataBean>>>> getMyChoiceList();
 
 
     /**

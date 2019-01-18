@@ -24,6 +24,7 @@ import com.moyacs.canary.util.SharePreferencesUtil;
 import com.moyacs.canary.util.ToastUtils;
 import com.moyacs.canary.widget.UnderLineTextView;
 
+import java.math.BigDecimal;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -558,10 +559,10 @@ public class OrderPopWindow implements View.OnClickListener {
      */
     private void setTvTotalMoney() {
         int totalMoney = leiXingPrice * countSize;
-        float shouXufei = trade.getQuantityCommissionCharges() * countSize;
-        tvTotalMoney.setText("$" + (totalMoney + shouXufei)); //总金额
+        float shouXuFei =new BigDecimal(String.valueOf(leiXingPrice)).multiply(new BigDecimal(String.valueOf(trade.getQuantityCommissionCharges())).multiply(new BigDecimal(String.valueOf(countSize)))) .floatValue();
+        tvTotalMoney.setText("$" + (totalMoney + shouXuFei)); //总金额
         tvOverNight.setText("过夜费" + totalMoney * trade.getQuantityOvernightFee() + "美元/天，默认开启，建仓后可手动关闭"); // 过夜费
-        tvFee.setText("（手续费：$" + shouXufei + "）"); //手续费
+        tvFee.setText("（手续费：$" + shouXuFei + "）"); //手续费
         int boDongNum = 0;
         if (leiXingPrice == trade.getUnitPriceOne()) {
             boDongNum = trade.getQuantityOne();

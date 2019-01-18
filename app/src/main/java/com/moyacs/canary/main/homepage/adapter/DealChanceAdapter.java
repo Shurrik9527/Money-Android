@@ -1,6 +1,7 @@
 package com.moyacs.canary.main.homepage.adapter;
 
 import android.content.Context;
+import android.text.TextUtils;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -9,6 +10,7 @@ import com.alibaba.android.vlayout.LayoutHelper;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.moyacs.canary.base.BaseDelegateAdapter;
 import com.moyacs.canary.main.homepage.net.DealChanceDate;
+import com.moyacs.canary.util.ForeignUtil;
 
 import java.util.List;
 
@@ -28,10 +30,10 @@ public class DealChanceAdapter extends BaseDelegateAdapter {
         DealChanceDate dealChanceDate = chanceDateList.get(position);
         //品种名称
         TextView tv_name = holder.getView(R.id.tv_homeinformation_product);
-        tv_name.setText(dealChanceDate.getName());
+        tv_name.setText(ForeignUtil.codeFormatCN(dealChanceDate.getName()));
         //趋势 看多
         TextView tv_trend = holder.getView(R.id.tv_homeinformation_abstract);
-        tv_trend.setText(dealChanceDate.getTrend());
+        tv_trend.setText(TextUtils.equals(dealChanceDate.getTrend(), "Sell") ? "卖" : "买");
         //年月日日期
         TextView tv_data = holder.getView(R.id.tv_data);
         tv_data.setText(dealChanceDate.getDate());

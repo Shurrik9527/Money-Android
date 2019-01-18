@@ -12,14 +12,17 @@ import android.widget.TextView;
 
 import com.moyacs.canary.base.BaseFragment;
 import com.moyacs.canary.common.AppConstans;
+import com.moyacs.canary.common.DialogUtils;
 import com.moyacs.canary.main.market.adapter.MarketAdapter;
 import com.moyacs.canary.main.market.contract.MarketContract;
 import com.moyacs.canary.main.market.contract.MarketPresenterImpl;
 import com.moyacs.canary.main.market.net.MarketDataBean;
 import com.moyacs.canary.main.market.net.TradeVo;
+import com.moyacs.canary.main.me.EvenVo;
 import com.moyacs.canary.netty.codec.Quotation;
 import com.moyacs.canary.product_fxbtg.ProductActivity;
 import com.moyacs.canary.util.LogUtils;
+import com.moyacs.canary.util.SharePreferencesUtil;
 import com.moyacs.canary.widget.UnderLineTextView;
 import com.yan.pullrefreshlayout.PullRefreshLayout;
 
@@ -84,6 +87,10 @@ public class MarketFragment extends BaseFragment implements MarketContract.Marke
     private ArrayList<MarketDataBean> quanQiuZhiShuList;
     //可交易品种列表
     private List<TradeVo.Trade> tradeList;
+    //可交易品种列表MOA
+    private List<MarketDataBean> marketAllList;
+
+    private boolean isLoaderData = false;
 
     @Override
     protected int getLayoutId() {
@@ -117,7 +124,6 @@ public class MarketFragment extends BaseFragment implements MarketContract.Marke
 
             @Override
             public void onFootItemClickListener() {
-                LogUtils.e("====我被点击了吗？====");
                 Intent intent = new Intent(mActivity, OptionalActivity.class);
                 startActivity(intent);
             }
@@ -128,8 +134,17 @@ public class MarketFragment extends BaseFragment implements MarketContract.Marke
     protected void initData() {
         registerEventBus();
         presenter = new MarketPresenterImpl(this);
-        //获取可以交类型列表
-        presenter.getTradeList();
+        initList();
+    }
+
+    @Override
+    public void setUserVisibleHint(boolean isVisibleToUser) {
+        super.setUserVisibleHint(isVisibleToUser);
+        if (isVisibleToUser && !isLoaderData) {
+            //获取可以交类型列表
+            presenter.getTradeList();
+            isLoaderData = true;
+        }
     }
 
     /**
@@ -151,7 +166,7 @@ public class MarketFragment extends BaseFragment implements MarketContract.Marke
             @Override
             public void onRefresh() {
                 if (tab1.isSelected())
-                    presenter.getMarketList("13232323636", "DEMO");
+                    presenter.getMyChoiceList();
                 else {
                     // 模拟刷新  实际上什么都没做
                     new Handler(Looper.getMainLooper()).postDelayed(new Runnable() {
@@ -182,6 +197,13 @@ public class MarketFragment extends BaseFragment implements MarketContract.Marke
         tabList.add(tab5);
     }
 
+    private void initList() {
+        waiHuiList = new ArrayList<>();
+        guiJinShuList = new ArrayList<>();
+        yuanYouList = new ArrayList<>();
+        quanQiuZhiShuList = new ArrayList<>();
+    }
+
     /**
      * 抽取方法，便于设置 对应tab 的选中状态
      */
@@ -193,44 +215,38 @@ public class MarketFragment extends BaseFragment implements MarketContract.Marke
 
     @OnClick({R.id.tab1, R.id.tab2, R.id.tab3, R.id.tab4, R.id.tab5, R.id.ll_zhangdiefu})
     public void onViewClicked(View view) {
-        showLoadingDialog();
         switch (view.getId()) {
             case R.id.tab1:
-                dismissLoadingDialog();
-                Intent intent = new Intent(mActivity, OptionalActivity.class);
-                startActivity(intent);
-                /*if (TextUtils.isEmpty(SharePreferencesUtil.getInstance().getUserPhone())) {
+                if (TextUtils.isEmpty(SharePreferencesUtil.getInstance().getUserPhone())) {
+                    dismissLoadingDialog();
                     DialogUtils.login_please("请先登录", getContext());
                     return;
                 }
                 setTabSelect(0);
                 //防止重复加载数据
+                marketAdapter.setIsShowFootView(true);
                 if (ziXuanList == null) {
-                    presenter.getMarketList("13232323636", "DEMO");
+                    presenter.getMyChoiceList();
                 } else {
                     replaceMarketList(ziXuanList);
-                }*/
+                }
                 break;
             case R.id.tab2:
-                type = "1";
                 setTabSelect(1);
                 marketAdapter.setIsShowFootView(false);
                 replaceMarketList(waiHuiList);
                 break;
             case R.id.tab3:
-                type = "2";
                 setTabSelect(2);
                 marketAdapter.setIsShowFootView(false);
                 replaceMarketList(guiJinShuList);
                 break;
             case R.id.tab4:
-                type = "3";
                 setTabSelect(3);
                 marketAdapter.setIsShowFootView(false);
                 replaceMarketList(yuanYouList);
                 break;
             case R.id.tab5:
-                type = "4";
                 setTabSelect(4);
                 replaceMarketList(quanQiuZhiShuList);
                 break;
@@ -243,7 +259,6 @@ public class MarketFragment extends BaseFragment implements MarketContract.Marke
     private void replaceMarketList(List<MarketDataBean> list) {
         tvFailedView.setVisibility(View.GONE);//加载数据隐藏异常状态提醒
         rvMarket.setVisibility(View.VISIBLE);
-        dismissLoadingDialog();
         if (list == null) {
             rvMarket.setVisibility(View.GONE);
             tvFailedView.setVisibility(View.VISIBLE);
@@ -264,14 +279,23 @@ public class MarketFragment extends BaseFragment implements MarketContract.Marke
      * 请求自选列表成功
      */
     @Override
-    public void setMarketOptionalList(List<MarketDataBean> result) {
-        ziXuanList = new ArrayList<>(result);
-        marketAdapter.setIsShowFootView(true);
+    public void setMyChoiceList(List<TradeVo.Trade> result) {
+        ziXuanList = new ArrayList<>();
+        if (result.size() > 0 && marketAllList != null && marketAllList.size() > 0) {
+            for (TradeVo.Trade t : result) {
+                for (MarketDataBean mb : marketAllList) {
+                    if (TextUtils.equals(t.getSymbolCode(), mb.getSymbol())) {
+                        mb.setTrade(t);
+                        ziXuanList.add(mb);
+                    }
+                }
+            }
+        }
         replaceMarketList(ziXuanList);
     }
 
     @Override
-    public void getMarketOptionalListFiled(String msg) {
+    public void getMyChoiceListFiled(String msg) {
         rvMarket.setVisibility(View.GONE);
         tvFailedView.setVisibility(View.VISIBLE);
         tvFailedView.setText("自选列表获取失败");
@@ -283,36 +307,43 @@ public class MarketFragment extends BaseFragment implements MarketContract.Marke
      * @param result
      */
     @Override
-    public void setMarketTypeList(List<MarketDataBean> result) {
-        List<MarketDataBean> listData = new ArrayList<>();
+    public void setMarketList(List<MarketDataBean> result) {
+        marketAllList = new ArrayList<>(result);
         //过滤数据
         if (tradeList != null) {
-            for (MarketDataBean mb : result) {
+            for (MarketDataBean mb : marketAllList) {
                 for (TradeVo.Trade t : tradeList) {
                     if (TextUtils.equals(mb.getSymbol(), t.getSymbolCode())) {
                         mb.setTrade(t);
-                        listData.add(mb);
+                        if (TextUtils.equals("1", mb.getType())) {
+                            waiHuiList.add(mb);
+                        } else if (TextUtils.equals("2", mb.getType())) {
+                            guiJinShuList.add(mb);
+                        } else if (TextUtils.equals("3", mb.getType())) {
+                            yuanYouList.add(mb);
+                        } else {
+                            quanQiuZhiShuList.add(mb);
+                        }
                     }
                 }
             }
         }
+        marketList.clear();
         switch (showTabType) {
             case 1:
-                waiHuiList = new ArrayList<>(listData);
+                marketList.addAll(waiHuiList);
                 break;
             case 2:
-                guiJinShuList = new ArrayList<>(listData);
+                marketList.addAll(guiJinShuList);
                 break;
             case 3:
-                yuanYouList = new ArrayList<>(listData);
+                marketList.addAll(yuanYouList);
                 break;
             case 4:
-                quanQiuZhiShuList = new ArrayList<>(listData);
+                marketList.addAll(quanQiuZhiShuList);
                 break;
         }
         rvMarket.setVisibility(View.VISIBLE);
-        marketList.clear();
-        marketList.addAll(listData);
         marketAdapter.setIsShowFootView(false);
         marketAdapter.notifyDataSetChanged();
         tvFailedView.setVisibility(View.GONE);
@@ -338,12 +369,11 @@ public class MarketFragment extends BaseFragment implements MarketContract.Marke
         tvFailedView.setVisibility(View.VISIBLE);
     }
 
-
     @Override
     public void setTradList(List<TradeVo.Trade> list) {
         tradeList = new ArrayList<>();
         tradeList.addAll(list);
-        presenter.getMarketList_type("live", String.valueOf(showTabType));
+        presenter.getMarketList();
     }
 
     @Override
@@ -400,6 +430,13 @@ public class MarketFragment extends BaseFragment implements MarketContract.Marke
                 //第二个参数不为 0 ，表示可以更新item 中的一部分 ui，对应 adapter 中的 三个参数的 onbindviewHolder
                 marketAdapter.notifyItemChanged(i, i);
             }
+        }
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onEventData(EvenVo evenVo) {
+        if (evenVo.getCode() == EvenVo.UPDATE_MY_CHOICE) {
+            presenter.getMyChoiceList();
         }
     }
 }

@@ -19,17 +19,17 @@ public interface MarketContract {
         /**
          * 获取自选列表成功
          */
-        void setMarketOptionalList(List<MarketDataBean> result);
+        void setMyChoiceList(List<TradeVo.Trade> result);
 
         /**
          * 获取自选列表失败
          */
-        void getMarketOptionalListFiled(String msg);
+        void getMyChoiceListFiled(String msg);
 
         /**
          * 获取行情列表成功
          */
-        void setMarketTypeList(List<MarketDataBean> result);
+        void setMarketList(List<MarketDataBean> result);
 
         /**
          * 获取行情列表失败
@@ -51,15 +51,12 @@ public interface MarketContract {
         /**
          * 获取自选列表
          */
-        void getMarketList(String username, String server);
+        void getMyChoiceList();
 
         /**
          * 获取行情列表
-         *
-         * @param server
-         * @param type   1:外汇 2:贵金属 3:原油  4:全球指数
          */
-        void getMarketList_type(String server, String type);
+        void getMarketList();
 
         /**
          * 获取可以交易列表

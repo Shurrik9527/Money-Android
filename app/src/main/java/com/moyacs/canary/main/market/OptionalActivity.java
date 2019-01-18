@@ -13,8 +13,11 @@ import com.moyacs.canary.main.market.adapter.MyOptionalAdapter;
 import com.moyacs.canary.main.market.contract.OptionalContract;
 import com.moyacs.canary.main.market.contract.OptionalPresenter;
 import com.moyacs.canary.main.market.net.TradeVo;
+import com.moyacs.canary.main.me.EvenVo;
 import com.moyacs.canary.util.ScreenUtil;
 import com.moyacs.canary.widget.UnderLineTextView;
+
+import org.greenrobot.eventbus.EventBus;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -50,6 +53,7 @@ public class OptionalActivity extends BaseActivity implements OptionalContract.V
     private int selectPos;// 选择的位置
     private TradeVo.Trade targetTrade; // 操作目标的外汇 也许是删除 也许是添加
     private int targetPos;//操作目标的位置
+    private boolean changeMyChoice; //是否改变了我的选择  用于是否刷新Fragment我的自选列表
 
     @Override
     protected int getLayoutId() {
@@ -147,11 +151,11 @@ public class OptionalActivity extends BaseActivity implements OptionalContract.V
             boolean isBreak = false;
             for (TradeVo.Trade my : myChoiceList) {
                 if (TextUtils.equals(t.getSymbolCode(), my.getSymbolCode())) {
-                    isBreak= true;
+                    isBreak = true;
                     break;
                 }
             }
-            if(!isBreak){
+            if (!isBreak) {
                 if (t.getSymbolType() == 1) {
                     //外汇
                     waiHuiList.add(t);
@@ -179,6 +183,7 @@ public class OptionalActivity extends BaseActivity implements OptionalContract.V
             yuanYouList.remove(targetPos);
         }
         replaceOptionalList();
+        changeMyChoice = true;
     }
 
     @Override
@@ -193,6 +198,7 @@ public class OptionalActivity extends BaseActivity implements OptionalContract.V
             yuanYouList.add(targetTrade);
         }
         replaceOptionalList();
+        changeMyChoice = true;
     }
 
     private void replaceOptionalList() {
@@ -229,5 +235,15 @@ public class OptionalActivity extends BaseActivity implements OptionalContract.V
     public void unsubscribe() {
         super.unsubscribe();
         presenter.unsubscribe();
+    }
+
+    @Override
+    protected void onDestroy() {
+        senChangeMyChoiceEvent();
+        super.onDestroy();
+    }
+
+    private void senChangeMyChoiceEvent(){
+        EventBus.getDefault().post(new EvenVo(EvenVo.UPDATE_MY_CHOICE));
     }
 }

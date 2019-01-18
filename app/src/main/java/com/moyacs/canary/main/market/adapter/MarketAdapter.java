@@ -59,7 +59,7 @@ public class MarketAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
             return new FootViewHolder(view);
         } else {
             View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_recycler_market, parent, false);
-            return new ViewHolder(view);
+            return new ContentViewHolder(view);
         }
     }
 
@@ -72,8 +72,8 @@ public class MarketAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
      */
     @SuppressLint("ResourceAsColor")
     @Override
-    public void onBindViewHolder(RecyclerView.ViewHolder holder, int position, List<Object> payloads) {
-        if (holder instanceof ViewHolder) {
+    public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position, List<Object> payloads) {
+        if (holder instanceof ContentViewHolder) {
             //表示 viewHolder 的整个条目所有数据都改变了！
             if (payloads.isEmpty()) {
                 onBindViewHolder(holder, position);
@@ -83,7 +83,7 @@ public class MarketAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
                 //数据不为空
                 if (marketDataBean != null) {
 //                    获取旧价格，String类型
-                    String oldPrice = (String) ((ViewHolder) holder).tvPrice.getText();
+                    String oldPrice = (String) ((ContentViewHolder) holder).tvPrice.getText();
                     //昨收
                     double close = marketDataBean.getClose();
                     //即将赋值的价格  买入价
@@ -92,14 +92,14 @@ public class MarketAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
                     //根据保留的小数位截取数据
                     String newPrice_d_scale = NumberUtils.setScale(newPrice_d, marketDataBean.getDigit());
                     //设置最新价格
-                    ((ViewHolder) holder).tvPrice.setText(newPrice_d_scale);
+                    ((ContentViewHolder) holder).tvPrice.setText(newPrice_d_scale);
 
                     //设置 卖出价
 //                Double price_sale = marketDataBean.getPrice_sale();
                     Double price_sale = marketDataBean.getPrice_sale() == 0 ? marketDataBean.getClose() : marketDataBean.getPrice_sale();
                     //根据保留的小数位截取数据
                     String price_sale_scale = NumberUtils.setScale(price_sale, marketDataBean.getDigit());
-                    ((ViewHolder) holder).tvSale.setText(price_sale_scale);
+                    ((ContentViewHolder) holder).tvSale.setText(price_sale_scale);
                     //第一次进入的时候 oldPrice 没数据
                     if (oldPrice != null && !oldPrice.equals("null") && !oldPrice.equals("")) {
                         double oldprice_d = Double.valueOf(oldPrice);
@@ -150,10 +150,10 @@ public class MarketAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
                             animatorColor = MyApplication.instance.getResources().getColor(R.color.color_opt_gt_50);
                         }
                         //价格  执行动画
-                        startAnimatorRGB(((ViewHolder) holder).tvPrice, animatorColor);
+                        startAnimatorRGB(((ContentViewHolder) holder).tvPrice, animatorColor);
                         //买入价的字体颜色 ，与 涨跌幅的背景颜色一致
-                        ((ViewHolder) holder).tvPrice.setTextColor(rangeColor);
-                        ((ViewHolder) holder).tvSale.setTextColor(rangeColor);
+                        ((ContentViewHolder) holder).tvPrice.setTextColor(rangeColor);
+                        ((ContentViewHolder) holder).tvSale.setTextColor(rangeColor);
                         //如果是显示点差状态
                         if (isShowDianCha) {
                             //卖出 - 买入
@@ -162,12 +162,12 @@ public class MarketAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
                             //格式化小数位
                             String s = NumberUtils.setScale(abs, marketDataBean.getDigit());
                             //设置数据
-                            ((ViewHolder) holder).tvRange.setText(s);
+                            ((ContentViewHolder) holder).tvRange.setText(s);
                         } else {
                             //获取 shape 的背景色
-                            GradientDrawable gradientDrawable = (GradientDrawable) ((ViewHolder) holder).tvRange.getBackground();
+                            GradientDrawable gradientDrawable = (GradientDrawable) ((ContentViewHolder) holder).tvRange.getBackground();
                             gradientDrawable.setColor(rangeColor);
-                            ((ViewHolder) holder).tvRange.setText(rangeString);
+                            ((ContentViewHolder) holder).tvRange.setText(rangeString);
                         }
 
                         //缓存涨跌幅
@@ -205,15 +205,15 @@ public class MarketAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
 
 
     @Override
-    public void onBindViewHolder(RecyclerView.ViewHolder holder, final int position) {
-        if (holder instanceof ViewHolder) {
-            ((ViewHolder) holder).tvRange.setText("");
+    public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, final int position) {
+        if (holder instanceof ContentViewHolder) {
+            ((ContentViewHolder) holder).tvRange.setText("");
             if (isShowDianCha) {
-                ((ViewHolder) holder).tvRange.setBackgroundResource(R.color.white);
-                ((ViewHolder) holder).tvRange.setTextColor(context.getResources().getColor(R.color.app_bottom_text));
+                ((ContentViewHolder) holder).tvRange.setBackgroundResource(R.color.white);
+                ((ContentViewHolder) holder).tvRange.setTextColor(context.getResources().getColor(R.color.app_bottom_text));
             } else {
-                ((ViewHolder) holder).tvRange.setTextColor(context.getResources().getColor(R.color.white));
-                ((ViewHolder) holder).tvRange.setBackground(context.getResources().getDrawable(R.drawable.bg_market_text_item));
+                ((ContentViewHolder) holder).tvRange.setTextColor(context.getResources().getColor(R.color.white));
+                ((ContentViewHolder) holder).tvRange.setBackground(context.getResources().getDrawable(R.drawable.bg_market_text_item));
             }
             final MarketDataBean marketDataBean = marketList.get(position);
             if (marketDataBean == null) {
@@ -221,28 +221,28 @@ public class MarketAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
             }
             //获取 shape 的背景色
             //初始化背景色为蓝色
-            GradientDrawable gradientDrawable = (GradientDrawable) ((ViewHolder) holder).tvRange.getBackground();
+            GradientDrawable gradientDrawable = (GradientDrawable) ((ContentViewHolder) holder).tvRange.getBackground();
             gradientDrawable.setColor(context.getResources().getColor(R.color.dialog_btn_blue));
             int rangeColor = marketDataBean.getRangeColor();
 
             //品种中文名称
-            ((ViewHolder) holder).tvChinaname.setText(marketDataBean.getSymbol_cn());
+            ((ContentViewHolder) holder).tvChinaname.setText(marketDataBean.getSymbol_cn());
             //品种英文名称
-            ((ViewHolder) holder).tvEnglishname.setText(marketDataBean.getSymbol());
+            ((ContentViewHolder) holder).tvEnglishname.setText(marketDataBean.getSymbol());
             //买入价
             double newPrice_d = marketDataBean.getPrice_buy() == 0 ? marketDataBean.getOpen() : marketDataBean.getPrice_buy();
-            ((ViewHolder) holder).tvPrice.setText(newPrice_d + "");
+            ((ContentViewHolder) holder).tvPrice.setText(newPrice_d + "");
             //卖出价
             Double price_sale = marketDataBean.getPrice_sale() == 0 ? marketDataBean.getClose() : marketDataBean.getPrice_sale();
-            ((ViewHolder) holder).tvSale.setText(price_sale + "");
+            ((ContentViewHolder) holder).tvSale.setText(price_sale + "");
             //涨跌幅
             if (!isShowDianCha) {
-                ((ViewHolder) holder).tvRange.setText(marketDataBean.getRang_());
+                ((ContentViewHolder) holder).tvRange.setText(marketDataBean.getRang_());
             }
             //设置对应的颜色
             if (rangeColor != 0) {
-                ((ViewHolder) holder).tvPrice.setTextColor(rangeColor);
-                ((ViewHolder) holder).tvSale.setTextColor(rangeColor);
+                ((ContentViewHolder) holder).tvPrice.setTextColor(rangeColor);
+                ((ContentViewHolder) holder).tvSale.setTextColor(rangeColor);
                 gradientDrawable.setColor(rangeColor);
             }
 
@@ -254,18 +254,9 @@ public class MarketAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
                 }
             });
             //是否显示点差
-            ((ViewHolder) holder).tvRange.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    isShowDianCha = !isShowDianCha;
-                    notifyDataSetChanged();
-                }
-            });
-        } else if (holder instanceof FootViewHolder) {
-            holder.itemView.setOnClickListener(v -> {
-                if (clickListener != null) {
-                    clickListener.onFootItemClickListener();
-                }
+            ((ContentViewHolder) holder).tvRange.setOnClickListener(v -> {
+                isShowDianCha = !isShowDianCha;
+                notifyDataSetChanged();
             });
         }
     }
@@ -293,7 +284,7 @@ public class MarketAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
         return TYPE_NORMAL;
     }
 
-    class ViewHolder extends RecyclerView.ViewHolder {
+    class ContentViewHolder extends RecyclerView.ViewHolder {
         @BindView(R.id.tv_chinaname)
         TextView tvChinaname;
         @BindView(R.id.tv_englishname)
@@ -311,15 +302,24 @@ public class MarketAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
         @BindView(R.id.ll_range)
         LinearLayout llRange;
 
-        public ViewHolder(View itemView) {
+        public ContentViewHolder(View itemView) {
             super(itemView);
             ButterKnife.bind(this, itemView);
         }
     }
 
-    private class FootViewHolder extends RecyclerView.ViewHolder {
+    class FootViewHolder extends RecyclerView.ViewHolder {
+        @BindView(R.id.ll_footer)
+        LinearLayout llFooter;
+
         public FootViewHolder(@NonNull View itemView) {
             super(itemView);
+            ButterKnife.bind(this, itemView);
+            llFooter.setOnClickListener(v -> {
+                if (clickListener != null) {
+                    clickListener.onFootItemClickListener();
+                }
+            });
         }
     }
 

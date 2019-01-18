@@ -1,7 +1,6 @@
 package com.moyacs.canary.main.market.net;
 
 import java.io.Serializable;
-import java.util.List;
 
 /**
  * 作者：luoshen on 2018/3/6 0006 18:07
@@ -53,6 +52,7 @@ public class MarketDataBean implements Serializable {
     private String rangValue;
     //当前是否是上涨
     private boolean isUp;
+    private String type;
 
 
     public void setStops_level(int stops_level) {
@@ -197,6 +197,14 @@ public class MarketDataBean implements Serializable {
 
     public void setUp(boolean up) {
         isUp = up;
+    }
+
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
     }
 
     @Override

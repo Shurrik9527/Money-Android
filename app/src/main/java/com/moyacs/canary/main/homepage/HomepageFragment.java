@@ -90,7 +90,7 @@ public class HomepageFragment extends BaseFragment implements MarketContract.Mar
                     return;
                 }
                 //刷新交易机会
-                presenter.getDealChanceList(10, 0);
+                presenter.getDealChanceList();
             }
 
             @Override
@@ -106,7 +106,7 @@ public class HomepageFragment extends BaseFragment implements MarketContract.Mar
         //获取banner数据
         presenter.getBannerList();
         //获取MOA交易机会
-        presenter.getDealChanceList(10, 0);
+        presenter.getDealChanceList();
         //获取可交易列表
         presenter.getTradList();
         registerEventBus();
@@ -145,6 +145,7 @@ public class HomepageFragment extends BaseFragment implements MarketContract.Mar
      * banner
      */
     private void initBanner() {
+        bannerList = new ArrayList<>();
         LinearLayoutHelper bannerHelper = new LinearLayoutHelper();
         int banner_viewtype = 1;
         bannerAdapter = new BaseDelegateAdapter(mActivity, bannerHelper,
@@ -323,14 +324,15 @@ public class HomepageFragment extends BaseFragment implements MarketContract.Mar
 
     @Override
     public void setBannerList(List<BannerDate.Banner> result) {
-        bannerList = new ArrayList<>(result);
         //更新 banner 数据源
+        bannerList.addAll(result);
         bannerAdapter.notifyDataSetChanged();
     }
 
     @Override
     public void setDealChanceList(List<DealChanceDate> result) {
         chanceList.addAll(result);
+        dealChanceAdapter.setmCount(chanceList.size());
         dealChanceAdapter.notifyDataSetChanged();
     }
 

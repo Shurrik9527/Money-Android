@@ -55,8 +55,8 @@ public class MarketMudulImpl {
     }
 
     @Override
-    public void getMarketList(String server, String type) {
-        homePageServer.getMarketList(server, type)
+    public void getMyChoiceList(String server, String type) {
+        homePageServer.getMyChoiceList(server, type)
                 .subscribeOn(Schedulers.io())//指定网络请求所在的线程
                 .doOnSubscribe(new Consumer<Disposable>() {
                     @Override
