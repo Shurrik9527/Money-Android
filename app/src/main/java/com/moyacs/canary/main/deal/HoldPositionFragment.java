@@ -59,6 +59,7 @@ public class HoldPositionFragment extends BaseFragment implements ChiCangCountra
     private ChiCangAdapter chiCangAdapter;
     private int selectPos;//记录当前点击的条目
     private List<TransactionRecordVo.Record> recordList;
+    private boolean isLoadData=false; //是否加载过数据
 
     @Override
     protected int getLayoutId() {
@@ -95,12 +96,20 @@ public class HoldPositionFragment extends BaseFragment implements ChiCangCountra
     @Override
     protected void initData() {
         registerEventBus();
-        chiCangPresenter = new ChiCangPresenterImpl(this);
-        chiCangPresenter.getRecordList();
         //所有品种行情尚未获取成功
        /* if (AppConstans.marketDataBeanList == null || AppConstans.marketDataBeanList.size() <= 0) {
             return;
         }*/
+    }
+
+    @Override
+    public void setUserVisibleHint(boolean isVisibleToUser) {
+        super.setUserVisibleHint(isVisibleToUser);
+        if (isVisibleToUser && !isLoadData) {
+            chiCangPresenter = new ChiCangPresenterImpl(this);
+            chiCangPresenter.getRecordList();
+            isLoadData = true;
+        }
     }
 
     /**

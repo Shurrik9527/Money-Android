@@ -20,7 +20,7 @@ import com.moyacs.canary.main.deal.net_tab3.PaymentDateBean;
 import com.moyacs.canary.main.deal.net_tab3.TransactionRecordVo;
 import com.moyacs.canary.main.deal.net_tab3.UserAmountVo;
 import com.moyacs.canary.main.deal.net_tab3.WithdrawalDataBean;
-import com.moyacs.canary.pay.PayActivity;
+import com.moyacs.canary.main.me.RechargeActivity;
 import com.moyacs.canary.pay.WithdrawActivity;
 import com.moyacs.canary.widget.UnderLineTextView;
 import com.yan.pullrefreshlayout.PullRefreshLayout;
@@ -74,6 +74,7 @@ public class CapitalFragment extends BaseFragment implements FundContract.FundVi
     private List<PaymentDateBean.ContentBean> paymentList;
     //交易记录
     private List<TransactionRecordVo.Record> dealList;
+    private boolean isLoadData = false;
 
     @Override
     protected int getLayoutId() {
@@ -99,11 +100,20 @@ public class CapitalFragment extends BaseFragment implements FundContract.FundVi
 
     @Override
     protected void initData() {
-        fundPresenter = new FundPresenterImpl(this);
-        //获取交易记录
-        getSelectData(selectTabType);
-        //防止重复加载数据
-        fundPresenter.getAccountInfo();
+
+    }
+
+    @Override
+    public void setUserVisibleHint(boolean isVisibleToUser) {
+        super.setUserVisibleHint(isVisibleToUser);
+        if (isVisibleToUser && !isLoadData) {
+            fundPresenter = new FundPresenterImpl(this);
+            //获取交易记录
+            getSelectData(selectTabType);
+            //防止重复加载数据
+            fundPresenter.getAccountInfo();
+            isLoadData = true;
+        }
     }
 
     /**
@@ -189,11 +199,12 @@ public class CapitalFragment extends BaseFragment implements FundContract.FundVi
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.btn_chongzhi:
-                long nowMills = System.currentTimeMillis();
+              /*  long nowMills = System.currentTimeMillis();
                 String url = "http://uc.moyacs.com/my.account-deposit.funds_app_v2.html?v=" + nowMills + "&mt4id=812999&token=xxxxxxx";
                 Intent intent = new Intent(getContext(), PayActivity.class);
                 intent.putExtra("url", url);
-                startActivity(intent);
+                startActivity(intent);*/
+                startActivity(new Intent(getActivity(), RechargeActivity.class));
                 break;
             case R.id.btn_tixian:
                 //提现

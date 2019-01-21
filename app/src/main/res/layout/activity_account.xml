@@ -125,7 +125,6 @@
     </LinearLayout>
 
     <View
-        android:visibility="gone"
         android:layout_width="match_parent"
         android:layout_height="@dimen/margin_0.5dp"
         android:background="@color/line" />
@@ -137,14 +136,14 @@
         android:background="@color/white"
         android:gravity="center_vertical"
         android:orientation="horizontal"
-        android:visibility="gone"
+        android:visibility="visible"
         android:padding="@dimen/margin_16dp">
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="实名认证"
+            android:text="个人信息"
             android:textColor="@color/app_common_content" />
 
         <TextView

@@ -16,7 +16,6 @@ import com.just.library.LogUtils;
 import com.moyacs.canary.base.BaseDelegateAdapter;
 import com.moyacs.canary.base.BaseFragment;
 import com.moyacs.canary.common.AppConstans;
-import com.moyacs.canary.im.KefuActivity;
 import com.moyacs.canary.main.homepage.adapter.DealChanceAdapter;
 import com.moyacs.canary.main.homepage.adapter.TradeHorizontalAdapter;
 import com.moyacs.canary.main.homepage.contract.MarketContract;
@@ -39,8 +38,6 @@ import java.util.List;
 
 import butterknife.BindView;
 import www.moyacs.com.myapplication.R;
-
-import static com.moyacs.canary.common.AppConstans.marketDataBeanList;
 
 /**
  * 作者：luoshen on 2018/3/2 0002 10:15
@@ -83,12 +80,6 @@ public class HomepageFragment extends BaseFragment implements MarketContract.Mar
         pullrefreshLayout.setOnRefreshListener(new PullRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-                if (presenter == null) {
-                    return;
-                }
-                if (tradeList == null && tradeList.size() <= 0) {
-                    return;
-                }
                 //刷新交易机会
                 presenter.getDealChanceList();
             }
@@ -190,10 +181,10 @@ public class HomepageFragment extends BaseFragment implements MarketContract.Mar
                 //新手学堂布局
                 View view = holder.getView(R.id.rl_home_newuser_classroom);
                 view.setOnClickListener(v -> LogUtils.e("", "新手学堂"));
-                //在线客服
+                //盈利榜
                 View view1 = holder.getView(R.id.rl_home_newuser_gold);
                 view1.setOnClickListener(v -> {
-                    startActivity(new Intent(getContext(), KefuActivity.class));
+                    startActivity(new Intent(getContext(), ProfitActivity.class));
                 });
             }
         };
@@ -311,8 +302,9 @@ public class HomepageFragment extends BaseFragment implements MarketContract.Mar
             }
         }
         //给全局对象赋值
-        marketDataBeanList = new ArrayList<>(listData);
-        marketDataBeans = new ArrayList<>(listData);
+//        marketDataBeanList = new ArrayList<>(listData);
+        marketDataBeans.clear();
+        marketDataBeans.addAll(listData);
         tradeHorizontalAdapter.notifyDataSetChanged();
         //将所有的品种 按照  （英文 - 中文）  这种格式存入 sp
         /*SPUtils spUtils = SPUtils.getInstance(AppConstans.allMarket_en_cn);
@@ -339,10 +331,8 @@ public class HomepageFragment extends BaseFragment implements MarketContract.Mar
     @Override
     public void setTradList(List<TradeVo.Trade> list) {
         if (tradeList == null) {
-            tradeList = new ArrayList<>();
+            tradeList = new ArrayList<>(list);
         }
-        tradeList.clear();
-        tradeList.addAll(list);
         presenter.getMarketList("live", "");
     }
 

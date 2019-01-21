@@ -22,7 +22,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@drawable/me_head_bg"
-                android:orientation="vertical">
+                android:orientation="vertical"
+                android:visibility="visible">
 
                 <LinearLayout
                     android:id="@+id/userInfoView"
@@ -128,198 +129,272 @@
 
             </LinearLayout>
             <!--登录/注册 下方的方格布局-->
-            <LinearLayout
+            <!-- <LinearLayout
+                 android:layout_width="match_parent"
+                 android:layout_height="@dimen/margin_88dp"
+                 android:layout_marginTop="@dimen/margin_8dp"
+                 android:orientation="horizontal"
+                 android:visibility="gone">
+                 &lt;!&ndash;未登录成功的时候显示&ndash;&gt;
+                 <RelativeLayout
+                     android:id="@+id/rl_openaccount"
+                     android:layout_width="0dip"
+                     android:layout_height="match_parent"
+                     android:layout_weight="1.0"
+                     android:background="@color/white">
+
+                     <ImageView
+                         android:layout_width="30dip"
+                         android:layout_height="30dip"
+                         android:layout_alignParentRight="true"
+                         android:src="@mipmap/icon_me_hot"
+                         android:visibility="visible" />
+
+                     <LinearLayout
+                         android:layout_width="wrap_content"
+                         android:layout_height="wrap_content"
+                         android:layout_centerHorizontal="true"
+                         android:layout_centerVertical="true"
+                         android:gravity="center"
+                         android:orientation="vertical">
+
+                         <RelativeLayout
+                             android:layout_width="@dimen/margin_31dp"
+                             android:layout_height="@dimen/margin_31dp"
+                             android:gravity="center">
+
+                             <ImageView
+                                 android:id="@+id/ic_needAuth"
+                                 android:layout_width="@dimen/margin_27dp"
+                                 android:layout_height="@dimen/margin_24dp"
+                                 android:src="@mipmap/me_open_account" />
+                         </RelativeLayout>
+
+                         <TextView
+                             android:id="@+id/tv_needAuth"
+                             android:layout_width="wrap_content"
+                             android:layout_height="wrap_content"
+                             android:layout_marginTop="5dip"
+                             android:gravity="center"
+                             android:text="@string/me_open_account"
+                             android:textColor="@color/home_title_bg_color"
+                             android:textSize="@dimen/text_size_12sp" />
+                     </LinearLayout>
+                 </RelativeLayout>
+
+                 &lt;!&ndash;登录成功 显示&ndash;&gt;
+                 <RelativeLayout
+                     android:id="@+id/rl_intergral_market"
+                     android:layout_width="0dip"
+                     android:layout_height="match_parent"
+                     android:layout_weight="1.0"
+                     android:background="@color/white"
+                     android:visibility="gone">
+
+                     <LinearLayout
+                         android:layout_width="wrap_content"
+                         android:layout_height="wrap_content"
+                         android:layout_centerHorizontal="true"
+                         android:layout_centerVertical="true"
+                         android:gravity="center"
+                         android:orientation="vertical">
+
+                         <ImageView
+                             android:layout_width="@dimen/margin_31dp"
+                             android:layout_height="@dimen/margin_31dp"
+                             android:src="@mipmap/img_intergral_market" />
+
+                         <TextView
+                             android:layout_width="wrap_content"
+                             android:layout_height="wrap_content"
+                             android:layout_marginTop="5dip"
+                             android:gravity="center"
+                             android:text="@string/intergral_market"
+                             android:textColor="@color/home_title_bg_color"
+                             android:textSize="@dimen/text_size_12sp" />
+                     </LinearLayout>
+
+                     <ImageView
+                         android:layout_width="30dip"
+                         android:layout_height="30dip"
+                         android:layout_alignParentRight="true"
+                         android:src="@mipmap/icon_me_hot"
+                         android:visibility="visible" />
+                 </RelativeLayout>
+                 &lt;!&ndash;登录成功 显示&ndash;&gt;
+                 <RelativeLayout
+                     android:id="@+id/rl_mission_center"
+                     android:layout_width="match_parent"
+                     android:layout_height="match_parent"
+                     android:layout_weight="1.0"
+                     android:background="@color/white"
+                     android:visibility="gone">
+
+                     <ImageView
+                         android:layout_width="@dimen/margin_31dp"
+                         android:layout_height="@dimen/margin_31dp"
+                         android:layout_centerHorizontal="true"
+                         android:layout_marginTop="@dimen/margin_20dp"
+                         android:src="@mipmap/img_mission_center" />
+
+                     <TextView
+                         android:layout_width="match_parent"
+                         android:layout_height="wrap_content"
+                         android:layout_alignParentBottom="true"
+                         android:layout_marginBottom="@dimen/margin_16dp"
+                         android:gravity="center"
+                         android:text="@string/mission_center"
+                         android:textColor="@color/home_title_bg_color"
+                         android:textSize="@dimen/text_size_12sp" />
+
+                     <ImageView
+                         android:layout_width="30dip"
+                         android:layout_height="30dip"
+                         android:layout_alignParentRight="true"
+                         android:src="@mipmap/img_newtag_icon" />
+                 </RelativeLayout>
+
+                 <View
+                     android:id="@+id/line_open_account"
+                     android:layout_width="@dimen/margin_1dp"
+                     android:layout_height="match_parent" />
+                 &lt;!&ndash; 始终 显示&ndash;&gt;
+                 <LinearLayout
+                     android:id="@+id/ll_customer_service"
+                     android:layout_width="0dip"
+                     android:layout_height="match_parent"
+                     android:layout_weight="1.0"
+                     android:background="@color/white"
+                     android:gravity="center"
+                     android:orientation="vertical">
+
+                     <ImageView
+                         android:id="@+id/imageView2"
+                         android:layout_width="@dimen/margin_31dp"
+                         android:layout_height="@dimen/margin_31dp"
+                         android:layout_above="@+id/textView2"
+                         android:layout_centerHorizontal="true"
+                         android:src="@mipmap/img_customer_service" />
+
+                     <TextView
+                         android:id="@+id/textView2"
+                         android:layout_width="match_parent"
+                         android:layout_height="wrap_content"
+                         android:layout_marginTop="5dip"
+                         android:gravity="center"
+                         android:text="@string/customer_service"
+                         android:textColor="@color/home_title_bg_color"
+                         android:textSize="@dimen/text_size_12sp" />
+                 </LinearLayout>
+
+                 <View
+                     android:layout_width="@dimen/margin_1dp"
+                     android:layout_height="match_parent" />
+                 &lt;!&ndash;始终 显示&ndash;&gt;
+                 <LinearLayout
+                     android:id="@+id/ll_account_manager"
+                     android:layout_width="0dip"
+                     android:layout_height="match_parent"
+                     android:layout_weight="1.0"
+                     android:background="@color/white"
+                     android:gravity="center"
+                     android:orientation="vertical">
+
+                     <ImageView
+                         android:layout_width="@dimen/margin_31dp"
+                         android:layout_height="@dimen/margin_31dp"
+                         android:layout_centerHorizontal="true"
+                         android:src="@mipmap/img_account_manager" />
+
+                     <TextView
+                         android:layout_width="match_parent"
+                         android:layout_height="wrap_content"
+                         android:layout_marginTop="5dip"
+                         android:gravity="center"
+                         android:text="@string/account_manager"
+                         android:textColor="@color/home_title_bg_color"
+                         android:textSize="@dimen/text_size_12sp" />
+                 </LinearLayout>
+             </LinearLayout>-->
+
+            <android.support.constraint.ConstraintLayout
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/margin_88dp"
-                android:layout_marginTop="@dimen/margin_8dp"
-                android:orientation="horizontal">
-                <!--未登录成功的时候显示-->
-                <RelativeLayout
-                    android:id="@+id/rl_openaccount"
-                    android:layout_width="0dip"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1.0"
-                    android:background="@color/white">
+                android:layout_height="wrap_content"
+                android:background="@color/white"
+                android:orientation="horizontal"
+                android:padding="@dimen/margin_16dp">
 
-                    <ImageView
-                        android:layout_width="30dip"
-                        android:layout_height="30dip"
-                        android:layout_alignParentRight="true"
-                        android:src="@mipmap/icon_me_hot"
-                        android:visibility="visible" />
+                <TextView
+                    android:id="@+id/tv_01"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="资产净值（美元）"
+                    android:textColor="#333"
+                    android_custom:layout_constraintLeft_toLeftOf="parent"
+                    android_custom:layout_constraintTop_toTopOf="parent" />
 
-                    <LinearLayout
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_centerHorizontal="true"
-                        android:layout_centerVertical="true"
-                        android:gravity="center"
-                        android:orientation="vertical">
+                <TextView
+                    android:id="@+id/tv_asset"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/margin_4dp"
+                    android:text="0.000"
+                    android:textColor="#000000"
+                    android:textSize="30sp"
+                    android_custom:layout_constraintLeft_toLeftOf="@id/tv_01"
+                    android_custom:layout_constraintTop_toBottomOf="@id/tv_01" />
 
-                        <RelativeLayout
-                            android:layout_width="@dimen/margin_31dp"
-                            android:layout_height="@dimen/margin_31dp"
-                            android:gravity="center">
+                <TextView
+                    android:id="@+id/tv_02"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="@dimen/margin_20dp"
+                    android:text="浮动盈亏："
+                    android_custom:layout_constraintRight_toLeftOf="@id/tv_profit"
+                    android_custom:layout_constraintTop_toTopOf="@id/tv_01" />
 
-                            <ImageView
-                                android:id="@+id/ic_needAuth"
-                                android:layout_width="@dimen/margin_27dp"
-                                android:layout_height="@dimen/margin_24dp"
-                                android:src="@mipmap/me_open_account" />
-                        </RelativeLayout>
+                <TextView
+                    android:id="@+id/tv_profit"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="0>"
+                    android:textColor="#000000"
+                    android:textSize="@dimen/sp_16"
+                    android_custom:layout_constraintRight_toRightOf="parent"
+                    android_custom:layout_constraintTop_toTopOf="@id/tv_02" />
 
-                        <TextView
-                            android:id="@+id/tv_needAuth"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="5dip"
-                            android:gravity="center"
-                            android:text="@string/me_open_account"
-                            android:textColor="@color/home_title_bg_color"
-                            android:textSize="@dimen/text_size_12sp" />
-                    </LinearLayout>
-                </RelativeLayout>
 
-                <!--登录成功 显示-->
-                <RelativeLayout
-                    android:id="@+id/rl_intergral_market"
-                    android:layout_width="0dip"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1.0"
-                    android:background="@color/white"
-                    android:visibility="gone">
+                <TextView
+                    android:id="@+id/tv_03"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/margin_10dp"
+                    android:layout_marginRight="@dimen/margin_20dp"
+                    android:text="可用余额："
+                    android_custom:layout_constraintRight_toLeftOf="@id/tv_balance"
+                    android_custom:layout_constraintTop_toBottomOf="@id/tv_02" />
 
-                    <LinearLayout
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_centerHorizontal="true"
-                        android:layout_centerVertical="true"
-                        android:gravity="center"
-                        android:orientation="vertical">
+                <TextView
+                    android:id="@+id/tv_balance"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="0>"
+                    android:textColor="#000000"
+                    android:textSize="@dimen/sp_16"
+                    android_custom:layout_constraintRight_toRightOf="parent"
+                    android_custom:layout_constraintTop_toTopOf="@id/tv_03" />
 
-                        <ImageView
-                            android:layout_width="@dimen/margin_31dp"
-                            android:layout_height="@dimen/margin_31dp"
-                            android:src="@mipmap/img_intergral_market" />
 
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="5dip"
-                            android:gravity="center"
-                            android:text="@string/intergral_market"
-                            android:textColor="@color/home_title_bg_color"
-                            android:textSize="@dimen/text_size_12sp" />
-                    </LinearLayout>
+            </android.support.constraint.ConstraintLayout>
 
-                    <ImageView
-                        android:layout_width="30dip"
-                        android:layout_height="30dip"
-                        android:layout_alignParentRight="true"
-                        android:src="@mipmap/icon_me_hot"
-                        android:visibility="visible" />
-                </RelativeLayout>
-                <!--登录成功 显示-->
-                <RelativeLayout
-                    android:id="@+id/rl_mission_center"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1.0"
-                    android:background="@color/white"
-                    android:visibility="gone">
 
-                    <ImageView
-                        android:layout_width="@dimen/margin_31dp"
-                        android:layout_height="@dimen/margin_31dp"
-                        android:layout_centerHorizontal="true"
-                        android:layout_marginTop="@dimen/margin_20dp"
-                        android:src="@mipmap/img_mission_center" />
-
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_alignParentBottom="true"
-                        android:layout_marginBottom="@dimen/margin_16dp"
-                        android:gravity="center"
-                        android:text="@string/mission_center"
-                        android:textColor="@color/home_title_bg_color"
-                        android:textSize="@dimen/text_size_12sp" />
-
-                    <ImageView
-                        android:layout_width="30dip"
-                        android:layout_height="30dip"
-                        android:layout_alignParentRight="true"
-                        android:src="@mipmap/img_newtag_icon" />
-                </RelativeLayout>
-
-                <View
-                    android:id="@+id/line_open_account"
-                    android:layout_width="@dimen/margin_1dp"
-                    android:layout_height="match_parent" />
-                <!-- 始终 显示-->
-                <LinearLayout
-                    android:id="@+id/ll_customer_service"
-                    android:layout_width="0dip"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1.0"
-                    android:background="@color/white"
-                    android:gravity="center"
-                    android:orientation="vertical">
-
-                    <ImageView
-                        android:id="@+id/imageView2"
-                        android:layout_width="@dimen/margin_31dp"
-                        android:layout_height="@dimen/margin_31dp"
-                        android:layout_above="@+id/textView2"
-                        android:layout_centerHorizontal="true"
-                        android:src="@mipmap/img_customer_service" />
-
-                    <TextView
-                        android:id="@+id/textView2"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="5dip"
-                        android:gravity="center"
-                        android:text="@string/customer_service"
-                        android:textColor="@color/home_title_bg_color"
-                        android:textSize="@dimen/text_size_12sp" />
-                </LinearLayout>
-
-                <View
-                    android:layout_width="@dimen/margin_1dp"
-                    android:layout_height="match_parent" />
-                <!--始终 显示-->
-                <LinearLayout
-                    android:id="@+id/ll_account_manager"
-                    android:layout_width="0dip"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1.0"
-                    android:background="@color/white"
-                    android:gravity="center"
-                    android:orientation="vertical">
-
-                    <ImageView
-                        android:layout_width="@dimen/margin_31dp"
-                        android:layout_height="@dimen/margin_31dp"
-                        android:layout_centerHorizontal="true"
-                        android:src="@mipmap/img_account_manager" />
-
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="5dip"
-                        android:gravity="center"
-                        android:text="@string/account_manager"
-                        android:textColor="@color/home_title_bg_color"
-                        android:textSize="@dimen/text_size_12sp" />
-                </LinearLayout>
-            </LinearLayout>
             <!--方格下方的条状布局-->
             <View
                 android:layout_width="fill_parent"
                 android:layout_height="8dip"
                 android:background="@color/sub_bg"
                 android:visibility="visible" />
+
             <!--登录状态显示，消息中心-->
             <com.allen.library.SuperTextView
                 android:id="@+id/super_msg"
@@ -350,7 +425,6 @@
                 android:layout_height="50dp"
                 android_custom:sLeftTextString="关于我们"
                 android_custom:sRightIconRes="@mipmap/me_icon_more" />
-
         </LinearLayout>
 
     </ScrollView>

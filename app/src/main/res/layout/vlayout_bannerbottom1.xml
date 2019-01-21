@@ -56,7 +56,7 @@
                 android:layout_width="@dimen/margin_40dp"
                 android:layout_height="@dimen/margin_40dp"
                 android:scaleType="fitXY"
-                android:src="@drawable/kefu" />
+                android:src="@mipmap/img_home_usergold" />
 
             <TextView
                 android:id="@+id/tv_home_usergold"
@@ -65,7 +65,7 @@
                 android:layout_centerVertical="true"
                 android:layout_marginLeft="@dimen/margin_12dp"
                 android:layout_toRightOf="@+id/img_usergold_icon"
-                android:text="在线客服"
+                android:text="盈利榜"
                 android:textColor="@color/app_common_content"
                 android:textSize="@dimen/text_size_16sp" />
 

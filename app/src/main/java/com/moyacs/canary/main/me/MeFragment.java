@@ -9,6 +9,7 @@ import android.widget.TextView;
 import com.moyacs.canary.base.BaseFragment;
 import com.moyacs.canary.common.DialogUtils;
 import com.moyacs.canary.login.LoginActivity;
+import com.moyacs.canary.main.deal.net_tab3.UserAmountVo;
 import com.moyacs.canary.network.BaseObservable;
 import com.moyacs.canary.network.RxUtils;
 import com.moyacs.canary.network.ServerManger;
@@ -37,6 +38,14 @@ public class MeFragment extends BaseFragment {
     LinearLayout llUnLogin;
     @BindView(R.id.ll_login)
     LinearLayout llLogin;
+    @BindView(R.id.tv_asset)
+    TextView tvAsset;
+    @BindView(R.id.tv_profit)
+    TextView tvProfit;
+    @BindView(R.id.tv_balance)
+    TextView tvBalance;
+
+    private boolean isLoadData = false;
 
     @Override
     protected int getLayoutId() {
@@ -55,12 +64,19 @@ public class MeFragment extends BaseFragment {
 
     @Override
     protected void initData() {
-        if (!TextUtils.isEmpty(SharePreferencesUtil.getInstance().getUserPhone())) {
-            getUserInfo();
-        }
         registerEventBus();
     }
 
+    @Override
+    public void setUserVisibleHint(boolean isVisibleToUser) {
+        super.setUserVisibleHint(isVisibleToUser);
+        if (isVisibleToUser && !isLoadData) {
+            if (!TextUtils.isEmpty(SharePreferencesUtil.getInstance().getUserPhone())) {
+                getUserInfo();
+            }
+            isLoadData = true;
+        }
+    }
 
     /**
      * 登录成功之后，改变相关状态
@@ -77,8 +93,7 @@ public class MeFragment extends BaseFragment {
         }
     }
 
-    @OnClick({R.id.btn_login, R.id.rl_openaccount, R.id.rl_intergral_market, R.id.rl_mission_center,
-            R.id.ll_customer_service, R.id.ll_account_manager, R.id.super_huidashi, R.id.super_version,
+    @OnClick({R.id.btn_login, R.id.img_person, R.id.super_huidashi, R.id.super_version,
             R.id.super_aboutus, R.id.text_needexp})
     public void onViewClicked(View view) {
         Intent intent;
@@ -89,22 +104,8 @@ public class MeFragment extends BaseFragment {
                 intent = new Intent(mActivity, LoginActivity.class);
                 startActivity(intent);
                 break;
-            case R.id.rl_openaccount:
-                //开通账号
-                ToastUtils.showShort("正在开发中...");
-                break;
-            case R.id.rl_intergral_market:
-                //积分商城
-                break;
-            case R.id.rl_mission_center:
-                //任务中心
-                break;
-            case R.id.ll_customer_service:
-                //在线客服
-                ToastUtils.showShort("正在开发中...");
-                break;
-            case R.id.ll_account_manager:
-                //账号管理
+            case R.id.img_person:
+                //点击头像进去个人信息设置
                 if (TextUtils.isEmpty(SharePreferencesUtil.getInstance().getUserPhone())) {
                     DialogUtils.login_please("请先登录", getContext());
                 } else {
@@ -164,6 +165,7 @@ public class MeFragment extends BaseFragment {
                         llUnLogin.setVisibility(View.GONE);
                         llLogin.setVisibility(View.VISIBLE);
                         SharePreferencesUtil.getInstance().setNickName(data.getData().getUserName());
+                        getUserBalance();
                     }
 
                     @Override
@@ -176,6 +178,24 @@ public class MeFragment extends BaseFragment {
                     public void onComplete() {
                         super.onComplete();
                         setNickName();
+                    }
+                }));
+    }
+
+    /**
+     * 获取用户资产信息
+     */
+    private void getUserBalance() {
+        addSubscribe(ServerManger.getInstance().getServer().getUserAmountInfo()
+                .compose(RxUtils.rxSchedulerHelper())
+                .subscribeWith(new BaseObservable<ServerResult<UserAmountVo>>() {
+                    @Override
+                    protected void requestSuccess(ServerResult<UserAmountVo> data) {
+                        UserAmountVo amount = data.getData();
+                        if (amount != null) {
+                            tvAsset.setText(data.getData().getRechargeAmount());
+                            tvBalance.setText(data.getData().getBalance());
+                        }
                     }
                 }));
     }

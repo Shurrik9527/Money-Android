@@ -708,7 +708,6 @@ public class OrderPopWindow implements View.OnClickListener {
                 tvSize01.setTextColor(baseActivity2.getResources().getColorStateList(R.color.item_quick_trade_color_tv_down));
                 tvSize02.setTextColor(baseActivity2.getResources().getColorStateList(R.color.item_quick_trade_color_tv_down));
                 tvSize03.setTextColor(baseActivity2.getResources().getColorStateList(R.color.item_quick_trade_color_tv_down));
-
             }
             btnSubmit.setBackgroundResource(R.drawable.qucik_trade_submit_green);
         }

@@ -164,4 +164,10 @@ public interface ServerApi {
      */
     @POST("login/refreshJWT")
     Call<JsonObject> getAuth();
+
+    /**
+     * 获取webSocket地址
+     */
+    @GET("symbolInfo/getWebSocketAddress")
+    Observable<ServerResult<String>> getWebSocketAddress();
 }

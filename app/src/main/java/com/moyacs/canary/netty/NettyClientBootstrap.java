@@ -1,12 +1,9 @@
 package com.moyacs.canary.netty;
 
-import android.util.Log;
-
 import com.moyacs.canary.netty.codec.Decode;
 
 import java.nio.charset.Charset;
 import java.util.concurrent.TimeUnit;
-
 
 import io.netty.bootstrap.Bootstrap;
 import io.netty.buffer.Unpooled;
@@ -35,7 +32,7 @@ public class NettyClientBootstrap {
     private ChannelFuture channelFuture;
     private EventLoopGroup eventLoopGroup;
 
-    public void init() throws InterruptedException {
+    public void init(String url) throws InterruptedException {
         clientHandler = new NettyClientHandler(this);
         eventLoopGroup = new NioEventLoopGroup();
         bootstrap.channel(NioSocketChannel.class);
@@ -84,7 +81,6 @@ public class NettyClientBootstrap {
 
     }
 
-
     private String getServerInfo() {
         return String.format("RemoteHost=%s RemotePort=%d", "quotation.moamarkets.com", 1234);
     }
@@ -107,5 +103,4 @@ public class NettyClientBootstrap {
             e.printStackTrace();
         }
     }
-
 }

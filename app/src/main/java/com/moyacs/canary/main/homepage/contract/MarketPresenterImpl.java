@@ -15,9 +15,7 @@ import com.moyacs.canary.network.ServerResult;
 
 import java.util.List;
 
-import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.CompositeDisposable;
-import io.reactivex.schedulers.Schedulers;
 
 /**
  * 作者：luoshen on 2018/3/7 0007 10:17
@@ -44,8 +42,7 @@ public class MarketPresenterImpl implements MarketContract.MarketPresenter {
     @Override
     public void getMarketList(String server, String type) {
         disposable.add(homePageServer.getMarketList(server, type)
-                .subscribeOn(Schedulers.io())//指定网络请求所在的线程
-                .observeOn(AndroidSchedulers.mainThread())//指定的是它之后（下方）执行的操作所在的线程
+                .compose(RxUtils.rxSchedulerHelper())
                 .subscribeWith(new BaseMoaObservable<HttpResult<List<MarketDataBean>>>() {
                     @Override
                     protected void requestSuccess(HttpResult<List<MarketDataBean>> data) {
@@ -64,7 +61,6 @@ public class MarketPresenterImpl implements MarketContract.MarketPresenter {
                         mView.setBannerList(data.getData().getList());
                     }
                 }));
-
     }
 
     @Override

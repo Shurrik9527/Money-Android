@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<TextView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/tv_price"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/select_recharge_bg"
+    android:gravity="center"
+    android:padding="@dimen/margin_16dp"
+    android:text="$100"
+    android:textColor="@drawable/select_recharge_color" />
+

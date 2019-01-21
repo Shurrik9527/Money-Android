@@ -622,5 +622,11 @@
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="guadan">挂单</string>
+    <string name="chongzhishuoming">充值说明\n
+        1.人民币充值无手续费，汇率根据银行汇率实时浮动\n
+        2.充值限额根据银行规定\n
+        3.本司仅支持客户使用本人银行卡出入金，不支持信用卡或者第三方入金，若出现信用卡入金，我司将退出资金并收取7%手续费用；若出现第三方存款，除了退款及7%手续费外，应监管
+        要求还会对账户号先行禁用，需要提交所有过往存款证明及第三方存款人资料后等待审核。
+    </string>
 
 </resources>
