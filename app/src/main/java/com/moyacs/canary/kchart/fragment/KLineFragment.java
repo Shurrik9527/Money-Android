@@ -23,11 +23,12 @@ import com.moyacs.canary.kchart.util.KDisplayUtil;
 import com.moyacs.canary.kchart.util.KNumberUtil;
 import com.moyacs.canary.kchart.util.KParamConfig;
 import com.moyacs.canary.kchart.util.KParseUtils;
-import com.moyacs.canary.netty.codec.Quotation;
+import com.moyacs.canary.main.me.EvenVo;
 import com.moyacs.canary.product_fxbtg.Product_constans;
 import com.moyacs.canary.product_fxbtg.contract_kline.ProductContract;
 import com.moyacs.canary.product_fxbtg.contract_kline.ProductPresenterImpl;
 import com.moyacs.canary.product_fxbtg.net_kline.KLineData;
+import com.moyacs.canary.service.SocketQuotation;
 import com.moyacs.canary.util.DateUtil;
 
 import org.greenrobot.eventbus.Subscribe;
@@ -229,7 +230,7 @@ public class KLineFragment extends BaseFragment implements OnKCrossLineMoveListe
      *
      * @param isLand
      */
-   private void handLandView(boolean isLand) {
+    private void handLandView(boolean isLand) {
         if (isLand) {
             kLineView.setAxisYmiddleHeight(KDisplayUtil.dip2px(getActivity(), 15));
             //隐藏竖屏的指标
@@ -555,7 +556,7 @@ public class KLineFragment extends BaseFragment implements OnKCrossLineMoveListe
                 simpleDateFormat = "yyyy-MM-dd";
             }
 
-            String time_format = DateUtil.parseDateToStr(new Date(timeLong),simpleDateFormat);
+            String time_format = DateUtil.parseDateToStr(new Date(timeLong), simpleDateFormat);
             //long 类型时间
             kCandleObj.setTimeLong(timeLong);
             //格式化的时间字符串
@@ -736,37 +737,35 @@ public class KLineFragment extends BaseFragment implements OnKCrossLineMoveListe
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)
-    public void onGetNettyDate(Quotation quotation) {
-        //如果不是当前的品种代码，直接返回
-        if (!code.equals(quotation.getSymbol())) {
-            return;
-        }
-        if (kCandleObjRefresh != null) {
-            kCandleObjRefresh = null;
-        }
-        if (listData == null || listData.size() <= 0) {
-            return;
-        }
-        kCandleObjRefresh = new KCandleObj();
+    public void onGetNettyDate(EvenVo<SocketQuotation> evenVo) {
+        if (evenVo.getCode() == EvenVo.SOCKET_QUOTATION) {
+            if (kCandleObjRefresh != null) {
+                kCandleObjRefresh = null;
+            }
+            if (listData == null || listData.size() <= 0) {
+                return;
+            }
+            SocketQuotation quotation = evenVo.getT();
+            //如果不是当前的品种代码，直接返回
+            if (!code.equals(quotation.getSymbolCode())) {
+                return;
+            }
+            kCandleObjRefresh = new KCandleObj();
 
-        Long unixTime = quotation.getUnixTime();
-        long l = unixTime + 5 * 60 * 60 * 1000;
-        //设置 long 时间
-//        kCandleObjRefresh.setTimeLong(quotation.getUnixTime());
-        kCandleObjRefresh.setTimeLong(l);
-        //最新买入价
-        double ask = quotation.getAsk();
-        kCandleObjRefresh.setHigh(ask);
-        kCandleObjRefresh.setLow(ask);
-        kCandleObjRefresh.setOpen(ask);
-        kCandleObjRefresh.setClose(ask);
-        String time = DateUtil.parseDateToStr(new Date(l), simpleDateFormat);
-        kCandleObjRefresh.setTime(quotation.getTime());
-        kCandleObjRefresh.setTime(time);
-        //获取 socket 数据之前，是否绘制完毕
-        if (isEvent4SMA) {
-            //刷新数据
-            setLastKData(kCandleObjRefresh);
+            //设置 long 时间
+            kCandleObjRefresh.setTimeLong(quotation.getMarketTime().getLongTime());
+            //最新买入价
+            double ask = quotation.getPrice();
+            kCandleObjRefresh.setHigh(ask);
+            kCandleObjRefresh.setLow(ask);
+            kCandleObjRefresh.setOpen(ask);
+            kCandleObjRefresh.setClose(ask);
+            kCandleObjRefresh.setTime(quotation.getMarketTime().getTime());
+            //获取 socket 数据之前，是否绘制完毕
+            if (isEvent4SMA) {
+                //刷新数据
+                setLastKData(kCandleObjRefresh);
+            }
         }
     }
 

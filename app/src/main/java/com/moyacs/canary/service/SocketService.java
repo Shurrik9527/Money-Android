@@ -54,6 +54,7 @@ public class SocketService extends Service {
     public void onDestroy() {
         super.onDestroy();
         disposables.clear();
+        WebSocketManger.getInstance().closeConnect();
 //        nettyClientBootstrap.disConnect();
     }
 

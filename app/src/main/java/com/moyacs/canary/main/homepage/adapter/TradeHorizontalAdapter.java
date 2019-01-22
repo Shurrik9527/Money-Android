@@ -64,7 +64,7 @@ public class TradeHorizontalAdapter extends RecyclerView.Adapter<TradeHorizontal
             String oldPrice = (String) holder.tvPrice.getText();
             //昨收
             double close = marketDataBean.getClose();
-            //即将赋值的价格
+            //即将赋值的价格  最新的买入价
             double newPrice_d = marketDataBean.getPrice_buy();
             //根据保留的小数位截取数据
             String newPrice_d_scale = NumberUtils.setScale(newPrice_d, marketDataBean.getDigit());
@@ -73,11 +73,11 @@ public class TradeHorizontalAdapter extends RecyclerView.Adapter<TradeHorizontal
 
             //第一次进入的时候 oldPrice 没数据
             if (oldPrice != null && !oldPrice.equals("null") && !oldPrice.equals("")) {
-                double oldprice_d = Double.valueOf(oldPrice);
+                double oldPrice_d = Double.valueOf(oldPrice);
                 //比较昨收价格  与 最新买入价 大小
                 int compare = NumberUtils.compare(newPrice_d, close);
                 //比较，新旧买入价
-                int compare2 = NumberUtils.compare(newPrice_d, oldprice_d);
+                int compare2 = NumberUtils.compare(newPrice_d, oldPrice_d);
 
                 //主要是为了保证 相减始终为正数，正负号手动添加
                 if (compare == -1) {// 新价格 < 昨收价格
@@ -94,7 +94,6 @@ public class TradeHorizontalAdapter extends RecyclerView.Adapter<TradeHorizontal
                     String s = NumberUtils.setScale2(range);
                     //跌 加 - 号
                     rangeString = "-" + s + "%";
-                    holder.tvvalueAndRate.setText(rangeValue + "   " + rangeString);
                 } else if (compare != 0) {//新价格 > 昨收价格
                     isUp = true;
                     rangeColor = holder.itemView.getResources().getColor(R.color.color_opt_gt);
@@ -107,8 +106,9 @@ public class TradeHorizontalAdapter extends RecyclerView.Adapter<TradeHorizontal
                     String s = NumberUtils.setScale2(range);
                     //涨 加 + 号
                     rangeString = "+" + s + "%";
-                    holder.tvvalueAndRate.setText(rangeValue + "   " + rangeString);
                 }
+                holder.tvvalueAndRate.setText(rangeValue + "   " + rangeString);
+                //这里的背景颜色表示实时的涨跌 所有由前后两次买入价格决定
                 // 价格 执行动画的颜色， 靠 前后两次买入价对比决定
                 if (compare2 == -1) {//新价格 < 旧价格 ，跌
                     animatorColor = holder.itemView.getResources().getColor(R.color.color_opt_lt_shan);

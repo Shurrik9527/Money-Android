@@ -88,7 +88,7 @@ public class MarketAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
                     double close = marketDataBean.getClose();
                     //即将赋值的价格  买入价
 //                    double newPrice_d = marketDataBean.getPrice_buy();
-                    double newPrice_d = marketDataBean.getPrice_buy() == 0 ? marketDataBean.getOpen() : marketDataBean.getPrice_buy();
+                    double newPrice_d = marketDataBean.getPrice_buy() == 0 ? marketDataBean.getClose() : marketDataBean.getPrice_buy();
                     //根据保留的小数位截取数据
                     String newPrice_d_scale = NumberUtils.setScale(newPrice_d, marketDataBean.getDigit());
                     //设置最新价格
@@ -96,7 +96,7 @@ public class MarketAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
 
                     //设置 卖出价
 //                Double price_sale = marketDataBean.getPrice_sale();
-                    Double price_sale = marketDataBean.getPrice_sale() == 0 ? marketDataBean.getClose() : marketDataBean.getPrice_sale();
+                    Double price_sale = marketDataBean.getPrice_sale() == 0 ? marketDataBean.getOpen() : marketDataBean.getPrice_sale();
                     //根据保留的小数位截取数据
                     String price_sale_scale = NumberUtils.setScale(price_sale, marketDataBean.getDigit());
                     ((ContentViewHolder) holder).tvSale.setText(price_sale_scale);
@@ -230,10 +230,10 @@ public class MarketAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
             //品种英文名称
             ((ContentViewHolder) holder).tvEnglishname.setText(marketDataBean.getSymbol());
             //买入价
-            double newPrice_d = marketDataBean.getPrice_buy() == 0 ? marketDataBean.getOpen() : marketDataBean.getPrice_buy();
+            double newPrice_d = marketDataBean.getPrice_buy() == 0 ? marketDataBean.getClose() : marketDataBean.getPrice_buy();
             ((ContentViewHolder) holder).tvPrice.setText(newPrice_d + "");
             //卖出价
-            Double price_sale = marketDataBean.getPrice_sale() == 0 ? marketDataBean.getClose() : marketDataBean.getPrice_sale();
+            Double price_sale = marketDataBean.getPrice_sale() == 0 ? marketDataBean.getOpen() : marketDataBean.getPrice_sale();
             ((ContentViewHolder) holder).tvSale.setText(price_sale + "");
             //涨跌幅
             if (!isShowDianCha) {

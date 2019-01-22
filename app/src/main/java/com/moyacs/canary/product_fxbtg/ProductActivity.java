@@ -26,10 +26,11 @@ import com.moyacs.canary.common.NumberUtils;
 import com.moyacs.canary.kchart.fragment.KLineFragment;
 import com.moyacs.canary.main.market.net.MarketDataBean;
 import com.moyacs.canary.main.market.net.TradeVo;
-import com.moyacs.canary.netty.codec.Quotation;
+import com.moyacs.canary.main.me.EvenVo;
 import com.moyacs.canary.pay.GuaDanPopWindow;
 import com.moyacs.canary.pay.OrderPopWindow;
 import com.moyacs.canary.product_fxbtg.adapter.ProductAdapter;
+import com.moyacs.canary.service.SocketQuotation;
 import com.moyacs.canary.util.DateUtil;
 import com.moyacs.canary.util.LogUtils;
 import com.moyacs.canary.util.ViewListenerAbs;
@@ -191,111 +192,113 @@ public class ProductActivity extends BaseActivity implements OnClickListener {
     /**
      * 获取 EventBus 传递的 Socket 数据
      *
-     * @param quotation
+     * @param evenVo
      */
     @Subscribe(threadMode = ThreadMode.MAIN)
-    public void onGetNettyData(Quotation quotation) {
-        //过滤数据，只有与当前页面品种相同才处理
-        if (symbol.equals(quotation.getSymbol())) {
-            //是否获取到新价格
-            boolean isGetNewPrice = true;
-            // 获取旧价格，String 类型
-            String oldPrice = (String) tv_latest.getText();
-            //获取最新买入价，并显示
-            //新价格
-            double price_new = quotation.getAsk();
-            //格式化买入价
-            String price_new_scale = NumberUtils.setScale(price_new, digit);
-            //赋值最新买入价
-            priceBuy = price_new_scale;
-            //赋值最新卖出价
-            String priceSell = NumberUtils.setScale(quotation.getBid(), digit);
+    public void onGetNettyData(EvenVo<SocketQuotation> evenVo) {
+        if (evenVo.getCode() == EvenVo.SOCKET_QUOTATION) {
+            SocketQuotation quotation = evenVo.getT();
+            //过滤数据，只有与当前页面品种相同才处理
+            if (symbol.equals(quotation.getSymbolCode())) {
+                //是否获取到新价格
+                boolean isGetNewPrice = true;
+                // 获取旧价格，String 类型
+                String oldPrice = (String) tv_latest.getText();
+                //获取最新买入价，并显示
+                //新价格
+                double price_new = quotation.getPrice();
+                //格式化买入价
+                String price_new_scale = NumberUtils.setScale(price_new, digit);
+                //赋值最新买入价
+                priceBuy = price_new_scale;
+                //赋值最新卖出价
+//                String priceSell = NumberUtils.setScale(quotation.getBid(), digit);
 
-            //更新弹框数据
-            if (orderPopWindow != null && orderPopWindow.isShow()) {
-                orderPopWindow.setNewPrice(isGetNewPrice, Double.parseDouble(priceBuy));
-            }
-            if (guaDanPopWindow != null && guaDanPopWindow.isShow()) {
-                guaDanPopWindow.setNewPrice(isGetNewPrice, priceBuy);
-            }
-            //时间
-            Long unixTime = quotation.getUnixTime();
-            //时间
-            String time1 = DateUtil.parseDateToStr(new Date(unixTime + 5 * 60 * 60 * 1000), simpleDateFormat);
-            //竖屏
-            if (tv_latest != null) {
-                //设置最新买入价
-                tv_latest.setText(price_new_scale);
-                //设置时间
-                tvTime.setText(time1);
-            }
-            //横屏
-            if (tv_latest_land != null) {
-                //设置最新买入价
-                tv_latest_land.setText(price_new_scale);
-                //设置时间
-                tvTimeLand.setText(time1);
-            }
-            //比较新价格与昨收，
-            double compare = NumberUtils.compare(price_new, close);
-            //新旧价格差
-            double subtract;
-            //涨跌幅
-            double range;
-            if (compare == 1) {//新价格 > 昨收   涨
-                //计算涨跌值 新 - 旧
-                subtract = NumberUtils.subtract(price_new, close);
-                String s = NumberUtils.doubleToString(subtract);
-                //字体颜色
-                textColor = getResources().getColor(R.color.color_opt_gt);
-                //计算涨跌幅
-                range = NumberUtils.divide(subtract, close, 4);
-                //涨跌幅格式化
-                String s2 = NumberUtils.setScale2(range);
-                //竖屏时候设置
+                //更新弹框数据
+                if (orderPopWindow != null && orderPopWindow.isShow()) {
+                    orderPopWindow.setNewPrice(isGetNewPrice, Double.parseDouble(priceBuy));
+                }
+                if (guaDanPopWindow != null && guaDanPopWindow.isShow()) {
+                    guaDanPopWindow.setNewPrice(isGetNewPrice, priceBuy);
+                }
+                //时间
+                String time1 = quotation.getMarketTime().getTime();
+                //竖屏
+                if (tv_latest != null) {
+                    //设置最新买入价
+                    tv_latest.setText(price_new_scale);
+                    //设置时间
+                    tvTime.setText(time1);
+                }
+                //横屏
+                if (tv_latest_land != null) {
+                    //设置最新买入价
+                    tv_latest_land.setText(price_new_scale);
+                    //设置时间
+                    tvTimeLand.setText(time1);
+                }
+                //比较新价格与昨收，
+                double compare = NumberUtils.compare(price_new, close);
+                //新旧价格差
+                double subtract;
+                //涨跌幅
+                double range;
+                if (compare == 1) {//新价格 > 昨收   涨
+                    //计算涨跌值 新 - 旧
+                    subtract = NumberUtils.subtract(price_new, close);
+                    String s = NumberUtils.doubleToString(subtract);
+                    //字体颜色
+                    textColor = getResources().getColor(R.color.color_opt_gt);
+                    //计算涨跌幅
+                    range = NumberUtils.divide(subtract, close, 4);
+                    //涨跌幅格式化
+                    String s2 = NumberUtils.setScale2(range);
+                    //竖屏时候设置
+                    if (tvRate != null) {
+                        tvRate.setText("+" + s + "   +" + s2 + "%");
+                    }
+                    //横屏时候设置
+                    if (tvRateLand != null) {
+                        tvRateLand.setText("+" + s + "   +" + s2 + "%");
+                    }
+                    //设置 涨跌值 涨跌幅
+                } else if (compare == -1) {//新价格 < 昨收   跌
+                    //计算涨跌值  旧 - 新
+                    subtract = NumberUtils.subtract(close, price_new);
+                    String s = NumberUtils.doubleToString(subtract);
+                    //字体颜色
+                    textColor = getResources().getColor(R.color.trade_down);
+                    //计算涨跌幅
+                    range = NumberUtils.divide(subtract, close, 4);
+                    //涨跌幅格式化
+                    String s2 = NumberUtils.setScale2(range);
+                    //设置 涨跌值 涨跌幅
+                    rate = "-" + s + "   -" + s2 + "%";
+                    //竖屏时候设置
+                    if (tvRate != null) {
+                        tvRate.setText(rate);
+                    }
+                    //横屏时候设置
+                    if (tvRateLand != null) {
+                        tvRateLand.setText(rate);
+                    }
+                } else {
+                    //新价格 = 旧价格   平
+                }
+                //改变字体颜色
+                tv_latest.setTextColor(textColor);
+                //改变涨跌值和涨跌幅的颜色
+                //竖屏
                 if (tvRate != null) {
-                    tvRate.setText("+" + s + "   +" + s2 + "%");
+                    tvRate.setTextColor(textColor);
                 }
-                //横屏时候设置
+                //横屏
                 if (tvRateLand != null) {
-                    tvRateLand.setText("+" + s + "   +" + s2 + "%");
+                    tvRateLand.setTextColor(textColor);
                 }
-                //设置 涨跌值 涨跌幅
-            } else if (compare == -1) {//新价格 < 昨收   跌
-                //计算涨跌值  旧 - 新
-                subtract = NumberUtils.subtract(close, price_new);
-                String s = NumberUtils.doubleToString(subtract);
-                //字体颜色
-                textColor = getResources().getColor(R.color.trade_down);
-                //计算涨跌幅
-                range = NumberUtils.divide(subtract, close, 4);
-                //涨跌幅格式化
-                String s2 = NumberUtils.setScale2(range);
-                //设置 涨跌值 涨跌幅
-                rate = "-" + s + "   -" + s2 + "%";
-                //竖屏时候设置
-                if (tvRate != null) {
-                    tvRate.setText(rate);
-                }
-                //横屏时候设置
-                if (tvRateLand != null) {
-                    tvRateLand.setText(rate);
-                }
-            } else {
-                //新价格 = 旧价格   平
-            }
-            //改变字体颜色
-            tv_latest.setTextColor(textColor);
-            //改变涨跌值和涨跌幅的颜色
-            //竖屏
-            if (tvRate != null) {
-                tvRate.setTextColor(textColor);
-            }
-            //横屏
-            if (tvRateLand != null) {
-                tvRateLand.setTextColor(textColor);
             }
         }
+
     }
 
 
@@ -393,8 +396,7 @@ public class ProductActivity extends BaseActivity implements OnClickListener {
         //设置涨跌值 涨跌幅
         tvRate.setText(marketDataBean.getRangValue() + "   " + marketDataBean.getRangString());
         //设置时间
-        this.time = intent.getStringExtra(AppConstans.time);
-        tvTime.setText(this.time);
+        tvTime.setText(marketDataBean.getTime());
         //最高
         String high = NumberUtils.setScale(marketDataBean.getHigh(), marketDataBean.getDigit());
         //最低

@@ -21,6 +21,7 @@ import com.moyacs.canary.main.market.net.TradeVo;
 import com.moyacs.canary.main.me.EvenVo;
 import com.moyacs.canary.netty.codec.Quotation;
 import com.moyacs.canary.product_fxbtg.ProductActivity;
+import com.moyacs.canary.service.SocketQuotation;
 import com.moyacs.canary.util.LogUtils;
 import com.moyacs.canary.util.SharePreferencesUtil;
 import com.moyacs.canary.widget.UnderLineTextView;
@@ -429,14 +430,33 @@ public class MarketFragment extends BaseFragment implements MarketContract.Marke
                 marketList.set(i, marketDataBean);
                 //第二个参数不为 0 ，表示可以更新item 中的一部分 ui，对应 adapter 中的 三个参数的 onbindviewHolder
                 marketAdapter.notifyItemChanged(i, i);
+
             }
         }
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)
-    public void onEventData(EvenVo evenVo) {
+    public void onEventData(EvenVo<SocketQuotation> evenVo) {
         if (evenVo.getCode() == EvenVo.UPDATE_MY_CHOICE) {
             presenter.getMyChoiceList();
+        }else if(evenVo.getCode()==EvenVo.SOCKET_QUOTATION){
+            if(marketList != null && marketList.size() > 0 && isVisible()){
+                SocketQuotation sq= evenVo.getT();
+                for (int i = 0; i < marketList.size(); i++) {
+                    MarketDataBean dataBean = marketList.get(i);
+                   if(TextUtils.equals(dataBean.getSymbol(),sq.getSymbolCode())){
+                       //设置买入价
+                       dataBean.setPrice_buy(sq.getPrice());
+                       //设置卖出价  和买入价一致
+                       dataBean.setPrice_sale(sq.getPrice());
+                       dataBean.setTime(sq.getMarketTime().getTime());
+                       marketList.set(i, dataBean);
+                       //第二个参数不为 0 ，表示可以更新item 中的一部分 ui，对应 adapter 中的 三个参数的 onbindviewHolder
+                       marketAdapter.notifyItemChanged(i, i);
+                       break;
+                   }
+                }
+            }
         }
     }
 }

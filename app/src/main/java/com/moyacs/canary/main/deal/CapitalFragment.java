@@ -228,7 +228,9 @@ public class CapitalFragment extends BaseFragment implements FundContract.FundVi
 
     @Override
     public void unsubscribe() {
-        fundPresenter.unsubscribe();
+        if (fundPresenter != null) {
+            fundPresenter.unsubscribe();
+        }
     }
 
     @Override

@@ -779,23 +779,23 @@
                     android:visibility="visible" />
 
                 <TextView
+                    android:gravity="center"
                     android:id="@+id/tv_totalMoney"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="@dimen/margin_16dp"
+                    android:layout_height="match_parent"
                     android:layout_weight="1"
                     android:text="--"
                     android:textColor="@color/color_opt_gt"
-                    android:textSize="20sp"
+                    android:textSize="18sp"
                     android:visibility="visible" />
 
                 <TextView
+                    android:gravity="center"
                     android:id="@+id/tv_fee"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_height="match_parent"
                     android:layout_marginLeft="8dip"
                     android:layout_marginRight="@dimen/margin_16dp"
-                    android:text="(手续费--元)"
                     android:textColor="@color/grey"
                     android:textSize="12sp"
                     android:visibility="visible" />

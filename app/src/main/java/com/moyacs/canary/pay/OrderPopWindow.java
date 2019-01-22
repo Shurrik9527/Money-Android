@@ -20,11 +20,11 @@ import com.moyacs.canary.network.ServerManger;
 import com.moyacs.canary.network.ServerResult;
 import com.moyacs.canary.util.ForeignUtil;
 import com.moyacs.canary.util.LogUtils;
+import com.moyacs.canary.util.MoneyUtil;
 import com.moyacs.canary.util.SharePreferencesUtil;
 import com.moyacs.canary.util.ToastUtils;
 import com.moyacs.canary.widget.UnderLineTextView;
 
-import java.math.BigDecimal;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -264,12 +264,7 @@ public class OrderPopWindow implements View.OnClickListener {
         //动画效果
         popupWindow_order.setAnimationStyle(R.style.popwin_anim_style);
         //点击空白位置，popupwindow消失的事件监听，这时候让背景恢复正常
-        popupWindow_order.setOnDismissListener(new PopupWindow.OnDismissListener() {
-            @Override
-            public void onDismiss() {
-                backgroundAlpha(1.0f);
-            }
-        });
+        popupWindow_order.setOnDismissListener(() -> backgroundAlpha(1.0f));
         initViews(rootView);
         initData();
     }
@@ -558,11 +553,13 @@ public class OrderPopWindow implements View.OnClickListener {
      * 设置订单总价
      */
     private void setTvTotalMoney() {
-        int totalMoney = leiXingPrice * countSize;
-        float shouXuFei =new BigDecimal(String.valueOf(leiXingPrice)).multiply(new BigDecimal(String.valueOf(trade.getQuantityCommissionCharges())).multiply(new BigDecimal(String.valueOf(countSize)))) .floatValue();
-        tvTotalMoney.setText("$" + (totalMoney + shouXuFei)); //总金额
-        tvOverNight.setText("过夜费" + totalMoney * trade.getQuantityOvernightFee() + "美元/天，默认开启，建仓后可手动关闭"); // 过夜费
+//        String totalMoney = leiXingPrice * countSize;
+        String totalMoney = MoneyUtil.moneyMul(String.valueOf(leiXingPrice), String.valueOf(countSize));
+        String shouXuFei = MoneyUtil.moneyMul(totalMoney,String.valueOf(trade.getQuantityCommissionCharges()));
+        String nightFee = MoneyUtil.moneyMul(totalMoney,String.valueOf(trade.getQuantityOvernightFee()));
+        tvOverNight.setText("过夜费" + nightFee + "美元/天，默认开启，建仓后可手动关闭"); // 过夜费
         tvFee.setText("（手续费：$" + shouXuFei + "）"); //手续费
+        tvTotalMoney.setText("$" + MoneyUtil.moneyAdd(MoneyUtil.moneyAdd(totalMoney,nightFee),shouXuFei)); //总金额
         int boDongNum = 0;
         if (leiXingPrice == trade.getUnitPriceOne()) {
             boDongNum = trade.getQuantityOne();
@@ -571,9 +568,9 @@ public class OrderPopWindow implements View.OnClickListener {
         } else {
             boDongNum = trade.getQuantityThree();
         }
-        int heJiNum = boDongNum * countSize;
+        String heJiNum = MoneyUtil.moneyMul(String.valueOf(boDongNum),String.valueOf(countSize));
         textRatetips.setText("共计约合量" + heJiNum + ForeignUtil.formatForeignUtil(trade.getSymbolCode())
-                + "每波动一个点，收益$" + trade.getQuantityPriceFluctuation() * countSize * heJiNum);
+                + "每波动一个点，收益$" + MoneyUtil.moneyMul(String.valueOf(trade.getQuantityPriceFluctuation()),heJiNum));
     }
 
 

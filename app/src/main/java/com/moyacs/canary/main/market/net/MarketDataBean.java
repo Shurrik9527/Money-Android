@@ -54,6 +54,8 @@ public class MarketDataBean implements Serializable {
     private boolean isUp;
     private String type;
 
+    private String time; //刷新时间
+
 
     public void setStops_level(int stops_level) {
         this.stops_level = stops_level;
@@ -205,6 +207,15 @@ public class MarketDataBean implements Serializable {
 
     public void setType(String type) {
         this.type = type;
+    }
+
+
+    public String getTime() {
+        return time;
+    }
+
+    public void setTime(String time) {
+        this.time = time;
     }
 
     @Override

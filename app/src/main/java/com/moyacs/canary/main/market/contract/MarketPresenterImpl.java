@@ -57,6 +57,12 @@ public class MarketPresenterImpl implements MarketContract.MarketPresenter {
                         super.onComplete();
                         view.dismissLoadingDialog();
                     }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        super.onError(e);
+                        view.getMyChoiceListFiled(e.getMessage());
+                    }
                 }));
     }
 

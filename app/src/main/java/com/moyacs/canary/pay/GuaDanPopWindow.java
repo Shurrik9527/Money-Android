@@ -18,6 +18,7 @@ import com.moyacs.canary.main.market.net.TradeVo;
 import com.moyacs.canary.network.ServerManger;
 import com.moyacs.canary.network.ServerResult;
 import com.moyacs.canary.util.ForeignUtil;
+import com.moyacs.canary.util.MoneyUtil;
 import com.moyacs.canary.util.SharePreferencesUtil;
 import com.moyacs.canary.util.ToastUtils;
 
@@ -380,11 +381,12 @@ public class GuaDanPopWindow implements View.OnClickListener {
     }
 
     private void setMoneyValue() {
-        tvTotalMoney.setText("$ " + buySize * buyUnity);
-        int totalMoney = buyUnity * buySize;
-        tvNightFee.setText("过夜费" + totalMoney * trade.getQuantityOvernightFee() + "美元/天，默认开启，建仓后可手动关闭"); // 过夜费
-        float shouXufei = trade.getQuantityCommissionCharges() * buySize;
-        tvFee.setText("（手续费：$" + shouXufei + "）"); //手续费
+        String totalMoney = MoneyUtil.moneyMul(String.valueOf(buySize), String.valueOf(buyUnity));
+        String nightFee = MoneyUtil.moneyMul(String.valueOf(buySize),String.valueOf(trade.getQuantityOvernightFee()));
+        tvNightFee.setText("过夜费" + nightFee + "美元/天，默认开启，建仓后可手动关闭"); // 过夜费
+        String shouXufei = MoneyUtil.moneyMul(String.valueOf(trade.getQuantityCommissionCharges()), String.valueOf(buySize));
+        tvFee.setText("(手续费:$" + shouXufei + ")"); //手续费
+        tvTotalMoney.setText("$" + MoneyUtil.moneyAdd(MoneyUtil.moneyAdd(totalMoney, nightFee), shouXufei));
         int boDongNum = 0;
         if (buyUnity == trade.getUnitPriceOne()) {
             boDongNum = trade.getQuantityOne();
@@ -393,9 +395,9 @@ public class GuaDanPopWindow implements View.OnClickListener {
         } else {
             boDongNum = trade.getQuantityThree();
         }
-        int heJiNum = boDongNum * buySize;
+        String heJiNum =MoneyUtil.moneyMul(String.valueOf(boDongNum),String.valueOf(buySize));
         tvRateTips.setText("共计约合量" + heJiNum + ForeignUtil.formatForeignUtil(trade.getSymbolCode())
-                + "每波动一个点，收益$" + trade.getEntryOrders() * buySize * heJiNum);
+                + "每波动一个点，收益$" + MoneyUtil.moneyMul(String.valueOf(trade.getEntryOrders()),heJiNum));
     }
 
     private void initJianCangOtherViews(boolean isUp) {

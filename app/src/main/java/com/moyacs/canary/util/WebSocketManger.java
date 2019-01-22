@@ -2,6 +2,12 @@ package com.moyacs.canary.util;
 
 import android.util.Log;
 
+import com.google.gson.Gson;
+import com.moyacs.canary.main.me.EvenVo;
+import com.moyacs.canary.service.SocketQuotation;
+
+import org.greenrobot.eventbus.EventBus;
+
 import java.util.concurrent.TimeUnit;
 
 import okhttp3.OkHttpClient;
@@ -20,6 +26,8 @@ public class WebSocketManger {
     private static final WebSocketManger ourInstance = new WebSocketManger();
     private OkHttpClient client;
     private final String WEB_SOCKET_URL = "ws://www.zhangstz.com/royal/websocket/";
+    private Gson mGson;
+    private boolean isFirstLoad = true; //是不是第一条数据  第一条数据过滤
 
     public static WebSocketManger getInstance() {
         return ourInstance;
@@ -36,6 +44,7 @@ public class WebSocketManger {
                 .readTimeout(10, TimeUnit.SECONDS)
                 .writeTimeout(10, TimeUnit.SECONDS)
                 .build();
+        mGson = new Gson();
     }
 
     /**
@@ -45,7 +54,6 @@ public class WebSocketManger {
      */
     public void connectWebSocket(String url) {
         String webSocketUrL = WEB_SOCKET_URL + url;
-        Log.d("===webSocket地址==", webSocketUrL);
         Request request = new Request.Builder()
                 .url(webSocketUrL).build();
         client.newWebSocket(request, new WebSocketListener() {
@@ -56,12 +64,17 @@ public class WebSocketManger {
 
             @Override
             public void onMessage(WebSocket webSocket, String text) {
-                Log.e("===WebSocket==", "===数据======" + text);
+                if(isFirstLoad){
+                    isFirstLoad=false;
+                }else {
+                    SocketQuotation socketQuotation = mGson.fromJson(text, SocketQuotation.class);
+                    EventBus.getDefault().post(new EvenVo<SocketQuotation>(EvenVo.SOCKET_QUOTATION).setT(socketQuotation));
+                }
             }
 
             @Override
             public void onMessage(WebSocket webSocket, ByteString bytes) {
-                Log.e("===WebSocket==", "=====数据====" + bytes.hex());
+
             }
 
             @Override
@@ -72,8 +85,8 @@ public class WebSocketManger {
 
             @Override
             public void onClosed(WebSocket webSocket, int code, String reason) {
-                super.onClosed(webSocket,code,reason);
-                Log.e("===WebSocket===", "=====关闭====="+reason);
+                super.onClosed(webSocket, code, reason);
+                Log.e("===WebSocket===", "=====关闭=====" + reason);
             }
 
             @Override

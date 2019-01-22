@@ -24,8 +24,10 @@ import com.moyacs.canary.main.homepage.net.BannerDate;
 import com.moyacs.canary.main.homepage.net.DealChanceDate;
 import com.moyacs.canary.main.market.net.MarketDataBean;
 import com.moyacs.canary.main.market.net.TradeVo;
+import com.moyacs.canary.main.me.EvenVo;
 import com.moyacs.canary.netty.codec.Quotation;
 import com.moyacs.canary.product_fxbtg.ProductActivity;
+import com.moyacs.canary.service.SocketQuotation;
 import com.yan.pullrefreshlayout.PullRefreshLayout;
 import com.youth.banner.Banner;
 
@@ -261,6 +263,25 @@ public class HomepageFragment extends BaseFragment implements MarketContract.Mar
                 marketDataBeans.set(i, marketDataBean);
 //                第二个参数不为 0 ，表示可以更新item 中的一部分 ui，对应 adapter 中的 三个参数的 onbindviewHolder
                 tradeHorizontalAdapter.notifyItemChanged(i, i);
+                break;
+            }
+        }
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onWebSocketData(EvenVo<SocketQuotation> evenVo) {
+        if (evenVo.getCode() == EvenVo.SOCKET_QUOTATION && marketDataBeans != null
+                && marketDataBeans.size() > 0 && isVisible()) {
+            SocketQuotation sq = evenVo.getT();
+            for (int i = 0; i < marketDataBeans.size(); i++) {
+                MarketDataBean marketDataBean = marketDataBeans.get(i);
+                if (TextUtils.equals(marketDataBean.getSymbol(), sq.getSymbolCode())) {
+                    marketDataBean.setPrice_buy(sq.getPrice());
+                    marketDataBean.setTime(sq.getMarketTime().getTime());
+                    marketDataBeans.set(i, marketDataBean);
+                    tradeHorizontalAdapter.notifyItemChanged(i);
+                    break;
+                }
             }
         }
     }

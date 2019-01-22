@@ -170,7 +170,6 @@
                             android:layout_marginLeft="0dip"
                             android:gravity="center"
                             android:singleLine="true"
-                            android:text=""
                             android:textColor="@color/color_86919c"
                             android:textSize="@dimen/text_size_12sp"
                             android:visibility="visible" />
