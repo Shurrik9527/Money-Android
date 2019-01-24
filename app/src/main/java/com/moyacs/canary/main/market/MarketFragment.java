@@ -11,15 +11,12 @@ import android.view.View;
 import android.widget.TextView;
 
 import com.moyacs.canary.base.BaseFragment;
-import com.moyacs.canary.common.AppConstans;
 import com.moyacs.canary.common.DialogUtils;
 import com.moyacs.canary.main.market.adapter.MarketAdapter;
 import com.moyacs.canary.main.market.contract.MarketContract;
 import com.moyacs.canary.main.market.contract.MarketPresenterImpl;
-import com.moyacs.canary.main.market.net.MarketDataBean;
 import com.moyacs.canary.main.market.net.TradeVo;
 import com.moyacs.canary.main.me.EvenVo;
-import com.moyacs.canary.netty.codec.Quotation;
 import com.moyacs.canary.product_fxbtg.ProductActivity;
 import com.moyacs.canary.service.SocketQuotation;
 import com.moyacs.canary.util.LogUtils;
@@ -66,31 +63,24 @@ public class MarketFragment extends BaseFragment implements MarketContract.Marke
 
     //顶部 tab 集合
     private ArrayList<UnderLineTextView> tabList;
-    //五个 tab 公用的 数据源
-    private ArrayList<MarketDataBean> marketList;
-    //recycler 数据源 自选
-    private ArrayList<MarketDataBean> ziXuanList;
     private MarketAdapter marketAdapter;
     private MarketContract.MarketPresenter presenter;
-    // 记录 价格改变时间
-    private String time;
     //1:外汇 2:贵金属 3:原油  4:全球指数 “” 代表所有 ，是为了请求对应数据
     private String type;
     //为了确定当前页面显示的是哪个tab * 0 自选 1:外汇 2:贵金属 3:原油  4:全球指数
     private int showTabType = 1;
     //外汇 数据源
-    private ArrayList<MarketDataBean> waiHuiList;
+    private ArrayList<TradeVo.Trade> waiHuiList;
     //贵金属 数据源
-    private ArrayList<MarketDataBean> guiJinShuList;
+    private ArrayList<TradeVo.Trade> guiJinShuList;
     ///原油 数据源
-    private ArrayList<MarketDataBean> yuanYouList;
+    private ArrayList<TradeVo.Trade> yuanYouList;
     //全球指数  数据源
-    private ArrayList<MarketDataBean> quanQiuZhiShuList;
-    //可交易品种列表
-    private List<TradeVo.Trade> tradeList;
-    //可交易品种列表MOA
-    private List<MarketDataBean> marketAllList;
-
+    private ArrayList<TradeVo.Trade> quanQiuZhiShuList;
+    //五个 tab 公用的 数据源
+    private List<TradeVo.Trade> marketList;
+    //recycler 数据源 自选
+    private ArrayList<TradeVo.Trade> ziXuanList;
     private boolean isLoaderData = false;
 
     @Override
@@ -113,11 +103,9 @@ public class MarketFragment extends BaseFragment implements MarketContract.Marke
     protected void intListener() {
         marketAdapter.setAdapterClickListener(new MarketAdapter.AdapterClickListener() {
             @Override
-            public void onItemClickListener(MarketDataBean dataBean) {
+            public void onItemClickListener(TradeVo.Trade dataBean) {
                 //跳转详情页面
                 Intent intent = new Intent(mActivity, ProductActivity.class);
-                //时间
-                intent.putExtra(AppConstans.time, time);
                 //外汇信息
                 intent.putExtra("marketData", dataBean);
                 startActivity(intent);
@@ -257,7 +245,7 @@ public class MarketFragment extends BaseFragment implements MarketContract.Marke
     /**
      * 替换数据源
      */
-    private void replaceMarketList(List<MarketDataBean> list) {
+    private void replaceMarketList(List<TradeVo.Trade> list) {
         tvFailedView.setVisibility(View.GONE);//加载数据隐藏异常状态提醒
         rvMarket.setVisibility(View.VISIBLE);
         if (list == null) {
@@ -282,16 +270,7 @@ public class MarketFragment extends BaseFragment implements MarketContract.Marke
     @Override
     public void setMyChoiceList(List<TradeVo.Trade> result) {
         ziXuanList = new ArrayList<>();
-        if (result.size() > 0 && marketAllList != null && marketAllList.size() > 0) {
-            for (TradeVo.Trade t : result) {
-                for (MarketDataBean mb : marketAllList) {
-                    if (TextUtils.equals(t.getSymbolCode(), mb.getSymbol())) {
-                        mb.setTrade(t);
-                        ziXuanList.add(mb);
-                    }
-                }
-            }
-        }
+        ziXuanList.addAll(result);
         replaceMarketList(ziXuanList);
     }
 
@@ -302,31 +281,17 @@ public class MarketFragment extends BaseFragment implements MarketContract.Marke
         tvFailedView.setText("自选列表获取失败");
     }
 
-    /**
-     * 获取行情列表成功
-     *
-     * @param result
-     */
     @Override
-    public void setMarketList(List<MarketDataBean> result) {
-        marketAllList = new ArrayList<>(result);
-        //过滤数据
-        if (tradeList != null) {
-            for (MarketDataBean mb : marketAllList) {
-                for (TradeVo.Trade t : tradeList) {
-                    if (TextUtils.equals(mb.getSymbol(), t.getSymbolCode())) {
-                        mb.setTrade(t);
-                        if (TextUtils.equals("1", mb.getType())) {
-                            waiHuiList.add(mb);
-                        } else if (TextUtils.equals("2", mb.getType())) {
-                            guiJinShuList.add(mb);
-                        } else if (TextUtils.equals("3", mb.getType())) {
-                            yuanYouList.add(mb);
-                        } else {
-                            quanQiuZhiShuList.add(mb);
-                        }
-                    }
-                }
+    public void setTradList(List<TradeVo.Trade> list) {
+        for (TradeVo.Trade t : list) {
+            if (1 == t.getSymbolType()) {
+                waiHuiList.add(t);
+            } else if (2 == t.getSymbolType()) {
+                guiJinShuList.add(t);
+            } else if (3 == t.getSymbolType()) {
+                yuanYouList.add(t);
+            } else {
+                quanQiuZhiShuList.add(t);
             }
         }
         marketList.clear();
@@ -351,7 +316,11 @@ public class MarketFragment extends BaseFragment implements MarketContract.Marke
     }
 
     @Override
-    public void getMarkTypeListFiled(String msg) {
+    public void getTradListFiled(String msg) {
+        getMarkTypeListFiled(msg);
+    }
+
+    private void getMarkTypeListFiled(String msg) {
         switch (showTabType) {
             case 1:
                 tvFailedView.setText("外汇列表获取失败");
@@ -370,91 +339,24 @@ public class MarketFragment extends BaseFragment implements MarketContract.Marke
         tvFailedView.setVisibility(View.VISIBLE);
     }
 
-    @Override
-    public void setTradList(List<TradeVo.Trade> list) {
-        tradeList = new ArrayList<>();
-        tradeList.addAll(list);
-        presenter.getMarketList();
-    }
-
-    @Override
-    public void getTradListFiled(String msg) {
-        getMarkTypeListFiled(msg);
-    }
-
-    @Subscribe(threadMode = ThreadMode.MAIN)
-    public void onGetNettyData(Quotation quotation) {
-        // 如果没有获取行情列表数据就返回 或者 fragment 不可见，不解析数据
-        if (marketList == null || isHidden()) {
-            return;
-        }
-        //遍历比对名称
-        for (int i = 0; i < marketList.size(); i++) {
-            MarketDataBean marketDataBean = marketList.get(i);
-            String symbol = marketDataBean.getSymbol();
-            //名称比对成功，就更改价格数据，并更新 对应条目
-            if (symbol.equals(quotation.getSymbol())) {
-                //设置买入价
-                marketDataBean.setPrice_buy(quotation.getAsk());
-                //设置卖出价
-                marketDataBean.setPrice_sale(quotation.getBid());
-                time = quotation.getTime();
-                //主要是为了缓存 对应 tab 的买入价 和 卖出价
-                switch (showTabType) {
-                    case 0:
-                        if (ziXuanList != null) {
-                            ziXuanList.set(i, marketDataBean);
-                        }
-                        break;
-                    case 1:
-                        if (waiHuiList != null) {
-                            waiHuiList.set(i, marketDataBean);
-                        }
-                        break;
-                    case 2:
-                        if (guiJinShuList != null) {
-                            guiJinShuList.set(i, marketDataBean);
-                        }
-                        break;
-                    case 3:
-                        if (yuanYouList != null) {
-                            yuanYouList.set(i, marketDataBean);
-                        }
-                        break;
-                    case 4:
-                        if (quanQiuZhiShuList != null) {
-                            quanQiuZhiShuList.set(i, marketDataBean);
-                        }
-                        break;
-                }
-                marketList.set(i, marketDataBean);
-                //第二个参数不为 0 ，表示可以更新item 中的一部分 ui，对应 adapter 中的 三个参数的 onbindviewHolder
-                marketAdapter.notifyItemChanged(i, i);
-
-            }
-        }
-    }
-
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onEventData(EvenVo<SocketQuotation> evenVo) {
         if (evenVo.getCode() == EvenVo.UPDATE_MY_CHOICE) {
             presenter.getMyChoiceList();
-        }else if(evenVo.getCode()==EvenVo.SOCKET_QUOTATION){
-            if(marketList != null && marketList.size() > 0 && isVisible()){
-                SocketQuotation sq= evenVo.getT();
+        } else if (evenVo.getCode() == EvenVo.SOCKET_QUOTATION) {
+            if (marketList != null && marketList.size() > 0 && isVisible()) {
+                SocketQuotation sq = evenVo.getT();
                 for (int i = 0; i < marketList.size(); i++) {
-                    MarketDataBean dataBean = marketList.get(i);
-                   if(TextUtils.equals(dataBean.getSymbol(),sq.getSymbolCode())){
-                       //设置买入价
-                       dataBean.setPrice_buy(sq.getPrice());
-                       //设置卖出价  和买入价一致
-                       dataBean.setPrice_sale(sq.getPrice());
-                       dataBean.setTime(sq.getMarketTime().getTime());
-                       marketList.set(i, dataBean);
-                       //第二个参数不为 0 ，表示可以更新item 中的一部分 ui，对应 adapter 中的 三个参数的 onbindviewHolder
-                       marketAdapter.notifyItemChanged(i, i);
-                       break;
-                   }
+                    TradeVo.Trade dataBean = marketList.get(i);
+                    if (TextUtils.equals(dataBean.getSymbolCode(), sq.getSymbolCode())) {
+                        //设置买入价
+                        dataBean.setPriceBuy(sq.getPrice());
+                        dataBean.setTime(sq.getMarketTime().getTime());
+                        marketList.set(i, dataBean);
+                        //第二个参数不为 0 ，表示可以更新item 中的一部分 ui，对应 adapter 中的 三个参数的 onbindviewHolder
+                        marketAdapter.notifyItemChanged(i,"live");
+                        break;
+                    }
                 }
             }
         }

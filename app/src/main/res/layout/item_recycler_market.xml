@@ -56,55 +56,23 @@
                 android:singleLine="true"
                 android:textSize="@dimen/text_size_17sp"
                 android:visibility="visible" />
-
         </LinearLayout>
 
-        <LinearLayout
-            android:id="@+id/ll_sale"
-            android:layout_width="0dip"
-            android:layout_height="match_parent"
-            android:layout_gravity="center_vertical"
-            android:layout_weight="1"
-            android:gravity="center"
-            android:visibility="gone">
 
-            <TextView
-                android:id="@+id/tv_sale"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:background="@color/white"
-                android:gravity="center"
-                android:minEms="5"
-                android:paddingTop="5dp"
-                android:paddingBottom="5dp"
-                android:singleLine="true"
-                android:textSize="@dimen/text_size_17sp"
-                android:visibility="visible" />
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:id="@+id/ll_range"
+        <TextView
+            android:text="0.000"
+            android:id="@+id/tv_range"
             android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_gravity="center_vertical"
-            android:gravity="center_vertical|right">
-
-            <TextView
-                android:id="@+id/tv_range"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:background="@drawable/bg_market_text_item"
-                android:gravity="center"
-                android:minEms="5"
-                android:paddingTop="5dp"
-                android:paddingBottom="5dp"
-                android:singleLine="true"
-                android:textSize="@dimen/text_size_15sp"
-                android:visibility="visible" />
-
-        </LinearLayout>
-
+            android:layout_height="wrap_content"
+            android:background="@drawable/bg_market_text_item"
+            android:gravity="center"
+            android:minEms="5"
+            android:paddingTop="5dp"
+            android:paddingBottom="5dp"
+            android:singleLine="true"
+            android:textColor="@color/white"
+            android:textSize="@dimen/text_size_15sp"
+            android:visibility="visible" />
     </LinearLayout>
 
     <View

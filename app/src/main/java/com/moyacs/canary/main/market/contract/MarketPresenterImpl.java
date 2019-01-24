@@ -1,17 +1,12 @@
 package com.moyacs.canary.main.market.contract;
 
-import com.moyacs.canary.main.market.net.MarketDataBean;
 import com.moyacs.canary.main.market.net.MarketServer;
 import com.moyacs.canary.main.market.net.TradeVo;
-import com.moyacs.canary.network.BaseMoaObservable;
 import com.moyacs.canary.network.BaseObservable;
-import com.moyacs.canary.network.HttpResult;
 import com.moyacs.canary.network.HttpServerManager;
 import com.moyacs.canary.network.RxUtils;
 import com.moyacs.canary.network.ServerManger;
 import com.moyacs.canary.network.ServerResult;
-
-import java.util.List;
 
 import io.reactivex.disposables.CompositeDisposable;
 
@@ -24,12 +19,10 @@ import io.reactivex.disposables.CompositeDisposable;
 public class MarketPresenterImpl implements MarketContract.MarketPresenter {
     private MarketContract.MarketView view;
     private CompositeDisposable disposable;
-    private MarketServer marketServer;
 
     public MarketPresenterImpl(MarketContract.MarketView view) {
         this.view = view;
         disposable = new CompositeDisposable();
-        marketServer = HttpServerManager.getInstance().create(MarketServer.class);
     }
 
     @Override
@@ -66,29 +59,6 @@ public class MarketPresenterImpl implements MarketContract.MarketPresenter {
                 }));
     }
 
-    public void getMarketList() {
-        disposable.add(marketServer.getMarketList_type("live", "")
-                .compose(RxUtils.rxSchedulerHelper())
-                .subscribeWith(new BaseMoaObservable<HttpResult<List<MarketDataBean>>>() {
-                    @Override
-                    protected void requestSuccess(HttpResult<List<MarketDataBean>> data) {
-                        view.setMarketList(data.getDataObject());
-                    }
-
-                    @Override
-                    public void onError(Throwable e) {
-                        super.onError(e);
-                        view.getMarkTypeListFiled("服务器异常");
-                    }
-
-                    @Override
-                    public void onComplete() {
-                        super.onComplete();
-                        view.dismissLoadingDialog();
-                    }
-                }));
-
-    }
 
     @Override
     public void getTradeList() {

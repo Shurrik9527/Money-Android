@@ -10,6 +10,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.util.LruCache;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -24,7 +25,6 @@ import com.moyacs.canary.base.BaseActivity;
 import com.moyacs.canary.common.AppConstans;
 import com.moyacs.canary.common.NumberUtils;
 import com.moyacs.canary.kchart.fragment.KLineFragment;
-import com.moyacs.canary.main.market.net.MarketDataBean;
 import com.moyacs.canary.main.market.net.TradeVo;
 import com.moyacs.canary.main.me.EvenVo;
 import com.moyacs.canary.pay.GuaDanPopWindow;
@@ -33,6 +33,7 @@ import com.moyacs.canary.product_fxbtg.adapter.ProductAdapter;
 import com.moyacs.canary.service.SocketQuotation;
 import com.moyacs.canary.util.DateUtil;
 import com.moyacs.canary.util.LogUtils;
+import com.moyacs.canary.util.ToastUtils;
 import com.moyacs.canary.util.ViewListenerAbs;
 
 import org.greenrobot.eventbus.Subscribe;
@@ -86,8 +87,6 @@ public class ProductActivity extends BaseActivity implements OnClickListener {
     //下单页面
     private OrderPopWindow orderPopWindow;
     private GuaDanPopWindow guaDanPopWindow;
-    //产品购买 单价 过夜费等
-    private TradeVo.Trade tradeVo;
     //字体颜色
     private int textColor = 0;
     //当前品种的英文名称
@@ -99,6 +98,7 @@ public class ProductActivity extends BaseActivity implements OnClickListener {
     private ProductAdapter productAdapter; // 竖屏标题适配器
     private ProductAdapter landProductAdapter; //横屏标题适配器
     private List<KlineCycle> klineCycles;
+    private TradeVo.Trade marketDataBean; // 交易信息  上个页面intent传过来
 
     @Override
     protected int getLayoutId() {
@@ -373,13 +373,12 @@ public class ProductActivity extends BaseActivity implements OnClickListener {
      * 获取上个页面传递过来的值
      */
     protected void initIntentData(Intent intent) {
-        MarketDataBean marketDataBean = (MarketDataBean) intent.getSerializableExtra("marketData");
         //获取产品购买信息
-        tradeVo = marketDataBean.getTrade();
+        marketDataBean = (TradeVo.Trade) intent.getSerializableExtra("marketData");
         //品种中文名称
-        symbol_cn = marketDataBean.getSymbol_cn();
+        symbol_cn = marketDataBean.getSymbolName();
         //品种英文名称
-        symbol = marketDataBean.getSymbol();
+        symbol = marketDataBean.getSymbolCode();
         //excode
 //        String excode = intent.getStringExtra("excode");
         String[] startDataAndEndData = getStartDateAndEndDate(PARAM_KLINE_1M_WEIPAN_new);
@@ -389,7 +388,7 @@ public class ProductActivity extends BaseActivity implements OnClickListener {
         //止损 止盈 点位
 //        int stops_level = intent.getIntExtra(AppConstans.stops_level, 0);
         //设置买价
-        priceBuy = String.valueOf(marketDataBean.getPrice_buy());
+        priceBuy = String.valueOf(marketDataBean.getPriceBuy());
         tv_latest.setText(priceBuy);
         //获取传递过来的最新卖出价
 //        String priceSell = intent.getStringExtra(AppConstans.price_sell);
@@ -398,9 +397,9 @@ public class ProductActivity extends BaseActivity implements OnClickListener {
         //设置时间
         tvTime.setText(marketDataBean.getTime());
         //最高
-        String high = NumberUtils.setScale(marketDataBean.getHigh(), marketDataBean.getDigit());
+        String high = NumberUtils.setScale(marketDataBean.getMaxPrice(), marketDataBean.getDigit());
         //最低
-        String low = NumberUtils.setScale(marketDataBean.getLow(), marketDataBean.getDigit());
+        String low = NumberUtils.setScale(marketDataBean.getMinPrice(), marketDataBean.getDigit());
         //今开
         String open = NumberUtils.setScale(marketDataBean.getOpen(), marketDataBean.getDigit());
         //昨收
@@ -478,13 +477,17 @@ public class ProductActivity extends BaseActivity implements OnClickListener {
         } else if (id == R.id.iconback) {//退出全屏
             setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
         } else if (id == R.id.tv_buyUp) {//买涨
-            if (orderPopWindow == null) {
-                orderPopWindow = new OrderPopWindow(priceBuy, symbol_cn, textColor, symbol, tradeVo, this);
+            if (TextUtils.equals(marketDataBean.getStatus(), "1")) {
+                if (orderPopWindow == null) {
+                    orderPopWindow = new OrderPopWindow(priceBuy, symbol_cn, textColor, symbol, marketDataBean, this);
+                }
+            } else {
+                ToastUtils.showShort("当前产品不可交易");
             }
             orderPopWindow.showOrderPopwindow(v, true);
         } else if (id == R.id.tv_buyDown) {//买跌
             if (orderPopWindow == null) {
-                orderPopWindow = new OrderPopWindow(priceBuy, symbol_cn, textColor, symbol, tradeVo, this);
+                orderPopWindow = new OrderPopWindow(priceBuy, symbol_cn, textColor, symbol, marketDataBean, this);
             }
             orderPopWindow.showOrderPopwindow(v, false);
         } else if (id == R.id.tv_tradeclose) {// 查看持仓
@@ -517,7 +520,7 @@ public class ProductActivity extends BaseActivity implements OnClickListener {
         } else if (id == R.id.tv_guadan) {
             //挂单
             if (guaDanPopWindow == null) {
-                guaDanPopWindow = new GuaDanPopWindow(this, priceBuy, symbol_cn, textColor, symbol, tradeVo);
+                guaDanPopWindow = new GuaDanPopWindow(this, priceBuy, symbol_cn, textColor, symbol, marketDataBean);
             }
             guaDanPopWindow.showWindow(v);
         }

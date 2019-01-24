@@ -110,7 +110,7 @@ public class ServerManger {
             Response response = chain.proceed(request); //前往网络请求
             String auth = response.header(HttpConstants.header_key); // 获取请求头的auth
             Log.d("TAG", request.url() + "======请求头===" + SharePreferencesUtil.getInstance().getServerAuthor());
-            if (!TextUtils.isEmpty(auth)) {
+            if (auth != null && !TextUtils.isEmpty(auth) && auth.contains("Bearer")) {
                 //当前服务器返回auth不为空的话 更新auth
                 SharePreferencesUtil.getInstance().setServerAuthor(auth);
             }
@@ -124,7 +124,7 @@ public class ServerManger {
                 e.printStackTrace();
             }
             //判断auth是否过期
-            if (TextUtils.equals("-111", msgCode)) {
+            if (TextUtils.equals("-111", msgCode) || TextUtils.equals("-999", msgCode)) {
                 //更新auth
                 getNewAuth();
                 //重新配置

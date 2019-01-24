@@ -4,7 +4,6 @@ import com.moyacs.canary.base.BasePresenter;
 import com.moyacs.canary.base.BaseView;
 import com.moyacs.canary.main.homepage.net.BannerDate;
 import com.moyacs.canary.main.homepage.net.DealChanceDate;
-import com.moyacs.canary.main.market.net.MarketDataBean;
 import com.moyacs.canary.main.market.net.TradeVo;
 
 import java.util.List;
@@ -18,13 +17,6 @@ import java.util.List;
 public interface MarketContract {
 
     interface MarketView extends BaseView {
-        /**
-         * 获取行情列表成功
-         *
-         * @param result
-         */
-        void setMarketList(List<MarketDataBean> result);
-
         /**
          * 获取 banner 列表成功
          *
@@ -54,11 +46,6 @@ public interface MarketContract {
 
     interface MarketPresenter extends BasePresenter {
         /**
-         * 获取行情列表
-         */
-        void getMarketList(String server, String type);
-
-        /**
          * banner 列表
          */
         void getBannerList();
@@ -68,6 +55,9 @@ public interface MarketContract {
          */
         void getDealChanceList();
 
+        /**
+         * 获取可以交易列表
+         */
         void getTradList();
     }
 }

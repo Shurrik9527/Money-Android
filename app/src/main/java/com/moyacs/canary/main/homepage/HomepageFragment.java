@@ -1,6 +1,8 @@
 package com.moyacs.canary.main.homepage;
 
 import android.content.Intent;
+import android.os.Handler;
+import android.os.Looper;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
@@ -15,17 +17,14 @@ import com.chad.library.adapter.base.BaseViewHolder;
 import com.just.library.LogUtils;
 import com.moyacs.canary.base.BaseDelegateAdapter;
 import com.moyacs.canary.base.BaseFragment;
-import com.moyacs.canary.common.AppConstans;
 import com.moyacs.canary.main.homepage.adapter.DealChanceAdapter;
 import com.moyacs.canary.main.homepage.adapter.TradeHorizontalAdapter;
 import com.moyacs.canary.main.homepage.contract.MarketContract;
 import com.moyacs.canary.main.homepage.contract.MarketPresenterImpl;
 import com.moyacs.canary.main.homepage.net.BannerDate;
 import com.moyacs.canary.main.homepage.net.DealChanceDate;
-import com.moyacs.canary.main.market.net.MarketDataBean;
 import com.moyacs.canary.main.market.net.TradeVo;
 import com.moyacs.canary.main.me.EvenVo;
-import com.moyacs.canary.netty.codec.Quotation;
 import com.moyacs.canary.product_fxbtg.ProductActivity;
 import com.moyacs.canary.service.SocketQuotation;
 import com.yan.pullrefreshlayout.PullRefreshLayout;
@@ -58,13 +57,11 @@ public class HomepageFragment extends BaseFragment implements MarketContract.Mar
     private MarketContract.MarketPresenter presenter;
     private TradeHorizontalAdapter tradeHorizontalAdapter;
 
-    private String time;//记录 价格改变时间
     private BaseDelegateAdapter bannerAdapter;
     private List<DealChanceDate> chanceList;//交易机会数据源
     private BaseDelegateAdapter dealChanceAdapter;//交易机会条目对应的 adapter
     private List<TradeVo.Trade> tradeList; // 可交易外汇列表
     private List<BannerDate.Banner> bannerList;//轮播图数据源
-    private List<MarketDataBean> marketDataBeans;//横向 recyclerView 数据源
 
     @Override
     protected int getLayoutId() {
@@ -73,6 +70,7 @@ public class HomepageFragment extends BaseFragment implements MarketContract.Mar
 
     @Override
     protected void initView() {
+        tradeList = new ArrayList<>();
         initVLayout();
     }
 
@@ -82,8 +80,7 @@ public class HomepageFragment extends BaseFragment implements MarketContract.Mar
         pullrefreshLayout.setOnRefreshListener(new PullRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-                //刷新交易机会
-                presenter.getDealChanceList();
+                new Handler(Looper.getMainLooper()).postAtTime(() -> pullrefreshLayout.refreshComplete(), 2000);
             }
 
             @Override
@@ -209,11 +206,10 @@ public class HomepageFragment extends BaseFragment implements MarketContract.Mar
                 LinearLayoutManager linearLayoutManager = new LinearLayoutManager(mActivity);
                 linearLayoutManager.setOrientation(LinearLayoutManager.HORIZONTAL);
                 recyclerView.setLayoutManager(linearLayoutManager);
-                marketDataBeans = new ArrayList<>();
-                tradeHorizontalAdapter = new TradeHorizontalAdapter(marketDataBeans);
+                tradeHorizontalAdapter = new TradeHorizontalAdapter(tradeList);
                 tradeHorizontalAdapter.setItemClickListener((view, pos) -> {
                     //外汇列表点击跳转详情
-                    intentProductActivity(marketDataBeans.get(pos));
+                    intentProductActivity(tradeList.get(pos));
                 });
                 recyclerView.setAdapter(tradeHorizontalAdapter);
             }
@@ -245,94 +241,9 @@ public class HomepageFragment extends BaseFragment implements MarketContract.Mar
         adapters.add(dealChanceAdapter);
     }
 
-    //socket 数据刷新 每一条外汇的值
-    @Subscribe(threadMode = ThreadMode.MAIN)
-    public void onGetNettyData(Quotation quotation) {
-        //如果没有获取行情列表数据就返回 如果 fragment 不可见，不解析数据
-        if (marketDataBeans == null || isHidden()) {
-            return;
-        }
-        //遍历比对名称
-        for (int i = 0; i < marketDataBeans.size(); i++) {
-            MarketDataBean marketDataBean = marketDataBeans.get(i);
-            String symbol = marketDataBean.getSymbol();
-            //名称比对成功，就更改价格数据，并更新 对应条目
-            if (symbol.equals(quotation.getSymbol())) {
-                marketDataBean.setPrice_buy(quotation.getAsk());
-                time = quotation.getTime();
-                marketDataBeans.set(i, marketDataBean);
-//                第二个参数不为 0 ，表示可以更新item 中的一部分 ui，对应 adapter 中的 三个参数的 onbindviewHolder
-                tradeHorizontalAdapter.notifyItemChanged(i, i);
-                break;
-            }
-        }
-    }
-
-    @Subscribe(threadMode = ThreadMode.MAIN)
-    public void onWebSocketData(EvenVo<SocketQuotation> evenVo) {
-        if (evenVo.getCode() == EvenVo.SOCKET_QUOTATION && marketDataBeans != null
-                && marketDataBeans.size() > 0 && isVisible()) {
-            SocketQuotation sq = evenVo.getT();
-            for (int i = 0; i < marketDataBeans.size(); i++) {
-                MarketDataBean marketDataBean = marketDataBeans.get(i);
-                if (TextUtils.equals(marketDataBean.getSymbol(), sq.getSymbolCode())) {
-                    marketDataBean.setPrice_buy(sq.getPrice());
-                    marketDataBean.setTime(sq.getMarketTime().getTime());
-                    marketDataBeans.set(i, marketDataBean);
-                    tradeHorizontalAdapter.notifyItemChanged(i);
-                    break;
-                }
-            }
-        }
-    }
-
     @Override
     public void unsubscribe() {
         presenter.unsubscribe();
-    }
-
-    @Override
-    public void showLoadingDialog() {
-        if (pullrefreshLayout.isRefreshing()) {
-            return;
-        }
-        //自动刷新，但是不触发刷新回调
-        pullrefreshLayout.autoRefresh(false);
-    }
-
-    @Override
-    public void dismissLoadingDialog() {
-        pullrefreshLayout.refreshComplete();
-    }
-
-
-    @Override
-    public void setMarketList(List<MarketDataBean> result) {
-        if (marketDataBeans != null && marketDataBeans.size() > 0) {
-            tradeHorizontalAdapter.notifyDataSetChanged();
-            return;
-        }
-        List<MarketDataBean> listData = new ArrayList<>();
-        for (int i = 0; i < result.size(); i++) {
-            MarketDataBean marketDataBean = result.get(i);
-            for (TradeVo.Trade trade : tradeList) {
-                if (TextUtils.equals(marketDataBean.getSymbol(), trade.getSymbolCode())) {
-                    marketDataBean.setTrade(trade);
-                    listData.add(marketDataBean);
-                }
-            }
-        }
-        //给全局对象赋值
-//        marketDataBeanList = new ArrayList<>(listData);
-        marketDataBeans.clear();
-        marketDataBeans.addAll(listData);
-        tradeHorizontalAdapter.notifyDataSetChanged();
-        //将所有的品种 按照  （英文 - 中文）  这种格式存入 sp
-        /*SPUtils spUtils = SPUtils.getInstance(AppConstans.allMarket_en_cn);
-        for (int i = 0; i < listData.size(); i++) {
-            MarketDataBean marketDataBean = listData.get(i);
-            spUtils.put(marketDataBean.getSymbol(), marketDataBean.getSymbol_cn());
-        }*/
     }
 
     @Override
@@ -351,10 +262,8 @@ public class HomepageFragment extends BaseFragment implements MarketContract.Mar
 
     @Override
     public void setTradList(List<TradeVo.Trade> list) {
-        if (tradeList == null) {
-            tradeList = new ArrayList<>(list);
-        }
-        presenter.getMarketList("live", "");
+        tradeList.addAll(list);
+        tradeHorizontalAdapter.notifyDataSetChanged();
     }
 
     @Override
@@ -365,15 +274,31 @@ public class HomepageFragment extends BaseFragment implements MarketContract.Mar
     /**
      * 跳转到购买详情
      *
-     * @param marketDataBean
+     * @param marketDataBean 交易信息
      */
-    private void intentProductActivity(MarketDataBean marketDataBean) {
+    private void intentProductActivity(TradeVo.Trade marketDataBean) {
         //跳转详情页面
         Intent intent = new Intent(getContext(), ProductActivity.class);
-        //时间
-        intent.putExtra(AppConstans.time, time);
         //外汇信息
         intent.putExtra("marketData", marketDataBean);
         startActivity(intent);
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onWebSocketData(EvenVo<SocketQuotation> evenVo) {
+        if (evenVo.getCode() == EvenVo.SOCKET_QUOTATION && tradeList != null
+                && tradeList.size() > 0 && isVisible()) {
+            SocketQuotation sq = evenVo.getT();
+            for (int i = 0; i < tradeList.size(); i++) {
+                TradeVo.Trade marketDataBean = tradeList.get(i);
+                if (TextUtils.equals(marketDataBean.getSymbolCode(), sq.getSymbolCode())) {
+                    marketDataBean.setPriceBuy(sq.getPrice());
+                    marketDataBean.setTime(sq.getMarketTime().getTime());
+                    tradeList.set(i, marketDataBean);
+                    tradeHorizontalAdapter.notifyItemChanged(i, "live");
+                    break;
+                }
+            }
+        }
     }
 }

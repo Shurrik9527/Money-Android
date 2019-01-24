@@ -34,10 +34,9 @@ public class WebSocketManger {
     }
 
     private WebSocketManger() {
-        initOkHttpClient();
     }
 
-    private void initOkHttpClient() {
+    private OkHttpClient getOkHttpClick() {
         client = new OkHttpClient.Builder()
                 .retryOnConnectionFailure(true) //失败自动重连
                 .connectTimeout(10, TimeUnit.SECONDS)
@@ -45,6 +44,7 @@ public class WebSocketManger {
                 .writeTimeout(10, TimeUnit.SECONDS)
                 .build();
         mGson = new Gson();
+        return client;
     }
 
     /**
@@ -56,7 +56,7 @@ public class WebSocketManger {
         String webSocketUrL = WEB_SOCKET_URL + url;
         Request request = new Request.Builder()
                 .url(webSocketUrL).build();
-        client.newWebSocket(request, new WebSocketListener() {
+        getOkHttpClick().newWebSocket(request, new WebSocketListener() {
             @Override
             public void onOpen(WebSocket webSocket, Response response) {
                 Log.e("WebSocket", "======webSocket 连接成功========");
@@ -64,9 +64,9 @@ public class WebSocketManger {
 
             @Override
             public void onMessage(WebSocket webSocket, String text) {
-                if(isFirstLoad){
-                    isFirstLoad=false;
-                }else {
+                if (isFirstLoad) {
+                    isFirstLoad = false;
+                } else {
                     SocketQuotation socketQuotation = mGson.fromJson(text, SocketQuotation.class);
                     EventBus.getDefault().post(new EvenVo<SocketQuotation>(EvenVo.SOCKET_QUOTATION).setT(socketQuotation));
                 }

@@ -40,18 +40,6 @@ public class MarketPresenterImpl implements MarketContract.MarketPresenter {
     }
 
     @Override
-    public void getMarketList(String server, String type) {
-        disposable.add(homePageServer.getMarketList(server, type)
-                .compose(RxUtils.rxSchedulerHelper())
-                .subscribeWith(new BaseMoaObservable<HttpResult<List<MarketDataBean>>>() {
-                    @Override
-                    protected void requestSuccess(HttpResult<List<MarketDataBean>> data) {
-                        mView.setMarketList(data.getDataObject());
-                    }
-                }));
-    }
-
-    @Override
     public void getBannerList() {
         disposable.add(ServerManger.getInstance().getServer().getBannerList("0", "0")
                 .compose(RxUtils.rxSchedulerHelper())

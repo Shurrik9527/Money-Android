@@ -2,7 +2,6 @@ package com.moyacs.canary.main.market.contract;
 
 import com.moyacs.canary.base.BasePresenter;
 import com.moyacs.canary.base.BaseView;
-import com.moyacs.canary.main.market.net.MarketDataBean;
 import com.moyacs.canary.main.market.net.TradeVo;
 
 import java.util.List;
@@ -27,16 +26,6 @@ public interface MarketContract {
         void getMyChoiceListFiled(String msg);
 
         /**
-         * 获取行情列表成功
-         */
-        void setMarketList(List<MarketDataBean> result);
-
-        /**
-         * 获取行情列表失败
-         */
-        void getMarkTypeListFiled(String msg);
-
-        /**
          * 获取可交易列表
          */
         void setTradList(List<TradeVo.Trade> list);
@@ -52,11 +41,6 @@ public interface MarketContract {
          * 获取自选列表
          */
         void getMyChoiceList();
-
-        /**
-         * 获取行情列表
-         */
-        void getMarketList();
 
         /**
          * 获取可以交易列表

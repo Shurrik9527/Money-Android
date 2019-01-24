@@ -816,7 +816,6 @@ public class OrderPopWindow implements View.OnClickListener {
                 //重新设置总价
                 setTvTotalMoney();
                 break;
-
             case R.id.tv_size01://数量一 1 手
             case R.id.tv_size02://数量二
             case R.id.tv_size03://数量三

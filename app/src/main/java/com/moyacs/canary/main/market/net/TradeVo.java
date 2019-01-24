@@ -39,7 +39,10 @@ public class TradeVo implements Serializable {
         private int quantityOne; //数量一
         private int quantityTwo;
         private int quantityThree;
-
+        private double open;//开仓价格 今开
+        private double maxPrice;//最高
+        private double minPrice;//最低
+        private double close;//平仓价格  昨收
 
         public String getSymbolCode() {
             return symbolCode;
@@ -97,9 +100,6 @@ public class TradeVo implements Serializable {
             return quantityPriceFluctuation;
         }
 
-        public void setQuantityPriceFluctuation(int quantityPriceFluctuation) {
-            this.quantityPriceFluctuation = quantityPriceFluctuation;
-        }
 
         public float getEntryOrders() {
             return entryOrders;
@@ -163,6 +163,110 @@ public class TradeVo implements Serializable {
 
         public void setQuantityThree(int quantityThree) {
             this.quantityThree = quantityThree;
+        }
+
+        public double getOpen() {
+            return open;
+        }
+
+        public void setOpen(double open) {
+            this.open = open;
+        }
+
+        public double getMaxPrice() {
+            return maxPrice;
+        }
+
+        public void setMaxPrice(double maxPrice) {
+            this.maxPrice = maxPrice;
+        }
+
+        public double getMinPrice() {
+            return minPrice;
+        }
+
+        public void setMinPrice(double minPrice) {
+            this.minPrice = minPrice;
+        }
+
+        public double getClose() {
+            return close;
+        }
+
+        public void setClose(double close) {
+            this.close = close;
+        }
+
+        public void setQuantityPriceFluctuation(float quantityPriceFluctuation) {
+            this.quantityPriceFluctuation = quantityPriceFluctuation;
+        }
+
+
+        //买入价，卖出价和买入价相同  通过 socket 获取
+        private double priceBuy = 0.00000;
+        //买入价 卖出价 涨跌幅背景的字体颜色
+        private int rangeColor = 0;
+        //涨跌幅 0.1% 显示文本
+        private String rangString;
+        //涨跌值 -0.001 显示文本
+        private String rangValue;
+        //当前是否是上涨
+        private boolean isUp;
+        //刷新时间
+        private String time;
+        //保存几位小数点
+        private int digit = 3;
+
+        public double getPriceBuy() {
+            return priceBuy;
+        }
+
+        public void setPriceBuy(double priceBuy) {
+            this.priceBuy = priceBuy;
+        }
+
+        public int getRangeColor() {
+            return rangeColor;
+        }
+
+        public void setRangeColor(int rangeColor) {
+            this.rangeColor = rangeColor;
+        }
+
+        public String getRangString() {
+            return rangString;
+        }
+
+        public void setRangString(String rangString) {
+            this.rangString = rangString;
+        }
+
+        public String getRangValue() {
+            return rangValue;
+        }
+
+        public void setRangValue(String rangValue) {
+            this.rangValue = rangValue;
+        }
+
+        public boolean isUp() {
+            return isUp;
+        }
+
+        public void setUp(boolean up) {
+            isUp = up;
+        }
+
+        public String getTime() {
+            return time;
+        }
+
+        public void setTime(String time) {
+            this.time = time;
+        }
+
+        public int getDigit() {
+            return digit;
         }
     }
 

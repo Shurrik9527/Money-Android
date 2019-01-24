@@ -42,7 +42,7 @@ public class DealFragment extends BaseFragment {
     SlidingTabLayout tabLayout;
     @BindView(R.id.viewpager)
     SwitchSlidingViewPager viewPager;
-
+    private HoldPositionFragment positionFragment;
     // tabLayout 标题数据源
     private String[] mTitles = {"持仓", "资金"};
 
@@ -59,7 +59,6 @@ public class DealFragment extends BaseFragment {
         viewPager.setOffscreenPageLimit(2);
         viewPager.setAdapter(new MyPagerAdapter(getChildFragmentManager()));
         tabLayout.setViewPager(viewPager);
-
     }
 
     @Override
@@ -72,12 +71,21 @@ public class DealFragment extends BaseFragment {
 
     }
 
+    @Override
+    public void setUserVisibleHint(boolean isVisibleToUser) {
+        super.setUserVisibleHint(isVisibleToUser);
+        if(isVisibleToUser){
+            positionFragment.isVisibleToUser();
+        }
+    }
+
     /**
      * 初始化 FragmentPagerAdapter 数据源
      */
     private void initFragments() {
         mFragments = new ArrayList<>();
-        mFragments.add(new HoldPositionFragment());
+        positionFragment = new HoldPositionFragment();
+        mFragments.add(positionFragment);
         mFragments.add(new CapitalFragment());
     }
 
