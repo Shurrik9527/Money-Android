@@ -150,6 +150,8 @@ public class MeFragment extends BaseFragment {
     public void onEventBus(EvenVo vo) {
         if (vo.getCode() == EvenVo.EVENT_CODE_UPDATE_NICK_NAME) {
             setNickName();
+        } else if (vo.getCode() == EvenVo.CHANGE_ORDER_SUCCESS) {
+            getUserBalance();
         }
     }
 

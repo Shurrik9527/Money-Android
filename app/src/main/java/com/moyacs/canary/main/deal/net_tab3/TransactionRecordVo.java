@@ -17,7 +17,7 @@ public class TransactionRecordVo {
         private String id;
         private String loginName;
         private String symbolCode;
-        private long createTime;
+        private String createTime;
         private double lot;
         private String unitPrice;
         private String money;
@@ -64,11 +64,11 @@ public class TransactionRecordVo {
             this.symbolCode = symbolCode;
         }
 
-        public long getCreateTime() {
+        public String getCreateTime() {
             return createTime;
         }
 
-        public void setCreateTime(long createTime) {
+        public void setCreateTime(String createTime) {
             this.createTime = createTime;
         }
 

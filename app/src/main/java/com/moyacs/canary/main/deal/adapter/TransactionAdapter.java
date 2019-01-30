@@ -10,9 +10,7 @@ import android.widget.TextView;
 import com.moyacs.canary.common.AppConstans;
 import com.moyacs.canary.common.NumberUtils;
 import com.moyacs.canary.main.deal.net_tab3.TransactionRecordVo;
-import com.moyacs.canary.util.DateUtil;
 
-import java.util.Date;
 import java.util.List;
 
 import butterknife.BindView;
@@ -79,9 +77,7 @@ public class TransactionAdapter extends RecyclerView.Adapter<TransactionAdapter.
         holder.tvProfit.setText(profit_s);
         holder.tvProfit.setTextColor(color);
         //建仓时间
-        String simpleDateFormat = "yyyy-MM-dd HH:mm:ss";
-        String openTime = DateUtil.parseDateToStr(new Date(chiCangDateBean.getCreateTime()), simpleDateFormat);
-        holder.tvTime.setText(openTime);
+        holder.tvTime.setText(chiCangDateBean.getCreateTime());
     }
 
     @Override
@@ -99,7 +95,6 @@ public class TransactionAdapter extends RecyclerView.Adapter<TransactionAdapter.
     public int getItemViewType(int position) {
         return position;
     }
-
 
     public class ViewHolder extends RecyclerView.ViewHolder {
         @BindView(R.id.tv_type)

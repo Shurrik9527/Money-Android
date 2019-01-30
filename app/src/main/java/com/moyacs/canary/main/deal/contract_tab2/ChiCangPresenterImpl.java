@@ -44,7 +44,7 @@ public class ChiCangPresenterImpl implements ChiCangPresenter {
                     @Override
                     public void onError(Throwable e) {
                         super.onError(e);
-                        view.getRecordListFailed("服务器异常");
+                        view.getRecordListFailed("服务器异常"+e.getMessage());
                     }
                 }));
     }

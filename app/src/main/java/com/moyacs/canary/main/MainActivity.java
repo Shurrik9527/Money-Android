@@ -20,10 +20,14 @@ import com.moyacs.canary.login.LoginActivity;
 import com.moyacs.canary.main.deal.DealFragment;
 import com.moyacs.canary.main.homepage.HomepageFragment;
 import com.moyacs.canary.main.market.MarketFragment;
+import com.moyacs.canary.main.me.EvenVo;
 import com.moyacs.canary.main.me.MeFragment;
 import com.moyacs.canary.service.SocketService;
 import com.moyacs.canary.util.SharePreferencesUtil;
 import com.moyacs.canary.widget.SwitchSlidingViewPager;
+
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
 
 import java.util.ArrayList;
 
@@ -50,6 +54,7 @@ public class MainActivity extends BaseActivity {
     private Intent serviceIntent;
     private ArrayList<CustomTabEntity> mTabEntities = new ArrayList<>();
     private int oldSelectPos;
+    private DealFragment dealFragment;
 
     @Override
     protected int getLayoutId() {
@@ -61,6 +66,7 @@ public class MainActivity extends BaseActivity {
         commonTabLayout = findViewById(R.id.commonTabLayout);
         initViewPager();
         initCommonTabLayout();
+        registerEventBus();
     }
 
     @Override
@@ -158,9 +164,9 @@ public class MainActivity extends BaseActivity {
     private void getFragmentList() {
         fragments = new ArrayList<>();
         fragments.add(new HomepageFragment());
-        MarketFragment marketFragment = new MarketFragment();
-        fragments.add(marketFragment);
-        fragments.add(new DealFragment());
+        fragments.add(new MarketFragment());
+        dealFragment = new DealFragment();
+        fragments.add(dealFragment);
         fragments.add(new MeFragment());
     }
 
@@ -201,5 +207,13 @@ public class MainActivity extends BaseActivity {
         }
     }
 
-
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void event(EvenVo evenVo) {
+        //前往持仓页面
+        if (evenVo.getCode() == EvenVo.WATCH_CHI_CHAN) {
+            tabListener.onTabSelect(2);
+            commonTabLayout.setCurrentTab(2);
+            dealFragment.setSelectHoldPosition();
+        }
+    }
 }

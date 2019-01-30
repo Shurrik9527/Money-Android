@@ -3,11 +3,8 @@ package com.moyacs.canary.network;
 import android.text.TextUtils;
 import android.util.Log;
 
-import com.google.gson.JsonObject;
+import com.google.gson.Gson;
 import com.moyacs.canary.util.SharePreferencesUtil;
-
-import org.json.JSONException;
-import org.json.JSONObject;
 
 import java.io.IOException;
 import java.util.concurrent.TimeUnit;
@@ -109,68 +106,46 @@ public class ServerManger {
                     .addHeader(HttpConstants.header_key, SharePreferencesUtil.getInstance().getServerAuthor()).build();
             Response response = chain.proceed(request); //前往网络请求
             String auth = response.header(HttpConstants.header_key); // 获取请求头的auth
-            Log.d("TAG", request.url() + "======请求头===" + SharePreferencesUtil.getInstance().getServerAuthor());
+            Log.d("TAG", request.url() + "===1===请求头===" + SharePreferencesUtil.getInstance().getServerAuthor());
             if (auth != null && !TextUtils.isEmpty(auth) && auth.contains("Bearer")) {
                 //当前服务器返回auth不为空的话 更新auth
                 SharePreferencesUtil.getInstance().setServerAuthor(auth);
             }
-
-            String requestBody = response.body().string();
-            String msgCode = "";
-            try {
-                JSONObject jsonObject = new JSONObject(requestBody);
-                msgCode = jsonObject.getString("msgCode");
-            } catch (JSONException e) {
-                e.printStackTrace();
-            }
             //判断auth是否过期
-            if (TextUtils.equals("-111", msgCode) || TextUtils.equals("-999", msgCode)) {
+            if (response.code() == 405) {
                 //更新auth
                 getNewAuth();
                 //重新配置
                 Request newRequest = chain.request().newBuilder()
                         .addHeader(HttpConstants.header_key, SharePreferencesUtil.getInstance().getServerAuthor())
                         .build();
-                Log.d("TAG", newRequest.url() + "======请求头===" + SharePreferencesUtil.getInstance().getServerAuthor());
+                Log.d("TAG", newRequest.url() + "===2===请求头===" + SharePreferencesUtil.getInstance().getServerAuthor());
                 return chain.proceed(newRequest); //再次发起请求
             } else {
-                return createNewResponse(response, requestBody, response.code());
+                return response;
             }
         }
     }
 
-
-   /* private boolean isAuthExpired(Response response) {
-        try {
-
-            if (TextUtils.equals("-111", msgCode)) {
-                return true;
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
-        return false;
-    }*/
-
     private void getNewAuth() {
         Retrofit retrofit = new Retrofit.Builder()
+                .client(initOkHttpClient())
                 .baseUrl(HttpConstants.SERVER_HOST)
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
-        retrofit2.Response<JsonObject> tokenJson = null;
         try {
-            tokenJson = retrofit.create(ServerApi.class).getAuth().execute();
-            assert tokenJson.body() != null;
-            String auth = tokenJson.body().get("data").toString();
-            if (TextUtils.isEmpty(auth)) {
-                Log.e("TAG", "========获取的auth为空======");
-                return;
+            ServerResult<String> tokenJson = retrofit.create(ServerApi.class).getAuth().execute().body();
+            if (tokenJson != null) {
+                String auth = tokenJson.getData();
+                if (TextUtils.isEmpty(auth) || TextUtils.equals("null", auth)) {
+                    Log.e("TAG", "========获取的auth为空======");
+                    return;
+                }
+                SharePreferencesUtil.getInstance().setServerAuthor(auth);
             }
-            SharePreferencesUtil.getInstance().setServerAuthor(auth);
         } catch (IOException e) {
             e.printStackTrace();
+            Log.e("TAG", "=======请求auth出现异常=====" + e.getMessage());
         }
     }
 

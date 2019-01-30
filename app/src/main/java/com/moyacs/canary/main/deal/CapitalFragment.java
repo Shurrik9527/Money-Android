@@ -20,10 +20,14 @@ import com.moyacs.canary.main.deal.net_tab3.PaymentDateBean;
 import com.moyacs.canary.main.deal.net_tab3.TransactionRecordVo;
 import com.moyacs.canary.main.deal.net_tab3.UserAmountVo;
 import com.moyacs.canary.main.deal.net_tab3.WithdrawalDataBean;
+import com.moyacs.canary.main.me.EvenVo;
 import com.moyacs.canary.main.me.RechargeActivity;
 import com.moyacs.canary.pay.WithdrawActivity;
 import com.moyacs.canary.widget.UnderLineTextView;
 import com.yan.pullrefreshlayout.PullRefreshLayout;
+
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -100,7 +104,7 @@ public class CapitalFragment extends BaseFragment implements FundContract.FundVi
 
     @Override
     protected void initData() {
-
+        registerEventBus();
     }
 
     @Override
@@ -242,10 +246,11 @@ public class CapitalFragment extends BaseFragment implements FundContract.FundVi
         String balance = result.getBalance();
         //设置余额和保证金
         tvTotalMoney.setText(balance);
-        Double margin_free = Double.parseDouble(result.getCashDeposit());
-        //保证金
-        String marginFree = NumberUtils.setScale_down(margin_free);
-        tvBaoZhengJin.setText(marginFree);
+        if (result.getCashDeposit() != null && TextUtils.equals("null", result.getCashDeposit())) {
+            //保证金
+            String marginFree = NumberUtils.setScale_down(Double.parseDouble(result.getCashDeposit()));
+            tvBaoZhengJin.setText(marginFree);
+        }
     }
 
     /**
@@ -319,5 +324,15 @@ public class CapitalFragment extends BaseFragment implements FundContract.FundVi
         freshLayout.refreshComplete();
         tvRequestFailed.setText("获取充值记录失败");
         rlRequestFailed.setVisibility(View.VISIBLE);
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void event(EvenVo evenVo) {
+        if (evenVo.getCode() == EvenVo.CHANGE_ORDER_SUCCESS && fundPresenter != null) {
+            fundPresenter.getAccountInfo();
+            if (tv1.isSelected()) {
+                fundPresenter.getTransactionRecordList("0");
+            }
+        }
     }
 }

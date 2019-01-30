@@ -348,7 +348,6 @@
                     android:id="@+id/tv_02"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginRight="@dimen/margin_20dp"
                     android:text="浮动盈亏："
                     android_custom:layout_constraintRight_toLeftOf="@id/tv_profit"
                     android_custom:layout_constraintTop_toTopOf="@id/tv_01" />
@@ -358,6 +357,8 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="0>"
+                    android:gravity="right"
+                    android:minWidth="@dimen/margin_30dp"
                     android:textColor="#000000"
                     android:textSize="@dimen/sp_16"
                     android_custom:layout_constraintRight_toRightOf="parent"
@@ -369,7 +370,6 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/margin_10dp"
-                    android:layout_marginRight="@dimen/margin_20dp"
                     android:text="可用余额："
                     android_custom:layout_constraintRight_toLeftOf="@id/tv_balance"
                     android_custom:layout_constraintTop_toBottomOf="@id/tv_02" />
@@ -379,6 +379,8 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="0>"
+                    android:gravity="right"
+                    android:minWidth="@dimen/margin_30dp"
                     android:textColor="#000000"
                     android:textSize="@dimen/sp_16"
                     android_custom:layout_constraintRight_toRightOf="parent"

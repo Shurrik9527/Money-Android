@@ -74,7 +74,7 @@ public class DealFragment extends BaseFragment {
     @Override
     public void setUserVisibleHint(boolean isVisibleToUser) {
         super.setUserVisibleHint(isVisibleToUser);
-        if(isVisibleToUser){
+        if (isVisibleToUser) {
             positionFragment.isVisibleToUser();
         }
     }
@@ -119,5 +119,9 @@ public class DealFragment extends BaseFragment {
         public Fragment getItem(int position) {
             return mFragments.get(position);
         }
+    }
+
+    public void setSelectHoldPosition() {
+        tabLayout.setCurrentTab(0);
     }
 }

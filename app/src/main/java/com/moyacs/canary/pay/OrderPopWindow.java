@@ -3,6 +3,7 @@ package com.moyacs.canary.pay;
 import android.app.Activity;
 import android.content.Intent;
 import android.graphics.drawable.ColorDrawable;
+import android.text.TextUtils;
 import android.view.Gravity;
 import android.view.View;
 import android.view.WindowManager;
@@ -15,7 +16,12 @@ import android.widget.SeekBar;
 import android.widget.TextView;
 
 import com.moyacs.canary.common.RSAKeyManger;
+import com.moyacs.canary.main.deal.net_tab3.UserAmountVo;
 import com.moyacs.canary.main.market.net.TradeVo;
+import com.moyacs.canary.main.me.EvenVo;
+import com.moyacs.canary.main.me.RechargeActivity;
+import com.moyacs.canary.network.BaseObservable;
+import com.moyacs.canary.network.RxUtils;
 import com.moyacs.canary.network.ServerManger;
 import com.moyacs.canary.network.ServerResult;
 import com.moyacs.canary.util.ForeignUtil;
@@ -25,14 +31,14 @@ import com.moyacs.canary.util.SharePreferencesUtil;
 import com.moyacs.canary.util.ToastUtils;
 import com.moyacs.canary.widget.UnderLineTextView;
 
+import org.greenrobot.eventbus.EventBus;
+
 import java.util.HashMap;
 import java.util.Map;
 
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
-import io.reactivex.Observer;
 import io.reactivex.android.schedulers.AndroidSchedulers;
-import io.reactivex.disposables.Disposable;
 import io.reactivex.schedulers.Schedulers;
 import www.moyacs.com.myapplication.R;
 
@@ -276,9 +282,9 @@ public class OrderPopWindow implements View.OnClickListener {
         //品种价格
         tvPrice01.setText(price_buy);
         tvPrice01.setTextColor(textColor);
-        tvMongey01.setText(trade.getUnitPriceOne() + "元/手");
-        tvMongey02.setText(trade.getUnitPriceTwo() + "元/手");
-        tvMongey03.setText(trade.getUnitPriceThree() + "元/手");
+        tvMongey01.setText(trade.getUnitPriceOne() + "美元/手");
+        tvMongey02.setText(trade.getUnitPriceTwo() + "美元/手");
+        tvMongey03.setText(trade.getUnitPriceThree() + "美元/手");
     }
 
     /**
@@ -297,6 +303,7 @@ public class OrderPopWindow implements View.OnClickListener {
         popupWindow_order.showAtLocation(view, Gravity.BOTTOM, 0, 0);
         onClick(tvMongey01);
         onClick(tvSize01);
+        userAmountInfo();
     }
 
     /**
@@ -396,7 +403,6 @@ public class OrderPopWindow implements View.OnClickListener {
      * @param isUp 买涨为 true 买跌为 false
      */
     private void initOrderPopwindowViews(boolean isUp) {
-
         //根据按钮点击情况，修改初始化配置
         if (isUp) {
             setViewBG(true);
@@ -509,9 +515,6 @@ public class OrderPopWindow implements View.OnClickListener {
     public static final int COUNT_SIZE02 = 5;
     public static final int COUNT_SIZE03 = 10;
 
-    public static final int MONEY01 = 8;
-    public static final int MONEY02 = 80;
-    public static final int MONEY03 = 200;
     /**
      * 记录建仓 ，几手 ，当前选中的为第几个，默认为第一个,
      */
@@ -553,13 +556,12 @@ public class OrderPopWindow implements View.OnClickListener {
      * 设置订单总价
      */
     private void setTvTotalMoney() {
-//        String totalMoney = leiXingPrice * countSize;
         String totalMoney = MoneyUtil.moneyMul(String.valueOf(leiXingPrice), String.valueOf(countSize));
-        String shouXuFei = MoneyUtil.moneyMul(totalMoney,String.valueOf(trade.getQuantityCommissionCharges()));
-        String nightFee = MoneyUtil.moneyMul(totalMoney,String.valueOf(trade.getQuantityOvernightFee()));
+        String shouXuFei = MoneyUtil.moneyMul(totalMoney, String.valueOf(trade.getQuantityCommissionCharges()));
+        String nightFee = MoneyUtil.moneyMul(totalMoney, String.valueOf(trade.getQuantityOvernightFee()));
         tvOverNight.setText("过夜费" + nightFee + "美元/天，默认开启，建仓后可手动关闭"); // 过夜费
         tvFee.setText("（手续费：$" + shouXuFei + "）"); //手续费
-        tvTotalMoney.setText("$" + MoneyUtil.moneyAdd(MoneyUtil.moneyAdd(totalMoney,nightFee),shouXuFei)); //总金额
+        tvTotalMoney.setText("$" + MoneyUtil.moneyAdd(MoneyUtil.moneyAdd(totalMoney, nightFee), shouXuFei)); //总金额
         int boDongNum = 0;
         if (leiXingPrice == trade.getUnitPriceOne()) {
             boDongNum = trade.getQuantityOne();
@@ -568,11 +570,10 @@ public class OrderPopWindow implements View.OnClickListener {
         } else {
             boDongNum = trade.getQuantityThree();
         }
-        String heJiNum = MoneyUtil.moneyMul(String.valueOf(boDongNum),String.valueOf(countSize));
+        String heJiNum = MoneyUtil.moneyMul(String.valueOf(boDongNum), String.valueOf(countSize));
         textRatetips.setText("共计约合量" + heJiNum + ForeignUtil.formatForeignUtil(trade.getSymbolCode())
-                + "每波动一个点，收益$" + MoneyUtil.moneyMul(String.valueOf(trade.getQuantityPriceFluctuation()),heJiNum));
+                + "每波动一个点，收益$" + MoneyUtil.moneyMul(String.valueOf(trade.getQuantityPriceFluctuation()), heJiNum));
     }
-
 
     /**
      * 建仓 其他 按钮的点击事件
@@ -633,22 +634,18 @@ public class OrderPopWindow implements View.OnClickListener {
                 else
                     textView.setSelected(false);
                 final int size = index;
-                textView.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        TextView textView = (TextView) view;
-                        jianCangView.setSelected(false);
-                        jianCangView = textView;
-                        jianCangView.setSelected(true);
-                        countSize = size;
-                        //每次点击完之后重新初始化 seekbar
-                        initSeekbar();
-                        //重新设置总价
-                        setTvTotalMoney();
-                    }
+                textView.setOnClickListener(view -> {
+                    TextView textView1 = (TextView) view;
+                    jianCangView.setSelected(false);
+                    jianCangView = textView1;
+                    jianCangView.setSelected(true);
+                    countSize = size;
+                    //每次点击完之后重新初始化 seekbar
+                    initSeekbar();
+                    //重新设置总价
+                    setTvTotalMoney();
                 });
                 index++;
-
             }
         }
         jianCangView.setSelected(true);
@@ -683,7 +680,6 @@ public class OrderPopWindow implements View.OnClickListener {
                 tvSize03.setTextColor(baseActivity2.getResources().getColorStateList(R.color.item_quick_trade_color_tv));
             }
             btnSubmit.setBackgroundResource(R.drawable.qucik_trade_submit);
-
         } else {
             tvMongey01.setBackgroundResource(R.drawable.bg_item_quick_trade_down);
             tvMongey02.setBackgroundResource(R.drawable.bg_item_quick_trade_down);
@@ -694,10 +690,8 @@ public class OrderPopWindow implements View.OnClickListener {
             //根据“其他” 按钮点击与否，决定初始化不同的控件
             if (sizeOtherView.getVisibility() == View.VISIBLE) {
                 countSize = 1;
-
                 initJianCangOtherViews();
             } else {
-
                 tvSize01.setBackgroundResource(R.drawable.bg_item_quick_trade_down);
                 tvSize02.setBackgroundResource(R.drawable.bg_item_quick_trade_down);
                 tvSize03.setBackgroundResource(R.drawable.bg_item_quick_trade_down);
@@ -726,7 +720,6 @@ public class OrderPopWindow implements View.OnClickListener {
         jianCangView = tvSize01;
         jianCangView.setSelected(true);
 //        btnSubmit.setSelected(true);
-
     }
 
     /**
@@ -749,6 +742,12 @@ public class OrderPopWindow implements View.OnClickListener {
             case R.id.gobackView://返回按钮
                 break;
             case R.id.btn_submit://下单按钮
+                double balance = Double.parseDouble(tvBalance.getText().toString().replace("$", ""));
+                double totalMoney = Double.parseDouble(tvTotalMoney.getText().toString().replace("$", ""));
+                if (balance < totalMoney) {
+                    ToastUtils.showShort("您当前余额不足，请及时充值！");
+                    return;
+                }
                 transactionBuy();
                 break;
             case R.id.line_check_usequan://代金券总布局
@@ -770,7 +769,7 @@ public class OrderPopWindow implements View.OnClickListener {
             case R.id.tv_cashin://充值
                 popupWindow_order.dismiss();
                 //跳转充值页面
-                Intent intent = new Intent(baseActivity2, PayActivity.class);
+                Intent intent = new Intent(baseActivity2, RechargeActivity.class);
                 baseActivity2.startActivity(intent);
                 break;
             case R.id.upView://买涨
@@ -830,7 +829,6 @@ public class OrderPopWindow implements View.OnClickListener {
                 setTvTotalMoney();
                 break;
             case R.id.line_check_usecasher://余额总布局
-                LogUtils.d("余额总布局点击事件");
                 checkUsecasher.setImageResource(R.mipmap.img_choosequan_checked);
                 checkUsequan.setImageResource(R.mipmap.img_choosequan_normal);
                 break;
@@ -851,41 +849,52 @@ public class OrderPopWindow implements View.OnClickListener {
         map.put("unitPrice", leiXingPrice);//建仓单价
         map.put("lot", countSize);
         map.put("id", 0);
-        map.put("stopLossCount", zhiSun_value);
-        map.put("stopProfitCount", zhiYing_value);
         map.put("url", "/transaction/buy");
         try {
-            map.put("sign", RSAKeyManger.sign(RSAKeyManger.getFormatParams(map)));
+            String sing = RSAKeyManger.sign(RSAKeyManger.getFormatParams(map));
+            map.put("sign", sing);
         } catch (Exception e) {
             e.printStackTrace();
         }
+        map.put("stopLossCount", zhiSun_value);
+        map.put("stopProfitCount", zhiYing_value);
         ServerManger.getInstance().getServer().transactionBuy(map)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Observer<ServerResult<String>>() {
+                .subscribe(new BaseObservable<ServerResult<String>>() {
                     @Override
-                    public void onSubscribe(Disposable d) {
-
-                    }
-
-                    @Override
-                    public void onNext(ServerResult<String> stringServerResult) {
-                        ToastUtils.showShort("购买成功");
+                    protected void requestSuccess(ServerResult<String> data) {
+                        ToastUtils.showShort("交易成功");
+                        EventBus.getDefault().post(new EvenVo(EvenVo.CHANGE_ORDER_SUCCESS));
+                        popupWindow_order.dismiss();
                     }
 
                     @Override
                     public void onError(Throwable e) {
-                        ToastUtils.showShort("购买失败");
-                    }
-
-                    @Override
-                    public void onComplete() {
-
+                        ToastUtils.showShort("交易失败");
                     }
                 });
     }
 
     public boolean isShow() {
         return popupWindow_order.isShowing();
+    }
+
+    /**
+     * 获取用户资产
+     */
+    private void userAmountInfo() {
+        ServerManger.getInstance().getServer().getUserAmountInfo()
+                .compose(RxUtils.rxSchedulerHelper())
+                .subscribe(new BaseObservable<ServerResult<UserAmountVo>>() {
+                    @Override
+                    protected void requestSuccess(ServerResult<UserAmountVo> data) {
+                        String userBalance = data.getData().getBalance();
+                        if (userBalance == null || TextUtils.equals("null", userBalance)) {
+                            userBalance = "0.00";
+                        }
+                        tvBalance.setText(userBalance);
+                    }
+                });
     }
 }

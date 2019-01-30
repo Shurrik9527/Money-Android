@@ -224,28 +224,29 @@ public class HoldPositionFragment extends BaseFragment implements ChiCangCountra
 
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onGetNettyData(EvenVo<SocketQuotation> evenVo) {
-        //如果没有获取行情列表数据就返回
-        if (isHidden() || evenVo.getCode() != EvenVo.SOCKET_QUOTATION
-                || recordList == null || recordList.size() == 0) {
-            return;
-        }
-        SocketQuotation quotation = evenVo.getT();
-        //遍历比对名称
-        for (int i = 0; i < recordList.size(); i++) {
-            TransactionRecordVo.Record record = recordList.get(i);
-            String symbol = record.getCloseOutPrice();
-            //名称比对成功，就更改价格数据，并更新 对应条目
-            if (symbol.equals(quotation.getSymbolCode())) {
-                record.setPrice_buy(quotation.getPrice());
-                record.setPrice_sell(quotation.getPrice());
-                recordList.set(i, record);
-//                第二个参数不为 0 ，表示可以更新item 中的一部分 ui，对应 adapter 中的 三个参数的 onbindviewHolder
-                if (chiCangAdapter != null) {
-                    chiCangAdapter.notifyItemChanged(i, i);
+        if (evenVo.getCode() == EvenVo.SOCKET_QUOTATION) {
+            //如果没有获取行情列表数据就返回
+            if (isHidden() || recordList == null || recordList.size() == 0) {
+                return;
+            }
+            SocketQuotation quotation = evenVo.getT();
+            //遍历比对名称
+            for (int i = 0; i < recordList.size(); i++) {
+                TransactionRecordVo.Record record = recordList.get(i);
+                String symbol = record.getSymbolCode();
+                //名称比对成功，就更改价格数据，并更新 对应条目
+                if (symbol.equals(quotation.getSymbolCode())) {
+                    record.setPrice_buy(quotation.getPrice());
+                    record.setPrice_sell(quotation.getPrice());
+                    recordList.set(i, record);
+                    // 第二个参数不为 0 ，表示可以更新item 中的一部分 ui，对应 adapter 中的 三个参数的 onbindviewHolder
+                    if (chiCangAdapter != null) {
+                        chiCangAdapter.notifyItemChanged(i, i);
+                    }
                 }
             }
+        } else if (chiCangPresenter != null && evenVo.getCode() == EvenVo.CHANGE_ORDER_SUCCESS) {
+            chiCangPresenter.getRecordList();
         }
     }
-
-
 }

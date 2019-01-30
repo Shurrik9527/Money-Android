@@ -9,10 +9,9 @@ import android.widget.TextView;
 
 import com.moyacs.canary.common.NumberUtils;
 import com.moyacs.canary.main.deal.net_tab3.TransactionRecordVo;
-import com.moyacs.canary.util.DateUtil;
+import com.moyacs.canary.util.ForeignUtil;
 import com.moyacs.canary.util.ViewListenerAbs;
 
-import java.util.Date;
 import java.util.List;
 
 import butterknife.BindView;
@@ -44,19 +43,18 @@ public class ChiCangAdapter extends RecyclerView.Adapter<ChiCangAdapter.ViewHold
         if (symbol_cn == null || symbol_cn.equals("")) {
             return;
         }*/
-        holder.tvSymbolCn.setText("外汇名称");
+        holder.tvSymbolCn.setText(ForeignUtil.codeFormatCN(record.getSymbolCode()));
         //买或者卖
         int type = record.getTransactionStatus();
 
         String type_cn = getType_cn(type);
-
         //手数
         String s1 = NumberUtils.setScale2(record.getLot());
         holder.tvShoushu.setText(s1);
         //订单号
         holder.tvOrder.setText(record.getId());
         //type
-        holder.tvType.setText(type_cn);
+//        holder.tvType.setText(type_cn);
         //收益
         holder.tvProfit.setText("(" + record.getProfit() + "$)");
         //涨 或者 跌 并且设置收益的颜色
@@ -72,9 +70,7 @@ public class ChiCangAdapter extends RecyclerView.Adapter<ChiCangAdapter.ViewHold
             holder.tvProfit.setTextColor(context.getResources().getColor(R.color.color_opt_lt));
         }
         //建仓时间
-        String simpleDateFormat = "yyyy-MM-dd HH:mm:ss";
-        String openTime = DateUtil.parseDateToStr(new Date(record.getCreateTime()), simpleDateFormat);
-        holder.tvJiancangTime.setText(openTime);
+        holder.tvJiancangTime.setText(record.getCreateTime());
         //建仓价
         double open_price = record.getExponent();
         String s2 = NumberUtils.setScale(open_price, record.getDigit());
@@ -86,22 +82,16 @@ public class ChiCangAdapter extends RecyclerView.Adapter<ChiCangAdapter.ViewHold
         String s3 = NumberUtils.setScale(record.getStopLossCount(), record.getDigit());
         holder.tvZhisunValue.setText(s3);
         String orderType = getType_cn(type);
-        String pingCangText;
         if (orderType.equals("挂单")) {
-            pingCangText = "撤销";
             holder.tvSubmit.setText("撤销");
         } else {
-            pingCangText = "平仓";
             holder.tvSubmit.setText("平仓");
         }
         //市价单或者挂单
         holder.tvShijiadan.setText(orderType);
-        holder.tvSubmit.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (itemClickListener != null) {
-                    itemClickListener.onItemClickListener(v, position);
-                }
+        holder.tvSubmit.setOnClickListener(v -> {
+            if (itemClickListener != null) {
+                itemClickListener.onItemClickListener(v, position);
             }
         });
     }
@@ -116,9 +106,11 @@ public class ChiCangAdapter extends RecyclerView.Adapter<ChiCangAdapter.ViewHold
         } else {
             TransactionRecordVo.Record record = recordList.get(position);
             String s = NumberUtils.setScale(record.getPrice_buy(), record.getDigit());
+            holder.tvRate.setVisibility(View.VISIBLE);
             holder.tvRate.setText(s);
             holder.tvRate.setTextColor(context.getResources().getColor(R.color.color_opt_gt));
             String s1 = NumberUtils.setScale(record.getPrice_sell(), record.getDigit());
+            holder.tvRateChange.setVisibility(View.VISIBLE);
             holder.tvRateChange.setText(s1);
             holder.tvRateChange.setTextColor(context.getResources().getColor(R.color.color_opt_lt));
         }

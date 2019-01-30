@@ -36,6 +36,7 @@ import com.moyacs.canary.util.LogUtils;
 import com.moyacs.canary.util.ToastUtils;
 import com.moyacs.canary.util.ViewListenerAbs;
 
+import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 
@@ -491,7 +492,7 @@ public class ProductActivity extends BaseActivity implements OnClickListener {
             }
             orderPopWindow.showOrderPopwindow(v, false);
         } else if (id == R.id.tv_tradeclose) {// 查看持仓
-            setResult(0x11);
+            EventBus.getDefault().post(new EvenVo(EvenVo.WATCH_CHI_CHAN));
             finish();
         } else if (id == R.id.line_productnotice) {//提醒
         } else if (id == R.id.line_product_fullscr) {//全屏

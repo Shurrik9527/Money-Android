@@ -77,7 +77,8 @@
             android:padding="2dp"
             android:text="买涨止损"
             android:textColor="@color/white"
-            android:textSize="9sp" />
+            android:textSize="9sp"
+            android:visibility="gone" />
 
         <TextView
             android:id="@+id/tv_arrow"
@@ -92,60 +93,62 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="10dp"
         android:layout_marginTop="10dp"
+        android:layout_marginBottom="10dp"
         android:paddingLeft="@dimen/margin_10dp"
         android:paddingRight="@dimen/margin_10dp">
 
         <TextView
-            android:layout_marginRight="@dimen/margin_5dp"
-            android:textSize="@dimen/text_size_17sp"
-            android:textStyle="bold"
             android:id="@+id/tv_shouyi_type"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginRight="@dimen/margin_5dp"
             android:background="@drawable/die"
             android:paddingLeft="7dp"
-            android:paddingRight="7dp"
             android:paddingTop="4dp"
+            android:paddingRight="7dp"
             android:paddingBottom="4dp"
             android:text="涨"
-            android:textColor="@color/white" />
+            android:textColor="@color/white"
+            android:textSize="@dimen/text_size_17sp"
+            android:textStyle="bold" />
 
         <TextView
 
-            android:layout_toRightOf="@id/tv_shouyi_type"
             android:id="@+id/tv_jiancang_time"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_toRightOf="@id/tv_shouyi_type"
             android:text="2018-04-18"
             android:textSize="10sp" />
 
         <TextView
-            android:textSize="@dimen/sp_14"
-            android:layout_toRightOf="@id/tv_shouyi_type"
             android:id="@+id/tv_jiancangjia"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@id/tv_jiancang_time"
-            android:text="建仓价" />
+            android:layout_toRightOf="@id/tv_shouyi_type"
+            android:text="建仓价"
+            android:textSize="@dimen/sp_14" />
 
         <TextView
-            android:textSize="@dimen/sp_14"
             android:id="@id/tv_jiancang_price"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@id/tv_jiancang_time"
+            android:layout_marginLeft="@dimen/margin_4dp"
+            android:layout_marginRight="@dimen/margin_4dp"
             android:layout_toRightOf="@id/tv_jiancangjia"
             android:text="1.2323"
-            android:textColor="@color/app_common_content" />
+            android:textColor="@color/app_common_content"
+            android:textSize="@dimen/sp_14" />
         <!--android:layout_alignBaseline=""  下方对齐-->
         <TextView
             android:id="@+id/tv_profit"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignBaseline="@id/tv_jiancangjia"
             android:layout_below="@id/tv_jiancang_time"
+            android:layout_alignBaseline="@id/tv_jiancangjia"
             android:layout_toRightOf="@id/tv_jiancang_price"
             android:text="(-0.23$)"
             android:textColor="@color/color_opt_lt"
@@ -159,10 +162,10 @@
             android:layout_centerVertical="true"
             android:layout_marginRight="16dp"
             android:background="@drawable/pingcang"
-            android:paddingBottom="5dp"
             android:paddingLeft="10dp"
-            android:paddingRight="10dp"
             android:paddingTop="5dp"
+            android:paddingRight="10dp"
+            android:paddingBottom="5dp"
             android:text="@string/trade_close"
             android:textColor="@color/white"
             android:textSize="@dimen/text_size_13sp" />
@@ -178,8 +181,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="center_vertical"
-        android:layout_marginBottom="5dp"
         android:layout_marginTop="10dp"
+        android:layout_marginBottom="5dp"
         android:gravity="center_vertical"
         android:orientation="horizontal"
         android:paddingLeft="@dimen/margin_10dp">
@@ -260,8 +263,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="center_vertical"
-        android:layout_marginBottom="10dp"
         android:layout_marginTop="5dp"
+        android:layout_marginBottom="10dp"
         android:gravity="center_vertical"
         android:orientation="horizontal"
         android:paddingLeft="@dimen/margin_10dp">

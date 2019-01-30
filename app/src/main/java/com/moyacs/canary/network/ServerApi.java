@@ -1,6 +1,5 @@
 package com.moyacs.canary.network;
 
-import com.google.gson.JsonObject;
 import com.moyacs.canary.main.deal.net_tab3.TransactionRecordVo;
 import com.moyacs.canary.main.deal.net_tab3.UserAmountVo;
 import com.moyacs.canary.main.homepage.net.BannerDate;
@@ -163,7 +162,7 @@ public interface ServerApi {
      * 刷新auth
      */
     @POST("login/refreshJWT")
-    Call<JsonObject> getAuth();
+    Call<ServerResult<String>> getAuth();
 
     /**
      * 获取webSocket地址
