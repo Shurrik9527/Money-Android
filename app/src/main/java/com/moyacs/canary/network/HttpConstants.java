@@ -10,8 +10,8 @@ public class HttpConstants {
 
     public static final String Base_URL = "http://47.91.164.170:8012/";
     //新版地址
-//    public static final String SERVER_HOST = "http://47.97.186.123/royal/";
-    public static final String SERVER_HOST = "http://www.wjhsh.cn/royal/";
+    public static final String SERVER_HOST = "http://47.97.186.123/royal/";
+//    public static final String SERVER_HOST = "http://www.wjhsh.cn/royal/";
 
     public static final String header_key = "Authorization";
     //    public static final String header_value = "Bearer"+" ";

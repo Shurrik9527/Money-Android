@@ -2,14 +2,16 @@ package com.moyacs.canary.main.deal.adapter;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.moyacs.canary.common.AppConstans;
-import com.moyacs.canary.common.NumberUtils;
 import com.moyacs.canary.main.deal.net_tab3.TransactionRecordVo;
+import com.moyacs.canary.util.ForeignUtil;
+import com.moyacs.canary.util.MoneyUtil;
 
 import java.util.List;
 
@@ -42,7 +44,7 @@ public class TransactionAdapter extends RecyclerView.Adapter<TransactionAdapter.
         if (symbol_cn == null || symbol_cn.equals("")) {
             return;
         }*/
-        holder.tvSymbolCn.setText("品牌名称");
+
         //买或者卖
         String type = chiCangDateBean.getRansactionType();
         int color = 0;
@@ -55,26 +57,26 @@ public class TransactionAdapter extends RecyclerView.Adapter<TransactionAdapter.
             }
         }
         //买涨 / 买跌
-        String type_cn = getType_cn(type);
-        holder.tvType.setText(type_cn);
-        holder.tvType.setTextColor(color);
-
-        //手数
-        String s1 = NumberUtils.setScale2(chiCangDateBean.getLot());
-        holder.tvShoushu.setText(s1 + "手");
-        holder.tvShoushu.setTextColor(color);
-        //收益
-        double profit = chiCangDateBean.getProfit();
-        double abs = Math.abs(profit);
-        String profit_s;
-        if (profit > 0) {
-            profit_s = "+$" + abs;
-            color = context.getResources().getColor(R.color.color_opt_gt);
+        String type_cn;
+        if (TextUtils.equals("1", chiCangDateBean.getRansactionType())) {
+            type_cn = "买涨";
         } else {
-            profit_s = "-$" + abs;
-            color = context.getResources().getColor(R.color.color_opt_lt);
+            type_cn = "买跌";
         }
-        holder.tvProfit.setText(profit_s);
+        holder.tvType.setText(type_cn + "\t\t" + chiCangDateBean.getLot() + "手");
+        holder.tvType.setTextColor(color);
+        holder.vHead.setBackgroundColor(color);
+        holder.tvSymbolCn.setText(ForeignUtil.codeFormatCN(chiCangDateBean.getSymbolCode()) + "\t\t" + chiCangDateBean.getMoney() + ForeignUtil.formatForeignUtil(chiCangDateBean.getSymbolCode()));
+        //收益
+        String p_unit;
+        if (Math.abs(chiCangDateBean.getProfit()) > 0) {
+            color = context.getResources().getColor(R.color.color_opt_gt);
+            p_unit = "+";
+        } else {
+            color = context.getResources().getColor(R.color.color_opt_lt);
+            p_unit = "-";
+        }
+        holder.tvProfit.setText(p_unit + MoneyUtil.moneyAdd(String.valueOf(chiCangDateBean.getMoney()), String.valueOf(chiCangDateBean.getCommissionCharges())) + "美元");
         holder.tvProfit.setTextColor(color);
         //建仓时间
         holder.tvTime.setText(chiCangDateBean.getCreateTime());
@@ -97,13 +99,13 @@ public class TransactionAdapter extends RecyclerView.Adapter<TransactionAdapter.
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
+        @BindView(R.id.v_head)
+        View vHead;
         @BindView(R.id.tv_type)
         TextView tvType;
-        @BindView(R.id.tv_shoushu)
-        TextView tvShoushu;
         @BindView(R.id.tv_symbol_cn)
         TextView tvSymbolCn;
-        @BindView(R.id.tv_rofit)
+        @BindView(R.id.tv_profit)
         TextView tvProfit;
         @BindView(R.id.tv_time)
         TextView tvTime;

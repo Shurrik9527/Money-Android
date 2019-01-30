@@ -1,64 +1,59 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:background="@color/white"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_height="wrap_content"
+    android:background="@color/white">
+
+    <View
+        android:id="@+id/v_head"
+        android:layout_width="@dimen/margin_4dp"
+        android:layout_height="@dimen/margin_20dp"
+        android:layout_marginTop="@dimen/dp_10"
+        android:background="@color/trade_up" />
 
     <RelativeLayout
-        android:layout_marginBottom="10dp"
-        android:layout_marginTop="10dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginLeft="10dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="10dp"
         android:orientation="vertical">
 
         <TextView
             android:id="@+id/tv_type"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentLeft="true"
+            android:layout_marginStart="0dp"
+            android:layout_marginLeft="0dp"
             android:text="买涨" />
 
         <TextView
-            android:layout_marginLeft="10dp"
-            android:layout_toRightOf="@id/tv_type"
-            android:text="0.01手"
-            android:id="@+id/tv_shoushu"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
-        <TextView
-            android:layout_marginLeft="10dp"
-            android:layout_toRightOf="@id/tv_shoushu"
-            android:text="美元"
             android:id="@+id/tv_symbol_cn"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_toRightOf="@id/tv_type"
+            android:text="美元"
+            android:textColor="#333" />
+
         <TextView
-            android:layout_marginTop="5dp"
-            android:layout_below="@id/tv_type"
             android:id="@+id/tv_time"
-            android:text="2018-4-17 16:12:20"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
-
-
+            android:layout_height="wrap_content"
+            android:layout_below="@id/tv_type"
+            android:layout_marginTop="5dp"
+            android:text="2018-4-17 16:12:20" />
     </RelativeLayout>
 
-    <!--<ImageView-->
-        <!--android:id="@+id/image_more"-->
-        <!--android:layout_width="wrap_content"-->
-        <!--android:layout_height="wrap_content"-->
-       <!--android:layout_alignParentRight="true"-->
-        <!--android:layout_centerVertical="true"-->
-        <!--android:layout_marginRight="10dp"-->
-        <!--android:src="@mipmap/me_icon_more" />-->
-
     <TextView
-        android:id="@+id/tv_rofit"
-        android:layout_alignParentRight="true"
-        android:layout_marginRight="10dp"
-        android:layout_centerVertical="true"
+        android:id="@+id/tv_profit"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_centerVertical="true"
+        android:layout_marginRight="10dp"
         android:text="+$8.08" />
 
 </RelativeLayout>

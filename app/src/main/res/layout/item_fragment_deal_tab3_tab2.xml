@@ -5,19 +5,19 @@
     android:layout_height="wrap_content">
 
     <com.allen.library.SuperTextView
-        app:sRightIconRes="@mipmap/home_more_arrow_right"
         android:id="@+id/supertextView"
-        app:sDividerLineType="none"
         android:layout_width="match_parent"
         android:layout_height="60dp"
+        app:sDividerLineType="none"
         app:sLeftBottomTextColor="@color/grey_80"
         app:sLeftBottomTextString="2018-4-18 10:50:10"
-        app:sLeftViewGravity="left_center"
         app:sLeftTopTextColor="@color/app_common_content"
         app:sLeftTopTextString="提现"
+        app:sLeftViewGravity="left_center"
         app:sRightBottomTextColor="@color/grey_80"
         app:sRightBottomTextString="提现成功"
-        app:sRightViewGravity="right_center"
+        app:sRightIconRes="@mipmap/home_more_arrow_right"
         app:sRightTopTextColor="@color/color_opt_gt"
-        app:sRightTopTextString="$3" />
+        app:sRightTopTextString="$3"
+        app:sRightViewGravity="right_center" />
 </RelativeLayout>

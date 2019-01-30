@@ -20,7 +20,6 @@
             android:background="@drawable/chicang_title_left_view" />
 
         <TextView
-
             android:id="@+id/tv_symbol_cn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -114,7 +113,6 @@
             android:textStyle="bold" />
 
         <TextView
-
             android:id="@+id/tv_jiancang_time"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -253,10 +251,7 @@
                     android:textColor="@color/sub_blue"
                     android:textSize="@dimen/text_size_12sp" />
             </LinearLayout>
-
         </LinearLayout>
-
-
     </LinearLayout>
 
     <LinearLayout
@@ -346,10 +341,6 @@
             <!--android:layout_width="wrap_content"-->
             <!--android:layout_height="wrap_content"-->
             <!--android:text="1.23235" />-->
-
         </LinearLayout>
-
-
     </LinearLayout>
-
 </LinearLayout>

@@ -7,7 +7,6 @@ import android.view.View;
 import android.widget.TextView;
 
 import com.moyacs.canary.base.BaseFragment;
-import com.moyacs.canary.common.MyDecoration;
 import com.moyacs.canary.common.RSAKeyManger;
 import com.moyacs.canary.main.deal.adapter.ChiCangAdapter;
 import com.moyacs.canary.main.deal.contract_tab2.ChiCangCountract;
@@ -75,22 +74,30 @@ public class HoldPositionFragment extends BaseFragment implements ChiCangCountra
 
     @Override
     protected void intListener() {
-        chiCangAdapter.setItemClickListener((view, pos) -> {
-            selectPos = pos;
-            LemonHello.getWarningHello("您确认平仓吗？", "")
-                    .addAction(new LemonHelloAction("取消", new LemonHelloActionDelegate() {
-                        @Override
-                        public void onClick(LemonHelloView helloView, LemonHelloInfo helloInfo, LemonHelloAction helloAction) {
-                            helloView.hide();
-                        }
-                    }))
-                    .addAction(new LemonHelloAction("确定", Color.RED, new LemonHelloActionDelegate() {
-                        @Override
-                        public void onClick(LemonHelloView lemonHelloView, LemonHelloInfo lemonHelloInfo, LemonHelloAction lemonHelloAction) {
-                            CheXiaoAndPingCang();
-                            lemonHelloView.hide();
-                        }
-                    })).show(getActivity());
+        chiCangAdapter.setItemClickListener(new ChiCangAdapter.ItemClickListener() {
+            @Override
+            public void itemCloseClickListener(int pos) {
+                selectPos = pos;
+                LemonHello.getWarningHello("您确认平仓吗？", "")
+                        .addAction(new LemonHelloAction("取消", new LemonHelloActionDelegate() {
+                            @Override
+                            public void onClick(LemonHelloView helloView, LemonHelloInfo helloInfo, LemonHelloAction helloAction) {
+                                helloView.hide();
+                            }
+                        }))
+                        .addAction(new LemonHelloAction("确定", Color.RED, new LemonHelloActionDelegate() {
+                            @Override
+                            public void onClick(LemonHelloView lemonHelloView, LemonHelloInfo lemonHelloInfo, LemonHelloAction lemonHelloAction) {
+                                CheXiaoAndPingCang();
+                                lemonHelloView.hide();
+                            }
+                        })).show(getActivity());
+            }
+
+            @Override
+            public void itemSwitchClickListener(int pos, boolean isCheck) {
+
+            }
         });
     }
 
@@ -117,7 +124,6 @@ public class HoldPositionFragment extends BaseFragment implements ChiCangCountra
     private void initRecyclerView() {
         LinearLayoutManager manager = new LinearLayoutManager(getActivity());
         manager.setOrientation(LinearLayoutManager.VERTICAL);
-        recyclerView.addItemDecoration(new MyDecoration(getActivity(), LinearLayoutManager.VERTICAL));
         recyclerView.setLayoutManager(manager);
         recordList = new ArrayList<>();
         chiCangAdapter = new ChiCangAdapter(mActivity, recordList);

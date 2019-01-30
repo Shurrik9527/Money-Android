@@ -260,9 +260,11 @@ public class CapitalFragment extends BaseFragment implements FundContract.FundVi
     public void setTradingRecordList(List<TransactionRecordVo.Record> list, String type) {
         freshLayout.refreshComplete();
         if (list == null || list.size() <= 0) {
+            rvContent.setVisibility(View.GONE);
             rlRequestFailed.setVisibility(View.VISIBLE);
             tvRequestFailed.setText("当前记录为空");
         } else {
+            rvContent.setVisibility(View.VISIBLE);
             if (TextUtils.equals(type, "0")) {
                 //交易记录
                 dealList.clear();
@@ -286,6 +288,7 @@ public class CapitalFragment extends BaseFragment implements FundContract.FundVi
     @Override
     public void getTradingRecordsFailed(String msg, String type) {
         freshLayout.refreshComplete();
+        rvContent.setVisibility(View.GONE);
         rlRequestFailed.setVisibility(View.VISIBLE);
         if (TextUtils.equals(type, "0")) {
             tvRequestFailed.setText("交易记录获取失败");
