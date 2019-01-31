@@ -18,7 +18,7 @@ public class TransactionRecordVo {
         private String loginName;
         private String symbolCode;
         private String createTime;
-        private double lot;
+        private int lot;
         private String unitPrice;
         private String money;
         private String overnightFee;
@@ -72,11 +72,11 @@ public class TransactionRecordVo {
             this.createTime = createTime;
         }
 
-        public double getLot() {
+        public int getLot() {
             return lot;
         }
 
-        public void setLot(double lot) {
+        public void setLot(int lot) {
             this.lot = lot;
         }
 

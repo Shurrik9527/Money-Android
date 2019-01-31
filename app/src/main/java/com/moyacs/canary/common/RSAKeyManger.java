@@ -1,5 +1,7 @@
 package com.moyacs.canary.common;
 
+import android.util.Log;
+
 import org.apache.mina.util.Base64;
 
 import java.security.KeyFactory;
@@ -26,6 +28,7 @@ public class RSAKeyManger {
      * @return 签名
      */
     public static String sign(String data) throws Exception {
+        Log.e("TAG", "========要签名的串===========" + data);
         PrivateKey privateKey = getPrivateKey(priKey);
         byte[] keyBytes = privateKey.getEncoded();
         PKCS8EncodedKeySpec keySpec = new PKCS8EncodedKeySpec(keyBytes);
@@ -36,6 +39,7 @@ public class RSAKeyManger {
         signature.initSign(key);
         signature.update(data.getBytes());
         String sing = new String(Base64.encodeBase64(signature.sign()));
+        Log.e("TAG", "========签好的串===========" + sing);
         return sing;
     }
 

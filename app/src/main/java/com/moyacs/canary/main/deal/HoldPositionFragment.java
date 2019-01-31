@@ -3,6 +3,7 @@ package com.moyacs.canary.main.deal;
 import android.graphics.Color;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.TextView;
 
@@ -14,6 +15,10 @@ import com.moyacs.canary.main.deal.contract_tab2.ChiCangPresenterImpl;
 import com.moyacs.canary.main.deal.net_tab3.TransactionRecordVo;
 import com.moyacs.canary.main.market.net.MarketDataBean;
 import com.moyacs.canary.main.me.EvenVo;
+import com.moyacs.canary.network.BaseObservable;
+import com.moyacs.canary.network.RxUtils;
+import com.moyacs.canary.network.ServerManger;
+import com.moyacs.canary.network.ServerResult;
 import com.moyacs.canary.pay.contract.PayContract;
 import com.moyacs.canary.pay.contract.PayPresenterImpl;
 import com.moyacs.canary.service.SocketQuotation;
@@ -95,8 +100,8 @@ public class HoldPositionFragment extends BaseFragment implements ChiCangCountra
             }
 
             @Override
-            public void itemSwitchClickListener(int pos, boolean isCheck) {
-
+            public void itemSwitchClickListener(int pos) {
+                updateOverNight(pos);
             }
         });
     }
@@ -197,7 +202,8 @@ public class HoldPositionFragment extends BaseFragment implements ChiCangCountra
     @Override
     public void closeOrderSuccess() {
         recordList.remove(selectPos);
-        chiCangAdapter.notifyItemRangeChanged(selectPos, chiCangAdapter.getItemCount()); //刷新被删除数据，以及其后面的数据
+        chiCangAdapter.notifyItemRemoved(selectPos);
+        chiCangAdapter.notifyItemChanged(selectPos, chiCangAdapter.getItemCount()); //刷新被删除数据，以及其后面的数据
     }
 
     /**
@@ -224,9 +230,45 @@ public class HoldPositionFragment extends BaseFragment implements ChiCangCountra
         map.put("unitPrice", record.getUnitPrice());
         map.put("lot", record.getLot());
         map.put("id", record.getId());
-        map.put("sign", RSAKeyManger.getFormatParams(map));
+        map.put("url", "/transaction/sell");
+        try {
+            map.put("sign", RSAKeyManger.sign(RSAKeyManger.getFormatParams(map)));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
         payPresenter.closeOrder(map);
     }
+
+    /**
+     * 设置为不过夜
+     *
+     * @param selectPos 交易
+     */
+    private void updateOverNight(final int selectPos) {
+        TransactionRecordVo.Record record = recordList.get(selectPos);
+        showLoadingDialog();
+        String id = record.getId();
+        addSubscribe(ServerManger.getInstance().getServer().updateOverNight(id)
+                .compose(RxUtils.rxSchedulerHelper())
+                .subscribeWith(new BaseObservable<ServerResult<String>>() {
+                    @Override
+                    protected void requestSuccess(ServerResult<String> data) {
+                        if (TextUtils.equals("1", record.getIsOvernight())) {
+                            record.setIsOvernight("2");
+                        } else {
+                            record.setIsOvernight("1");
+                        }
+                        chiCangAdapter.notifyItemChanged(selectPos);
+                    }
+
+                    @Override
+                    public void onComplete() {
+                        super.onComplete();
+                        dismissLoadingDialog();
+                    }
+                }));
+    }
+
 
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onGetNettyData(EvenVo<SocketQuotation> evenVo) {

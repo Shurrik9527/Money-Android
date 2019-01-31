@@ -169,4 +169,11 @@ public interface ServerApi {
      */
     @GET("symbolInfo/getWebSocketAddress")
     Observable<ServerResult<String>> getWebSocketAddress();
+
+    /**
+     * 设置为不过夜
+     */
+    @FormUrlEncoded
+    @POST("transactionRecord/updateOvernight")
+    Observable<ServerResult<String>> updateOverNight(@Field("id") String id);
 }

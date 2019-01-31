@@ -6,11 +6,12 @@ import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Switch;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.moyacs.canary.main.deal.net_tab3.TransactionRecordVo;
 import com.moyacs.canary.util.ForeignUtil;
+import com.moyacs.canary.util.MoneyUtil;
 
 import java.util.List;
 
@@ -22,10 +23,11 @@ public class ChiCangAdapter extends RecyclerView.Adapter<ChiCangAdapter.ViewHold
     private List<TransactionRecordVo.Record> recordList;
     private ItemClickListener itemClickListener;
     private int upColor, downColor;
+
     public ChiCangAdapter(Context context, List<TransactionRecordVo.Record> recordList) {
         this.recordList = recordList;
-         upColor = context.getResources().getColor(R.color.trade_up);
-         downColor = context.getResources().getColor(R.color.trade_down);
+        upColor = context.getResources().getColor(R.color.trade_up);
+        downColor = context.getResources().getColor(R.color.trade_down);
     }
 
     @Override
@@ -58,15 +60,15 @@ public class ChiCangAdapter extends RecyclerView.Adapter<ChiCangAdapter.ViewHold
         holder.tvCreateTime.setText(record.getCreateTime());
         holder.tvStopLoss.setText(record.getStopLossCount() == 0 ? "不限" : String.valueOf(record.getStopLossCount()));
         holder.tvStopProfit.setText(record.getStopProfitCount() == 0 ? "不限" : String.valueOf(record.getStopProfitCount()));
-
+        holder.sw.setImageResource(TextUtils.equals("1", record.getIsOvernight()) ? R.mipmap.ic_on : R.mipmap.ic_off);
         holder.tvClose.setOnClickListener(v -> {
             if (itemClickListener != null) {
                 itemClickListener.itemCloseClickListener(position);
             }
         });
-        holder.sw.setOnCheckedChangeListener((buttonView, isChecked) -> {
+        holder.sw.setOnClickListener(view -> {
             if (itemClickListener != null) {
-                itemClickListener.itemSwitchClickListener(position, isChecked);
+                itemClickListener.itemSwitchClickListener(position);
             }
         });
     }
@@ -79,6 +81,17 @@ public class ChiCangAdapter extends RecyclerView.Adapter<ChiCangAdapter.ViewHold
             onBindViewHolder(holder, position);
         } else {
             //表示，viewHolder 的一部分数据改变
+            String oldValue = holder.tvProfit01.getText().toString();
+            TransactionRecordVo.Record record = recordList.get(position);
+            String priceBuy = String.valueOf(record.getPrice_buy());
+            if (!TextUtils.isEmpty(oldValue) && !TextUtils.equals("null", oldValue)) {
+                if (MoneyUtil.moneyComp(priceBuy, oldValue)) {
+                    holder.tvProfit01.setTextColor(upColor);
+                } else {
+                    holder.tvProfit01.setTextColor(downColor);
+                }
+            }
+            holder.tvProfit01.setText(priceBuy);
         }
     }
 
@@ -135,7 +148,7 @@ public class ChiCangAdapter extends RecyclerView.Adapter<ChiCangAdapter.ViewHold
     public interface ItemClickListener {
         void itemCloseClickListener(int pos);
 
-        void itemSwitchClickListener(int pos, boolean isCheck);
+        void itemSwitchClickListener(int pos);
     }
 
     class ViewHolder extends RecyclerView.ViewHolder {
@@ -165,8 +178,8 @@ public class ChiCangAdapter extends RecyclerView.Adapter<ChiCangAdapter.ViewHold
         TextView tvStopLoss;
         @BindView(R.id.tv_stopProfit)
         TextView tvStopProfit;
-        @BindView(R.id.sw)
-        Switch sw;
+        @BindView(R.id.iv_sw)
+        ImageView sw;
         @BindView(R.id.tv_close)
         TextView tvClose;
 
