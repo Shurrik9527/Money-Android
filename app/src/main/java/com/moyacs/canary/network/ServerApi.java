@@ -6,15 +6,21 @@ import com.moyacs.canary.main.homepage.net.BannerDate;
 import com.moyacs.canary.main.market.net.TradeVo;
 import com.moyacs.canary.main.me.UserInfoVo;
 
+import java.util.List;
 import java.util.Map;
 
 import io.reactivex.Observable;
+import okhttp3.MultipartBody;
+import okhttp3.RequestBody;
 import retrofit2.Call;
 import retrofit2.http.Field;
 import retrofit2.http.FieldMap;
 import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
+import retrofit2.http.Multipart;
 import retrofit2.http.POST;
+import retrofit2.http.Part;
+import retrofit2.http.PartMap;
 import retrofit2.http.Query;
 
 public interface ServerApi {
@@ -129,7 +135,7 @@ public interface ServerApi {
      */
     @FormUrlEncoded
     @POST("user/edit")
-    Observable<ServerResult<String>> updateNickName(@Field("nickname") String nickname);
+    Observable<ServerResult<String>> updateNickName(@Field("nickname") String nickname, @Field("userImg") String userImg);
 
     /**
      * 平仓
@@ -176,4 +182,11 @@ public interface ServerApi {
     @FormUrlEncoded
     @POST("transactionRecord/updateOvernight")
     Observable<ServerResult<String>> updateOverNight(@Field("id") String id);
+
+    /**
+     * 上传图片
+     */
+    @POST("file/upload")
+    @Multipart
+    Observable<ServerResult<String>> uploadFile(@PartMap Map<String, RequestBody> body, @Part List<MultipartBody.Part> file);
 }

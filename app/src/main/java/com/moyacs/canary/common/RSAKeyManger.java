@@ -12,7 +12,6 @@ import java.security.spec.PKCS8EncodedKeySpec;
 import java.security.spec.X509EncodedKeySpec;
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
 
@@ -67,11 +66,7 @@ public class RSAKeyManger {
      */
     public static String getFormatParams(Map<String, Object> params) {
         List<Map.Entry<String, Object>> infoIds = new ArrayList<Map.Entry<String, Object>>(params.entrySet());
-        Collections.sort(infoIds, new Comparator<Map.Entry<String, Object>>() {
-            public int compare(Map.Entry<String, Object> arg0, Map.Entry<String, Object> arg1) {
-                return (arg0.getKey()).compareTo(arg1.getKey());
-            }
-        });
+        Collections.sort(infoIds, (arg0, arg1) -> (arg0.getKey()).compareTo(arg1.getKey()));
         String ret = "";
 
         for (Map.Entry<String, Object> entry : infoIds) {

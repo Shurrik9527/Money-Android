@@ -4,6 +4,7 @@
     package="www.moyacs.com.myapplication">
     <!-- 权限声明 -->
     <!-- 访问网络状态 -->
+    <uses-permission android:name="android.permission.BLUETOOTH" />
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" /> <!-- 控制呼吸灯，振动器等，用于新消息提醒 -->
@@ -46,7 +47,8 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:ignore="GoogleAppIndexingWarning">
-        <!--盈利榜-->
+        <activity android:name="com.moyacs.canary.web.WebActivity"></activity>
+        <!-- 盈利榜 -->
         <activity android:name="com.moyacs.canary.main.homepage.ProfitActivity" />
         <activity android:name="com.moyacs.canary.main.me.RechargeActivity" />
         <activity android:name="com.moyacs.canary.main.MainActivity">

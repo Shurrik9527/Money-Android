@@ -14,9 +14,9 @@ import com.alibaba.android.vlayout.layout.LinearLayoutHelper;
 import com.alibaba.android.vlayout.layout.SingleLayoutHelper;
 import com.alibaba.android.vlayout.layout.StickyLayoutHelper;
 import com.chad.library.adapter.base.BaseViewHolder;
-import com.just.library.LogUtils;
 import com.moyacs.canary.base.BaseDelegateAdapter;
 import com.moyacs.canary.base.BaseFragment;
+import com.moyacs.canary.common.AppConstans;
 import com.moyacs.canary.main.homepage.adapter.DealChanceAdapter;
 import com.moyacs.canary.main.homepage.adapter.TradeHorizontalAdapter;
 import com.moyacs.canary.main.homepage.contract.MarketContract;
@@ -27,6 +27,7 @@ import com.moyacs.canary.main.market.net.TradeVo;
 import com.moyacs.canary.main.me.EvenVo;
 import com.moyacs.canary.product_fxbtg.ProductActivity;
 import com.moyacs.canary.service.SocketQuotation;
+import com.moyacs.canary.web.WebActivity;
 import com.yan.pullrefreshlayout.PullRefreshLayout;
 import com.youth.banner.Banner;
 
@@ -179,7 +180,12 @@ public class HomepageFragment extends BaseFragment implements MarketContract.Mar
                 super.onBindViewHolder(holder, position);
                 //新手学堂布局
                 View view = holder.getView(R.id.rl_home_newuser_classroom);
-                view.setOnClickListener(v -> LogUtils.e("", "新手学堂"));
+                view.setOnClickListener(v -> {
+                    Intent intent = new Intent(mActivity, WebActivity.class);
+                    intent.putExtra("title", "一分钟了解汇大师");
+                    intent.putExtra("loadUrl", AppConstans.KNOW_APP);
+                    startActivity(intent);
+                });
                 //盈利榜
                 View view1 = holder.getView(R.id.rl_home_newuser_gold);
                 view1.setOnClickListener(v -> {

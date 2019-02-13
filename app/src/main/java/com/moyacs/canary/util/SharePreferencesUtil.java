@@ -46,6 +46,14 @@ public class SharePreferencesUtil {
         return spf.getString("serverAuthor", "");
     }
 
+    public void setUserHead(String head) {
+        spf.edit().putString("userHead", head).apply();
+    }
+
+    public String getUserHead() {
+        return spf.getString("userHead", "");
+    }
+
     public void clean() {
         spf.edit().clear().apply();
     }

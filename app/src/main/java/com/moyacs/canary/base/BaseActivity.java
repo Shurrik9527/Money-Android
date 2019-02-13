@@ -4,8 +4,10 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 
+import com.moyacs.canary.util.IPermissionsResultListener;
 import com.moyacs.canary.util.ToastUtils;
 import com.moyacs.canary.widget.LoadingDialog;
+import com.tbruyelle.rxpermissions2.RxPermissions;
 
 import org.greenrobot.eventbus.EventBus;
 
@@ -19,6 +21,7 @@ public abstract class BaseActivity extends AppCompatActivity implements BaseView
     private CompositeDisposable disposables;
     private Unbinder bind;
     private LoadingDialog loadingDialog;
+    private RxPermissions permissions;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -93,5 +96,22 @@ public abstract class BaseActivity extends AppCompatActivity implements BaseView
     @Override
     public void unsubscribe() {
 
+    }
+
+    public void requestPermission(String[] permission, IPermissionsResultListener listener) {
+        addSubscribe(getPermissions().request(permission).subscribe(per -> {
+            if (per) {
+                listener.onSuccess();
+            } else {
+                listener.onFailure();
+            }
+        }));
+    }
+
+    private RxPermissions getPermissions() {
+        if (permissions == null) {
+            permissions = new RxPermissions(this);
+        }
+        return permissions;
     }
 }

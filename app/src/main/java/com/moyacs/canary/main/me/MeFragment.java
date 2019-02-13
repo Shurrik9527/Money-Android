@@ -6,7 +6,9 @@ import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.moyacs.canary.base.BaseFragment;
+import com.moyacs.canary.common.AppConstans;
 import com.moyacs.canary.common.DialogUtils;
 import com.moyacs.canary.login.LoginActivity;
 import com.moyacs.canary.main.deal.net_tab3.UserAmountVo;
@@ -14,9 +16,10 @@ import com.moyacs.canary.network.BaseObservable;
 import com.moyacs.canary.network.RxUtils;
 import com.moyacs.canary.network.ServerManger;
 import com.moyacs.canary.network.ServerResult;
-import com.moyacs.canary.news.NewsActivity;
 import com.moyacs.canary.util.SharePreferencesUtil;
 import com.moyacs.canary.util.ToastUtils;
+import com.moyacs.canary.web.WebActivity;
+import com.moyacs.canary.widget.CircleImageView;
 
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
@@ -44,6 +47,8 @@ public class MeFragment extends BaseFragment {
     TextView tvProfit;
     @BindView(R.id.tv_balance)
     TextView tvBalance;
+    @BindView(R.id.img_person)
+    CircleImageView ivPerson;
 
     private boolean isLoadData = false;
 
@@ -88,8 +93,11 @@ public class MeFragment extends BaseFragment {
         } else {
             llLogin.setVisibility(View.VISIBLE);
             llUnLogin.setVisibility(View.GONE);
-            String nickName = SharePreferencesUtil.getInstance().getNickName();
-            tvNickName.setText(nickName);
+            tvNickName.setText( SharePreferencesUtil.getInstance().getNickName());
+            Glide.with(mActivity)
+                    .load(SharePreferencesUtil.getInstance().getUserHead())
+                    .into(ivPerson);
+
         }
     }
 
@@ -114,9 +122,9 @@ public class MeFragment extends BaseFragment {
                 break;
             case R.id.super_huidashi:
                 //一分钟了解汇大师
-                intent = new Intent(mActivity, NewsActivity.class);
-                url = "http://47.91.164.170:8080/pages/xsxt/zh-CN/index.html";
-                intent.putExtra("url", url);
+                intent = new Intent(mActivity, WebActivity.class);
+                intent.putExtra("title","一分钟了解汇大师");
+                intent.putExtra("loadUrl", AppConstans.KNOW_APP);
                 startActivity(intent);
                 break;
             case R.id.super_version:
@@ -124,9 +132,9 @@ public class MeFragment extends BaseFragment {
                 break;
             case R.id.super_aboutus:
                 //关于我们
-                intent = new Intent(mActivity, NewsActivity.class);
-                url = "http://47.91.164.170:8080/pages/aboutus/aboutus-zh-CN.html";
-                intent.putExtra("url", url);
+                intent = new Intent(mActivity, WebActivity.class);
+                intent.putExtra("title","关于我们");
+                intent.putExtra("loadUrl", AppConstans.ABOUT_US);
                 startActivity(intent);
                 break;
             case R.id.text_needexp:

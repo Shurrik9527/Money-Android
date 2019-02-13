@@ -154,7 +154,9 @@ public class HoldPositionFragment extends BaseFragment implements ChiCangCountra
 
     @Override
     public void unsubscribe() {
-        chiCangPresenter.unsubscribe();
+        if(chiCangPresenter!=null){
+            chiCangPresenter.unsubscribe();
+        }
     }
 
 

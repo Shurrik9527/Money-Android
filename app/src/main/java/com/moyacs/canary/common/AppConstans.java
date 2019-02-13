@@ -4,6 +4,9 @@ import com.moyacs.canary.main.market.net.MarketDataBean;
 
 import java.util.List;
 
+import okhttp3.MediaType;
+import okhttp3.RequestBody;
+
 /**
  * 作者：luoshen on 2018/3/5 0005 17:48
  * 邮箱：rsf411613593@gmail.com
@@ -92,6 +95,12 @@ public class AppConstans {
      * 全局所有列表行情数据,首页获取所有行情列表之后赋值
      */
     public static List<MarketDataBean> marketDataBeanList = null;
+    //一分钟了解汇大师
+    public static final String KNOW_APP="http://www.zhangstz.com/xsxt/zh-CN/index.html";
+    //关于我们
+    public static final String ABOUT_US = "http://www.zhangstz.com/aboutus/aboutus-zh-CN.html";
 
-
+    public static RequestBody toRequestBody(String value) {
+        return RequestBody.create(MediaType.parse("text/plain"), value);
+    }
 }

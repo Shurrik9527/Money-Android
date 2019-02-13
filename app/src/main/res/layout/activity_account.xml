@@ -30,6 +30,7 @@
     </RelativeLayout>
 
     <LinearLayout
+        android:id="@+id/ll_head"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@color/white"
@@ -136,8 +137,8 @@
         android:background="@color/white"
         android:gravity="center_vertical"
         android:orientation="horizontal"
-        android:visibility="visible"
-        android:padding="@dimen/margin_16dp">
+        android:padding="@dimen/margin_16dp"
+        android:visibility="visible">
 
         <TextView
             android:layout_width="wrap_content"

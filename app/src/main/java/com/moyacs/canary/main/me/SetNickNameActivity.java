@@ -65,7 +65,7 @@ public class SetNickNameActivity extends BaseActivity {
             ToastUtils.showShort("昵称不能为空");
             return;
         }
-        addSubscribe(ServerManger.getInstance().getServer().updateNickName(nickName)
+        addSubscribe(ServerManger.getInstance().getServer().updateNickName(nickName,"")
                 .compose(RxUtils.rxSchedulerHelper())
                 .subscribeWith(new BaseObservable<ServerResult<String>>() {
                     @Override
