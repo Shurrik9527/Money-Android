@@ -9,24 +9,19 @@ import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.TextView;
-
 import com.moyacs.canary.base.BaseFragment;
+import com.moyacs.canary.bean.TradeVo;
+import com.moyacs.canary.bean.event.EvenVo;
 import com.moyacs.canary.common.DialogUtils;
-import com.moyacs.canary.main.market.adapter.MarketAdapter;
-import com.moyacs.canary.main.market.contract.MarketContract;
-import com.moyacs.canary.main.market.contract.MarketPresenterImpl;
-import com.moyacs.canary.main.market.net.TradeVo;
-import com.moyacs.canary.main.me.EvenVo;
+import com.moyacs.canary.main.market.optional.OptionalActivity;
 import com.moyacs.canary.product_fxbtg.ProductActivity;
 import com.moyacs.canary.service.SocketQuotation;
 import com.moyacs.canary.util.LogUtils;
 import com.moyacs.canary.util.SharePreferencesUtil;
 import com.moyacs.canary.widget.UnderLineTextView;
 import com.yan.pullrefreshlayout.PullRefreshLayout;
-
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -64,7 +59,7 @@ public class MarketFragment extends BaseFragment implements MarketContract.Marke
     //顶部 tab 集合
     private ArrayList<UnderLineTextView> tabList;
     private MarketAdapter marketAdapter;
-    private MarketContract.MarketPresenter presenter;
+
     //1:外汇 2:贵金属 3:原油  4:全球指数 “” 代表所有 ，是为了请求对应数据
     private String type;
     //为了确定当前页面显示的是哪个tab * 0 自选 1:外汇 2:贵金属 3:原油  4:全球指数
@@ -82,6 +77,8 @@ public class MarketFragment extends BaseFragment implements MarketContract.Marke
     //recycler 数据源 自选
     private ArrayList<TradeVo.Trade> ziXuanList;
     private boolean isLoaderData = false;
+
+    private MarketContract.MarketPresenter mPresenter;
 
     @Override
     protected int getLayoutId() {
@@ -122,7 +119,7 @@ public class MarketFragment extends BaseFragment implements MarketContract.Marke
     @Override
     protected void initData() {
         registerEventBus();
-        presenter = new MarketPresenterImpl(this);
+        new MarketPresenter(this);
         initList();
     }
 
@@ -131,7 +128,9 @@ public class MarketFragment extends BaseFragment implements MarketContract.Marke
         super.setUserVisibleHint(isVisibleToUser);
         if (isVisibleToUser && !isLoaderData) {
             //获取可以交类型列表
-            presenter.getTradeList();
+            if(mPresenter!=null){
+                mPresenter.getTradeList();
+            }
             isLoaderData = true;
         }
     }
@@ -155,7 +154,9 @@ public class MarketFragment extends BaseFragment implements MarketContract.Marke
             @Override
             public void onRefresh() {
                 if (tab1.isSelected())
-                    presenter.getMyChoiceList();
+                    if(mPresenter!=null){
+                        mPresenter.getMyChoiceList();
+                    }
                 else {
                     // 模拟刷新  实际上什么都没做
                     new Handler(Looper.getMainLooper()).postDelayed(new Runnable() {
@@ -215,7 +216,9 @@ public class MarketFragment extends BaseFragment implements MarketContract.Marke
                 //防止重复加载数据
                 marketAdapter.setIsShowFootView(true);
                 if (ziXuanList == null) {
-                    presenter.getMyChoiceList();
+                    if(mPresenter!=null){
+                        mPresenter.getMyChoiceList();
+                    }
                 } else {
                     replaceMarketList(ziXuanList);
                 }
@@ -261,7 +264,19 @@ public class MarketFragment extends BaseFragment implements MarketContract.Marke
 
     @Override
     public void unsubscribe() {
-        presenter.unsubscribe();
+        if(mPresenter!=null){
+            mPresenter.unsubscribe();
+        }
+    }
+
+    @Override
+    public void setPresenter(MarketContract.MarketPresenter presenter) {
+        this.mPresenter =presenter;
+    }
+
+    @Override
+    public void showMessageTips(String msg) {
+
     }
 
     /**
@@ -342,7 +357,9 @@ public class MarketFragment extends BaseFragment implements MarketContract.Marke
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onEventData(EvenVo<SocketQuotation> evenVo) {
         if (evenVo.getCode() == EvenVo.UPDATE_MY_CHOICE) {
-            presenter.getMyChoiceList();
+            if(mPresenter!=null){
+                mPresenter.getMyChoiceList();
+            }
         } else if (evenVo.getCode() == EvenVo.SOCKET_QUOTATION) {
             if (marketList != null && marketList.size() > 0 && isVisible()) {
                 SocketQuotation sq = evenVo.getT();

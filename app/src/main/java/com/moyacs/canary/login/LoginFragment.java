@@ -32,7 +32,7 @@ import www.moyacs.com.myapplication.R;
  * 说明：登录
  */
 
-public class LoginFragment extends BaseFragment {
+public class LoginFragment extends BaseFragment implements LoginRegistContract.LoginRegistView{
     @BindView(R.id.et_phonenumber)
     EditText etPhoneNun;
     @BindView(R.id.et_pwd)
@@ -49,6 +49,8 @@ public class LoginFragment extends BaseFragment {
     private String userName;//登录的账号
     private String passWord;//登录密码
     private boolean isShowPwd;//是否显示密码
+    private LoginRegistContract.Presenter mPresenter;
+
 
     @Override
     protected int getLayoutId() {
@@ -66,6 +68,7 @@ public class LoginFragment extends BaseFragment {
 
     @Override
     protected void initData() {
+        new LoginRegistPresenter(this);
         isShowPwd = false;
     }
 
@@ -98,7 +101,10 @@ public class LoginFragment extends BaseFragment {
                     return;
                 }
                 //执行登录操作
-                doLogin(userName, passWord);
+                if(mPresenter!=null){
+                    showLoadingDialog();
+                    mPresenter.doLogin(userName, passWord);
+                }
                 break;
             case R.id.btn_findPwd://找回密码
                 startActivity(new Intent(getContext(), ForgetPasswordActivity.class));
@@ -106,58 +112,37 @@ public class LoginFragment extends BaseFragment {
         }
     }
 
-    private void doLogin(String userName, String passWord) {
-        showLoadingDialog();
-        String pw = "zst" + passWord.trim() + "013";
-        String base64Pw;
-        try {
-            base64Pw = Base64.encodeToString(pw.getBytes("utf-8"), Base64.DEFAULT).trim();
-        } catch (UnsupportedEncodingException e) {
-            e.printStackTrace();
-            ToastUtils.showShort("密码格式输入错误");
-            return;
-        }
-        addSubscribe(ServerManger.getInstance().getServer().doLogin(userName, base64Pw)
-                .compose(RxUtils.rxSchedulerHelper())
-                .subscribeWith(new BaseObservable<ServerResult<String>>() {
-                    @Override
-                    protected void requestSuccess(ServerResult<String> data) {
-                        uploadPubKey(RSAKeyManger.pubKey);
-                    }
 
-                    @Override
-                    public void onError(Throwable e) {
-                        super.onError(e);
-                        showMag(e.getMessage());
-                        dismissLoadingDialog();
-                    }
-                }));
+    @Override
+    public void showSuccess() {
+        SharePreferencesUtil.getInstance().setUserPhone(userName);
+        startActivity(new Intent(getContext(), MainActivity.class));
+        mActivity.finish();
     }
 
-    private void uploadPubKey(String pubKey) {
-        addSubscribe(ServerManger.getInstance().getServer()
-                .uploadPubKey(pubKey)
-                .compose(RxUtils.rxSchedulerHelper())
-                .subscribeWith(new BaseObservable<ServerResult<String>>() {
-                    @Override
-                    protected void requestSuccess(ServerResult<String> data) {
-                        showMag("登录成功");
-                        SharePreferencesUtil.getInstance().setUserPhone(userName);
-                        startActivity(new Intent(getContext(), MainActivity.class));
-                        mActivity.finish();
-                    }
+    @Override
+    public void dissLoading() {
+        dismissLoadingDialog();
+    }
 
-                    @Override
-                    public void onError(Throwable e) {
-                        super.onError(e);
-                        showMag("系统错误，请稍后再试");
-                    }
+    @Override
+    public void getCodeSuccess(String code) {
 
-                    @Override
-                    public void onComplete() {
-                        super.onComplete();
-                        dismissLoadingDialog();
-                    }
-                }));
+    }
+
+    @Override
+    public void getCodeFailed() {
+
+    }
+
+
+    @Override
+    public void setPresenter(LoginRegistContract.Presenter presenter) {
+        this.mPresenter =presenter;
+    }
+
+    @Override
+    public void showMessageTips(String msg) {
+        ToastUtils.showShort(msg);
     }
 }

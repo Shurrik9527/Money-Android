@@ -1,13 +1,14 @@
 package com.moyacs.canary.main.homepage;
 
 import android.content.Intent;
+import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
+import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
 import android.view.View;
-
 import com.alibaba.android.vlayout.DelegateAdapter;
 import com.alibaba.android.vlayout.VirtualLayoutManager;
 import com.alibaba.android.vlayout.layout.LinearLayoutHelper;
@@ -16,38 +17,34 @@ import com.alibaba.android.vlayout.layout.StickyLayoutHelper;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.moyacs.canary.base.BaseDelegateAdapter;
 import com.moyacs.canary.base.BaseFragment;
+import com.moyacs.canary.bean.BannerBean;
+import com.moyacs.canary.bean.TradeVo;
+import com.moyacs.canary.bean.event.EvenVo;
 import com.moyacs.canary.common.AppConstans;
-import com.moyacs.canary.main.homepage.adapter.DealChanceAdapter;
-import com.moyacs.canary.main.homepage.adapter.TradeHorizontalAdapter;
-import com.moyacs.canary.main.homepage.contract.MarketContract;
-import com.moyacs.canary.main.homepage.contract.MarketPresenterImpl;
-import com.moyacs.canary.main.homepage.net.BannerDate;
-import com.moyacs.canary.main.homepage.net.DealChanceDate;
-import com.moyacs.canary.main.market.net.TradeVo;
-import com.moyacs.canary.main.me.EvenVo;
+import com.moyacs.canary.bean.DealChanceBean;
+import com.moyacs.canary.main.homepage.profitrank.ProfitRangActivity;
 import com.moyacs.canary.product_fxbtg.ProductActivity;
 import com.moyacs.canary.service.SocketQuotation;
+import com.moyacs.canary.util.BannerImageLoaderUtil;
 import com.moyacs.canary.web.WebActivity;
 import com.yan.pullrefreshlayout.PullRefreshLayout;
 import com.youth.banner.Banner;
-
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
-
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
-
 import butterknife.BindView;
 import www.moyacs.com.myapplication.R;
 
 /**
- * 作者：luoshen on 2018/3/2 0002 10:15
- * 邮箱：rsf411613593@gmail.com
- * 说明：首页
+ * @author heguogui
+ * @version v 1.0.0
+ * @describe 首页 Fragment
+ * @date 2019/2/26
+ * @email 252774645@qq.com
  */
-
-public class HomepageFragment extends BaseFragment implements MarketContract.MarketView {
+public class HomepageFragment extends BaseFragment implements HomeContract.HomeView {
 
     @BindView(R.id.recycler_homepage)
     RecyclerView recyclerHomepage;
@@ -55,18 +52,23 @@ public class HomepageFragment extends BaseFragment implements MarketContract.Mar
     PullRefreshLayout pullrefreshLayout;
 
     private List<DelegateAdapter.Adapter> adapters;//adapter 数据源，vlayout 框架使用
-    private MarketContract.MarketPresenter presenter;
+    private HomeContract.HomePresenter mPresenter;
     private TradeHorizontalAdapter tradeHorizontalAdapter;
-
     private BaseDelegateAdapter bannerAdapter;
-    private List<DealChanceDate> chanceList;//交易机会数据源
+    private List<DealChanceBean> chanceList;//交易机会数据源
     private BaseDelegateAdapter dealChanceAdapter;//交易机会条目对应的 adapter
     private List<TradeVo.Trade> tradeList; // 可交易外汇列表
-    private List<BannerDate.Banner> bannerList;//轮播图数据源
+    private List<BannerBean> bannerList;//轮播图数据源
 
     @Override
     protected int getLayoutId() {
         return R.layout.fragment_homepage;
+    }
+
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        new HomePresenter(this);
     }
 
     @Override
@@ -81,6 +83,15 @@ public class HomepageFragment extends BaseFragment implements MarketContract.Mar
         pullrefreshLayout.setOnRefreshListener(new PullRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
+
+//                if(mPresenter!=null){
+//                    //获取banner数据
+//                    mPresenter.getBannerList();
+//                    //获取MOA交易机会
+//                    mPresenter.getDealChanceList();
+//                    //获取可交易列表
+//                    mPresenter.getTradList();
+//                }
                 new Handler(Looper.getMainLooper()).postAtTime(() -> pullrefreshLayout.refreshComplete(), 2000);
             }
 
@@ -93,13 +104,15 @@ public class HomepageFragment extends BaseFragment implements MarketContract.Mar
 
     @Override
     protected void initData() {
-        presenter = new MarketPresenterImpl(this);
-        //获取banner数据
-        presenter.getBannerList();
-        //获取MOA交易机会
-        presenter.getDealChanceList();
-        //获取可交易列表
-        presenter.getTradList();
+        //请求数据
+        if(mPresenter!=null){
+            //获取banner数据
+            mPresenter.getBannerList();
+            //获取MOA交易机会
+            mPresenter.getDealChanceList();
+            //获取可交易列表
+            mPresenter.getTradList();
+        }
         registerEventBus();
     }
 
@@ -138,9 +151,8 @@ public class HomepageFragment extends BaseFragment implements MarketContract.Mar
     private void initBanner() {
         bannerList = new ArrayList<>();
         LinearLayoutHelper bannerHelper = new LinearLayoutHelper();
-        int banner_viewtype = 1;
         bannerAdapter = new BaseDelegateAdapter(mActivity, bannerHelper,
-                R.layout.vlayout_banner_homepage, 1, banner_viewtype) {
+                R.layout.vlayout_banner_homepage, 1, AppConstans.HOME_ADAPTER_ITEM_BANNER_TYPE) {
             @Override
             public void onBindViewHolder(BaseViewHolder holder, int position) {
                 super.onBindViewHolder(holder, position);
@@ -152,10 +164,10 @@ public class HomepageFragment extends BaseFragment implements MarketContract.Mar
                 }
                 //添加数据
                 for (int i = 0; i < bannerList.size(); i++) {
-                    imageUrls.add(bannerList.get(i).getImage());
+                    imageUrls.add(bannerList.get(i).getImgAddress());
                 }
                 //设置图片加载器
-                banner.setImageLoader(new BannerImageLoader());
+                banner.setImageLoader(new BannerImageLoaderUtil());
                 //设置图片集合
                 banner.setImages(imageUrls);
                 //设置轮播时间
@@ -172,9 +184,8 @@ public class HomepageFragment extends BaseFragment implements MarketContract.Mar
      */
     private void initBannerBottom() {
         SingleLayoutHelper singleLayoutHelper = new SingleLayoutHelper();
-        int banner_bottom1 = 2;
         BaseDelegateAdapter baseDelegateAdapter = new BaseDelegateAdapter(mActivity, singleLayoutHelper,
-                R.layout.vlayout_bannerbottom1, 1, banner_bottom1) {
+                R.layout.vlayout_bannerbottom1, 1, AppConstans.HOME_ADAPTER_ITEM_FRESH_RANK_TYPE) {
             @Override
             public void onBindViewHolder(BaseViewHolder holder, int position) {
                 super.onBindViewHolder(holder, position);
@@ -189,7 +200,7 @@ public class HomepageFragment extends BaseFragment implements MarketContract.Mar
                 //盈利榜
                 View view1 = holder.getView(R.id.rl_home_newuser_gold);
                 view1.setOnClickListener(v -> {
-                    startActivity(new Intent(getContext(), ProfitActivity.class));
+                    startActivity(new Intent(getContext(), ProfitRangActivity.class));
                 });
             }
         };
@@ -201,10 +212,9 @@ public class HomepageFragment extends BaseFragment implements MarketContract.Mar
      */
     private void initHorizontalRecyclerView() {
         SingleLayoutHelper singleLayoutHelper = new SingleLayoutHelper();
-        int horizontalRecyclerView = 3;
         //横向 recyclerview adapter
         BaseDelegateAdapter horizontalRecyclerAdapter = new BaseDelegateAdapter(mActivity, singleLayoutHelper,
-                R.layout.vlayout_horizontalrecyclerview, 1, horizontalRecyclerView) {
+                R.layout.vlayout_horizontalrecyclerview, 1, AppConstans.HOME_ADAPTER_ITEM_SPECIES_TYPE) {
             @Override
             public void onBindViewHolder(BaseViewHolder holder, int position) {
                 super.onBindViewHolder(holder, position);
@@ -229,9 +239,8 @@ public class HomepageFragment extends BaseFragment implements MarketContract.Mar
     private void initSingleLayoutHelper() {
         //true 为吸顶，false 为吸底
         StickyLayoutHelper stickyLayoutHelper = new StickyLayoutHelper(true);
-        int jiaoYiJiHui = 4;
         BaseDelegateAdapter baseDelegateAdapter = new BaseDelegateAdapter(mActivity, stickyLayoutHelper,
-                R.layout.vlayout_jiaoyijihui, 1, jiaoYiJiHui);
+                R.layout.vlayout_jiaoyijihui, 1, AppConstans.HOME_ADAPTER_ITEM_CHANGE_TYPE);
         adapters.add(baseDelegateAdapter);
     }
 
@@ -241,40 +250,70 @@ public class HomepageFragment extends BaseFragment implements MarketContract.Mar
     private void initVertivalRecyclerView() {
         chanceList = new ArrayList<>();
         LinearLayoutHelper linearLayoutHelper = new LinearLayoutHelper();
-        int verticalRecyclerView = 5;
         dealChanceAdapter = new DealChanceAdapter(mActivity, linearLayoutHelper,
-                R.layout.vlayout_verticalrecyclerview_item, chanceList.size(), verticalRecyclerView, chanceList);
+                R.layout.vlayout_verticalrecyclerview_item, chanceList.size(), AppConstans.HOME_ADAPTER_ITEM_DETAIL_TYPE, chanceList);
         adapters.add(dealChanceAdapter);
     }
 
     @Override
     public void unsubscribe() {
-        presenter.unsubscribe();
+        if(mPresenter!=null){
+            mPresenter.unsubscribe();
+        }
     }
 
     @Override
-    public void setBannerList(List<BannerDate.Banner> result) {
+    public void setPresenter(HomeContract.HomePresenter presenter) {
+        this.mPresenter =presenter;
+    }
+
+    @Override
+    public void showMessageTips(String msg) {
+
+    }
+
+    @Override
+    public void setBannerList(List<BannerBean> result) {
         //更新 banner 数据源
+        if(bannerList==null){
+            bannerList =new ArrayList<>();
+        }else {
+            bannerList.clear();
+        }
         bannerList.addAll(result);
         bannerAdapter.notifyDataSetChanged();
     }
 
     @Override
-    public void setDealChanceList(List<DealChanceDate> result) {
+    public void setDealChanceList(List<DealChanceBean> result) {
+        if(chanceList==null){
+            chanceList = new ArrayList<>();
+        }else {
+            chanceList.clear();
+        }
         chanceList.addAll(result);
         dealChanceAdapter.setmCount(chanceList.size());
         dealChanceAdapter.notifyDataSetChanged();
     }
 
     @Override
-    public void setTradList(List<TradeVo.Trade> list) {
-        tradeList.addAll(list);
-        tradeHorizontalAdapter.notifyDataSetChanged();
+    public void setTradList(List<TradeVo.Trade> mlist) {
+        if(tradeList==null){
+            tradeList = new ArrayList<>();
+        }else {
+            tradeList.clear();
+        }
+        tradeList.addAll(mlist);
+        if(tradeHorizontalAdapter!=null){
+            tradeHorizontalAdapter.notifyDataSetChanged();
+        }
     }
 
     @Override
     public void refreshFinish() {
-        pullrefreshLayout.refreshComplete();
+        if(pullrefreshLayout!=null){
+            pullrefreshLayout.refreshComplete();
+        }
     }
 
     /**
@@ -290,6 +329,10 @@ public class HomepageFragment extends BaseFragment implements MarketContract.Mar
         startActivity(intent);
     }
 
+    /**
+     * 刷新产品种类信息
+     * @param evenVo
+     */
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onWebSocketData(EvenVo<SocketQuotation> evenVo) {
         if (evenVo.getCode() == EvenVo.SOCKET_QUOTATION && tradeList != null

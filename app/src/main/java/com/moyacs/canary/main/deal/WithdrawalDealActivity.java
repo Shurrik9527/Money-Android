@@ -8,8 +8,8 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.moyacs.canary.base.BaseActivity2;
+import com.moyacs.canary.bean.WithdrawalDataBean;
 import com.moyacs.canary.common.NumberUtils;
-import com.moyacs.canary.main.deal.net_tab3.WithdrawalDataBean;
 import com.moyacs.canary.util.DateUtil;
 
 import java.util.Date;

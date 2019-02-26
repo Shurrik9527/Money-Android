@@ -3,7 +3,7 @@ package com.moyacs.canary.util;
 import android.util.Log;
 
 import com.google.gson.Gson;
-import com.moyacs.canary.main.me.EvenVo;
+import com.moyacs.canary.bean.event.EvenVo;
 import com.moyacs.canary.service.SocketQuotation;
 
 import org.greenrobot.eventbus.EventBus;
@@ -18,6 +18,7 @@ import okhttp3.WebSocketListener;
 import okio.ByteString;
 
 /**
+ * 当前可交易Socket 管理
  * @Author: Akame
  * @Date: 2019/1/21
  * @Description:

@@ -22,11 +22,11 @@ import android.widget.PopupWindow;
 import android.widget.TextView;
 
 import com.moyacs.canary.base.BaseActivity;
+import com.moyacs.canary.bean.TradeVo;
+import com.moyacs.canary.bean.event.EvenVo;
 import com.moyacs.canary.common.AppConstans;
 import com.moyacs.canary.common.NumberUtils;
 import com.moyacs.canary.kchart.fragment.KLineFragment;
-import com.moyacs.canary.main.market.net.TradeVo;
-import com.moyacs.canary.main.me.EvenVo;
 import com.moyacs.canary.pay.GuaDanPopWindow;
 import com.moyacs.canary.pay.OrderPopWindow;
 import com.moyacs.canary.product_fxbtg.adapter.ProductAdapter;
@@ -224,6 +224,8 @@ public class ProductActivity extends BaseActivity implements OnClickListener {
                 }
                 //时间
                 String time1 = quotation.getMarketTime().getTime();
+
+                time =time1;
                 //竖屏
                 if (tv_latest != null) {
                     //设置最新买入价
@@ -397,6 +399,8 @@ public class ProductActivity extends BaseActivity implements OnClickListener {
         tvRate.setText(marketDataBean.getRangValue() + "   " + marketDataBean.getRangString());
         //设置时间
         tvTime.setText(marketDataBean.getTime());
+
+        time =marketDataBean.getTime();
         //最高
         String high = NumberUtils.setScale(marketDataBean.getMaxPrice(), marketDataBean.getDigit());
         //最低
@@ -494,15 +498,22 @@ public class ProductActivity extends BaseActivity implements OnClickListener {
         } else if (id == R.id.tv_tradeclose) {// 查看持仓
             EventBus.getDefault().post(new EvenVo(EvenVo.WATCH_CHI_CHAN));
             finish();
-        } else if (id == R.id.line_productnotice) {//提醒
+        } else if (id == R.id.line_productnotice) {//行情提醒
+
+
         } else if (id == R.id.line_product_fullscr) {//全屏
             //保存最新买入价
             lruCache.put(AppConstans.price_buy, priceBuy);
             //保存最新涨跌值和涨跌幅
-            lruCache.put("rate", rate);
+            if(!TextUtils.isEmpty(rate)){
+                lruCache.put("rate", rate);
+            }
             //保存字体颜色
             lruCache.put("textColor", textColor);
-            lruCache.put("time", time);
+
+            if(!TextUtils.isEmpty(time)){
+                lruCache.put("time", time);
+            }
             if (Configuration.ORIENTATION_LANDSCAPE == getResources()
                     .getConfiguration().orientation) {
                 setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);

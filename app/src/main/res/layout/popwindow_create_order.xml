@@ -545,7 +545,7 @@
                             android:layout_height="wrap_content"
                             android:layout_marginLeft="@dimen/margin_4dp"
                             android:gravity="center_vertical"
-                            android:text="余额"
+                            android:text="余额:"
                             android:textColor="@color/app_common_content"
                             android:textSize="15sp" />
 
@@ -555,7 +555,6 @@
                             android:layout_height="match_parent"
                             android:layout_marginLeft="@dimen/margin_8dp"
                             android:gravity="center_vertical"
-                            android:text="--元"
                             android:textColor="@color/app_common_content"
                             android:textSize="15sp" />
                     </LinearLayout>

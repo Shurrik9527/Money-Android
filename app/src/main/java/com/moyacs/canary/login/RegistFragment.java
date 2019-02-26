@@ -32,7 +32,7 @@ import www.moyacs.com.myapplication.R;
  * 说明：注册
  */
 
-public class RegistFragment extends BaseFragment {
+public class RegistFragment extends BaseFragment implements LoginRegistContract.LoginRegistView{
     @BindView(R.id.et_phone)
     EditText etPhone;
     @BindView(R.id.ed_code)
@@ -64,7 +64,7 @@ public class RegistFragment extends BaseFragment {
      */
     private boolean isShowPwd;
     private String phone;
-
+    private LoginRegistContract.Presenter mPresenter;
     @Override
     protected int getLayoutId() {
         return R.layout.fragment_regist;
@@ -82,6 +82,9 @@ public class RegistFragment extends BaseFragment {
 
     @Override
     protected void initData() {
+
+        new LoginRegistPresenter(this);
+
         //初始化计数器
         countDownTimer = new GetCodeCountDownTimer(60000, 1000);
         isShowPwd = false;
@@ -100,7 +103,10 @@ public class RegistFragment extends BaseFragment {
                 //开始计时
                 countDownTimer.start();
                 //网络请求
-                getCode(phone);
+                if(mPresenter!=null){
+                    showLoadingDialog();
+                    mPresenter.getcode(phone);
+                }
                 break;
             case R.id.img_showpwd://是否显示密码
                 if (!isShowPwd) {
@@ -139,37 +145,39 @@ public class RegistFragment extends BaseFragment {
                     showMag("密码长度不符合规范");
                     return;
                 }
-                doRegister(registerId, phone, passWord, fullName, code);
+                if(mPresenter!=null){
+                    showLoadingDialog();
+                    mPresenter.doRegister(registerId, phone, passWord, fullName, code);
+                }
                 break;
             case R.id.tv_rule:
                 break;
         }
     }
 
-    private void doRegister(String registerId, String phone, String passWord, String fullName, String code) {
-        String pw = "zst" + passWord.trim() + "013";
-        String base64Pw;
-        try {
-            base64Pw = Base64.encodeToString(pw.getBytes("utf-8"), Base64.DEFAULT).trim();
-        } catch (UnsupportedEncodingException e) {
-            e.printStackTrace();
-            ToastUtils.showShort("密码格式错误，请更换密码再试");
-            return;
-        }
-        addSubscribe(ServerManger.getInstance().getServer().register(registerId, phone, base64Pw, fullName, code)
-                .compose(RxUtils.rxSchedulerHelper())
-                .subscribeWith(new BaseObservable<ServerResult<String>>() {
-                    @Override
-                    protected void requestSuccess(ServerResult<String> data) {
-                        registerSuccess();
-                    }
 
-                    @Override
-                    public void onError(Throwable e) {
-                        super.onError(e);
-                        registerFailed(e.getMessage());
-                    }
-                }));
+
+    @Override
+    public void showSuccess() {
+        dismissLoadingDialog();
+        ToastUtils.showShort("注册成功");
+    }
+
+    @Override
+    public void dissLoading() {
+        dismissLoadingDialog();
+    }
+
+
+
+    @Override
+    public void setPresenter(LoginRegistContract.Presenter presenter) {
+        this.mPresenter =presenter;
+    }
+
+    @Override
+    public void showMessageTips(String msg) {
+        ToastUtils.showShort(msg+"");
     }
 
     /**
@@ -204,24 +212,6 @@ public class RegistFragment extends BaseFragment {
     }
 
 
-    private void getCode(String phone) {
-        addSubscribe(ServerManger.getInstance().getServer()
-                .getCode(phone)
-                .compose(RxUtils.rxSchedulerHelper())
-                .subscribeWith(new BaseObservable<ServerResult<String>>() {
-                    @Override
-                    protected void requestSuccess(ServerResult<String> data) {
-                        getCodeSuccess(data.getData());
-                    }
-
-                    @Override
-                    public void onError(Throwable e) {
-                        super.onError(e);
-                        getCodeFailed();
-                    }
-                }));
-    }
-
 
     /**
      * 获取验证码成功
@@ -234,23 +224,11 @@ public class RegistFragment extends BaseFragment {
     /**
      * 获取验证码失败
      */
-    private void getCodeFailed() {
+    @Override
+    public void getCodeFailed() {
         countDownTimer.onFinish();
         countDownTimer.cancel();
         ToastUtils.showShort("验证码发送失败");
     }
 
-    /**
-     * 注册成功
-     */
-    public void registerSuccess() {
-        ToastUtils.showShort("注册成功");
-    }
-
-    /**
-     * 注册失败
-     */
-    public void registerFailed(String msg) {
-        ToastUtils.showShort(msg);
-    }
 }

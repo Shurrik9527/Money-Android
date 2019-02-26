@@ -8,10 +8,14 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.moyacs.canary.base.BaseFragment;
+import com.moyacs.canary.bean.UserAmountVo;
+import com.moyacs.canary.bean.UserInfoVo;
+import com.moyacs.canary.bean.event.EvenVo;
+import com.moyacs.canary.bean.event.LoginMessageEvent;
 import com.moyacs.canary.common.AppConstans;
 import com.moyacs.canary.common.DialogUtils;
 import com.moyacs.canary.login.LoginActivity;
-import com.moyacs.canary.main.deal.net_tab3.UserAmountVo;
+import com.moyacs.canary.main.me.account.AccountActivity;
 import com.moyacs.canary.network.BaseObservable;
 import com.moyacs.canary.network.RxUtils;
 import com.moyacs.canary.network.ServerManger;

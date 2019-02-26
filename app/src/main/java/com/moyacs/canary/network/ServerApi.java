@@ -1,11 +1,15 @@
 package com.moyacs.canary.network;
 
-import com.moyacs.canary.main.deal.net_tab3.TransactionRecordVo;
-import com.moyacs.canary.main.deal.net_tab3.UserAmountVo;
-import com.moyacs.canary.main.homepage.net.BannerDate;
-import com.moyacs.canary.main.market.net.TradeVo;
-import com.moyacs.canary.main.me.UserInfoVo;
-
+import com.moyacs.canary.bean.BannerJsons;
+import com.moyacs.canary.bean.HoldOrderDateBean;
+import com.moyacs.canary.bean.MarketDataBean;
+import com.moyacs.canary.bean.PaymentDateBean;
+import com.moyacs.canary.bean.TradeVo;
+import com.moyacs.canary.bean.TransactionRecordVo;
+import com.moyacs.canary.bean.DealChanceBean;
+import com.moyacs.canary.bean.UserAmountVo;
+import com.moyacs.canary.bean.UserInfoVo;
+import com.moyacs.canary.bean.WithdrawalDataBean;
 import java.util.List;
 import java.util.Map;
 
@@ -13,6 +17,7 @@ import io.reactivex.Observable;
 import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
 import retrofit2.Call;
+import retrofit2.Response;
 import retrofit2.http.Field;
 import retrofit2.http.FieldMap;
 import retrofit2.http.FormUrlEncoded;
@@ -78,7 +83,7 @@ public interface ServerApi {
      */
     @FormUrlEncoded
     @POST("banner/getList")
-    Observable<ServerResult<BannerDate>> getBannerList(@Field("page") String size, @Field("pageSize") String pageSize);
+    Observable<ServerResult<BannerJsons>> getBannerList(@Field("page") String size, @Field("pageSize") String pageSize);
 
     /**
      * 获取可以交易品种
@@ -189,4 +194,97 @@ public interface ServerApi {
     @POST("file/upload")
     @Multipart
     Observable<ServerResult<String>> uploadFile(@PartMap Map<String, RequestBody> body, @Part List<MultipartBody.Part> file);
+
+
+
+    //heguogui
+
+
+    /**
+     * 首页 交易机会列表
+     */
+    @POST("chance")
+    Observable<HttpResult<List<DealChanceBean>>> getDealChanceList();
+
+
+    /**
+     * 获取全部行情列表
+     *
+     * @return
+     */
+    @GET("price/symbols")
+    Observable<HttpResult<List<MarketDataBean>>> getMarketList(@Query(HttpConstants.server) String server,
+                                                               @Query(HttpConstants.type) String type);
+
+
+
+
+    /**
+     * 入金记录
+     * @param mt4id
+     * @param startDate
+     * @param endDate
+     * @param pageSize 每页几个数据
+     * @param pageNumber 第几页
+     * @return
+     */
+    @GET("payment/records")
+    Observable<Response<HttpResult<PaymentDateBean>>> getPayment(@Query("mt4id") int mt4id,
+                                                                 @Query("startDate") String startDate,
+                                                                 @Query("endDate") String endDate,
+                                                                 @Query("pageSize") int pageSize,
+                                                                 @Query("pageNumber") int pageNumber
+    );
+
+    /**
+     * 出金记录
+     * @param mt4id
+     * @param startDate
+     * @param endDate
+     * @param pageSize 每页几个数据
+     * @param pageNumber 第几页
+     * @return
+     */
+    @GET("withdraw/records")
+    Observable<Response<HttpResult<WithdrawalDataBean>>> getWithdrawal(@Query("mt4id") int mt4id,
+                                                                       @Query("startDate") String startDate,
+                                                                       @Query("endDate") String endDate,
+                                                                       @Query("pageSize") int pageSize,
+                                                                       @Query("pageNumber") int pageNumber
+    );
+
+    /**
+     * 获取交易记录
+     * @param mt4id
+     * @param server
+     * @param startDate
+     * @param endDate
+     * @return
+     */
+    @GET("trading/records")
+    Observable<Response<HttpResult<List<HoldOrderDateBean>>>> getTradingRecords(@Query("mt4id") int mt4id,
+                                                                                @Query("server") String server,
+                                                                                @Query("startDate") String startDate,
+                                                                                @Query("endDate") String endDate
+
+    );
+
+    /**
+     * 获取持仓列表 ，
+     * @param mt4id
+     * @param server
+     * @param startDate 为了获取交易记录所增加的字段，已无用，可以删除
+     * @param endDate 为了获取交易记录所增加的字段，已无用，可以删除
+     * @return
+     */
+    @GET("trading/orders")
+    Observable<Response<HttpResult<List<HoldOrderDateBean>>>> getChiCangList(@Query("mt4id") int mt4id,
+                                                                           @Query("server") String server,
+                                                                           @Query("startDate") String startDate,
+                                                                           @Query("endDate") String endDate
+
+    );
+
+
+
 }

@@ -1,6 +1,6 @@
 package com.moyacs.canary.common;
 
-import com.moyacs.canary.main.market.net.MarketDataBean;
+import com.moyacs.canary.bean.MarketDataBean;
 
 import java.util.List;
 
@@ -103,4 +103,13 @@ public class AppConstans {
     public static RequestBody toRequestBody(String value) {
         return RequestBody.create(MediaType.parse("text/plain"), value);
     }
+
+    public static int HOME_ADAPTER_ITEM_BANNER_TYPE =1;           // 轮播图
+    public static int HOME_ADAPTER_ITEM_FRESH_RANK_TYPE =2;       //新手及盈利榜
+    public static int HOME_ADAPTER_ITEM_SPECIES_TYPE =3;          //种类
+    public static int HOME_ADAPTER_ITEM_CHANGE_TYPE =4;           //交易机会
+    public static int HOME_ADAPTER_ITEM_DETAIL_TYPE =5;           //交易详情
+
+
+
 }

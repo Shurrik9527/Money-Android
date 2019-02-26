@@ -10,6 +10,8 @@ import android.widget.TextView;
 
 import com.flyco.tablayout.SlidingTabLayout;
 import com.moyacs.canary.base.BaseFragment;
+import com.moyacs.canary.main.deal.capital.CapitalFragment;
+import com.moyacs.canary.main.deal.order.HoldOrderFragment;
 import com.moyacs.canary.widget.SwitchSlidingViewPager;
 
 import java.util.ArrayList;
@@ -42,7 +44,7 @@ public class DealFragment extends BaseFragment {
     SlidingTabLayout tabLayout;
     @BindView(R.id.viewpager)
     SwitchSlidingViewPager viewPager;
-    private HoldPositionFragment positionFragment;
+    private HoldOrderFragment positionFragment;
     // tabLayout 标题数据源
     private String[] mTitles = {"持仓", "资金"};
 
@@ -84,7 +86,7 @@ public class DealFragment extends BaseFragment {
      */
     private void initFragments() {
         mFragments = new ArrayList<>();
-        positionFragment = new HoldPositionFragment();
+        positionFragment = new HoldOrderFragment();
         mFragments.add(positionFragment);
         mFragments.add(new CapitalFragment());
     }

@@ -5,6 +5,7 @@ import com.moyacs.canary.util.DateUtil;
 import java.util.Date;
 
 /**
+ * Socket 链接返回当前可交易信息
  * @Author: Akame
  * @Date: 2019/1/22
  * @Description:

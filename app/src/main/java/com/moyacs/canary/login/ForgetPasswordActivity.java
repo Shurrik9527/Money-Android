@@ -227,10 +227,12 @@ public class ForgetPasswordActivity extends BaseActivity {
         @Override
         public void onFinish() {
             //重新给Button设置文字
-            btnGetCode.setText("重新获取");
-            //设置可点击
-            btnGetCode.setClickable(true);
-            btnGetCode.setTextColor(getResources().getColor(R.color.app_common_selected));
+            if(btnGetCode!=null){
+                btnGetCode.setText("重新获取");
+                //设置可点击
+                btnGetCode.setClickable(true);
+                btnGetCode.setTextColor(getResources().getColor(R.color.app_common_selected));
+            }
         }
     }
 }

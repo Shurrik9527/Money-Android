@@ -49,8 +49,8 @@
         tools:ignore="GoogleAppIndexingWarning">
         <activity android:name="com.moyacs.canary.web.WebActivity"></activity>
         <!-- 盈利榜 -->
-        <activity android:name="com.moyacs.canary.main.homepage.ProfitActivity" />
-        <activity android:name="com.moyacs.canary.main.me.RechargeActivity" />
+        <activity android:name="com.moyacs.canary.main.homepage.profitrank.ProfitRangActivity" />
+        <activity android:name="com.moyacs.canary.moudle.recharge.RechargeActivity" />
         <activity android:name="com.moyacs.canary.main.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -105,9 +105,9 @@
             android:process=":core" />
 
         <activity android:name="com.moyacs.canary.main.me.UserInformationActivity" />
-        <activity android:name="com.moyacs.canary.main.market.OptionalActivity" />
+        <activity android:name="com.moyacs.canary.main.market.optional.OptionalActivity" />
         <activity android:name="com.moyacs.canary.login.ForgetPasswordActivity" />
-        <activity android:name="com.moyacs.canary.main.me.AccountActivity" />
+        <activity android:name="com.moyacs.canary.main.me.account.AccountActivity" />
         <activity android:name="com.moyacs.canary.main.me.SetNickNameActivity" />
     </application>
 

@@ -10,6 +10,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.moyacs.canary.base.BaseFragment;
+import com.moyacs.canary.bean.event.EvenVo;
 import com.moyacs.canary.common.NumberUtils;
 import com.moyacs.canary.kchart.chart.candle.KLineView;
 import com.moyacs.canary.kchart.chart.cross.KCrossLineView;
@@ -23,7 +24,6 @@ import com.moyacs.canary.kchart.util.KDisplayUtil;
 import com.moyacs.canary.kchart.util.KNumberUtil;
 import com.moyacs.canary.kchart.util.KParamConfig;
 import com.moyacs.canary.kchart.util.KParseUtils;
-import com.moyacs.canary.main.me.EvenVo;
 import com.moyacs.canary.product_fxbtg.Product_constans;
 import com.moyacs.canary.product_fxbtg.contract_kline.ProductContract;
 import com.moyacs.canary.product_fxbtg.contract_kline.ProductPresenterImpl;

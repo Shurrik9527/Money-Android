@@ -15,11 +15,11 @@ import android.widget.RelativeLayout;
 import android.widget.SeekBar;
 import android.widget.TextView;
 
+import com.moyacs.canary.bean.TradeVo;
+import com.moyacs.canary.bean.UserAmountVo;
+import com.moyacs.canary.bean.event.EvenVo;
 import com.moyacs.canary.common.RSAKeyManger;
-import com.moyacs.canary.main.deal.net_tab3.UserAmountVo;
-import com.moyacs.canary.main.market.net.TradeVo;
-import com.moyacs.canary.main.me.EvenVo;
-import com.moyacs.canary.main.me.RechargeActivity;
+import com.moyacs.canary.moudle.recharge.RechargeActivity;
 import com.moyacs.canary.network.BaseObservable;
 import com.moyacs.canary.network.RxUtils;
 import com.moyacs.canary.network.ServerManger;
@@ -889,11 +889,22 @@ public class OrderPopWindow implements View.OnClickListener {
                 .subscribe(new BaseObservable<ServerResult<UserAmountVo>>() {
                     @Override
                     protected void requestSuccess(ServerResult<UserAmountVo> data) {
-                        String userBalance = data.getData().getBalance();
-                        if (userBalance == null || TextUtils.equals("null", userBalance)) {
-                            userBalance = "0.00";
+                        if(data!=null){
+                            UserAmountVo mUserAmountVo =data.getData();
+                            String userBalance =null;
+                            if(mUserAmountVo!=null){
+                                userBalance = mUserAmountVo.getBalance();
+                                if (TextUtils.isEmpty(userBalance)|| TextUtils.equals("null", userBalance)) {
+                                    userBalance = "0.00";
+                                }
+                            }else {
+                                userBalance = "0.00";
+                            }
+
+                            if(tvBalance!=null){
+                                tvBalance.setText("$"+userBalance);
+                            }
                         }
-                        tvBalance.setText(userBalance);
                     }
                 });
     }

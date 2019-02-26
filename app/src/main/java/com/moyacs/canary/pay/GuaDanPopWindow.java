@@ -13,8 +13,8 @@ import android.widget.PopupWindow;
 import android.widget.SeekBar;
 import android.widget.TextView;
 
+import com.moyacs.canary.bean.TradeVo;
 import com.moyacs.canary.common.RSAKeyManger;
-import com.moyacs.canary.main.market.net.TradeVo;
 import com.moyacs.canary.network.ServerManger;
 import com.moyacs.canary.network.ServerResult;
 import com.moyacs.canary.util.ForeignUtil;

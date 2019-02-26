@@ -5,6 +5,7 @@ import android.view.View;
 import android.widget.EditText;
 
 import com.moyacs.canary.base.BaseActivity;
+import com.moyacs.canary.bean.event.EvenVo;
 import com.moyacs.canary.network.BaseObservable;
 import com.moyacs.canary.network.RxUtils;
 import com.moyacs.canary.network.ServerManger;
