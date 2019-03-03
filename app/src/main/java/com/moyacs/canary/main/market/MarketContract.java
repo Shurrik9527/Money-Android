@@ -36,6 +36,9 @@ public interface MarketContract {
          * 获取可交易列表失败
          */
         void getTradListFiled(String msg);
+
+        void refreshComplete();
+
     }
 
     interface MarketPresenter extends BasePresenter {

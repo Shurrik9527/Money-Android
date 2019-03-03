@@ -11,6 +11,9 @@ public class HttpConstants {
     public static final String Base_URL = "http://47.91.164.170:8012/";
     //新版地址
     public static final String SERVER_HOST = "http://47.97.186.123/royal/";
+    //融云
+    public static final String SERVER_RONE_IM_HOST = "http://api-cn.ronghub.com/user/";
+
 //    public static final String SERVER_HOST = "http://www.wjhsh.cn/royal/";
 
     public static final String header_key = "Authorization";

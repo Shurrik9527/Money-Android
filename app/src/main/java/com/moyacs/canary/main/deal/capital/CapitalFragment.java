@@ -32,7 +32,7 @@ import www.moyacs.com.myapplication.R;
 /**
  * @author heguogui
  * @version v 1.0.0
- * @describe
+ * @describe  现金页面
  * @date 2019/2/26
  * @email 252774645@qq.com
  */

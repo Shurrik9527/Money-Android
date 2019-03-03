@@ -37,25 +37,35 @@ public class MarketPresenter implements MarketContract.MarketPresenter{
                 .subscribeWith(new BaseObservable<ServerResult<TradeVo>>() {
                     @Override
                     protected void requestSuccess(ServerResult<TradeVo> data) {
-                        view.setMyChoiceList(data.getData().getList());
+                        if(view!=null){
+                            view.refreshComplete();
+                            view.setMyChoiceList(data.getData().getList());
+                        }
                     }
 
                     @Override
                     protected void onStart() {
                         super.onStart();
-                        view.showLoadingDialog();
+                        if(view!=null){
+                            view.refreshComplete();
+                        }
                     }
 
                     @Override
                     public void onComplete() {
                         super.onComplete();
-                        view.dismissLoadingDialog();
+                        if(view!=null){
+                            view.refreshComplete();
+                        }
                     }
 
                     @Override
                     public void onError(Throwable e) {
                         super.onError(e);
-                        view.getMyChoiceListFiled(e.getMessage());
+                        if(view!=null){
+                            view.refreshComplete();
+                            view.getMyChoiceListFiled(e.getMessage());
+                        }
                     }
                 }));
     }
@@ -68,13 +78,17 @@ public class MarketPresenter implements MarketContract.MarketPresenter{
                 .subscribeWith(new BaseObservable<ServerResult<TradeVo>>() {
                     @Override
                     protected void requestSuccess(ServerResult<TradeVo> data) {
-                        view.setTradList(data.getData().getList());
+                        if(view!=null){
+                            view.setTradList(data.getData().getList());
+                        }
                     }
 
                     @Override
                     public void onError(Throwable e) {
                         super.onError(e);
-                        view.getTradListFiled("服务器异常");
+                        if(view!=null){
+                            view.getTradListFiled("服务器异常");
+                        }
                     }
                 }));
     }

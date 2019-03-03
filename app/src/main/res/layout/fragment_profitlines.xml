@@ -1,0 +1,298 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:xrefreshview="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/theme"
+    android:orientation="vertical">
+
+    <com.moyacs.canary.widget.XXRefreshView
+        android:id="@+id/profit_lines_xrefreshview"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        xrefreshview:autoRefresh="false"
+        android:layout_marginLeft="@dimen/margin_15dp"
+        android:layout_marginRight="@dimen/margin_15dp"
+        >
+
+
+        <android.support.v4.widget.NestedScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:fillViewport="true"
+            >
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                android:focusable="true"
+                android:focusableInTouchMode="true"
+                >
+
+                <TextView
+                    android:id="@+id/profitlines_time_tv"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/margin_30dp"
+                    android:textSize="12sp"
+                    android:gravity="center"
+                    android:textColor="@color/grey_30"
+                    />
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@mipmap/img_homerank_headbg"
+                    >
+
+                    <RelativeLayout
+                        android:id="@+id/lines_one_rl"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerHorizontal="true"
+                        >
+
+                        <ImageView
+                            android:id="@+id/lines_rank_one_iv"
+                            android:layout_width="@dimen/margin_30dp"
+                            android:layout_height="@dimen/margin_30dp"
+                            android:src="@mipmap/img_ranhhead_first"
+                            android:layout_centerHorizontal="true"
+                            android:layout_marginTop="@dimen/margin_10dp"
+                            />
+                        <ImageView
+                            android:id="@+id/lines_rank_one_hp_iv"
+                            android:layout_width="@dimen/margin_45dp"
+                            android:layout_height="@dimen/margin_45dp"
+                            android:src="@mipmap/img_me_headimage_default"
+                            android:layout_below="@+id/lines_rank_one_iv"
+                            android:layout_centerHorizontal="true"
+                            android:layout_marginTop="@dimen/margin_2dp"
+                            />
+                        <TextView
+                            android:id="@+id/lines_rank_one_name_tv"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textColor="@color/white"
+                            android:textSize="14sp"
+                            android:layout_below="@+id/lines_rank_one_hp_iv"
+                            android:layout_marginTop="@dimen/margin_5dp"
+                            android:layout_centerHorizontal="true"
+                            />
+                        <TextView
+                            android:id="@+id/lines_rank_one_rate_tv"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textColor="@color/color_ffdd00"
+                            android:textSize="13sp"
+                            android:layout_below="@+id/lines_rank_one_name_tv"
+                            android:layout_marginTop="@dimen/margin_2dp"
+                            android:layout_centerHorizontal="true"
+                            />
+
+                        <TextView
+                            android:id="@+id/lines_rank_one_jifen_tv"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textColor="@color/white"
+                            android:textSize="13sp"
+                            android:layout_below="@+id/lines_rank_one_rate_tv"
+                            android:layout_marginTop="@dimen/margin_5dp"
+                            android:layout_centerHorizontal="true"
+                            />
+
+                    </RelativeLayout>
+
+                    <RelativeLayout
+                        android:id="@+id/lines_two_rl"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerHorizontal="true"
+                        android:layout_toLeftOf="@+id/lines_one_rl"
+                        android:layout_marginRight="@dimen/margin_70dp"
+                        >
+
+                        <ImageView
+                            android:id="@+id/lines_rank_two_iv"
+                            android:layout_width="@dimen/margin_30dp"
+                            android:layout_height="@dimen/margin_30dp"
+                            android:src="@mipmap/img_ranhhead_second"
+                            android:layout_centerHorizontal="true"
+                            android:layout_marginTop="@dimen/margin_30dp"
+                            />
+                        <ImageView
+                            android:id="@+id/lines_rank_two_hp_iv"
+                            android:layout_width="@dimen/margin_45dp"
+                            android:layout_height="@dimen/margin_45dp"
+                            android:src="@mipmap/img_me_headimage_default"
+                            android:layout_below="@+id/lines_rank_two_iv"
+                            android:layout_centerHorizontal="true"
+                            android:layout_marginTop="@dimen/margin_2dp"
+                            />
+                        <TextView
+                            android:id="@+id/lines_rank_two_name_tv"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textColor="@color/white"
+                            android:textSize="14sp"
+                            android:layout_below="@+id/lines_rank_two_hp_iv"
+                            android:layout_marginTop="@dimen/margin_5dp"
+                            android:layout_centerHorizontal="true"
+                            />
+                        <TextView
+                            android:id="@+id/lines_rank_two_rate_tv"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textColor="@color/color_ffdd00"
+                            android:textSize="13sp"
+                            android:layout_below="@+id/lines_rank_two_name_tv"
+                            android:layout_marginTop="@dimen/margin_2dp"
+                            android:layout_centerHorizontal="true"
+                            />
+
+                        <TextView
+                            android:id="@+id/lines_rank_two_jifen_tv"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textColor="@color/white"
+                            android:textSize="13sp"
+                            android:layout_below="@+id/lines_rank_two_rate_tv"
+                            android:layout_marginTop="@dimen/margin_5dp"
+                            android:layout_centerHorizontal="true"
+                            />
+
+                    </RelativeLayout>
+
+                    <RelativeLayout
+                        android:id="@+id/lines_three_rl"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerHorizontal="true"
+                        android:layout_toRightOf="@+id/lines_one_rl"
+                        android:layout_marginLeft="@dimen/margin_70dp"
+                        >
+
+                        <ImageView
+                            android:id="@+id/lines_rank_three_iv"
+                            android:layout_width="@dimen/margin_30dp"
+                            android:layout_height="@dimen/margin_30dp"
+                            android:src="@mipmap/img_ranhhead_third"
+                            android:layout_centerHorizontal="true"
+                            android:layout_marginTop="@dimen/margin_30dp"
+                            />
+                        <ImageView
+                            android:id="@+id/lines_rank_three_hp_iv"
+                            android:layout_width="@dimen/margin_45dp"
+                            android:layout_height="@dimen/margin_45dp"
+                            android:src="@mipmap/img_me_headimage_default"
+                            android:layout_below="@+id/lines_rank_three_iv"
+                            android:layout_centerHorizontal="true"
+                            android:layout_marginTop="@dimen/margin_2dp"
+                            />
+                        <TextView
+                            android:id="@+id/lines_rank_three_name_tv"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textColor="@color/white"
+                            android:textSize="14sp"
+                            android:layout_below="@+id/lines_rank_three_hp_iv"
+                            android:layout_marginTop="@dimen/margin_5dp"
+                            android:layout_centerHorizontal="true"
+                            />
+                        <TextView
+                            android:id="@+id/lines_rank_three_rate_tv"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textColor="@color/color_ffdd00"
+                            android:textSize="13sp"
+                            android:layout_below="@+id/lines_rank_three_name_tv"
+                            android:layout_marginTop="@dimen/margin_2dp"
+                            android:layout_centerHorizontal="true"
+                            />
+
+                        <TextView
+                            android:id="@+id/lines_rank_three_jifen_tv"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textColor="@color/white"
+                            android:textSize="13sp"
+                            android:layout_below="@+id/lines_rank_three_rate_tv"
+                            android:layout_marginTop="@dimen/margin_5dp"
+                            android:layout_centerHorizontal="true"
+                            />
+
+                    </RelativeLayout>
+
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="@drawable/shape_white_solid_white_half_bg"
+                    >
+
+                    <LinearLayout
+                        android:id="@+id/profitlines_title_ll"
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/dp_40"
+                        android:orientation="horizontal"
+                        android:gravity="center_vertical"
+                        >
+                        <TextView
+                            android:id="@+id/lines_user_name_tv"
+                            android:layout_width="0dp"
+                            android:layout_weight="2"
+                            android:layout_height="match_parent"
+                            android:gravity="center"
+                            android:textSize="14sp"
+                            android:text="用户"
+                            android:textColor="@color/colorFF666666"
+                            />
+                        <TextView
+                            android:id="@+id/lines_user_profit_tv"
+                            android:layout_width="0dp"
+                            android:layout_weight="1"
+                            android:layout_height="match_parent"
+                            android:gravity="center"
+                            android:textSize="14sp"
+                            android:text="盈利"
+                            android:textColor="@color/colorFF666666"
+                            />
+                        <TextView
+                            android:id="@+id/lines_user_reward_tv"
+                            android:layout_width="0dp"
+                            android:layout_weight="1"
+                            android:layout_height="match_parent"
+                            android:gravity="center"
+                            android:textSize="14sp"
+                            android:text="奖励"
+                            android:textColor="@color/colorFF666666"
+                            />
+
+
+                    </LinearLayout>
+                    <TextView
+                        android:id="@+id/profitlines_line_tv"
+                        android:layout_width="match_parent"
+                        android:layout_height="1px"
+                        android:background="@color/grey_30"
+                        android:layout_below="@+id/profitlines_title_ll"
+                        />
+                    <android.support.v7.widget.RecyclerView
+                        android:id="@+id/profitlines_rv"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_below="@+id/profitlines_line_tv"
+                        android:nestedScrollingEnabled="false"
+                        android:focusable="true"
+                        android:scrollbars="vertical" />
+                </RelativeLayout>
+
+            </LinearLayout>
+
+
+        </android.support.v4.widget.NestedScrollView>
+
+
+
+    </com.moyacs.canary.widget.XXRefreshView>
+
+</LinearLayout>

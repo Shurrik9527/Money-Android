@@ -1,0 +1,281 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@color/white"
+    >
+
+
+    <include layout="@layout/view_top"></include>
+
+    <android.support.v4.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:scrollbars="none"
+        >
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            >
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/margin_80dp"
+                android:background="@color/grey_10"
+                >
+
+                <ImageView
+                    android:id="@+id/expert_head_iv"
+                    android:layout_width="@dimen/margin_45dp"
+                    android:layout_height="@dimen/margin_45dp"
+                    android:src="@mipmap/ic_launcher"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="@dimen/margin_15dp"
+                    />
+                <TextView
+                    android:id="@+id/expert_name_tv"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_toRightOf="@+id/expert_head_iv"
+                    android:layout_marginTop="@dimen/margin_20dp"
+                    android:textSize="20sp"
+                    android:textColor="@color/app_common_content"
+                    android:layout_marginLeft="@dimen/margin_10dp"
+                    android:gravity="center_vertical"
+                    />
+                <TextView
+                    android:id="@+id/expert_time_tv"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_toRightOf="@+id/expert_head_iv"
+                    android:layout_below="@+id/expert_name_tv"
+                    android:layout_marginTop="@dimen/margin_5dp"
+                    android:layout_marginLeft="@dimen/margin_10dp"
+                    android:textSize="14sp"
+                    android:textColor="@color/grey_50"
+                    android:gravity="center_vertical"
+                    />
+
+            </RelativeLayout>
+            <TextView
+                android:id="@+id/tv_ecpert_themetitle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/white"
+                android:gravity="center_vertical"
+                android:paddingLeft="@dimen/margin_25dp"
+                android:paddingRight="@dimen/margin_20dp"
+                android:textSize="16sp"
+                android:textColor="@color/app_common_content"
+                android:layout_marginTop="@dimen/margin_10dp"
+                />
+            <TextView
+                android:id="@+id/tv_expert_title"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/white"
+                android:gravity="center_vertical"
+                android:paddingLeft="@dimen/margin_20dp"
+                android:paddingRight="@dimen/margin_20dp"
+                android:textSize="16sp"
+                android:textColor="@color/app_common_content"
+                android:layout_marginBottom="@dimen/margin_10dp"
+                />
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="1px"
+                android:background="@color/grey_20"
+                />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/margin_40dp"
+                android:gravity="center"
+                android:background="@color/white"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/tv_expert_tradeup"
+                    android:layout_width="@dimen/margin_80dp"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="@dimen/margin_10dp"
+                    android:gravity="center|left"
+                    android:text=""
+                    android:textColor="@color/trade_up"
+                    android:textSize="@dimen/text_size_12sp" />
+
+                <View
+                    android:layout_width="@dimen/margin_10dp"
+                    android:layout_height="wrap_content" />
+
+                <ImageView
+                    android:id="@+id/iv_expert_tradeup"
+                    android:layout_width="wrap_content"
+                    android:layout_height="@dimen/margin_3dp"
+                    android:layout_gravity="center"
+                    android:layout_weight="1.0"
+                    android:background="@drawable/img_homeinformation_tradeup" />
+
+                <ImageView
+                    android:id="@+id/iv_expert_tradedown"
+                    android:layout_width="wrap_content"
+                    android:layout_height="@dimen/margin_3dp"
+                    android:layout_gravity="center"
+                    android:layout_marginLeft="-1dp"
+                    android:layout_weight="1.0"
+                    android:background="@drawable/img_homeinformation_tradedown" />
+
+                <View
+                    android:layout_width="@dimen/margin_10dp"
+                    android:layout_height="wrap_content" />
+
+                <TextView
+                    android:id="@+id/tv_expert_tradedown"
+                    android:layout_width="@dimen/margin_80dp"
+                    android:layout_height="match_parent"
+                    android:layout_marginRight="@dimen/margin_10dp"
+                    android:gravity="center|right"
+                    android:text=""
+                    android:textColor="@color/trade_down"
+                    android:textSize="@dimen/text_size_12sp" />
+            </LinearLayout>
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/margin_8dp"
+                android:background="@color/grey_40"
+                />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/white"
+                android:orientation="vertical"
+                >
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingTop="@dimen/margin_20dp"
+                    >
+                    <TextView
+                        android:layout_width="@dimen/margin_100dp"
+                        android:layout_height="1px"
+                        android:layout_centerVertical="true"
+                        android:background="@color/grey_50"
+                        android:layout_marginLeft="@dimen/margin_20dp"
+                        android:layout_toLeftOf="@+id/base_analysis_tv"
+                        android:layout_marginRight="@dimen/margin_20dp"
+                        />
+                    <TextView
+                        android:id="@+id/base_analysis_tv"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:padding="@dimen/dp_10"
+                        android:textSize="20sp"
+                        android:textColor="@color/app_common_content"
+                        android:text="基本面分析"
+                        android:layout_centerInParent="true"
+                        />
+                    <TextView
+                        android:layout_width="@dimen/margin_100dp"
+                        android:layout_height="1px"
+                        android:layout_centerVertical="true"
+                        android:layout_toRightOf="@+id/base_analysis_tv"
+                        android:background="@color/grey_50"
+                        android:layout_marginLeft="@dimen/margin_20dp"
+                        />
+                </RelativeLayout>
+                <TextView
+                    android:id="@+id/analysis_tv"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingLeft="@dimen/margin_20dp"
+                    android:paddingRight="@dimen/margin_20dp"
+                    android:textSize="18sp"
+                    android:textColor="@color/black_50"
+                    />
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingTop="@dimen/margin_30dp"
+                    >
+                    <TextView
+                        android:layout_width="@dimen/margin_100dp"
+                        android:layout_height="1px"
+                        android:layout_centerVertical="true"
+                        android:background="@color/grey_50"
+                        android:layout_marginLeft="@dimen/margin_20dp"
+                        android:layout_toLeftOf="@+id/techno_analysis_tv"
+                        android:layout_marginRight="@dimen/margin_20dp"
+                        />
+                    <TextView
+                        android:id="@+id/techno_analysis_tv"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:padding="@dimen/dp_10"
+                        android:textSize="20sp"
+                        android:textColor="@color/app_common_content"
+                        android:text="技术面分析"
+                        android:layout_centerInParent="true"
+                        />
+                    <TextView
+                        android:layout_width="@dimen/margin_100dp"
+                        android:layout_height="1px"
+                        android:layout_centerVertical="true"
+                        android:layout_toRightOf="@+id/techno_analysis_tv"
+                        android:background="@color/grey_50"
+                        android:layout_marginLeft="@dimen/margin_20dp"
+                        />
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+                    <ImageView
+                        android:id="@+id/techno_analysis_iv"
+                        android:layout_width="300dp"
+                        android:layout_height="150dp"
+                        android:src="@mipmap/img_loading_large"
+                        android:layout_centerInParent="true"
+                        />
+
+                </RelativeLayout>
+                <TextView
+                    android:id="@+id/techno_tv"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingLeft="@dimen/margin_20dp"
+                    android:paddingRight="@dimen/margin_20dp"
+                    android:textSize="18sp"
+                    android:textColor="@color/black_50"
+                    android:layout_marginTop="@dimen/margin_20dp"
+                    />
+
+                <TextView
+                    android:id="@+id/bootom_tv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:paddingLeft="@dimen/margin_20dp"
+                    android:paddingRight="@dimen/margin_20dp"
+                    android:textSize="18sp"
+                    android:text="以上策略仅供参考，不构成买卖依据!"
+                    android:textColor="@color/_red"
+                    android:layout_marginTop="@dimen/margin_20dp"
+                    />
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+
+    </android.support.v4.widget.NestedScrollView>
+
+
+
+
+
+</LinearLayout>

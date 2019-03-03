@@ -38,7 +38,7 @@ import static com.moyacs.canary.common.AppConstans.marketDataBeanList;
 /**
  * @author heguogui
  * @version v 1.0.0
- * @describe
+ * @describe 持仓fragment
  * @date 2019/2/26
  * @email 252774645@qq.com
  */

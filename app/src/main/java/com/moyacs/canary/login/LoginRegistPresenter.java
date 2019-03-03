@@ -1,7 +1,9 @@
 package com.moyacs.canary.login;
 
+import android.content.Context;
 import android.content.Intent;
 import android.util.Base64;
+import android.util.Log;
 
 import com.moyacs.canary.common.RSAKeyManger;
 import com.moyacs.canary.main.MainActivity;
@@ -10,12 +12,15 @@ import com.moyacs.canary.network.BaseObservable;
 import com.moyacs.canary.network.RxUtils;
 import com.moyacs.canary.network.ServerManger;
 import com.moyacs.canary.network.ServerResult;
+import com.moyacs.canary.util.AppUtils;
 import com.moyacs.canary.util.SharePreferencesUtil;
 import com.moyacs.canary.util.ToastUtils;
 
 import java.io.UnsupportedEncodingException;
 
 import io.reactivex.disposables.CompositeDisposable;
+import io.rong.imkit.RongIM;
+import io.rong.imlib.RongIMClient;
 
 /**
  * @author heguogui
@@ -26,6 +31,7 @@ import io.reactivex.disposables.CompositeDisposable;
  */
 public class LoginRegistPresenter implements LoginRegistContract.Presenter{
 
+    private static final String TAG = LoginRegistPresenter.class.getName();
     private LoginRegistContract.LoginRegistView mView;
     private CompositeDisposable disposable;
     public LoginRegistPresenter(LoginRegistContract.LoginRegistView view) {
@@ -155,6 +161,51 @@ public class LoginRegistPresenter implements LoginRegistContract.Presenter{
                         }
                     }
                 }));
+    }
+
+    @Override
+    public void getRongIMUserInform(String userid, String phone) {
+
+    }
+
+    @Override
+    public void connectRonIM(Context context,String token) {
+
+            if (context.getApplicationInfo().packageName.equals(AppUtils.getCurProcessName(context.getApplicationContext()))) {
+
+                RongIM.connect(token, new RongIMClient.ConnectCallback() {
+                    /**
+                     * Token 错误。可以从下面两点检查
+                     *  1.  Token 是否过期，如果过期您需要向 App Server 重新请求一个新的 Token
+                     *  2.  token 对应的 appKey 和工程里设置的 appKey 是否一致
+                     */
+                    @Override
+                    public void onTokenIncorrect() {
+
+                    }
+
+                    /**
+                     * 连接融云成功
+                     * @param userid 当前 token 对应的用户 id
+                     */
+                    @Override
+                    public void onSuccess(String userid) {
+                        Log.d(TAG, "Rong IM connect onSuccess" + userid);
+                    }
+
+                    /**
+                     * 连接融云失败
+                     * @param errorCode 错误码，可到官网 查看错误码对应的注释
+                     */
+                    @Override
+                    public void onError(RongIMClient.ErrorCode errorCode) {
+                        if(errorCode!=null){
+                            Log.d(TAG, "Rong IM connect onSuccess" + errorCode.getMessage());
+                        }
+                    }
+                });
+            }
+
     }
 
     @Override

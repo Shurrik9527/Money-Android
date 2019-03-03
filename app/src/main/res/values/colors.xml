@@ -417,4 +417,23 @@
     <color name="trade_down">#1FB73C</color>
     <color name="mt4user_not_select">#757575</color>
     <color name="theme">#24273e</color>
+
+    <!--灰色-->
+    <color name="gray">#eeeeee</color>
+    <color name="gray0">#DCDCDC</color>
+    <color name="gray1">#cccccc</color>
+    <color name="gray2">#ffc3c3c3</color>
+    <color name="gray3">#aaaaaa</color>
+    <color name="gray4">#999999</color>
+    <color name="gray5">#ff666666</color>
+    <color name="gray6">#d1d1d1</color>
+    <color name="gray7">#eee</color>
+    <color name="gray8">#f0f0f0</color>
+    <color name="gray9">#9b9b9b</color>
+    <color name="gray10">#62e1e0e0</color>
+    <color name="gray11">#ffe5e5e5</color>
+    <color name="gray12">#ff808080</color>
+    <color name="gray13">#ff9f9f9f</color>
+    <color name="graybg">#f6f6f6</color>
+    <color name="gray14">#F2F2F2</color>
 </resources>

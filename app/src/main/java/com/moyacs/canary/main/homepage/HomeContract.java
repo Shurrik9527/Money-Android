@@ -3,7 +3,7 @@ package com.moyacs.canary.main.homepage;
 import com.moyacs.canary.base.BasePresenter;
 import com.moyacs.canary.base.BaseViews;
 import com.moyacs.canary.bean.BannerBean;
-import com.moyacs.canary.bean.DealChanceBean;
+import com.moyacs.canary.bean.HomeDealChanceBean;
 import com.moyacs.canary.bean.TradeVo;
 
 import java.util.List;
@@ -30,7 +30,7 @@ public interface HomeContract {
          *
          * @param result
          */
-        void setDealChanceList(List<DealChanceBean> result);
+        void setDealChanceList(List<HomeDealChanceBean> result);
 
         /**
          * 获取可以交易的外汇列表

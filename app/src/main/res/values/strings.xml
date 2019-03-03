@@ -629,4 +629,28 @@
         要求还会对账户号先行禁用，需要提交所有过往存款证明及第三方存款人资料后等待审核。
     </string>
 
+
+    <string name="experanalysis_top_tv">专家分析</string>
+    <string name="profit_top_title">盈利榜</string>
+    <string name="profit_bootom_title">立刻晒单，占据榜首</string>
+    <string name="profit_bootom_show">可晒单列表</string>
+    <string name="profit_bootom_deal">立即交易</string>
+
+    <string name="profit_detail_create_price_ck">建仓价:</string>
+    <string name="profit_detail_create_time_ck">建仓时间:</string>
+    <string name="profit_detail_close_price_ck">平仓价:</string>
+    <string name="profit_detail_close_time_ck">平仓时间:</string>
+    <string name="profit_detail_create_amount_ck">建仓成本:</string>
+    <string name="profit_detail_create_type_ck">平仓类型:</string>
+    <string name="profit_detail_rechange">充值下单</string>
+    <string name="profit_detail_top_title">盈利详情</string>
+    <string name="profit_detail_popuwondow_title">上榜规则:</string>
+    <string name="profit_detail_popu_content">
+        1.当前交易日内平仓的盈利单可以晒单(用券单不可参加)\n
+        2.每日盈利率、盈利额排名前20者即可上榜，赢取积分，榜单定时更新。\n
+        3.上榜者奖金(积分)由系统在次日02:00(GMT+2)自动发放。\n
+        4.盈利额达到10美元以上的盈利单即可晒到盈利额榜。\n
+        5.一个盈利单若同时满足两个榜单规则即可同时上榜。
+    </string>
+
 </resources>

@@ -1,15 +1,17 @@
 package com.moyacs.canary.main.homepage;
 
 import com.moyacs.canary.bean.BannerJsons;
-import com.moyacs.canary.bean.DealChanceBean;
+import com.moyacs.canary.bean.HomeDealChanceBean;
+import com.moyacs.canary.bean.HomeDealChanceVo;
 import com.moyacs.canary.bean.TradeVo;
-import com.moyacs.canary.network.BaseMoaObservable;
 import com.moyacs.canary.network.BaseObservable;
-import com.moyacs.canary.network.HttpResult;
+import com.moyacs.canary.network.HttpResponse;
+import com.moyacs.canary.network.ResponseObservable;
 import com.moyacs.canary.network.RxUtils;
 import com.moyacs.canary.network.ServerManger;
 import com.moyacs.canary.network.ServerResult;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import io.reactivex.disposables.CompositeDisposable;
@@ -50,21 +52,60 @@ public class HomePresenter implements HomeContract.HomePresenter{
 
     @Override
     public void getDealChanceList() {
-        disposable.add(ServerManger.getInstance().getServer().getDealChanceList()
+//        disposable.add(ServerManger.getInstance().getServer().getDealChanceList()
+//                .compose(RxUtils.rxSchedulerHelper())
+//                .subscribeWith(new BaseMoaObservable<HttpResult<List<DealChanceBean>>>() {
+//                    @Override
+//                    protected void requestSuccess(HttpResult<List<DealChanceBean>> data) {
+//                        if(mView!=null){
+//                            mView.setDealChanceList(data.getDataObject());
+//                            mView.refreshFinish();
+//                        }
+//                    }
+//
+//                    @Override
+//                    public void onComplete() {
+//                        super.onComplete();
+//                        mView.refreshFinish();
+//                    }
+//                }));
+
+
+        disposable.add(ServerManger.getInstance().getServer().tradingOpportunitiesList()
                 .compose(RxUtils.rxSchedulerHelper())
-                .subscribeWith(new BaseMoaObservable<HttpResult<List<DealChanceBean>>>() {
+                .subscribeWith(new ResponseObservable<HttpResponse<HomeDealChanceVo>>() {
                     @Override
-                    protected void requestSuccess(HttpResult<List<DealChanceBean>> data) {
-                        if(mView!=null){
-                            mView.setDealChanceList(data.getDataObject());
+                    protected void requestSuccess(HttpResponse<HomeDealChanceVo> data) {
+                        if(mView!=null&&data!=null){
                             mView.refreshFinish();
+
+                            //test
+                            List<HomeDealChanceBean> list = new ArrayList<>();
+                            HomeDealChanceBean beans = new HomeDealChanceBean();
+                            beans.setCreateTime("02-27");
+                            beans.setOperatingMode("原油");
+                            beans.setRisePercentage(80);
+                            beans.setThemeText("美日短线暴跌");
+                            beans.setTitle("建议覅的设备覅但是覅士大夫");
+                            beans.setTechnologicalAnalysisImg("http://img.mp.itc.cn/upload/20160730/afcfbf496451438faa9c6cdb5396f862_th.jpg");
+                            beans.setUserName("高老师");
+                            list.add(beans);
+                            list.add(beans);
+                            list.add(beans);
+                            mView.setDealChanceList(list);
+
+//                            HomeDealChanceVo bean =data.getData();
+//                            if(bean!=null||bean.getList()!=null){
+//                                mView.setDealChanceList(bean.getList());
+//                            }
                         }
                     }
-
                     @Override
                     public void onComplete() {
                         super.onComplete();
-                        mView.refreshFinish();
+                        if(mView!=null){
+                            mView.refreshFinish();
+                        }
                     }
                 }));
 

@@ -162,7 +162,9 @@ public class MarketFragment extends BaseFragment implements MarketContract.Marke
                     new Handler(Looper.getMainLooper()).postDelayed(new Runnable() {
                         @Override
                         public void run() {
-                            freshLayout.refreshComplete();
+                            if(freshLayout!=null){
+                                freshLayout.refreshComplete();
+                            }
                         }
                     }, 600);
                 }
@@ -333,6 +335,13 @@ public class MarketFragment extends BaseFragment implements MarketContract.Marke
     @Override
     public void getTradListFiled(String msg) {
         getMarkTypeListFiled(msg);
+    }
+
+    @Override
+    public void refreshComplete() {
+        if(freshLayout!=null){
+            freshLayout.refreshComplete();
+        }
     }
 
     private void getMarkTypeListFiled(String msg) {

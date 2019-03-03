@@ -1,15 +1,11 @@
 package com.moyacs.canary.util;
 
 import android.util.Log;
-
 import com.google.gson.Gson;
 import com.moyacs.canary.bean.event.EvenVo;
 import com.moyacs.canary.service.SocketQuotation;
-
 import org.greenrobot.eventbus.EventBus;
-
 import java.util.concurrent.TimeUnit;
-
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
@@ -54,48 +50,54 @@ public class WebSocketManger {
      * @param url
      */
     public void connectWebSocket(String url) {
-        String webSocketUrL = WEB_SOCKET_URL + url;
-        Request request = new Request.Builder()
-                .url(webSocketUrL).build();
-        getOkHttpClick().newWebSocket(request, new WebSocketListener() {
-            @Override
-            public void onOpen(WebSocket webSocket, Response response) {
-                Log.e("WebSocket", "======webSocket 连接成功========");
-            }
-
-            @Override
-            public void onMessage(WebSocket webSocket, String text) {
-                if (isFirstLoad) {
-                    isFirstLoad = false;
-                } else {
-                    SocketQuotation socketQuotation = mGson.fromJson(text, SocketQuotation.class);
-                    EventBus.getDefault().post(new EvenVo<SocketQuotation>(EvenVo.SOCKET_QUOTATION).setT(socketQuotation));
+        try {
+            String webSocketUrL = WEB_SOCKET_URL + url;
+            Request request = new Request.Builder()
+                    .url(webSocketUrL).build();
+            getOkHttpClick().newWebSocket(request, new WebSocketListener() {
+                @Override
+                public void onOpen(WebSocket webSocket, Response response) {
+                    Log.e("WebSocket", "======webSocket 连接成功========");
                 }
-            }
 
-            @Override
-            public void onMessage(WebSocket webSocket, ByteString bytes) {
+                @Override
+                public void onMessage(WebSocket webSocket, String text) {
+                    if (isFirstLoad) {
+                        isFirstLoad = false;
+                    } else {
+                        SocketQuotation socketQuotation = mGson.fromJson(text, SocketQuotation.class);
+                        EventBus.getDefault().post(new EvenVo<SocketQuotation>(EvenVo.SOCKET_QUOTATION).setT(socketQuotation));
+                    }
+                }
 
-            }
+                @Override
+                public void onMessage(WebSocket webSocket, ByteString bytes) {
 
-            @Override
-            public void onClosing(WebSocket webSocket, int code, String reason) {
-                super.onClosing(webSocket, code, reason);
-                Log.e("===WebSocket===", "=====关闭中======");
-            }
+                }
 
-            @Override
-            public void onClosed(WebSocket webSocket, int code, String reason) {
-                super.onClosed(webSocket, code, reason);
-                Log.e("===WebSocket===", "=====关闭=====" + reason);
-            }
+                @Override
+                public void onClosing(WebSocket webSocket, int code, String reason) {
+                    super.onClosing(webSocket, code, reason);
+                    Log.e("===WebSocket===", "=====关闭中======");
+                }
 
-            @Override
-            public void onFailure(WebSocket webSocket, Throwable t, Response response) {
-                super.onFailure(webSocket, t, response);
-                Log.e("==webSocketError==", t.getMessage());
-            }
-        });
+                @Override
+                public void onClosed(WebSocket webSocket, int code, String reason) {
+                    super.onClosed(webSocket, code, reason);
+                    Log.e("===WebSocket===", "=====关闭=====" + reason);
+                }
+
+                @Override
+                public void onFailure(WebSocket webSocket, Throwable t, Response response) {
+                    super.onFailure(webSocket, t, response);
+                    if(t!=null){
+                        Log.e("==webSocketError==", t.getMessage()+"");
+                    }
+                }
+            });
+        }catch (Exception e){
+
+        }
     }
 
 

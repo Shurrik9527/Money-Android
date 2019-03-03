@@ -18,14 +18,17 @@ import com.chad.library.adapter.base.BaseViewHolder;
 import com.moyacs.canary.base.BaseDelegateAdapter;
 import com.moyacs.canary.base.BaseFragment;
 import com.moyacs.canary.bean.BannerBean;
+import com.moyacs.canary.bean.HomeDealChanceBean;
 import com.moyacs.canary.bean.TradeVo;
 import com.moyacs.canary.bean.event.EvenVo;
 import com.moyacs.canary.common.AppConstans;
-import com.moyacs.canary.bean.DealChanceBean;
+import com.moyacs.canary.main.homepage.expertanalysis.ExpertAnalysisActicity;
 import com.moyacs.canary.main.homepage.profitrank.ProfitRangActivity;
 import com.moyacs.canary.product_fxbtg.ProductActivity;
 import com.moyacs.canary.service.SocketQuotation;
 import com.moyacs.canary.util.BannerImageLoaderUtil;
+import com.moyacs.canary.util.StringUtil;
+import com.moyacs.canary.util.ViewListenerAbs;
 import com.moyacs.canary.web.WebActivity;
 import com.yan.pullrefreshlayout.PullRefreshLayout;
 import com.youth.banner.Banner;
@@ -55,7 +58,7 @@ public class HomepageFragment extends BaseFragment implements HomeContract.HomeV
     private HomeContract.HomePresenter mPresenter;
     private TradeHorizontalAdapter tradeHorizontalAdapter;
     private BaseDelegateAdapter bannerAdapter;
-    private List<DealChanceBean> chanceList;//交易机会数据源
+    private List<HomeDealChanceBean> chanceList;//交易机会数据源
     private BaseDelegateAdapter dealChanceAdapter;//交易机会条目对应的 adapter
     private List<TradeVo.Trade> tradeList; // 可交易外汇列表
     private List<BannerBean> bannerList;//轮播图数据源
@@ -200,7 +203,9 @@ public class HomepageFragment extends BaseFragment implements HomeContract.HomeV
                 //盈利榜
                 View view1 = holder.getView(R.id.rl_home_newuser_gold);
                 view1.setOnClickListener(v -> {
-                    startActivity(new Intent(getContext(), ProfitRangActivity.class));
+                    if(!StringUtil.isFastDoubleClick()){
+                        startActivity(new Intent(getContext(), ProfitRangActivity.class));
+                    }
                 });
             }
         };
@@ -252,6 +257,20 @@ public class HomepageFragment extends BaseFragment implements HomeContract.HomeV
         LinearLayoutHelper linearLayoutHelper = new LinearLayoutHelper();
         dealChanceAdapter = new DealChanceAdapter(mActivity, linearLayoutHelper,
                 R.layout.vlayout_verticalrecyclerview_item, chanceList.size(), AppConstans.HOME_ADAPTER_ITEM_DETAIL_TYPE, chanceList);
+        ((DealChanceAdapter) dealChanceAdapter).setItemClickListener(new ViewListenerAbs.ItemClickListener() {
+            @Override
+            public void onItemClickListener(View view, int pos) {
+                if(dealChanceAdapter!=null){
+                    List<HomeDealChanceBean> mlists =((DealChanceAdapter) dealChanceAdapter).getData();
+                    if(mlists!=null){
+                        HomeDealChanceBean bean =mlists.get(pos);
+                        Intent mIntent = new Intent(getContext(), ExpertAnalysisActicity.class);
+                        mIntent.putExtra("BEANS",bean);
+                        startActivity(mIntent);
+                    }
+                }
+            }
+        });
         adapters.add(dealChanceAdapter);
     }
 
@@ -285,7 +304,7 @@ public class HomepageFragment extends BaseFragment implements HomeContract.HomeV
     }
 
     @Override
-    public void setDealChanceList(List<DealChanceBean> result) {
+    public void setDealChanceList(List<HomeDealChanceBean> result) {
         if(chanceList==null){
             chanceList = new ArrayList<>();
         }else {

@@ -6,9 +6,11 @@ import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.os.Environment;
 import android.support.multidex.MultiDex;
+import android.util.Log;
 
 import com.moyacs.canary.main.MainActivity;
 import com.moyacs.canary.network.HttpServerManager;
+import com.moyacs.canary.util.AppUtils;
 import com.netease.nimlib.sdk.NIMClient;
 import com.netease.nimlib.sdk.SDKOptions;
 import com.netease.nimlib.sdk.StatusBarNotificationConfig;
@@ -18,6 +20,8 @@ import com.netease.nimlib.sdk.uinfo.UserInfoProvider;
 import com.netease.nimlib.sdk.uinfo.model.UserInfo;
 import com.netease.nimlib.sdk.util.NIMUtil;
 
+import io.rong.imkit.RongIM;
+import io.rong.imlib.RongIMClient;
 import www.moyacs.com.myapplication.R;
 
 /**
@@ -27,8 +31,10 @@ import www.moyacs.com.myapplication.R;
  */
 
 public class MyApplication extends Application {
-    public static MyApplication instance;
 
+    private  static final  String TAG = MyApplication.class.getName();
+
+    public static MyApplication instance;
     @Override
     public void onCreate() {
         super.onCreate();
@@ -45,6 +51,12 @@ public class MyApplication extends Application {
         }
         // okhttp 有网和无网的缓存策略
 //        RetrofitCache.getInstance().init(this).setDefaultTimeUnit(TimeUnit.MINUTES).setDefaultTime(5);
+
+        //融云初始化
+        if (getApplicationInfo().packageName.equals(AppUtils.getCurProcessName(getApplicationContext()))) {
+            // 初始化融云
+            RongIM.init(this);
+        }
     }
 
     // 如果返回值为 null，则全部使用默认参数。

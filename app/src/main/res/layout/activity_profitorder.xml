@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:xrefreshview="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/theme"
+    >
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/profitorder_top_rl"
+        >
+        <include layout="@layout/view_top"></include>
+    </RelativeLayout>
+
+    <com.moyacs.canary.widget.XXRefreshView
+        android:id="@+id/profit_lines_xrefreshview"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        xrefreshview:autoRefresh="false"
+        android:background="@color/gray"
+        android:layout_below="@+id/profitorder_top_rl"
+        >
+
+        <android.support.v4.widget.NestedScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:fillViewport="true"
+            >
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                android:focusable="true"
+                android:focusableInTouchMode="true"
+                >
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/margin_60dp"
+                    android:background="@color/white"
+                    >
+
+                    <ImageView
+                        android:id="@+id/profitorder_hp_iv"
+                        android:layout_width="@dimen/margin_40dp"
+                        android:layout_height="@dimen/margin_40dp"
+                        android:src="@mipmap/img_me_headimage_default"
+                        android:layout_centerVertical="true"
+                        android:layout_marginLeft="@dimen/margin_15dp"
+                        />
+                    <TextView
+                        android:id="@+id/profitorder_num_iv"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:textSize="@dimen/text_size_16sp"
+                        android:textColor="@color/theme"
+                        android:text="今日可晒0单"
+                        android:layout_marginLeft="10dp"
+                        android:layout_toRightOf="@+id/profitorder_hp_iv"
+                        />
+
+                    <android.support.v7.widget.SwitchCompat
+                        android:id="@+id/profitorder_auto_sw"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentRight="true"
+                        android:layout_marginRight="@dimen/margin_15dp"
+                        android:layout_centerVertical="true"
+                        />
+
+                    <TextView
+                        android:id="@+id/profitorder_title_iv"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:textSize="@dimen/text_size_16sp"
+                        android:textColor="@color/gray9"
+                        android:text="平仓自动晒单"
+                        android:layout_marginRight="@dimen/margin_10dp"
+                        android:layout_toLeftOf="@+id/profitorder_auto_sw"
+                        />
+
+                </RelativeLayout>
+                <android.support.v7.widget.RecyclerView
+                    android:id="@+id/profitorder_rv"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:nestedScrollingEnabled="false"
+                    android:focusable="true"
+                    android:scrollbars="vertical" />
+            </LinearLayout>
+
+        </android.support.v4.widget.NestedScrollView>
+
+    </com.moyacs.canary.widget.XXRefreshView>
+
+    <Button
+        android:id="@+id/profitorder_all_btn"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/margin_60dp"
+        android:layout_alignParentBottom="true"
+        android:gravity="center"
+        android:textSize="@dimen/text_size_16sp"
+        android:textColor="@color/white"
+        android:background="@color/blue"
+        android:text="全部晒单"
+        />
+
+</RelativeLayout>

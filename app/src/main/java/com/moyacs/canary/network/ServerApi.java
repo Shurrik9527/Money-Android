@@ -2,6 +2,7 @@ package com.moyacs.canary.network;
 
 import com.moyacs.canary.bean.BannerJsons;
 import com.moyacs.canary.bean.HoldOrderDateBean;
+import com.moyacs.canary.bean.HomeDealChanceVo;
 import com.moyacs.canary.bean.MarketDataBean;
 import com.moyacs.canary.bean.PaymentDateBean;
 import com.moyacs.canary.bean.TradeVo;
@@ -208,6 +209,13 @@ public interface ServerApi {
 
 
     /**
+     * 首页 交易机会列表
+     */
+    @POST("tradingOpportunities/getList")
+    Observable<HttpResponse<HomeDealChanceVo>> tradingOpportunitiesList();
+
+
+    /**
      * 获取全部行情列表
      *
      * @return
@@ -284,6 +292,32 @@ public interface ServerApi {
                                                                            @Query("endDate") String endDate
 
     );
+
+
+    /**
+     * 获取融云 token
+     * @param userId 用户ID
+     * @param name 用户呢城
+     * @param portraitUri 头像路径
+     * @return
+     */
+    @POST("getToken")
+    Observable<Response<Object>> getRongToken(@Query("userId") String userId,
+                                                                             @Query("name") String name,
+                                                                             @Query("portraitUri") String portraitUri);
+
+
+    /**
+     * 属性用户信息
+     * @param userId 用户ID
+     * @param name 用户呢城
+     * @param portraitUri 头像路径
+     * @return
+     */
+    @POST("refresh")
+    Observable<Response<Object>> getRefreshRongUserInform(@Query("userId") String userId,
+                                                                           @Query("name") String name,
+                                                                           @Query("portraitUri") String portraitUri);
 
 
 

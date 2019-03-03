@@ -1,5 +1,7 @@
 package com.moyacs.canary.login;
 
+import android.content.Context;
+
 import com.moyacs.canary.base.BasePresenter;
 import com.moyacs.canary.base.BaseViews;
 
@@ -22,6 +24,7 @@ public interface LoginRegistContract {
         void  dissLoading();
         void  getCodeSuccess(String code);
         void  getCodeFailed();
+        void  showRongIMToken(String token);
     }
 
 
@@ -56,5 +59,19 @@ public interface LoginRegistContract {
          * @param code 验证码
          */
         void doRegister(String registerId, String phone, String passWord, String fullName, String code);
+
+        /**
+         * 获取用户Token
+         * @param userid
+         * @param phone
+         */
+        void getRongIMUserInform(String userid,String phone);
+
+        /**
+         * 连接融云服务
+         * @param token
+         */
+        void connectRonIM(Context context,String token);
+
     }
 }

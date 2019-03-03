@@ -4,7 +4,6 @@ import android.os.CountDownTimer;
 import android.text.TextUtils;
 import android.text.method.HideReturnsTransformationMethod;
 import android.text.method.PasswordTransformationMethod;
-import android.util.Base64;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -12,16 +11,8 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-
 import com.moyacs.canary.base.BaseFragment;
-import com.moyacs.canary.network.BaseObservable;
-import com.moyacs.canary.network.RxUtils;
-import com.moyacs.canary.network.ServerManger;
-import com.moyacs.canary.network.ServerResult;
 import com.moyacs.canary.util.ToastUtils;
-
-import java.io.UnsupportedEncodingException;
-
 import butterknife.BindView;
 import butterknife.OnClick;
 import www.moyacs.com.myapplication.R;
@@ -229,6 +220,11 @@ public class RegistFragment extends BaseFragment implements LoginRegistContract.
         countDownTimer.onFinish();
         countDownTimer.cancel();
         ToastUtils.showShort("验证码发送失败");
+    }
+
+    @Override
+    public void showRongIMToken(String token) {
+
     }
 
 }

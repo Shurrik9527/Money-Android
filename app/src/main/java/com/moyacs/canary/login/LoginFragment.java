@@ -1,6 +1,7 @@
 package com.moyacs.canary.login;
 
 import android.content.Intent;
+import android.text.TextUtils;
 import android.text.method.HideReturnsTransformationMethod;
 import android.text.method.PasswordTransformationMethod;
 import android.util.Base64;
@@ -133,6 +134,15 @@ public class LoginFragment extends BaseFragment implements LoginRegistContract.L
     @Override
     public void getCodeFailed() {
 
+    }
+
+    @Override
+    public void showRongIMToken(String token) {
+        if(!TextUtils.isEmpty(token)){
+            if(mPresenter!=null){
+                mPresenter.connectRonIM(getContext(),token);
+            }
+        }
     }
 
 
