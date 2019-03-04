@@ -27,7 +27,7 @@ public class SharePreferencesUtil {
     }
 
     public String getNickName() {
-        return spf.getString("nickName", "这家伙很懒~");
+        return spf.getString("nickName", "");
     }
 
     public void setUserPhone(String userPhone) {

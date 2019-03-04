@@ -1,5 +1,7 @@
 package com.moyacs.canary.main.homepage;
 
+import android.util.Log;
+
 import com.moyacs.canary.bean.BannerJsons;
 import com.moyacs.canary.bean.HomeDealChanceBean;
 import com.moyacs.canary.bean.HomeDealChanceVo;
@@ -25,6 +27,7 @@ import io.reactivex.disposables.CompositeDisposable;
  */
 public class HomePresenter implements HomeContract.HomePresenter{
 
+    private static final String TAG =HomePresenter.class.getName();
     private HomeContract.HomeView mView;
     private CompositeDisposable disposable;
     public HomePresenter(HomeContract.HomeView view) {

@@ -28,17 +28,14 @@ import com.moyacs.canary.util.SharePreferencesUtil;
 import com.moyacs.canary.util.ToastUtils;
 import com.moyacs.canary.widget.CircleImageView;
 import com.moyacs.canary.widget.UpdateHeadPortraitDialog;
-
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
-
 import java.io.File;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
 import butterknife.BindView;
 import butterknife.OnClick;
 import okhttp3.MediaType;
@@ -65,10 +62,19 @@ public class AccountActivity extends BaseActivity {
 
     @Override
     protected void initView() {
-        tvNickName.setText(SharePreferencesUtil.getInstance().getNickName());
-        tvAccount.setText(SharePreferencesUtil.getInstance().getUserPhone());
         photoManger = new ChoicePhotoManger();
         portraitDialog = new UpdateHeadPortraitDialog(this);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        if(tvNickName!=null){
+            tvNickName.setText(SharePreferencesUtil.getInstance().getNickName()+"");
+        }
+        if(tvAccount!=null){
+            tvAccount.setText(SharePreferencesUtil.getInstance().getUserPhone()+"");
+        }
     }
 
     @Override
@@ -143,7 +149,9 @@ public class AccountActivity extends BaseActivity {
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onEventBus(EvenVo vo) {
         if (vo.getCode() == EvenVo.EVENT_CODE_UPDATE_NICK_NAME) {
-            tvNickName.setText(SharePreferencesUtil.getInstance().getNickName());
+            if(tvNickName!=null){
+                tvNickName.setText(SharePreferencesUtil.getInstance().getNickName());
+            }
         }
     }
 
@@ -163,7 +171,7 @@ public class AccountActivity extends BaseActivity {
             } else if (requestCode == ChoicePhotoManger.TACK_CAMERA_CODE) {
                 //相机拍照后回调
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-                    newUri = FileProvider.getUriForFile(this, ChoicePhotoManger.PICTURE_AUTHORITY, photoManger.getTakeFile());
+                    newUri = FileProvider.getUriForFile(this,"com.moyacs.canary.FileProvider", photoManger.getTakeFile());
                 } else {
                     newUri = Uri.fromFile(photoManger.getTakeFile());
                 }

@@ -19,6 +19,13 @@ public class TradeVo implements Serializable {
         return list;
     }
 
+    @Override
+    public String toString() {
+        return "TradeVo{" +
+                "list=" + list +
+                '}';
+    }
+
     public void setList(List<Trade> list) {
         this.list = list;
     }

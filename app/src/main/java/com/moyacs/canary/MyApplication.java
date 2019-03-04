@@ -52,11 +52,11 @@ public class MyApplication extends Application {
         // okhttp 有网和无网的缓存策略
 //        RetrofitCache.getInstance().init(this).setDefaultTimeUnit(TimeUnit.MINUTES).setDefaultTime(5);
 
-        //融云初始化
-        if (getApplicationInfo().packageName.equals(AppUtils.getCurProcessName(getApplicationContext()))) {
-            // 初始化融云
-            RongIM.init(this);
-        }
+//        //融云初始化
+//        if (getApplicationInfo().packageName.equals(AppUtils.getCurProcessName(getApplicationContext()))) {
+//            // 初始化融云
+//            RongIM.init(this);
+//        }
     }
 
     // 如果返回值为 null，则全部使用默认参数。

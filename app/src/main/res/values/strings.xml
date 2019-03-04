@@ -652,5 +652,6 @@
         4.盈利额达到10美元以上的盈利单即可晒到盈利额榜。\n
         5.一个盈利单若同时满足两个榜单规则即可同时上榜。
     </string>
+    <string name="home_custom_server">客服服务</string>
 
 </resources>

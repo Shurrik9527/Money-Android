@@ -9,10 +9,11 @@ import android.os.Build;
 import android.os.Environment;
 import android.provider.MediaStore;
 import android.support.v4.content.FileProvider;
-
 import com.moyacs.canary.MyApplication;
-
 import java.io.File;
+
+import www.moyacs.com.myapplication.BuildConfig;
+
 
 /**
  * @Author: Administrator
@@ -70,7 +71,7 @@ public class ChoicePhotoManger {
         }
         Uri fileUri;
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-            fileUri = FileProvider.getUriForFile(activity, PICTURE_AUTHORITY, getTakeFile());
+            fileUri = FileProvider.getUriForFile(activity, "com.moyacs.canary.FileProvider", getTakeFile());
         } else {
             fileUri = Uri.fromFile(getTakeFile());
         }

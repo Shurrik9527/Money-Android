@@ -31,11 +31,7 @@ public class SetNickNameActivity extends BaseActivity {
 
     @Override
     protected void initView() {
-        String nickName = SharePreferencesUtil.getInstance().getNickName();
-        if (!TextUtils.isEmpty(nickName)) {
-            etNickName.setText(SharePreferencesUtil.getInstance().getNickName());
-            etNickName.setSelection(etNickName.getText().length());
-        }
+
     }
 
     @Override
@@ -45,7 +41,11 @@ public class SetNickNameActivity extends BaseActivity {
 
     @Override
     protected void initData() {
-
+        String nickName = SharePreferencesUtil.getInstance().getNickName();
+        if (!TextUtils.isEmpty(nickName)) {
+            etNickName.setText(SharePreferencesUtil.getInstance().getNickName());
+            etNickName.setSelection(etNickName.getText().length());
+        }
     }
 
     @OnClick({R.id.iv_back, R.id.tv_confirm})
@@ -61,16 +61,17 @@ public class SetNickNameActivity extends BaseActivity {
     }
 
     private void uploadNickName(String nickName) {
-        showLoadingDialog();
         if (TextUtils.isEmpty(nickName)) {
             ToastUtils.showShort("昵称不能为空");
             return;
         }
+        showLoadingDialog();
         addSubscribe(ServerManger.getInstance().getServer().updateNickName(nickName,"")
                 .compose(RxUtils.rxSchedulerHelper())
                 .subscribeWith(new BaseObservable<ServerResult<String>>() {
                     @Override
                     protected void requestSuccess(ServerResult<String> data) {
+                        SharePreferencesUtil.getInstance().setNickName(nickName);
                         EventBus.getDefault().post(new EvenVo(EvenVo.EVENT_CODE_UPDATE_NICK_NAME));
                         ToastUtils.showShort("更新名字成功");
                         finish();
@@ -79,6 +80,7 @@ public class SetNickNameActivity extends BaseActivity {
                     @Override
                     public void onError(Throwable e) {
                         super.onError(e);
+                        dismissLoadingDialog();
                         ToastUtils.showShort("服务器异常");
                     }
 

@@ -22,6 +22,7 @@ import com.moyacs.canary.bean.HomeDealChanceBean;
 import com.moyacs.canary.bean.TradeVo;
 import com.moyacs.canary.bean.event.EvenVo;
 import com.moyacs.canary.common.AppConstans;
+import com.moyacs.canary.im.CustomerServerActivtiy;
 import com.moyacs.canary.main.homepage.expertanalysis.ExpertAnalysisActicity;
 import com.moyacs.canary.main.homepage.profitrank.ProfitRangActivity;
 import com.moyacs.canary.product_fxbtg.ProductActivity;
@@ -204,7 +205,7 @@ public class HomepageFragment extends BaseFragment implements HomeContract.HomeV
                 View view1 = holder.getView(R.id.rl_home_newuser_gold);
                 view1.setOnClickListener(v -> {
                     if(!StringUtil.isFastDoubleClick()){
-                        startActivity(new Intent(getContext(), ProfitRangActivity.class));
+                        startActivity(new Intent(getContext(), CustomerServerActivtiy.class));
                     }
                 });
             }

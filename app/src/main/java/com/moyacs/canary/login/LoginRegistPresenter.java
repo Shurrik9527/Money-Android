@@ -2,6 +2,7 @@ package com.moyacs.canary.login;
 
 import android.content.Context;
 import android.content.Intent;
+import android.text.TextUtils;
 import android.util.Base64;
 import android.util.Log;
 
@@ -170,7 +171,7 @@ public class LoginRegistPresenter implements LoginRegistContract.Presenter{
 
     @Override
     public void connectRonIM(Context context,String token) {
-
+            if(!TextUtils.isEmpty(token)){
             if (context.getApplicationInfo().packageName.equals(AppUtils.getCurProcessName(context.getApplicationContext()))) {
 
                 RongIM.connect(token, new RongIMClient.ConnectCallback() {
@@ -204,6 +205,7 @@ public class LoginRegistPresenter implements LoginRegistContract.Presenter{
                         }
                     }
                 });
+            }
             }
 
     }

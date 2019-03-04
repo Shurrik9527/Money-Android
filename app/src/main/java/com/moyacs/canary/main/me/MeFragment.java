@@ -55,6 +55,9 @@ public class MeFragment extends BaseFragment {
     CircleImageView ivPerson;
 
     private boolean isLoadData = false;
+    private UserInfoVo bean;
+
+
 
     @Override
     protected int getLayoutId() {
@@ -74,6 +77,8 @@ public class MeFragment extends BaseFragment {
     @Override
     protected void initData() {
         registerEventBus();
+        tvBalance.setText("0.00");
+        tvAsset.setText("0.00");
     }
 
     @Override
@@ -91,16 +96,34 @@ public class MeFragment extends BaseFragment {
      * 登录成功之后，改变相关状态
      */
     private void setNickName() {
+
         if (TextUtils.isEmpty(SharePreferencesUtil.getInstance().getUserPhone())) {
             llUnLogin.setVisibility(View.VISIBLE);
             llLogin.setVisibility(View.GONE);
         } else {
             llLogin.setVisibility(View.VISIBLE);
             llUnLogin.setVisibility(View.GONE);
-            tvNickName.setText( SharePreferencesUtil.getInstance().getNickName());
-            Glide.with(mActivity)
-                    .load(SharePreferencesUtil.getInstance().getUserHead())
-                    .into(ivPerson);
+            if(bean!=null){
+                if(!TextUtils.isEmpty(bean.getNickname())){
+                    tvNickName.setText(bean.getNickname());
+                }else {
+                    tvNickName.setText(bean.getLoginName());
+                }
+                if(!TextUtils.isEmpty(bean.getUserImg())){
+                    Glide.with(mActivity)
+                            .load(SharePreferencesUtil.getInstance().getUserHead())
+                            .into(ivPerson);
+                }else {
+                    Glide.with(mActivity)
+                            .load(R.mipmap.img_me_headimage_default)
+                            .into(ivPerson);
+                }
+
+                if(!TextUtils.isEmpty(SharePreferencesUtil.getInstance().getNickName())){
+                    tvNickName.setText(SharePreferencesUtil.getInstance().getNickName());
+                }
+            }
+
 
         }
     }
@@ -178,7 +201,8 @@ public class MeFragment extends BaseFragment {
                     protected void requestSuccess(ServerResult<UserInfoVo> data) {
                         llUnLogin.setVisibility(View.GONE);
                         llLogin.setVisibility(View.VISIBLE);
-                        SharePreferencesUtil.getInstance().setNickName(data.getData().getUserName());
+                        bean =data.getData();
+                        SharePreferencesUtil.getInstance().setNickName(data.getData().getNickname());
                         getUserBalance();
                     }
 
@@ -207,8 +231,12 @@ public class MeFragment extends BaseFragment {
                     protected void requestSuccess(ServerResult<UserAmountVo> data) {
                         UserAmountVo amount = data.getData();
                         if (amount != null) {
-                            tvAsset.setText(data.getData().getRechargeAmount());
-                            tvBalance.setText(data.getData().getBalance());
+                            if(!TextUtils.isEmpty(amount.getBalance())){
+                                tvBalance.setText(amount.getBalance());
+                            }
+                            if(!TextUtils.isEmpty(amount.getRechargeAmount())){
+                                tvAsset.setText(amount.getRechargeAmount());
+                            }
                         }
                     }
                 }));

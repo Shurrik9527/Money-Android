@@ -6,6 +6,7 @@ import android.animation.ValueAnimator;
 import android.graphics.Color;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -30,6 +31,7 @@ import www.moyacs.com.myapplication.R;
  */
 public class TradeHorizontalAdapter extends RecyclerView.Adapter<TradeHorizontalAdapter.ViewHolder>{
 
+    private static final String TAG = TradeHorizontalAdapter.class.getName();
     private List<TradeVo.Trade> marketDataBeanList;
     //买入价 动画闪跳颜色
     private int animatorColor = 0;
@@ -90,8 +92,8 @@ public class TradeHorizontalAdapter extends RecyclerView.Adapter<TradeHorizontal
         //根据后端返回保留的小数位截取数据
         String newPrice_d_scale = NumberUtils.setScale(newPrice_d, marketDataBean.getDigit());
         //设置最新价格
-        holder.tvPrice.setText(newPrice_d_scale);
-
+        holder.tvPrice.setText(newPrice_d_scale+"");
+        Log.i(TAG,"newPrice_d_scale="+newPrice_d_scale);
         //第一次进入的时候 oldPrice 没数据
         if (oldPrice != null && !oldPrice.equals("null") && !oldPrice.equals("")) {
             double oldPrice_d = Double.valueOf(oldPrice);
@@ -127,6 +129,19 @@ public class TradeHorizontalAdapter extends RecyclerView.Adapter<TradeHorizontal
                 String s = NumberUtils.setScale2(range);
                 //涨 加 + 号
                 rangeString = "+" + s + "%";
+            }else {
+                //计算新旧价格差
+                double subtract = NumberUtils.subtract(close, newPrice_d);
+                //买入价的字体颜色
+                rangeColor = holder.itemView.getResources().getColor(R.color.trade_down);
+                //计算涨跌值
+                rangeValue = NumberUtils.doubleToString(subtract);
+                //计算涨跌幅
+                double range = NumberUtils.divide(subtract, close, 4);
+                //涨跌幅数据格式化
+                String s = NumberUtils.setScale2(range);
+                //跌 加 - 号
+                rangeString = s + "%";
             }
             holder.tvValueAndRate.setText(rangeValue + "   " + rangeString);
             //这里的背景颜色表示实时的涨跌 所有由前后两次买入价格决定
@@ -146,6 +161,8 @@ public class TradeHorizontalAdapter extends RecyclerView.Adapter<TradeHorizontal
             marketDataBean.setUp(isUp);
             //价格  执行动画
             getAnimator(holder.relativeRoot, animatorColor);
+        }else {
+
         }
     }
 

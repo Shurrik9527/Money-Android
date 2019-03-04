@@ -1,7 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical">
@@ -29,19 +27,19 @@
             android:textSize="@dimen/text_size_18sp" />
     </RelativeLayout>
 
-    <LinearLayout
+    <RelativeLayout
         android:id="@+id/ll_head"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="@dimen/margin_80dp"
         android:background="@color/white"
         android:gravity="center_vertical"
-        android:orientation="horizontal"
-        android:padding="@dimen/margin_16dp">
+        >
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="@dimen/margin_15dp"
             android:text="头像"
             android:textColor="@color/app_common_content" />
 
@@ -49,63 +47,78 @@
             android:id="@+id/iv_head"
             android:layout_width="54dip"
             android:layout_height="54dip"
+            android:layout_marginRight="@dimen/margin_5dp"
+            android:layout_alignParentRight="true"
+            android:layout_toLeftOf="@+id/head_back_iv"
+            android:layout_centerVertical="true"
             android:src="@mipmap/img_me_headimage_default" />
 
         <ImageView
+            android:id="@+id/head_back_iv"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@mipmap/me_icon_more"
-            android:visibility="gone" />
-    </LinearLayout>
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="@dimen/margin_15dp"
+            android:layout_centerVertical="true"
+            android:src="@mipmap/me_icon_more" />
+    </RelativeLayout>
 
-    <LinearLayout
+    <RelativeLayout
         android:id="@+id/ll_nickName"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="@dimen/margin_45dp"
         android:layout_marginTop="@dimen/margin_10dp"
         android:background="@color/white"
         android:gravity="center_vertical"
-        android:orientation="horizontal"
-        android:padding="@dimen/margin_16dp">
+        >
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="@dimen/margin_15dp"
             android:text="昵称"
             android:textColor="@color/app_common_content" />
 
         <TextView
+            android:layout_toLeftOf="@+id/nickname_back_iv"
             android:id="@+id/tv_nickName"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginRight="@dimen/margin_26dp"
+            android:hint="请输入昵称"
+            android:gravity="center_vertical|right"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="@dimen/margin_5dp"
             android:textColor="@color/app_common_content"
             android:textSize="@dimen/text_size_14sp" />
 
         <ImageView
+            android:id="@+id/nickname_back_iv"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="@dimen/margin_15dp"
+            android:layout_centerVertical="true"
             android:src="@mipmap/me_icon_more" />
-    </LinearLayout>
+    </RelativeLayout>
 
     <View
         android:layout_width="match_parent"
         android:layout_height="@dimen/margin_0.5dp"
         android:background="@color/line" />
 
-    <LinearLayout
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="@dimen/margin_45dp"
         android:background="@color/white"
         android:gravity="center_vertical"
-        android:orientation="horizontal"
-        android:padding="@dimen/margin_16dp">
+        >
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="@dimen/margin_15dp"
             android:text="当前账户"
             android:textColor="@color/app_common_content" />
 
@@ -113,72 +126,81 @@
             android:id="@+id/tv_account"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="15158835049"
             android:textColor="@color/app_common_content"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="@dimen/margin_20dp"
+            android:layout_alignParentRight="true"
             android:textSize="@dimen/text_size_14sp" />
 
         <ImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="@dimen/margin_26dp"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="@dimen/margin_15dp"
+            android:layout_centerVertical="true"
             android:src="@mipmap/me_icon_more"
             android:visibility="gone" />
-    </LinearLayout>
+    </RelativeLayout>
 
     <View
         android:layout_width="match_parent"
         android:layout_height="@dimen/margin_0.5dp"
         android:background="@color/line" />
 
-    <LinearLayout
+    <RelativeLayout
         android:id="@+id/ll_author"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="@dimen/margin_45dp"
         android:background="@color/white"
         android:gravity="center_vertical"
-        android:orientation="horizontal"
-        android:padding="@dimen/margin_16dp"
-        android:visibility="visible">
+       >
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="个人信息"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="@dimen/margin_15dp"
+            android:text="实名认证"
             android:textColor="@color/app_common_content" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="待完善"
+            android:layout_centerVertical="true"
+            android:layout_toLeftOf="@+id/auot_back_iv"
             android:textColor="@color/color_6C97FC"
-            android:textSize="@dimen/text_size_12sp" />
+            android:layout_marginRight="@dimen/margin_5dp"
+            android:textSize="@dimen/text_size_14sp" />
 
         <ImageView
+            android:id="@+id/auot_back_iv"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="@dimen/margin_26dp"
+            android:layout_centerVertical="true"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="@dimen/margin_15dp"
             android:src="@mipmap/me_icon_more" />
-    </LinearLayout>
+    </RelativeLayout>
 
     <View
         android:layout_width="match_parent"
         android:layout_height="@dimen/margin_0.5dp"
         android:background="@color/line" />
 
-    <LinearLayout
+    <RelativeLayout
         android:id="@+id/ll_updatePsw"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="@dimen/margin_45dp"
         android:background="@color/white"
         android:gravity="center_vertical"
-        android:orientation="horizontal"
-        android:padding="@dimen/margin_16dp">
+        >
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
+            android:layout_marginLeft="@dimen/margin_15dp"
+            android:layout_centerVertical="true"
             android:text="修改密码"
             android:textColor="@color/app_common_content" />
 
@@ -186,9 +208,11 @@
         <ImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="@dimen/margin_26dp"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="@dimen/margin_15dp"
             android:src="@mipmap/me_icon_more" />
-    </LinearLayout>
+    </RelativeLayout>
 
     <Space
         android:layout_width="wrap_content"
