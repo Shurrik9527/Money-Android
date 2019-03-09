@@ -6,6 +6,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+
+import java.util.List;
+
 import www.moyacs.com.myapplication.R;
 
 /**
@@ -17,6 +20,11 @@ import www.moyacs.com.myapplication.R;
  */
 public class RechargeAdapter extends RecyclerView.Adapter<RechargeAdapter.ViewHolder>{
     private View oldSelectView;
+    private List<String> mLists;
+    private OnViewLister mOnViewLister;
+    public RechargeAdapter(List<String> mLists) {
+        this.mLists = mLists;
+    }
 
     @NonNull
     @Override
@@ -27,10 +35,11 @@ public class RechargeAdapter extends RecyclerView.Adapter<RechargeAdapter.ViewHo
     }
 
     @Override
-    public void onBindViewHolder(@NonNull ViewHolder viewHolder, int i) {
-        if (i == 0) {
+    public void onBindViewHolder(@NonNull ViewHolder viewHolder, int pos) {
+        if (pos == 0) {
             viewHolder.tvPrice.setSelected(true);
             oldSelectView = viewHolder.tvPrice;
+            mOnViewLister.onItemClickListener(0);
         }
         viewHolder.itemView.setOnClickListener(v -> {
             if (oldSelectView != null) {
@@ -38,12 +47,21 @@ public class RechargeAdapter extends RecyclerView.Adapter<RechargeAdapter.ViewHo
             }
             v.setSelected(true);
             oldSelectView = v;
+            mOnViewLister.onItemClickListener(pos);
         });
+
+        if(mLists!=null){
+           String price = mLists.get(pos);
+            viewHolder.tvPrice.setText("$"+price);
+        }
+
+
+
     }
 
     @Override
     public int getItemCount() {
-        return 5;
+        return mLists==null?0:mLists.size();
     }
 
     class ViewHolder extends RecyclerView.ViewHolder {
@@ -53,5 +71,12 @@ public class RechargeAdapter extends RecyclerView.Adapter<RechargeAdapter.ViewHo
             super(itemView);
             tvPrice = itemView.findViewById(R.id.tv_price);
         }
+    }
+
+    public interface   OnViewLister{
+        void onItemClickListener(int pos);
+    }
+    public void setItemClickListener(OnViewLister onViewLister) {
+        this.mOnViewLister = onViewLister;
     }
 }

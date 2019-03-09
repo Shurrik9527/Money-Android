@@ -6,6 +6,5 @@
     android:background="@drawable/select_recharge_bg"
     android:gravity="center"
     android:padding="@dimen/margin_16dp"
-    android:text="$100"
     android:textColor="@drawable/select_recharge_color" />
 

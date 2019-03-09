@@ -7,7 +7,7 @@ android {
     buildToolsVersion '28.0.3'
     defaultConfig {
         applicationId "com.moyacs.canary"
-        minSdkVersion 16
+        minSdkVersion 19
         targetSdkVersion 28
         versionCode 1
         versionName "1.0"
@@ -121,4 +121,6 @@ dependencies {
     implementation project(':IMKit')
     implementation project(':IMLib')
     implementation project(':MCenter')
+    //implementation(name: 'alipaySdk-15.6.0-20190226104053', ext: 'aar')
+    implementation files('libs/alipaySdk-20180601.jar')
 }

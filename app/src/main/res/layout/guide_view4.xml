@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:scaleType="fitXY"
+        android:layout_height="match_parent"
+        android:src="@mipmap/guide_four" />
+
+    <Button
+        android:id="@+id/btn_enter"
+        android:layout_width="150dp"
+        android:layout_height="40dp"
+        android:layout_marginBottom="100dp"
+        android:layout_centerHorizontal="true"
+        android:background="@drawable/shape_blue_solid_blue_bg"
+        android:textColor="@color/white"
+        android:textSize="16sp"
+        android:padding="5dp"
+        android:gravity="center"
+        android:text="开启掌上投之路"
+        android:layout_alignParentBottom="true"
+        />
+
+
+</RelativeLayout>

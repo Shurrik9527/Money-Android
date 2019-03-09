@@ -47,11 +47,12 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:ignore="GoogleAppIndexingWarning">
+        <activity android:name="com.moyacs.canary.main.MainActivity"/>
         <activity android:name="com.moyacs.canary.web.WebActivity"></activity>
         <!-- 盈利榜 -->
         <activity android:name="com.moyacs.canary.main.homepage.profitrank.ProfitRangActivity" />
         <activity android:name="com.moyacs.canary.moudle.recharge.RechargeActivity" />
-        <activity android:name="com.moyacs.canary.main.MainActivity">
+        <activity android:name="com.moyacs.canary.moudle.guide.WelcomeActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -71,7 +72,7 @@
         <activity android:name="com.moyacs.canary.im.KefuActivity" /> <!-- 提现详情 -->
         <activity android:name="com.moyacs.canary.main.deal.WithdrawalDealActivity" /> <!-- 提现 -->
         <activity android:name="com.moyacs.canary.pay.WithdrawActivity" />
-
+        <activity android:name="com.moyacs.canary.moudle.guide.GuideActivity"/>
         <meta-data
             android:name="com.netease.nim.appKey"
             android:value="a1defa17a0bdded81173f8aec15a89f0" /> <!-- 云信后台服务，请使用独立进程。 -->
@@ -125,6 +126,36 @@
         <activity android:name="com.moyacs.canary.main.homepage.profitrank.profitdetail.ProfitDetailActivity"/>
         <activity android:name="com.moyacs.canary.main.homepage.profitrank.profitorder.ProfitOrderActivity"/>
 
+        <activity android:name="com.moyacs.canary.moudle.recharge.H5PayTestActivity"
+            android:configChanges="orientation|keyboardHidden|navigation"
+            android:exported="false"
+            android:hardwareAccelerated="false"
+            android:screenOrientation="behind"
+            android:windowSoftInputMode="adjustResize|stateHidden"
+            />
+        <activity android:name="com.moyacs.canary.moudle.recharge.H5AliPayActivity"
+            android:configChanges="orientation|keyboardHidden|navigation"
+            android:exported="false"
+            android:screenOrientation="behind"
+            />
+
+
+        <activity
+            android:name="com.alipay.sdk.app.H5PayActivity"
+            android:configChanges="orientation|keyboardHidden|navigation|screenSize"
+            android:exported="false"
+            android:screenOrientation="behind"
+            android:windowSoftInputMode="adjustResize|stateHidden" >
+        </activity>
+        <activity
+            android:name="com.alipay.sdk.app.H5AuthActivity"
+            android:configChanges="orientation|keyboardHidden|navigation"
+            android:exported="false"
+            android:screenOrientation="behind"
+            android:windowSoftInputMode="adjustResize|stateHidden" >
+        </activity>
+        
+
         <!--融云 客服-->
         <activity android:name="com.moyacs.canary.im.CustomerServerActivtiy"
             android:screenOrientation="portrait"
@@ -143,5 +174,10 @@
 
 
     </application>
-
+    <supports-screens
+        android:anyDensity="true"
+        android:largeScreens="true"
+        android:normalScreens="true"
+        android:resizeable="true"
+        android:smallScreens="true" />
 </manifest>

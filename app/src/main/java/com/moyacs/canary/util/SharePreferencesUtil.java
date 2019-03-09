@@ -54,6 +54,17 @@ public class SharePreferencesUtil {
         return spf.getString("userHead", "");
     }
 
+
+    public void setIsFirst(boolean isfirst) {
+        spf.edit().putBoolean("isFirst", isfirst).apply();
+    }
+
+    public boolean getIsFirst() {
+        return spf.getBoolean("isFirst", false);
+    }
+
+
+
     public void clean() {
         spf.edit().clear().apply();
     }

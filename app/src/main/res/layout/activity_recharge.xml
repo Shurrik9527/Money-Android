@@ -86,6 +86,7 @@
                 android:orientation="horizontal"
                 android:paddingLeft="@dimen/margin_16dp"
                 android:paddingTop="@dimen/margin_10dp"
+                android:visibility="gone"
                 android:paddingRight="@dimen/margin_16dp"
                 android:paddingBottom="@dimen/margin_10dp">
 
@@ -159,6 +160,7 @@
                 android:background="@color/white"
                 android:orientation="horizontal"
                 android:paddingLeft="@dimen/margin_16dp"
+                android:visibility="gone"
                 android:paddingTop="@dimen/margin_10dp"
                 android:paddingRight="@dimen/margin_16dp"
                 android:paddingBottom="@dimen/margin_10dp">

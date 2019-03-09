@@ -4,6 +4,7 @@ import com.moyacs.canary.bean.BannerJsons;
 import com.moyacs.canary.bean.HoldOrderDateBean;
 import com.moyacs.canary.bean.HomeDealChanceVo;
 import com.moyacs.canary.bean.MarketDataBean;
+import com.moyacs.canary.bean.PayBean;
 import com.moyacs.canary.bean.PaymentDateBean;
 import com.moyacs.canary.bean.TradeVo;
 import com.moyacs.canary.bean.TransactionRecordVo;
@@ -318,6 +319,18 @@ public interface ServerApi {
     Observable<Response<Object>> getRefreshRongUserInform(@Query("userId") String userId,
                                                                            @Query("name") String name,
                                                                            @Query("portraitUri") String portraitUri);
+
+    /**
+     * 充值支付
+     * @param payWay
+     * @param returnUrl
+     * @param money
+     * @return
+     */
+    @POST("amountRecord/pay")
+    Observable<ServerResult<PayBean>> rechargePay(@Query("payWay") String payWay,
+                                                 @Query("returnUrl") String returnUrl,
+                                                 @Query("money") String money);
 
 
 

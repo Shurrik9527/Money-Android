@@ -112,4 +112,8 @@ public class AppConstans {
 
 
 
+    public static final String PAY_TYPE_WEIXING ="1";
+    public static final String PAY_TYPE_ZHIFUBAO ="2";
+    public static final String PAY_TYPE_KUAISHAN ="3";
+
 }
