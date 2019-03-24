@@ -1,16 +1,25 @@
 package com.moyacs.canary.moudle.recharge;
 
 import android.annotation.SuppressLint;
+import android.content.ComponentName;
+import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.content.pm.ResolveInfo;
+import android.graphics.Color;
 import android.graphics.Rect;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.Spannable;
+import android.text.SpannableString;
 import android.text.TextUtils;
+import android.text.style.ForegroundColorSpan;
 import android.util.Log;
 import android.view.View;
 import android.webkit.WebView;
@@ -21,14 +30,19 @@ import android.widget.TextView;
 import com.moyacs.canary.base.BaseActivity;
 import com.moyacs.canary.bean.PayBean;
 import com.moyacs.canary.common.AppConstans;
+import com.moyacs.canary.common.DialogUtils;
+import com.moyacs.canary.im.CustomerServerActivtiy;
+import com.moyacs.canary.util.AmountUtils;
 import com.moyacs.canary.util.PayResult;
 import com.moyacs.canary.util.ScreenUtil;
+import com.moyacs.canary.util.SharePreferencesUtil;
 import com.moyacs.canary.util.ToastUtils;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import butterknife.BindView;
 import butterknife.OnClick;
+import io.rong.imkit.RongIM;
 import www.moyacs.com.myapplication.R;
 
 public class RechargeActivity extends BaseActivity implements RechargeContract.View{
@@ -45,6 +59,8 @@ public class RechargeActivity extends BaseActivity implements RechargeContract.V
     @BindView(R.id.iv_03)
     ImageView iv03;
     private ImageView oldSelectImg;
+    @BindView(R.id.recharge_contract_tv)
+    TextView rechargeContractTv;
 
     private RechargeContract.Presenter mPresenter;
     private List<String> mLists;
@@ -53,53 +69,9 @@ public class RechargeActivity extends BaseActivity implements RechargeContract.V
     private static final int SDK_PAY_FLAG = 1;
     private static final int SDK_AUTH_FLAG = 2;
     private WebView mWebView;
-    @SuppressLint("HandlerLeak")
-    private Handler mHandler = new Handler() {
-        @SuppressWarnings("unused")
-        public void handleMessage(Message msg) {
-            switch (msg.what) {
-                case SDK_PAY_FLAG: {
-                    ToastUtils.showShort("支付返回结果成功");
-                    @SuppressWarnings("unchecked")
-                    PayResult payResult = new PayResult((Map<String, String>) msg.obj);
-                    /**
-                     * 对于支付结果，请商户依赖服务端的异步通知结果。同步通知结果，仅作为支付结束的通知。
-                     */
-                    String resultInfo = payResult.getResult();// 同步返回需要验证的信息
-                    String resultStatus = payResult.getResultStatus();
-                    Log.i(TAG,"resultStatus==="+resultStatus);
-                    // 判断resultStatus 为9000则代表支付成功
-//                    if (TextUtils.equals(resultStatus, "9000")) {
-//                        // 该笔订单是否真实支付成功，需要依赖服务端的异步通知。
-//                        showAlert(PayDemoActivity.this, getString(R.string.pay_success) + payResult);
-//                    } else {
-//                        // 该笔订单真实的支付结果，需要依赖服务端的异步通知。
-//                        showAlert(PayDemoActivity.this, getString(R.string.pay_failed) + payResult);
-//                    }
-                    break;
-                }
-                case SDK_AUTH_FLAG: {
-//                    @SuppressWarnings("unchecked")
-//                    AuthResult authResult = new AuthResult((Map<String, String>) msg.obj, true);
-//                    String resultStatus = authResult.getResultStatus();
-//
-//                    // 判断resultStatus 为“9000”且result_code
-//                    // 为“200”则代表授权成功，具体状态码代表含义可参考授权接口文档
-//                    if (TextUtils.equals(resultStatus, "9000") && TextUtils.equals(authResult.getResultCode(), "200")) {
-//                        // 获取alipay_open_id，调支付时作为参数extern_token 的value
-//                        // 传入，则支付账户为该授权账户
-//                        showAlert(PayDemoActivity.this, getString(R.string.auth_success) + authResult);
-//                    } else {
-//                        // 其他状态值则为授权失败
-//                        showAlert(PayDemoActivity.this, getString(R.string.auth_failed) + authResult);
-//                    }
-                    break;
-                }
-                default:
-                    break;
-            }
-        };
-    };
+    private boolean isSelect =false;
+     //http://api.k780.com/?app=finance.rate&scur=USD&tcur=CNY&appkey=10003&sign=b59bc3ef6191eb9f747dd4e83c99f2a4
+
     @Override
     protected int getLayoutId() {
         return R.layout.activity_recharge;
@@ -108,12 +80,22 @@ public class RechargeActivity extends BaseActivity implements RechargeContract.V
     @Override
     protected void initView() {
         onViewClicked(findViewById(R.id.ll_bank));
+
+
+        SpannableString spanString = new SpannableString("需要帮组?联系我们");
+        //再构造一个改变字体颜色的Span
+        ForegroundColorSpan span = new ForegroundColorSpan(Color.BLUE);
+        //将这个Span应用于指定范围的字体
+        spanString.setSpan(span, 5, 9, Spannable.SPAN_EXCLUSIVE_INCLUSIVE);
+        //设置给EditText显示出来
+        rechargeContractTv.setText(spanString);
+
+
         mLists = new ArrayList<>();
         rvContent.setLayoutManager(new GridLayoutManager(this, 3, LinearLayout.VERTICAL, false));
         rvContent.addItemDecoration(new MyItemDecoration());
         mAdapter =new RechargeAdapter(mLists);
         rvContent.setAdapter(mAdapter);
-
     }
 
     @Override
@@ -123,6 +105,9 @@ public class RechargeActivity extends BaseActivity implements RechargeContract.V
             public void onItemClickListener(int pos) {
                 if(mLists!=null){
                     mPrice =mLists.get(pos);
+                    if(mPresenter!=null){
+                        mPresenter.getRate(mPrice);
+                    }
                 }
             }
         });
@@ -133,10 +118,12 @@ public class RechargeActivity extends BaseActivity implements RechargeContract.V
         new RechargePresenter(this);
         if(mPresenter!=null){
             mPresenter.getRechargeAmount();
+            setSelectImage(iv02);
+            mPresenter.getRate("3");
         }
     }
 
-    @OnClick({R.id.iv_break, R.id.ll_bank, R.id.ll_ali, R.id.ll_wei_chat, R.id.b_recharge})
+    @OnClick({R.id.iv_break, R.id.ll_bank, R.id.ll_ali, R.id.ll_wei_chat, R.id.b_recharge,R.id.recharge_contract_tv})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.iv_break:
@@ -152,9 +139,19 @@ public class RechargeActivity extends BaseActivity implements RechargeContract.V
                 setSelectImage(iv03);
                 break;
             case R.id.b_recharge:
-
-                if(!TextUtils.isEmpty(mPrice)&&mPresenter!=null){
-                    mPresenter.rechargePay(AppConstans.PAY_TYPE_ZHIFUBAO,"https://www.baidu.com",mPrice);
+                if(isSelect){
+                    if(!TextUtils.isEmpty(mPrice)&&mPresenter!=null){
+                        mPresenter.rechargePay(AppConstans.PAY_TYPE_ZHIFUBAO,"https://www.baidu.com",mPrice);
+                    }
+                }else {
+                    showMessageTips("请选择支付方式");
+                }
+                break;
+            case R.id.recharge_contract_tv:
+                if (TextUtils.isEmpty(SharePreferencesUtil.getInstance().getUserPhone())) {
+                    DialogUtils.login_please("请先登录", RechargeActivity.this);
+                } else {
+                    RongIM.getInstance().startPrivateChat(RechargeActivity.this, AppConstans.CUSTOM_SERVER_ID, "客服");
                 }
                 break;
         }
@@ -163,8 +160,10 @@ public class RechargeActivity extends BaseActivity implements RechargeContract.V
     private void setSelectImage(ImageView selectImage) {
         if (oldSelectImg != null) {
             oldSelectImg.setImageResource(R.mipmap.ic_un_select);
+            isSelect =false;
         }
         selectImage.setImageResource(R.mipmap.ic_select);
+        isSelect =true;
         oldSelectImg = selectImage;
     }
 
@@ -177,55 +176,54 @@ public class RechargeActivity extends BaseActivity implements RechargeContract.V
     @Override
     public void showPayResult(PayBean bean) {
 
-
-//        Runnable payRunnable = new Runnable() {
-//
-//            @Override
-//            public void run() {
-//                PayTask alipay = new PayTask(RechargeActivity.this);
-//                Map<String,String> result = alipay.payV2(bean.getPay_url(),true);
-//
-//                Message msg = new Message();
-//                msg.what = SDK_PAY_FLAG;
-//                msg.obj = result;
-//                mHandler.sendMessage(msg);
-//            }
-//        };
-//        // 必须异步调用
-//        Thread payThread = new Thread(payRunnable);
-//        payThread.start();
-
-
-//        Intent intent=new Intent();
+//        Intent intent = new Intent();
 //        intent.setAction("android.intent.action.VIEW");
-//        Uri CONTENT_URI_BROWSERS = Uri.parse(bean.getPay_url());
-//        intent.setData(CONTENT_URI_BROWSERS);
-//        intent.setClassName("com.android.browser", "com.android.browser.BrowserActivity");
-//        startActivity(intent);
+//        intent.addCategory(Intent.CATEGORY_BROWSABLE);
+//        Uri contentUri = Uri.parse(bean.getPay_url());
+//        intent.setData(contentUri);
+//        if(hasbrowser(this,intent)) {
+//            intent.setComponent(new ComponentName("com.android.browser", "com.android.browser.BrowserActivity"));
+//            startActivity(intent);
+//        }else {
+//            startActivity(intent);
+//        }
 
-        Intent intent1= new Intent();
-//        intent1.setAction(Intent.ACTION_VIEW);
-//        Uri content_url = Uri.parse(bean.getPay_url());
-//        intent1.setData(content_url);
-//        startActivity(Intent.createChooser(intent1,"选择浏览器"));
-
-
-        intent1.setAction("android.intent.action.VIEW");
-        Uri url = Uri.parse(bean.getPay_url());
-        intent1.setData(url);
-        startActivity(intent1);
-
-
-//        WebView.setWebContentsDebuggingEnabled(true);
-//        mWebView = new WebView(getApplicationContext());
-//        mWebView.setWebContentsDebuggingEnabled(true);
-//        mWebView.resumeTimers();
-//        Intent mIntent = new Intent(RechargeActivity.this, H5AliPayActivity.class);
-//        Bundle extras = new Bundle();
-//        extras.putString("url", bean.getPay_url());
-//        mIntent.putExtras(extras);
-//        startActivity(mIntent);
+        WebView.setWebContentsDebuggingEnabled(true);
+        mWebView = new WebView(getApplicationContext());
+        mWebView.setWebContentsDebuggingEnabled(true);
+        mWebView.resumeTimers();
+        Intent mIntent = new Intent(RechargeActivity.this, H5AliPayActivity.class);
+        Bundle extras = new Bundle();
+        extras.putString("url", bean.getPay_url());
+        mIntent.putExtras(extras);
+        startActivity(mIntent);
     }
+
+    @Override
+    public void showTotalRMBAcount(String price, String rate) {
+        if(TextUtils.isEmpty(price)||TextUtils.isEmpty(rate)){
+            return;
+        }
+
+        double mRate = Double.parseDouble(rate);
+        int mPrice =Integer.parseInt(price);
+        double allTotal =mPrice*mRate;
+        tvRmb.setText("充值"+price+"美元，大约需要人民币￥"+AmountUtils.round(String.valueOf(allTotal),2));
+    }
+
+
+    public boolean hasbrowser(Context context, Intent intent) {
+        PackageManager pm = context.getPackageManager();
+        List<ResolveInfo> list=pm.queryIntentActivities(intent, PackageManager.MATCH_DEFAULT_ONLY);
+
+        for (ResolveInfo resolve:list) {
+            if (resolve.activityInfo.packageName.contains("com.android.browser")){
+                return true;
+            }
+        }
+        return false;
+    }
+
 
     @Override
     public void setPresenter(RechargeContract.Presenter presenter) {
@@ -234,7 +232,7 @@ public class RechargeActivity extends BaseActivity implements RechargeContract.V
 
     @Override
     public void showMessageTips(String msg) {
-
+        ToastUtils.showShort(msg+"");
     }
 
     private class MyItemDecoration extends RecyclerView.ItemDecoration {

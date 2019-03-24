@@ -38,6 +38,7 @@
     <uses-permission android:name="com.android.launcher.permission.INSTALL_SHORTCUT" />
     <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
 
+
     <application
         android:name="com.moyacs.canary.MyApplication"
         android:allowBackup="true"
@@ -46,9 +47,25 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
-        tools:ignore="GoogleAppIndexingWarning">
+        tools:ignore="GoogleAppIndexingWarning"
+        tools:replace="android:icon">
         <activity android:name="com.moyacs.canary.main.MainActivity"/>
-        <activity android:name="com.moyacs.canary.web.WebActivity"></activity>
+        <activity android:name="com.moyacs.canary.web.WebActivity"
+            android:hardwareAccelerated="true"
+            ></activity>
+        <activity android:name="com.moyacs.canary.web.VideoWebViewActivity"
+            android:configChanges="orientation|keyboardHidden|navigation|screenSize"
+            android:hardwareAccelerated="true"
+            android:screenOrientation="portrait"
+            />
+        <activity android:name="com.moyacs.canary.web.BrowserActivity"
+            android:windowSoftInputMode="stateHidden|adjustResize"
+            android:configChanges="orientation|screenSize|keyboardHidden"
+            android:hardwareAccelerated="true"
+            android:screenOrientation="portrait"
+            ></activity>
+
+
         <!-- 盈利榜 -->
         <activity android:name="com.moyacs.canary.main.homepage.profitrank.ProfitRangActivity" />
         <activity android:name="com.moyacs.canary.moudle.recharge.RechargeActivity" />
@@ -73,6 +90,7 @@
         <activity android:name="com.moyacs.canary.main.deal.WithdrawalDealActivity" /> <!-- 提现 -->
         <activity android:name="com.moyacs.canary.pay.WithdrawActivity" />
         <activity android:name="com.moyacs.canary.moudle.guide.GuideActivity"/>
+
         <meta-data
             android:name="com.netease.nim.appKey"
             android:value="a1defa17a0bdded81173f8aec15a89f0" /> <!-- 云信后台服务，请使用独立进程。 -->
@@ -105,7 +123,6 @@
             <!--android:exported="false"-->
             <!--android:process=":core" />-->
 
-
         <provider
             android:name="android.support.v4.content.FileProvider"
             android:authorities="com.moyacs.canary.FileProvider"
@@ -120,57 +137,70 @@
         <activity android:name="com.moyacs.canary.main.me.UserInformationActivity" />
         <activity android:name="com.moyacs.canary.main.market.optional.OptionalActivity" />
         <activity android:name="com.moyacs.canary.login.ForgetPasswordActivity" />
-        <activity android:name="com.moyacs.canary.main.me.account.AccountActivity" />
+        <activity android:name="com.moyacs.canary.main.me.account.AccountActivity"
+            android:launchMode="singleTask"
+            />
         <activity android:name="com.moyacs.canary.main.me.SetNickNameActivity" />
         <activity android:name="com.moyacs.canary.main.homepage.expertanalysis.ExpertAnalysisActicity"/>
         <activity android:name="com.moyacs.canary.main.homepage.profitrank.profitdetail.ProfitDetailActivity"/>
         <activity android:name="com.moyacs.canary.main.homepage.profitrank.profitorder.ProfitOrderActivity"/>
 
-        <activity android:name="com.moyacs.canary.moudle.recharge.H5PayTestActivity"
-            android:configChanges="orientation|keyboardHidden|navigation"
-            android:exported="false"
-            android:hardwareAccelerated="false"
-            android:screenOrientation="behind"
-            android:windowSoftInputMode="adjustResize|stateHidden"
-            />
         <activity android:name="com.moyacs.canary.moudle.recharge.H5AliPayActivity"
             android:configChanges="orientation|keyboardHidden|navigation"
             android:exported="false"
             android:screenOrientation="behind"
             />
 
+        <activity android:name="com.moyacs.canary.moudle.me.RealNameAuthActiviy"/>
+        <activity android:name="com.moyacs.canary.moudle.me.uploadidcard.UpLoadIdCardActivity"/>
 
-        <activity
-            android:name="com.alipay.sdk.app.H5PayActivity"
-            android:configChanges="orientation|keyboardHidden|navigation|screenSize"
-            android:exported="false"
-            android:screenOrientation="behind"
-            android:windowSoftInputMode="adjustResize|stateHidden" >
-        </activity>
-        <activity
-            android:name="com.alipay.sdk.app.H5AuthActivity"
-            android:configChanges="orientation|keyboardHidden|navigation"
-            android:exported="false"
-            android:screenOrientation="behind"
-            android:windowSoftInputMode="adjustResize|stateHidden" >
-        </activity>
-        
+        <!--<activity-->
+            <!--android:name="com.alipay.sdk.app.H5PayActivity"-->
+            <!--android:configChanges="orientation|keyboardHidden|navigation|screenSize"-->
+            <!--android:exported="false"-->
+            <!--android:screenOrientation="behind"-->
+            <!--android:windowSoftInputMode="adjustResize|stateHidden" >-->
+        <!--</activity>-->
+        <!--<activity-->
+            <!--android:name="com.alipay.sdk.app.H5AuthActivity"-->
+            <!--android:configChanges="orientation|keyboardHidden|navigation"-->
+            <!--android:exported="false"-->
+            <!--android:screenOrientation="behind"-->
+            <!--android:windowSoftInputMode="adjustResize|stateHidden" >-->
+        <!--</activity>-->
 
-        <!--融云 客服-->
-        <activity android:name="com.moyacs.canary.im.CustomerServerActivtiy"
+
+        <!--融云-->
+
+        <!-- chat page -->
+        <activity
+            android:name="com.moyacs.canary.im.ConversationActivity"
+            android:launchMode="singleTop"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="stateHidden|adjustResize"
-            >
+            android:windowSoftInputMode="stateHidden|adjustResize">
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
+
                 <category android:name="android.intent.category.DEFAULT" />
+
                 <data
-                    android:host="io.rong.fast"
-                    android:pathPrefix="/subconversationlist"
+                    android:host="com.moyacs.canary"
+                    android:pathPrefix="/conversation/"
                     android:scheme="rong" />
             </intent-filter>
         </activity>
 
+
+        <receiver
+            android:name="com.moyacs.canary.im.ChatNotificationReceiver"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="io.rong.push.intent.MESSAGE_ARRIVED" />
+                <action android:name="io.rong.push.intent.MI_MESSAGE_ARRIVED" />
+                <action android:name="io.rong.push.intent.MESSAGE_CLICKED" />
+                <action android:name="io.rong.push.intent.MI_MESSAGE_CLICKED" />
+            </intent-filter>
+        </receiver>
 
 
     </application>

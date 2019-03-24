@@ -6,6 +6,7 @@ public class EvenVo<T> {
     public static final int SOCKET_QUOTATION=0X13; //socket数据刷新
     public static final int WATCH_CHI_CHAN = 0X14; //查看持仓
     public static final int CHANGE_ORDER_SUCCESS=0X15; //交易成功
+    public static final int EVENT_CODE_REAL_NAME_AUTH = 0X16; //更新我的昵称
     private int code;
     private  T t;
     public EvenVo(int code) {

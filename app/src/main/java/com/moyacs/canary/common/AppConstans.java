@@ -100,6 +100,12 @@ public class AppConstans {
     //关于我们
     public static final String ABOUT_US = "http://www.zhangstz.com/aboutus/aboutus-zh-CN.html";
 
+    //用户协议
+    public static final String USER_AGREEMENT = "https://fxbtg-static.18panda.com/product/agreement_user.html";
+
+    //完善用户信息
+    public static final String PERFECT_USERDETAIL = "http://uc.moyacs.com/real_app_v2.html";
+
     public static RequestBody toRequestBody(String value) {
         return RequestBody.create(MediaType.parse("text/plain"), value);
     }
@@ -115,5 +121,15 @@ public class AppConstans {
     public static final String PAY_TYPE_WEIXING ="1";
     public static final String PAY_TYPE_ZHIFUBAO ="2";
     public static final String PAY_TYPE_KUAISHAN ="3";
+
+    /**
+     * 默认的did
+     */
+    public static final String DEFAULT_DID = "-1";
+    /**
+     * partyId
+     */
+    public static final String PARTY_ID = "partyId";
+    public static final String CUSTOM_SERVER_ID="5567";
 
 }

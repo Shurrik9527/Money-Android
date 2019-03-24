@@ -13,6 +13,8 @@ public class HttpConstants {
     public static final String SERVER_HOST = "http://47.97.186.123/royal/";
     //融云
     public static final String SERVER_RONE_IM_HOST = "http://api-cn.ronghub.com/user/";
+    //汇率
+    public static final String SERVER_RATE_HOST = "http://api.k780.com";
 
 //    public static final String SERVER_HOST = "http://www.wjhsh.cn/royal/";
 

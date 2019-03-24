@@ -1,0 +1,156 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/gray0"
+    >
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:id="@+id/real_name_auth_top_rl"
+        android:background="@color/theme">
+
+        <ImageView
+            android:id="@+id/iv_break"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="@dimen/margin_16dp"
+            android:src="@drawable/ic_break" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:text="@string/real_name_auth_top_title"
+            android:textColor="@color/white"
+            android:textSize="@dimen/text_size_18sp" />
+    </RelativeLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/white"
+                android:orientation="vertical"
+                android:layout_below="@+id/real_name_auth_top_rl"
+                >
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingTop="@dimen/margin_10dp"
+                    android:paddingLeft="@dimen/margin_20dp"
+                    android:paddingRight="@dimen/margin_20dp"
+                    android:paddingBottom="@dimen/margin_20dp"
+                    android:background="@color/gray"
+                    android:textColor="@color/black_50"
+                    android:textSize="@dimen/text_size_16sp"
+                    android:text="@string/real_name_auth_uploadidcard"
+                    android:lineSpacingExtra="@dimen/margin_2dp"
+                    />
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textSize="@dimen/text_size_16sp"
+                    android:textColor="@color/black_50"
+                    android:paddingTop="@dimen/margin_20dp"
+                    android:paddingLeft="@dimen/margin_20dp"
+                    android:paddingBottom="@dimen/margin_10dp"
+                    android:text="身份证证明"
+                    />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textSize="@dimen/text_size_16sp"
+                    android:textColor="@color/black_50"
+                    android:paddingTop="@dimen/margin_5dp"
+                    android:paddingLeft="@dimen/margin_20dp"
+                    android:paddingBottom="@dimen/margin_10dp"
+                    android:text="阅读证明文件要求，查看详情"
+                    />
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="180dp">
+
+                    <ImageView
+                        android:id="@+id/idcard_positive_iv"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_marginRight="@dimen/margin_30dp"
+                        android:layout_marginLeft="@dimen/margin_30dp"
+                        android:src="@mipmap/img_idcard_01"
+                        android:layout_centerInParent="true"
+                        android:scaleType="fitXY"
+                        />
+                    <ImageView
+                        android:id="@+id/idcard_add_positive_iv"
+                        android:layout_width="@dimen/margin_50dp"
+                        android:layout_height="@dimen/margin_50dp"
+                        android:layout_marginRight="@dimen/margin_30dp"
+                        android:layout_marginLeft="@dimen/margin_30dp"
+                        android:src="@mipmap/btn_add_pressed"
+                        android:layout_centerInParent="true"
+                        />
+
+
+                </RelativeLayout>
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="180dp"
+                    android:layout_marginBottom="@dimen/margin_20dp"
+                    android:layout_marginTop="@dimen/margin_20dp"
+                    >
+
+                    <ImageView
+                        android:id="@+id/idcard_reverse"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_marginRight="@dimen/margin_30dp"
+                        android:layout_marginLeft="@dimen/margin_30dp"
+                        android:src="@mipmap/img_idcard_02"
+                        android:layout_centerInParent="true"
+                        android:scaleType="fitXY"
+                        />
+                    <ImageView
+                        android:id="@+id/idcard_add_reverse_iv"
+                        android:layout_width="@dimen/margin_50dp"
+                        android:layout_height="@dimen/margin_50dp"
+                        android:layout_marginRight="@dimen/margin_30dp"
+                        android:layout_marginLeft="@dimen/margin_30dp"
+                        android:src="@mipmap/btn_add_pressed"
+                        android:layout_centerInParent="true"
+                        />
+
+                </RelativeLayout>
+            </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="55dp"
+        android:layout_alignParentBottom="true"
+        android:orientation="horizontal"
+        >
+        <Button
+            android:id="@+id/real_name_auth_before_btn"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="55dp"
+            android:gravity="center"
+            android:text="上一步"
+            android:textColor="@color/blue"
+            android:background="@color/white"
+            android:textSize="@dimen/margin_16dp"
+            />
+        <Button
+            android:id="@+id/real_name_auth_after_btn"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="55dp"
+            android:gravity="center"
+            android:text="下一步"
+            android:textColor="@color/blue"
+            android:background="@color/white"
+            android:textSize="@dimen/margin_16dp"
+            />
+
+    </LinearLayout>
+
+</RelativeLayout>

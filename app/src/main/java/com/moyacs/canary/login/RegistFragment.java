@@ -1,5 +1,6 @@
 package com.moyacs.canary.login;
 
+import android.content.Intent;
 import android.os.CountDownTimer;
 import android.text.TextUtils;
 import android.text.method.HideReturnsTransformationMethod;
@@ -12,7 +13,12 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import com.moyacs.canary.base.BaseFragment;
+import com.moyacs.canary.common.AppConstans;
+import com.moyacs.canary.main.MainActivity;
+import com.moyacs.canary.util.SharePreferencesUtil;
 import com.moyacs.canary.util.ToastUtils;
+import com.moyacs.canary.web.WebActivity;
+
 import butterknife.BindView;
 import butterknife.OnClick;
 import www.moyacs.com.myapplication.R;
@@ -121,7 +127,7 @@ public class RegistFragment extends BaseFragment implements LoginRegistContract.
 
                 String passWord = edUpwd.getText().toString().trim();
                 if (TextUtils.isEmpty(fullName)) {
-                    showMag("真实名字不能为空");
+                    showMag("昵称不能为空");
                     return;
                 }
                 if (TextUtils.isEmpty(code)) {
@@ -142,16 +148,29 @@ public class RegistFragment extends BaseFragment implements LoginRegistContract.
                 }
                 break;
             case R.id.tv_rule:
+                Intent intent = new Intent(mActivity, WebActivity.class);
+                intent.putExtra("title", "用户协议");
+                intent.putExtra("loadUrl", AppConstans.USER_AGREEMENT);
+                startActivity(intent);
                 break;
         }
     }
 
 
+    @Override
+    public void showLoginSuccess() {
+
+    }
 
     @Override
-    public void showSuccess() {
+    public void showRegistSuccess() {
         dismissLoadingDialog();
         ToastUtils.showShort("注册成功");
+        if(!TextUtils.isEmpty(phone)){
+            SharePreferencesUtil.getInstance().setUserPhone(phone);
+        }
+        startActivity(new Intent(getContext(), MainActivity.class));
+        mActivity.finish();
     }
 
     @Override

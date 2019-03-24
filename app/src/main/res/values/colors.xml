@@ -4,6 +4,7 @@
     <color name="colorPrimaryDark">#24273e</color>
     <color name="colorAccent">#3F51B5</color>
     <color name="bottombar_bg">#3F000000</color>
+    <color name="textColorPrimary">#2f96ff</color>
     <!--蜡烛图颜色配置-->
     <!--阳线-->
     <color name="k_post">#F15758</color>

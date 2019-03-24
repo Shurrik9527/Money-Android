@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 
+import com.moyacs.canary.util.AppUtils;
 import com.moyacs.canary.util.IPermissionsResultListener;
 import com.moyacs.canary.util.ToastUtils;
 import com.moyacs.canary.widget.LoadingDialog;
@@ -28,6 +29,7 @@ public abstract class BaseActivity extends AppCompatActivity implements BaseView
         super.onCreate(savedInstanceState);
         setContentView(getLayoutId());
         bind = ButterKnife.bind(this);
+        AppUtils.getActivityManager().add(this);
         initView();
         intListener();
         initData();
@@ -52,6 +54,7 @@ public abstract class BaseActivity extends AppCompatActivity implements BaseView
             loadingDialog.cancel();
             loadingDialog = null;
         }
+        AppUtils.getActivityManager().removeActivity(this);
         super.onDestroy();
     }
 

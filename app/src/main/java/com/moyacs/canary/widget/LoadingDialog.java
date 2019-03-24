@@ -43,7 +43,7 @@ public class LoadingDialog extends Dialog {
         lp.width = ScreenUtil.dip2px(getContext(),140);
         lp.height = ScreenUtil.dip2px(getContext(),140);
         dialogWindow.setAttributes(lp);
-        setCancelable(false);
+        setCancelable(true);
         loadView.show();
     }
 }

@@ -28,7 +28,7 @@ public class ToastUtils {
         }
         toast.setView(view);
         tvData.setText(msg);
-        toast.setGravity(Gravity.CENTER, 0, -500);
+        toast.setGravity(Gravity.CENTER, 0, 0);
         toast.show();
     }
 }

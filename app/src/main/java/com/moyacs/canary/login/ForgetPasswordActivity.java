@@ -142,7 +142,7 @@ public class ForgetPasswordActivity extends BaseActivity {
             ToastUtils.showShort("输入的手机号码不符合规范");
             return;
         }
-        addSubscribe(ServerManger.getInstance().getServer().getCode(phone)
+        addSubscribe(ServerManger.getInstance().getServer().getCode(phone,"2")
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeWith(new BaseObservable<ServerResult<String>>() {
@@ -199,6 +199,7 @@ public class ForgetPasswordActivity extends BaseActivity {
                     @Override
                     protected void requestSuccess(ServerResult<String> data) {
                         ToastUtils.showShort("密码重置成功");
+                        finish();
                     }
                 }));
     }

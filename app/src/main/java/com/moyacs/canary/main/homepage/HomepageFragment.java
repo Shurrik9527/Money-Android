@@ -1,6 +1,7 @@
 package com.moyacs.canary.main.homepage;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
@@ -22,13 +23,16 @@ import com.moyacs.canary.bean.HomeDealChanceBean;
 import com.moyacs.canary.bean.TradeVo;
 import com.moyacs.canary.bean.event.EvenVo;
 import com.moyacs.canary.common.AppConstans;
+import com.moyacs.canary.common.DialogUtils;
 import com.moyacs.canary.im.CustomerServerActivtiy;
 import com.moyacs.canary.main.homepage.expertanalysis.ExpertAnalysisActicity;
 import com.moyacs.canary.main.homepage.profitrank.ProfitRangActivity;
 import com.moyacs.canary.product_fxbtg.ProductActivity;
 import com.moyacs.canary.service.SocketQuotation;
 import com.moyacs.canary.util.BannerImageLoaderUtil;
+import com.moyacs.canary.util.SharePreferencesUtil;
 import com.moyacs.canary.util.StringUtil;
+import com.moyacs.canary.util.ToastUtils;
 import com.moyacs.canary.util.ViewListenerAbs;
 import com.moyacs.canary.web.WebActivity;
 import com.yan.pullrefreshlayout.PullRefreshLayout;
@@ -39,6 +43,7 @@ import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 import butterknife.BindView;
+import io.rong.imkit.RongIM;
 import www.moyacs.com.myapplication.R;
 
 /**
@@ -196,16 +201,22 @@ public class HomepageFragment extends BaseFragment implements HomeContract.HomeV
                 //新手学堂布局
                 View view = holder.getView(R.id.rl_home_newuser_classroom);
                 view.setOnClickListener(v -> {
-                    Intent intent = new Intent(mActivity, WebActivity.class);
-                    intent.putExtra("title", "一分钟了解汇大师");
-                    intent.putExtra("loadUrl", AppConstans.KNOW_APP);
-                    startActivity(intent);
+//                    Intent intent = new Intent(mActivity, WebActivity.class);
+//                    intent.putExtra("title", "新手学堂");
+//                    intent.putExtra("loadUrl", AppConstans.KNOW_APP);
+//                    startActivity(intent);
+                    Intent mintent =new Intent(Intent.ACTION_VIEW, Uri.parse(AppConstans.KNOW_APP));
+                    startActivity(mintent);
                 });
-                //盈利榜
+                //客服
                 View view1 = holder.getView(R.id.rl_home_newuser_gold);
                 view1.setOnClickListener(v -> {
                     if(!StringUtil.isFastDoubleClick()){
-                        startActivity(new Intent(getContext(), CustomerServerActivtiy.class));
+                        if (TextUtils.isEmpty(SharePreferencesUtil.getInstance().getUserPhone())) {
+                            DialogUtils.login_please("请先登录", getContext());
+                        } else {
+                            RongIM.getInstance().startPrivateChat(getActivity(), AppConstans.CUSTOM_SERVER_ID, "客服");
+                        }
                     }
                 });
             }

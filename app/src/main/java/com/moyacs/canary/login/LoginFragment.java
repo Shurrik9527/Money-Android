@@ -115,10 +115,17 @@ public class LoginFragment extends BaseFragment implements LoginRegistContract.L
 
 
     @Override
-    public void showSuccess() {
+    public void showLoginSuccess() {
+        ToastUtils.showShort("登录成功!");
         SharePreferencesUtil.getInstance().setUserPhone(userName);
         startActivity(new Intent(getContext(), MainActivity.class));
+
         mActivity.finish();
+    }
+
+    @Override
+    public void showRegistSuccess() {
+
     }
 
     @Override

@@ -19,10 +19,12 @@ public interface RechargeContract {
     interface View extends BaseViews<Presenter> {
         void showRechargeAmount(List<String> mlists);
         void showPayResult(PayBean bean);
+        void showTotalRMBAcount(String price,String rate);
     }
 
     interface Presenter extends BasePresenter {
         void rechargePay(String type,String url,String amount);
         void getRechargeAmount();
+        void getRate(String price);
     }
 }

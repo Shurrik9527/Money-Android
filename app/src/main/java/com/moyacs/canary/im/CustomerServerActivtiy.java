@@ -30,15 +30,15 @@ public class CustomerServerActivtiy extends FragmentActivity {
         transaction.add(R.id.rong_content, fragment);
         transaction.commit();
 
-        //启动客服服务
-        //首先需要构造使用客服者的用户信息
-        try {
-            CSCustomServiceInfo.Builder csBuilder = new CSCustomServiceInfo.Builder();
-            CSCustomServiceInfo csInfo = csBuilder.nickName("融云").build();
-            RongIM.getInstance().startCustomerServiceChat(this,RONG_CUSTOMER_SERVER_ID, "在线客服",csInfo);
-        }catch (Exception e){
-
-        }
+//        //启动客服服务
+//        //首先需要构造使用客服者的用户信息
+//        try {
+//            CSCustomServiceInfo.Builder csBuilder = new CSCustomServiceInfo.Builder();
+//            CSCustomServiceInfo csInfo = csBuilder.nickName("融云").build();
+//            RongIM.getInstance().startCustomerServiceChat(this,RONG_CUSTOMER_SERVER_ID, "在线客服",csInfo);
+//        }catch (Exception e){
+//
+//        }
     }
 
 

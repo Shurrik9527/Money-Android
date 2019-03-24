@@ -36,6 +36,7 @@
                     android:paddingRight="15dip">
 
                     <com.moyacs.canary.widget.CircleImageView
+                        android:id="@+id/me_iamge_iv"
                         android:layout_width="54dip"
                         android:layout_height="54dip"
                         android:layout_centerInParent="true"
@@ -316,78 +317,169 @@
                  </LinearLayout>
              </LinearLayout>-->
 
-            <android.support.constraint.ConstraintLayout
+            <!--<android.support.constraint.ConstraintLayout-->
+                <!--android:layout_width="match_parent"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:background="@color/white"-->
+                <!--android:orientation="horizontal"-->
+                <!--android:padding="@dimen/margin_16dp">-->
+
+                <!--<TextView-->
+                    <!--android:id="@+id/tv_01"-->
+                    <!--android:layout_width="wrap_content"-->
+                    <!--android:layout_height="wrap_content"-->
+                    <!--android:text="资产净值（美元）"-->
+                    <!--android:textColor="#333"-->
+                    <!--android_custom:layout_constraintLeft_toLeftOf="parent"-->
+                    <!--android_custom:layout_constraintTop_toTopOf="parent" />-->
+
+                <!--<TextView-->
+                    <!--android:id="@+id/tv_asset"-->
+                    <!--android:layout_width="wrap_content"-->
+                    <!--android:layout_height="wrap_content"-->
+                    <!--android:layout_marginTop="@dimen/margin_4dp"-->
+                    <!--android:text="0.000"-->
+                    <!--android:textColor="#000000"-->
+                    <!--android:textSize="30sp"-->
+                    <!--android_custom:layout_constraintLeft_toLeftOf="@id/tv_01"-->
+                    <!--android_custom:layout_constraintTop_toBottomOf="@id/tv_01" />-->
+
+                <!--<TextView-->
+                    <!--android:id="@+id/tv_02"-->
+                    <!--android:layout_width="wrap_content"-->
+                    <!--android:layout_height="wrap_content"-->
+                    <!--android:text="浮动盈亏："-->
+                    <!--android_custom:layout_constraintRight_toLeftOf="@id/tv_profit"-->
+                    <!--android_custom:layout_constraintTop_toTopOf="@id/tv_01" />-->
+
+                <!--<TextView-->
+                    <!--android:id="@+id/tv_profit"-->
+                    <!--android:layout_width="wrap_content"-->
+                    <!--android:layout_height="wrap_content"-->
+                    <!--android:gravity="right"-->
+                    <!--android:minWidth="@dimen/margin_30dp"-->
+                    <!--android:text="0>"-->
+                    <!--android:textColor="#000000"-->
+                    <!--android:textSize="@dimen/sp_16"-->
+                    <!--android_custom:layout_constraintRight_toRightOf="parent"-->
+                    <!--android_custom:layout_constraintTop_toTopOf="@id/tv_02" />-->
+
+
+                <!--<TextView-->
+                    <!--android:id="@+id/tv_03"-->
+                    <!--android:layout_width="wrap_content"-->
+                    <!--android:layout_height="wrap_content"-->
+                    <!--android:layout_marginTop="@dimen/margin_10dp"-->
+                    <!--android:text="可用余额："-->
+                    <!--android_custom:layout_constraintRight_toLeftOf="@id/tv_balance"-->
+                    <!--android_custom:layout_constraintTop_toBottomOf="@id/tv_02" />-->
+
+                <!--<TextView-->
+                    <!--android:id="@+id/tv_balance"-->
+                    <!--android:layout_width="wrap_content"-->
+                    <!--android:layout_height="wrap_content"-->
+                    <!--android:gravity="right"-->
+                    <!--android:minWidth="@dimen/margin_30dp"-->
+                    <!--android:text="0>"-->
+                    <!--android:textColor="#000000"-->
+                    <!--android:textSize="@dimen/sp_16"-->
+                    <!--android_custom:layout_constraintRight_toRightOf="parent"-->
+                    <!--android_custom:layout_constraintTop_toTopOf="@id/tv_03" />-->
+
+
+            <!--</android.support.constraint.ConstraintLayout>-->
+
+            <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@color/white"
+                android:layout_height="@dimen/margin_100dp"
                 android:orientation="horizontal"
-                android:padding="@dimen/margin_16dp">
+                android:background="@color/white"
+                >
+                <RelativeLayout
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical"
+                    >
+                    <ImageView
+                        android:id="@+id/me_open_cer_iv"
+                        android:layout_width="@dimen/margin_45dp"
+                        android:layout_height="@dimen/margin_45dp"
+                        android:src="@mipmap/me_open_account"
+                        android:layout_centerInParent="true"
+                        />
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="@string/me_open_certification_title"
+                        android:textSize="@dimen/text_size_14sp"
+                        android:gravity="center_horizontal"
+                        android:layout_marginTop="@dimen/margin_5dp"
+                        android:textColor="@color/black_70"
+                        android:layout_below="@+id/me_open_cer_iv"
+                        android:layout_centerHorizontal="true"
+                        />
+                    <ImageView
 
-                <TextView
-                    android:id="@+id/tv_01"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="资产净值（美元）"
-                    android:textColor="#333"
-                    android_custom:layout_constraintLeft_toLeftOf="parent"
-                    android_custom:layout_constraintTop_toTopOf="parent" />
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@mipmap/icon_me_hot"
+                        android:layout_alignParentRight="true"
+                        />
+                </RelativeLayout>
+                <RelativeLayout
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical"
+                    >
+                    <ImageView
+                        android:id="@+id/me_live_custom_service_iv"
+                        android:layout_width="@dimen/margin_45dp"
+                        android:layout_height="@dimen/margin_45dp"
+                        android:src="@mipmap/img_customer_service"
+                        android:layout_centerInParent="true"
+                        />
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="@string/me_live_custom_service_title"
+                        android:textSize="@dimen/text_size_14sp"
+                        android:gravity="center_horizontal"
+                        android:layout_marginTop="@dimen/margin_5dp"
+                        android:textColor="@color/black_70"
+                        android:layout_below="@+id/me_live_custom_service_iv"
+                        />
+                </RelativeLayout>
 
-                <TextView
-                    android:id="@+id/tv_asset"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/margin_4dp"
-                    android:text="0.000"
-                    android:textColor="#000000"
-                    android:textSize="30sp"
-                    android_custom:layout_constraintLeft_toLeftOf="@id/tv_01"
-                    android_custom:layout_constraintTop_toBottomOf="@id/tv_01" />
-
-                <TextView
-                    android:id="@+id/tv_02"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="浮动盈亏："
-                    android_custom:layout_constraintRight_toLeftOf="@id/tv_profit"
-                    android_custom:layout_constraintTop_toTopOf="@id/tv_01" />
-
-                <TextView
-                    android:id="@+id/tv_profit"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:gravity="right"
-                    android:minWidth="@dimen/margin_30dp"
-                    android:text="0>"
-                    android:textColor="#000000"
-                    android:textSize="@dimen/sp_16"
-                    android_custom:layout_constraintRight_toRightOf="parent"
-                    android_custom:layout_constraintTop_toTopOf="@id/tv_02" />
-
-
-                <TextView
-                    android:id="@+id/tv_03"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/margin_10dp"
-                    android:text="可用余额："
-                    android_custom:layout_constraintRight_toLeftOf="@id/tv_balance"
-                    android_custom:layout_constraintTop_toBottomOf="@id/tv_02" />
-
-                <TextView
-                    android:id="@+id/tv_balance"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:gravity="right"
-                    android:minWidth="@dimen/margin_30dp"
-                    android:text="0>"
-                    android:textColor="#000000"
-                    android:textSize="@dimen/sp_16"
-                    android_custom:layout_constraintRight_toRightOf="parent"
-                    android_custom:layout_constraintTop_toTopOf="@id/tv_03" />
+                <RelativeLayout
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical"
+                    >
+                    <ImageView
+                        android:id="@+id/me_account_manager_iv"
+                        android:layout_width="@dimen/margin_45dp"
+                        android:layout_height="@dimen/margin_45dp"
+                        android:src="@mipmap/img_account_manager"
+                        android:layout_centerInParent="true"
+                        />
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="@string/me_account_manager_title"
+                        android:textSize="@dimen/text_size_14sp"
+                        android:gravity="center_horizontal"
+                        android:layout_marginTop="@dimen/margin_5dp"
+                        android:textColor="@color/black_70"
+                        android:layout_below="@+id/me_account_manager_iv"
+                        android:layout_centerHorizontal="true"
+                        />
+                </RelativeLayout>
 
 
-            </android.support.constraint.ConstraintLayout>
-
+            </LinearLayout>
 
             <!--方格下方的条状布局-->
             <View

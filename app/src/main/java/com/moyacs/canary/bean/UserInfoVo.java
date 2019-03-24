@@ -1,5 +1,7 @@
 package com.moyacs.canary.bean;
 
+import java.io.Serializable;
+
 /**
  * @author heguogui
  * @version v 1.0.0
@@ -7,7 +9,7 @@ package com.moyacs.canary.bean;
  * @date 2019/2/26
  * @email 252774645@qq.com
  */
-public class UserInfoVo {
+public class UserInfoVo implements Serializable {
     private String id;
     private String loginName;
     private String password;
@@ -17,6 +19,14 @@ public class UserInfoVo {
     private String userType;
     private String nickname;
     private String userImg;
+    private String gender;
+    private String birthdate;
+    private String idNumber;
+    private String cardFront;
+    private String cardReverse;
+    private String auditStatus;
+    private String bankCard;
+    private String bankOfDeposit;
 
     public String getId() {
         return id;
@@ -90,6 +100,70 @@ public class UserInfoVo {
         this.userImg = userImg;
     }
 
+    public String getGender() {
+        return gender;
+    }
+
+    public void setGender(String gender) {
+        this.gender = gender;
+    }
+
+    public String getBirthdate() {
+        return birthdate;
+    }
+
+    public void setBirthdate(String birthdate) {
+        this.birthdate = birthdate;
+    }
+
+    public String getIdNumber() {
+        return idNumber;
+    }
+
+    public void setIdNumber(String idNumber) {
+        this.idNumber = idNumber;
+    }
+
+    public String getCardFront() {
+        return cardFront;
+    }
+
+    public void setCardFront(String cardFront) {
+        this.cardFront = cardFront;
+    }
+
+    public String getCardReverse() {
+        return cardReverse;
+    }
+
+    public void setCardReverse(String cardReverse) {
+        this.cardReverse = cardReverse;
+    }
+
+    public String getAuditStatus() {
+        return auditStatus;
+    }
+
+    public void setAuditStatus(String auditStatus) {
+        this.auditStatus = auditStatus;
+    }
+
+    public String getBankCard() {
+        return bankCard;
+    }
+
+    public void setBankCard(String bankCard) {
+        this.bankCard = bankCard;
+    }
+
+    public String getBankOfDeposit() {
+        return bankOfDeposit;
+    }
+
+    public void setBankOfDeposit(String bankOfDeposit) {
+        this.bankOfDeposit = bankOfDeposit;
+    }
+
     @Override
     public String toString() {
         return "UserInfoVo{" +
@@ -102,6 +176,14 @@ public class UserInfoVo {
                 ", userType='" + userType + '\'' +
                 ", nickname='" + nickname + '\'' +
                 ", userImg='" + userImg + '\'' +
+                ", gender='" + gender + '\'' +
+                ", birthdate='" + birthdate + '\'' +
+                ", idNumber='" + idNumber + '\'' +
+                ", cardFront='" + cardFront + '\'' +
+                ", cardReverse='" + cardReverse + '\'' +
+                ", auditStatus='" + auditStatus + '\'' +
+                ", bankCard='" + bankCard + '\'' +
+                ", bankOfDeposit='" + bankOfDeposit + '\'' +
                 '}';
     }
 }

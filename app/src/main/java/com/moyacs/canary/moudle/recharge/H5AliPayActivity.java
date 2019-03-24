@@ -2,14 +2,19 @@ package com.moyacs.canary.moudle.recharge;
 
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.content.ComponentName;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.content.pm.ResolveInfo;
 import android.content.res.Configuration;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.View;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
@@ -19,6 +24,8 @@ import android.widget.LinearLayout;
 import com.alipay.sdk.app.H5PayCallback;
 import com.alipay.sdk.app.PayTask;
 import com.alipay.sdk.util.H5PayResultModel;
+
+import java.util.List;
 
 /**
  * @author heguogui
@@ -110,9 +117,7 @@ public class H5AliPayActivity extends AppCompatActivity {
 
         @Override
         public boolean shouldOverrideUrlLoading(final WebView view, String url) {
-            if (!(url.startsWith("http") || url.startsWith("https"))) {
-                return true;
-            }
+
 
             if(url.contains("https://www.baidu.com")){
                 finish();
@@ -141,34 +146,79 @@ public class H5AliPayActivity extends AppCompatActivity {
 //            }
 //            // ------- 处理结束 -------
 
+//
+//            final PayTask task = new PayTask(H5AliPayActivity.this);
+//            boolean isIntercepted = task.payInterceptorWithUrl(url, true, new H5PayCallback() {
+//                @Override
+//                public void onPayResult(final H5PayResultModel result) {
+//                    final String url=result.getReturnUrl();
+//                    if(!TextUtils.isEmpty(url)){
+//                        H5AliPayActivity.this.runOnUiThread(new Runnable() {
+//                            @Override
+//                            public void run() {
+//                                view.loadUrl(url);
+//                            }
+//                        });
+//                    }
+//                }
+//            });
+//
+//            /**
+//             * 判断是否成功拦截
+//             * 若成功拦截，则无需继续加载该URL；否则继续加载
+//             */
+//            if (!isIntercepted) {
+//                view.loadUrl(url);
+//            }
+//            Log.i(TAG,"isIntercepted="+isIntercepted);
 
-            final PayTask task = new PayTask(H5AliPayActivity.this);
-            boolean isIntercepted = task.payInterceptorWithUrl(url, true, new H5PayCallback() {
-                @Override
-                public void onPayResult(final H5PayResultModel result) {
-                    final String url=result.getReturnUrl();
-                    if(!TextUtils.isEmpty(url)){
-                        H5AliPayActivity.this.runOnUiThread(new Runnable() {
-                            @Override
-                            public void run() {
-                                view.loadUrl(url);
-                            }
-                        });
-                    }
+            final Activity context = H5AliPayActivity.this;
+            //url.contains("alipays://platformapi")
+            if(url.startsWith("alipays:") || url.startsWith("alipay")){
+                try {
+                    Intent intent =new Intent(Intent.ACTION_VIEW,Uri.parse(url));
+                    startActivity(intent);
+                    context.finish();
+                }catch (Exception e){
+                    new AlertDialog.Builder(context)
+                            .setMessage("未检测到支付宝客户端，请点击下载支付宝安装后重试。")
+                            .setPositiveButton("确定", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+
+                                }
+                            }).setNegativeButton("取消", null).show();
                 }
-            });
+                return true;
+            }else if(url.startsWith("weixin://wap/pay?")){
+                Intent intent = new Intent();
+                intent.setAction(Intent.ACTION_VIEW);
+                intent.setData(Uri.parse(url));
+                startActivity(intent);
+                return true;
+            }else if(url.contains("alipayobjects")){//下载支付宝App
 
-            /**
-             * 判断是否成功拦截
-             * 若成功拦截，则无需继续加载该URL；否则继续加载
-             */
-            if (!isIntercepted) {
-                view.loadUrl(url);
+                try {
+                    Intent intent = new Intent();
+                    intent.setAction("android.intent.action.VIEW");
+                    Uri contentUri =Uri.parse(url);
+                    intent.setData(contentUri);
+                    if(hasbrowser(context,intent)) {
+                        intent.addCategory(Intent.CATEGORY_BROWSABLE);
+                        intent.setComponent(new ComponentName("com.android.browser", "com.android.browser.BrowserActivity"));
+                    }
+                    startActivity(intent);
+                    context.finish();
+                }catch (Exception e){
+                    e.printStackTrace();
+                }
             }
-
-            Log.i(TAG,"isIntercepted="+isIntercepted);
-
+            if (!(url.startsWith("http") || url.startsWith("https"))){
+                return true;
+            }
+            view.loadUrl(url);
             return true;
+           // return super.shouldOverrideUrlLoading(view,url);
         }
 
 
@@ -197,4 +247,27 @@ public class H5AliPayActivity extends AppCompatActivity {
     protected void onResume() {
         super.onResume();
     }
+
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        if (keyCode == KeyEvent.KEYCODE_BACK && mWebView.canGoBack()) {
+            mWebView.goBack();
+            return true;
+        }
+        return super.onKeyDown(keyCode, event);
+    }
+
+    public boolean hasbrowser(Context context, Intent intent) {
+        PackageManager pm = context.getPackageManager();
+        List<ResolveInfo> list=pm.queryIntentActivities(intent, PackageManager.MATCH_DEFAULT_ONLY);
+
+        for (ResolveInfo resolve:list) {
+            if (resolve.activityInfo.packageName.contains("com.android.browser")){
+                return true;
+            }
+        }
+        return false;
+    }
+
+
 }

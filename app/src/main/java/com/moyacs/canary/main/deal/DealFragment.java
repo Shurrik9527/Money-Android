@@ -3,6 +3,7 @@ package com.moyacs.canary.main.deal;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
@@ -10,8 +11,11 @@ import android.widget.TextView;
 
 import com.flyco.tablayout.SlidingTabLayout;
 import com.moyacs.canary.base.BaseFragment;
+import com.moyacs.canary.common.AppConstans;
+import com.moyacs.canary.common.DialogUtils;
 import com.moyacs.canary.main.deal.capital.CapitalFragment;
 import com.moyacs.canary.main.deal.order.HoldOrderFragment;
+import com.moyacs.canary.util.SharePreferencesUtil;
 import com.moyacs.canary.widget.SwitchSlidingViewPager;
 
 import java.util.ArrayList;
@@ -19,6 +23,7 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.OnClick;
+import io.rong.imkit.RongIM;
 import www.moyacs.com.myapplication.R;
 
 /**
@@ -98,6 +103,11 @@ public class DealFragment extends BaseFragment {
             case R.id.desView://标题左侧
                 break;
             case R.id.btn_help_trade://标题右侧
+                if (TextUtils.isEmpty(SharePreferencesUtil.getInstance().getUserPhone())) {
+                    DialogUtils.login_please("请先登录", getContext());
+                } else {
+                    RongIM.getInstance().startPrivateChat(getActivity(), AppConstans.CUSTOM_SERVER_ID, "客服");
+                }
                 break;
         }
     }

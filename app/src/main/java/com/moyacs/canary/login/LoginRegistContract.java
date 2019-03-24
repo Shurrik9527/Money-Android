@@ -20,7 +20,8 @@ public interface LoginRegistContract {
 
     interface LoginRegistView extends BaseViews<Presenter> {
 
-        void  showSuccess();
+        void  showLoginSuccess();
+        void  showRegistSuccess();
         void  dissLoading();
         void  getCodeSuccess(String code);
         void  getCodeFailed();
@@ -47,8 +48,9 @@ public interface LoginRegistContract {
         /**
          * 上传用户公钥
          * @param pubKey 公钥
+         * @param type 0注册 1登录
          */
-        void uploadPubKey(String pubKey);
+        void uploadPubKey(String pubKey,String type);
 
         /**
          * 注册
@@ -72,6 +74,10 @@ public interface LoginRegistContract {
          * @param token
          */
         void connectRonIM(Context context,String token);
+
+
+
+        void  resetPulPriKey();
 
     }
 }

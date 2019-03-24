@@ -1,5 +1,7 @@
 package com.moyacs.canary.main.deal.capital;
 
+import android.util.Log;
+
 import com.moyacs.canary.bean.TransactionRecordVo;
 import com.moyacs.canary.bean.UserAmountVo;
 import com.moyacs.canary.network.BaseObservable;
@@ -19,6 +21,7 @@ import io.reactivex.disposables.CompositeDisposable;
  */
 public class CapitalPresenter implements CapitalContract.CapitalPresenter{
 
+    private static final String TAG = CapitalPresenter.class.getName();
     private CapitalContract.CapitalView mView;
     private CompositeDisposable disposable;
     public CapitalPresenter(CapitalContract.CapitalView view) {
@@ -67,11 +70,50 @@ public class CapitalPresenter implements CapitalContract.CapitalPresenter{
     @Override
     public void getWithdrawal() {
 
+        disposable.add(ServerManger.getInstance().getServer()
+                .withdrawRechangeReword("WITHDRAWAL")
+                .compose(RxUtils.rxSchedulerHelper())
+                .subscribeWith(new BaseObservable<ServerResult<String>>() {
+                    @Override
+                    protected void requestSuccess(ServerResult<String> data) {
+                        if(mView!=null){
+                            Log.i(TAG,data.toString());
+                        }
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        super.onError(e);
+                        if(mView!=null){
+                            mView.showMessageTips(e.getMessage()+"");
+                        }
+                    }
+                }));
+
+
     }
 
     @Override
     public void getPayment() {
+        disposable.add(ServerManger.getInstance().getServer()
+                .withdrawRechangeReword("PAY")
+                .compose(RxUtils.rxSchedulerHelper())
+                .subscribeWith(new BaseObservable<ServerResult<String>>() {
+                    @Override
+                    protected void requestSuccess(ServerResult<String> data) {
+                        if(mView!=null){
+                            Log.i(TAG,data.toString());
+                        }
+                    }
 
+                    @Override
+                    public void onError(Throwable e) {
+                        super.onError(e);
+                        if(mView!=null){
+                            mView.showMessageTips(e.getMessage()+"");
+                        }
+                    }
+                }));
     }
 
     @Override

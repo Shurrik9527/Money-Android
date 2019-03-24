@@ -24,7 +24,7 @@
     <string name="string_lable_market">market</string>
     <string name="string_lable_versionCode">versionCode</string>
     <!-- do not modifyed end-->
-
+    <string name="common_dialog_ok">好的</string>
 
     <!--关于简介内容     &#160;  &nbsp;   -->
     <!--对于空格而言不同的分辨率会有不同的距离-->
@@ -653,5 +653,25 @@
         5.一个盈利单若同时满足两个榜单规则即可同时上榜。
     </string>
     <string name="home_custom_server">客服服务</string>
+    <string name="me_open_certification_title">身份认证</string>
+    <string name="me_live_custom_service_title">在线客服</string>
+    <string name="me_account_manager_title">账户管理</string>
+
+    <string name="real_name_auth_top_title">完善信息</string>
+    <string name="real_name_auth_title">请注意:\n在你填写个人信息时，请务必和上传的身份证保持一致。\n为遵循国际反洗钱法，在进行账户充值时，掌上投不接受第三方汇款，资金来源的银行账户名必须同您在掌上投的交易账户名相一致，并请确保您提取的所有资金回到您原本充值的账户。</string>
+    <string name="real_name_auth_name_title">姓名</string>
+    <string name="real_name_auth_phone_title">手机号码</string>
+    <string name="real_name_auth_idcard_title">身份证号</string>
+    <string name="real_name_auth_sex_title">性别</string>
+    <string name="real_name_auth_age_title">出生日期</string>
+    <string name="real_name_auth_address_title">完整地址</string>
+
+    <string name="real_name_auth_notice_title">我不是美国公民/我不在美国出生</string>
+    <string name="real_name_auth_notice_cb_title">申请人承诺以上问题由本人完成</string>
+    <string name="real_name_auth_agreement_title">我接受各项条款条约，已阅读并理解产品披露声明书，已阅读、理解并同意客户服务协议。</string>
+    <string name="real_name_auth_dialog">您现在可以用800美金(最高)开始交易。如需提现及解除充值上限必须完善所有资料。</string>
+    <string name="real_name_auth_uploadidcard">以下信息将用来验证您的身份，并帮助评估我们产品对您的适用性和可持续性。您的信息将始终保密。</string>
+    <string name="rongyun_key">p5tvi9dspeel4</string>
+    <string name="de_actionbar_sub_defult">客服</string>
 
 </resources>

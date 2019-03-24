@@ -14,10 +14,12 @@ import com.moyacs.canary.network.RxUtils;
 import com.moyacs.canary.network.ServerManger;
 import com.moyacs.canary.network.ServerResult;
 import com.moyacs.canary.util.AppUtils;
+import com.moyacs.canary.util.PublickPriveKeyUtil;
 import com.moyacs.canary.util.SharePreferencesUtil;
 import com.moyacs.canary.util.ToastUtils;
 
 import java.io.UnsupportedEncodingException;
+import java.security.NoSuchAlgorithmException;
 
 import io.reactivex.disposables.CompositeDisposable;
 import io.rong.imkit.RongIM;
@@ -45,7 +47,7 @@ public class LoginRegistPresenter implements LoginRegistContract.Presenter{
     @Override
     public void getcode(String phone) {
         disposable.add(ServerManger.getInstance().getServer()
-                .getCode(phone)
+                .getCode(phone,"1")
                 .compose(RxUtils.rxSchedulerHelper())
                 .subscribeWith(new BaseObservable<ServerResult<String>>() {
                     @Override
@@ -60,7 +62,7 @@ public class LoginRegistPresenter implements LoginRegistContract.Presenter{
                     public void onError(Throwable e) {
                         super.onError(e);
                         if(mView!=null){
-                            mView.getCodeFailed();
+                            mView.showMessageTips(e.getMessage()+"");
                             mView.dissLoading();
                         }
                     }
@@ -84,7 +86,22 @@ public class LoginRegistPresenter implements LoginRegistContract.Presenter{
                     @Override
                     protected void requestSuccess(ServerResult<String> data) {
                         if(data!=null&&mView!=null){
-                            uploadPubKey(RSAKeyManger.pubKey);
+                            String pubKey = SharePreferencesUtil.getInstance().getPublicKey();
+                            String mUserName =SharePreferencesUtil.getInstance().getNickName();
+                            if(!TextUtils.isEmpty(mUserName)){
+                                if(mUserName.equals(userName)){
+                                    if(TextUtils.isEmpty(pubKey)){
+                                        resetPulPriKey();
+                                    }else {
+                                        uploadPubKey(pubKey,"1");
+                                    }
+                                }else {
+                                    //注册成功后生成公私秘钥并保存
+                                    resetPulPriKey();
+                                }
+                            }else {//人为清理
+                                resetPulPriKey();
+                            }
                         }
                     }
 
@@ -100,7 +117,7 @@ public class LoginRegistPresenter implements LoginRegistContract.Presenter{
     }
 
     @Override
-    public void uploadPubKey(String pubKey) {
+    public void uploadPubKey(String pubKey,String type) {
         disposable.add(ServerManger.getInstance().getServer()
                 .uploadPubKey(pubKey)
                 .compose(RxUtils.rxSchedulerHelper())
@@ -108,16 +125,19 @@ public class LoginRegistPresenter implements LoginRegistContract.Presenter{
                     @Override
                     protected void requestSuccess(ServerResult<String> data) {
                         if(mView!=null){
-                            mView.showMessageTips("登录成功");
-                            mView.showSuccess();
+                            if(!TextUtils.isEmpty(type)&&type.equals("0")){
+                                mView.showRegistSuccess();
+                            }else {
+                                mView.showLoginSuccess();
+                            }
                         }
-
                     }
 
                     @Override
                     public void onError(Throwable e) {
                         super.onError(e);
                         if(mView!=null){
+                            mView.showMessageTips(e.getMessage()+"");
                             mView.dissLoading();
                         }
                     }
@@ -149,7 +169,18 @@ public class LoginRegistPresenter implements LoginRegistContract.Presenter{
                     @Override
                     protected void requestSuccess(ServerResult<String> data) {
                        if(mView!=null){
-                           mView.showSuccess();
+                           //生成公私钥
+                           try {
+                               //注册成功清理以前的数据
+                               SharePreferencesUtil.getInstance().clean();
+                               //注册成功后生成公私秘钥并保存
+                               PublickPriveKeyUtil.genKeyPair();
+                               //上传公钥
+                               String pubKey = SharePreferencesUtil.getInstance().getPublicKey();
+                               uploadPubKey(pubKey,"0");
+                           } catch (NoSuchAlgorithmException e) {
+                               e.printStackTrace();
+                           }
                        }
                     }
 
@@ -208,6 +239,20 @@ public class LoginRegistPresenter implements LoginRegistContract.Presenter{
             }
             }
 
+    }
+
+    @Override
+    public void resetPulPriKey() {
+        //注册成功后生成公私秘钥并保存
+        try {
+            SharePreferencesUtil.getInstance().cleanPublicPrivateKey();
+            PublickPriveKeyUtil.genKeyPair();
+        } catch (NoSuchAlgorithmException e) {
+            e.printStackTrace();
+        }
+        //上传公钥
+        String newPubKey = SharePreferencesUtil.getInstance().getPublicKey();
+        uploadPubKey(newPubKey,"1");
     }
 
     @Override

@@ -12,11 +12,14 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.moyacs.canary.base.BaseActivity;
+import com.moyacs.canary.bean.UserInfoVo;
+import com.moyacs.canary.bean.UserInformBean;
 import com.moyacs.canary.bean.event.EvenVo;
 import com.moyacs.canary.common.AppConstans;
 import com.moyacs.canary.common.DialogUtils;
 import com.moyacs.canary.login.ForgetPasswordActivity;
 import com.moyacs.canary.main.me.SetNickNameActivity;
+import com.moyacs.canary.moudle.me.RealNameAuthActiviy;
 import com.moyacs.canary.network.BaseObservable;
 import com.moyacs.canary.network.RxUtils;
 import com.moyacs.canary.network.ServerManger;
@@ -51,9 +54,12 @@ public class AccountActivity extends BaseActivity {
     TextView tvAccount;
     @BindView(R.id.iv_head)
     CircleImageView ivHead;
+    @BindView(R.id.account_realname_auth_tv)
+    TextView accountRealnameAuthTv;
 
     private ChoicePhotoManger photoManger;
     private UpdateHeadPortraitDialog portraitDialog;
+    private UserInfoVo bean;
 
     @Override
     protected int getLayoutId() {
@@ -64,6 +70,13 @@ public class AccountActivity extends BaseActivity {
     protected void initView() {
         photoManger = new ChoicePhotoManger();
         portraitDialog = new UpdateHeadPortraitDialog(this);
+        Intent mIntent = getIntent();
+        if(mIntent!=null){
+            bean = (UserInfoVo) mIntent.getSerializableExtra("USER_INFORM");
+        }
+
+
+
     }
 
     @Override
@@ -75,6 +88,23 @@ public class AccountActivity extends BaseActivity {
         if(tvAccount!=null){
             tvAccount.setText(SharePreferencesUtil.getInstance().getUserPhone()+"");
         }
+
+        if (!TextUtils.isEmpty(bean.getUserImg())) {
+            Glide.with(this)
+                    .load(bean.getUserImg())
+                    .into(ivHead);
+        } else {
+            Glide.with(this)
+                    .load(R.mipmap.img_me_headimage_default)
+                    .into(ivHead);
+        }
+
+        if(bean!=null&&!TextUtils.isEmpty(bean.getAuditStatus())&&bean.getAuditStatus().equals("DONT_SUBMIT")){
+            accountRealnameAuthTv.setText("待完善");
+        }else {
+            accountRealnameAuthTv.setVisibility(View.GONE);
+        }
+
     }
 
     @Override
@@ -129,7 +159,27 @@ public class AccountActivity extends BaseActivity {
                 break;
             case R.id.ll_author:
                 //实名认证
-                ToastUtils.showShort("正在开发中...");
+                Intent intent = new Intent(this, RealNameAuthActiviy.class);
+                UserInformBean mBean = new UserInformBean();
+                mBean.setIdcard(bean.getIdNumber());
+                mBean.setIdcard_afterPath(bean.getCardReverse());
+                mBean.setIdcard_beforPath(bean.getCardFront());
+                mBean.setAge(bean.getBirthdate());
+                mBean.setSex(bean.getGender());
+                mBean.setName(bean.getUserName());
+
+                if(!TextUtils.isEmpty(bean.getAuditStatus())){
+                    if(bean.getAuditStatus().equals("DONT_SUBMIT")){
+                        mBean.setAuth(false);
+                    }else {
+                        mBean.setAuth(true);
+                    }
+                }else {
+                    mBean.setAuth(false);
+                }
+                mBean.setPhone(bean.getLoginName());
+                intent.putExtra("USER_INFORM",mBean);
+                startActivity(intent);
                 break;
             case R.id.ll_updatePsw:
                 //修改密码
@@ -184,7 +234,11 @@ public class AccountActivity extends BaseActivity {
                     return;
                 }
                 File file = FileUtil.getSmallBitmap(this, cropFilePath);
-                uploadUserImage(file); //上传头像
+                if(file!=null){
+                    uploadUserImage(file); //上传头像
+                }else {
+                    showMsg("上传失败!");
+                }
             }
         } else {
             if (requestCode == ChoicePhotoManger.TACK_CAMERA_CODE || requestCode == ChoicePhotoManger.TACK_ALBUM_CODE) {
@@ -218,7 +272,6 @@ public class AccountActivity extends BaseActivity {
                                     @Override
                                     protected void requestSuccess(ServerResult<String> data) {
                                         ToastUtils.showShort("头像修改成功");
-                                        finish();
                                         Glide.with(AccountActivity.this)
                                                 .load(imgHead)
                                                 .into(ivHead);

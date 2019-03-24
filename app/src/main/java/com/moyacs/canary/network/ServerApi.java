@@ -6,6 +6,7 @@ import com.moyacs.canary.bean.HomeDealChanceVo;
 import com.moyacs.canary.bean.MarketDataBean;
 import com.moyacs.canary.bean.PayBean;
 import com.moyacs.canary.bean.PaymentDateBean;
+import com.moyacs.canary.bean.RateBean;
 import com.moyacs.canary.bean.TradeVo;
 import com.moyacs.canary.bean.TransactionRecordVo;
 import com.moyacs.canary.bean.DealChanceBean;
@@ -29,6 +30,7 @@ import retrofit2.http.POST;
 import retrofit2.http.Part;
 import retrofit2.http.PartMap;
 import retrofit2.http.Query;
+import retrofit2.http.Url;
 
 public interface ServerApi {
     /**
@@ -44,12 +46,12 @@ public interface ServerApi {
 
     /**
      * 获取验证码
-     *
-     * @param mobile
+     * @param mobile 手机号
+     * @param codeType 类型 1为注册 2为忘记密码
      * @return
      */
     @GET("login/getCode")
-    Observable<ServerResult<String>> getCode(@Query("loginName") String mobile);
+    Observable<ServerResult<String>> getCode(@Query("loginName") String mobile,@Query("codeType") String codeType);
 
     /**
      * 注册
@@ -331,6 +333,42 @@ public interface ServerApi {
     Observable<ServerResult<PayBean>> rechargePay(@Query("payWay") String payWay,
                                                  @Query("returnUrl") String returnUrl,
                                                  @Query("money") String money);
+
+
+
+
+    /**
+     * 提现接口
+     * @param money 提现金额
+     * @return
+     */
+    @POST("amountRecord/withdraw")
+    Observable<ServerResult<String>> withdrawMoney(@Query("money") String money);
+
+
+    /**
+     * 实时汇率接口
+     * @return
+     */
+    @POST("/")
+    Observable<RateResult<RateBean>> rate(@Query("app") String app,@Query("scur") String scur,@Query("tcur") String tcur,@Query("appkey") String appkey,@Query("sign") String sign,@Query("format") String format);
+
+
+    /**
+     * 实名认证
+     */
+    @FormUrlEncoded
+    @POST("user/edit")
+    Observable<ServerResult<String>> realNameAuth(@Field("gender") String gender, @Field("birthdate") String birthdate,@Field("id_number") String id_number, @Field("card_front") String card_front,@Field("card_reverse") String card_reverse, @Field("userName") String userName);
+
+
+    /**
+     * 充值提现记录接口
+     * @return
+     */
+    @POST("amountRecord/getList")
+    Observable<ServerResult<String>> withdrawRechangeReword(@Query("amountType") String amountType);
+
 
 
 
